@@ -311,6 +311,16 @@ export const cards={
  cheerKid:{title:'ほめる・ありがとうを言う',kind:'talk',label:'ほめる',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'やってくれたら、ほめる。',hint:'ほめると、またやる',icon:'heart'},
  tryLead:{title:'もう一度、班をまとめる',kind:'support',label:'まとめる',cost:2,atk:3,attr:'soc',up:'soc',desc:'見つけたやり方で、班をまとめる。',hint:'伝え方が変われば、班が動く',icon:'flag'},
  leadWay:{title:'班がひとつにまとまった',kind:'support',label:'まとまった',cost:2,atk:3,attr:'soc',up:'soc',desc:'みんなで、やりきった。',hint:'まとまった経験は、自信になる',icon:'check'},
+ rush:{title:'あわてて走る',kind:'think',label:'あわてる',cost:0,strain:1,atk:1,attr:'ath',desc:'あわてて、学校へ走る。',hint:'あわてると、転ぶかも',icon:'runner'},
+ makeExcuse:{title:'言い訳を考える',kind:'think',label:'言い訳',cost:0,strain:1,atk:0,desc:'遅れた理由の、言い訳を考える。',hint:'言い訳は、ばれるかも',icon:'eye'},
+ admitLate:{title:'遅れたと正直に言う',kind:'talk',label:'正直に言う',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'「寝坊しました」と、正直に言う。',hint:'正直に言うと、すっきりする',icon:'check'},
+ callAhead:{title:'先生に連絡する',kind:'talk',label:'連絡する',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'遅れることを、先に言う。',hint:'先に言うと、安心してもらえる',icon:'message'},
+ calmWalk:{title:'落ち着いて歩く',kind:'think',label:'落ち着いて',cost:1,atk:2,attr:'study',up:'study',desc:'あわてず、落ち着いて歩く。',hint:'落ち着くと、ミスが減る',icon:'clock'},
+ earlyNight:{title:'前の日から準備する',kind:'think',label:'前日準備',cost:1,atk:2,attr:'study',up:'study',desc:'夜、持ち物と服を準備する。',hint:'前日準備で、朝が楽になる',icon:'list'},
+ wakeTrick:{title:'起きる工夫をする',kind:'think',label:'起きる工夫',cost:1,atk:2,attr:'study',up:'study',desc:'目覚まし・日差し・声かけ、工夫する。',hint:'工夫すれば、起きられる',icon:'sun'},
+ habitAsk:{title:'習慣を先生に相談する',kind:'talk',label:'習慣相談',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'遅刻ぐせを、先生に相談する。',hint:'習慣のことも、相談できる',icon:'people'},
+ arriveCalm:{title:'落ち着いて登校する',kind:'support',label:'落ち着いて',cost:2,atk:3,attr:'study',up:'study',desc:'準備した朝で、落ち着いて登校する。',hint:'準備の分だけ、落ち着ける',icon:'flag'},
+ newHabit:{title:'遅刻しない習慣を作る',kind:'support',label:'習慣を作る',cost:2,atk:3,attr:'study',up:'study',desc:'早寝・準備・工夫で、習慣を作る。',hint:'習慣は、明日の味方',icon:'check'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -1877,6 +1887,55 @@ leader:{
  },
  progress(s){const f=s.flags;return f.united||f.led?3:f.heardK||f.togetherDone||f.delegated?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.united?'班がまとまった。伝え方が変わった。':f.heardK||f.delegated?'やり方が見つかった。聞く・一緒・任せる・ほめる。':'班がまとまらないまま。伝え方は練習できる。'}
+},
+
+// STORY 34 ── 朝、起きられなくて遅刻しそう ──
+late:{
+ title:'朝、起きられなくて遅刻しそう',nav:'朝の遅刻',num:'34',attrs:['study','soc'],
+ goals:['遅れずに登校したい','遅れたときの自分を知りたい','朝の習慣を変えたい'],
+ chapters:['朝・寝坊','登校中','教室'],locations:['家','登校中','教室'],
+ base:['rush','makeExcuse','anger','ignore','boast'],start:{mind:5,energy:4},
+ monsters:[{name:'マニワナイの影',hp:4,power:1,turns:4,look:'時計の針が、どんどん進んでいる。'},{name:'イイワケの影',hp:4,power:1,turns:4,look:'言い訳が、頭の中で渦巻いている。'},{name:'セカセカの影',hp:6,power:2,turns:5,look:'教室に着いても、気持ちが落ち着かない。'}],
+ talk:[['callFirst','先生に先に言う','遅れることを、先に言う。'],['teacherHabit','先生に習慣を相談','遅刻ぐせを、先生に相談する。'],['friendMorning','友達と登校の約束','友達と、一緒に登校する約束をする。']],
+ think:[['sleepy','夜更かしした','夜、遅くまで起きていた。'],['noPrep','準備をしてなかった','持ち物も服も、決めてなかった。'],['weakMorning','朝が苦手','そもそも、朝が苦手だ。']],
+ reasonKeys:['sleepy','noPrep','weakMorning'],
+ stageGrants:[['calmWalk'],['arriveCalm']],
+ onExplore(s,key){
+  const out={text:'',card:null};
+  if(key==='callFirst'){s.flags.toldFirst=true;relation(s,'先に連絡したら、「気をつけてね」と言われた。');out.text='「遅れます」と、先に言った。\n先生「分かった。気をつけてね」';out.card='callAhead'}
+  if(key==='teacherHabit'){s.flags.askedH=true;note(s,'先生に「寝る時間を決めよう」と言われた。');out.text='先生「まず、寝る時間を決めよう」\n習慣のヒントを、もらった。';out.card='habitAsk'}
+  if(key==='friendMorning'){s.flags.promised=true;relation(s,'友達と登校の約束をした。');out.text='「明日、一緒に行こう！」\n約束があれば、起きられる。';out.card='admitLate'}
+  if(key==='sleepy'){s.reason='sleepy';note(s,'夜更かしが原因なら、前日準備で変えられる。');out.text='「夜更かしが、原因だ」\n前の日から、変えられる。';out.card='earlyNight'}
+  if(key==='noPrep'){s.reason='noPrep';note(s,'準備がないなら、前の日にやっておく。');out.text='「準備を、してなかった」\n前の日に、準備しよう。';out.card='earlyNight'}
+  if(key==='weakMorning'){s.reason='weakMorning';note(s,'朝が苦手なら、起きる工夫がいる。');out.text='「朝が、苦手」\n起きる工夫を、しよう。';out.card='wakeTrick'}
+  return out;
+ },
+ onPlay(s,id){
+  const f=s.flags;let text='',meaning='';
+  if(id==='rush'){f.rushed=true;s.mind-=1;relation(s,'あわてて走ったら、転んで余計に遅れた。');text='あわてて、走った。\n転んで、余計に遅れた。';meaning='あわてると、ミスが増える。';grant(s,'calmWalk')}
+  if(id==='makeExcuse'){f.excused=true;s.mind-=1;relation(s,'言い訳を考えたら、余計にモヤモヤした。');text='言い訳を、考えた。\n余計に、モヤモヤした。';meaning='言い訳は、気持ちが晴れない。';grant(s,'admitLate')}
+  if(id==='admitLate'){f.told=true;relation(s,'正直に言ったら、すっきりした。');text='「寝坊しました」と、正直に言った。\n「分かった。明日は気をつけてね」';meaning='正直に言うと、すっきりする。'}
+  if(id==='callAhead'){f.called=true;f.told=true;relation(s,'先に連絡したら、安心してもらえた。');text='「遅れます」と、先に言った。\n「分かった。気をつけて来てね」';meaning='先に言うと、安心してもらえる。'}
+  if(id==='calmWalk'){f.calmed=true;note(s,'落ち着いて歩いたら、転ばず着いた。');text='落ち着いて、歩いた。\n転ばずに、着いた。';meaning='落ち着くと、ミスが減る。'}
+  if(id==='earlyNight'){f.prepared=true;note(s,'前の日に準備したら、朝が楽になった。');text='夜、持ち物と服を準備した。\n「朝が、楽だ」';meaning='前日準備で、朝が楽になる。'}
+  if(id==='wakeTrick'){f.prepared=true;note(s,'起きる工夫をしたら、起きられた。');text='目覚ましと日差しの工夫をした。\n「起きられた！」';meaning='工夫すれば、起きられる。'}
+  if(id==='habitAsk'){f.askedH=true;f.prepared=true;note(s,'先生と習慣を考えたら、見通しが立った。');text='「寝る時間を、決めよう」\n先生と、習慣を考えた。';meaning='習慣のことも、相談できる。'}
+  if(id==='arriveCalm'){if(f.calmed||f.prepared||f.told){f.arrived=true;note(s,'落ち着いて登校できた。');text='落ち着いて、登校した。\n「間に合った」';meaning='準備の分だけ、落ち着ける。'}else{s.mind-=1;text='落ち着いて登校しようとしたが、あわててしまった。';meaning='まず準備・連絡・落ち着きをしてから、登校すると良い。';grant(s,'calmWalk')}}
+  if(id==='newHabit'){if(f.prepared||f.askedH){f.habit=true;note(s,'遅刻しない習慣ができた。');text='早寝・準備・工夫で、習慣に。\n「朝が、変わった」';meaning='習慣は、明日の味方。'}else{s.mind-=1;text='習慣を作ろうとしたが、何から変えるか分からなかった。';meaning='まず寝る時間・準備・工夫をしてから、習慣にすると良い。';grant(s,'earlyNight')}}
+  return {text,meaning};
+ },
+ watch(s){
+  if(s.stage===0)return '時計の針が、どんどん進んでいる。';
+  if(s.stage===1)return '言い訳が、頭の中で渦巻いている。';
+  return '教室に着いても、気持ちが落ち着かない。';
+ },
+ scene(s){const f=s.flags;
+  if(s.stage===0)return {narrative:'朝。目覚ましを止めて、二度寝してしまった。',speaker:'家族',quote:'早く！ 遅刻するよ！',look:'時計が、もうすぐ登校時間。',self:'やばい、遅刻だ…',hint:'遅刻しそうなとき、何がつらい？'};
+  if(s.stage===1)return {narrative:'登校中。遅れた言い訳を、考えてしまう。',speaker:'友達',quote:'走ろうよ！','look':'みんなは、もう登校している。',self:s.reason==='sleepy'?'夜更かしが、原因だ。':s.reason==='noPrep'?'準備を、してなかった。':s.reason==='weakMorning'?'朝が、苦手だ。':'どう言おう…',hint:'正直・連絡・落ち着き・前日準備、方法はある。'};
+  return {narrative:'教室に着いた。授業は、もう始まっている。',speaker:'先生',quote:f.arrived?'遅れても、来れたね':'どうしたの？',look:'教室が、静かだ。',self:f.told?'正直に言えて、すっきりした。':'まだ、モヤモヤする。',hint:'明日からの習慣を、変えよう。'};
+ },
+ progress(s){const f=s.flags;return f.arrived||f.habit?3:f.told||f.prepared||f.calmed?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.arrived||f.habit?'落ち着いて登校できた。習慣も変わった。':f.told||f.prepared?'やり方が見つかった。正直・連絡・前日準備・工夫。':'遅刻しそうなまま。朝の習慣は変えられる。'}
 }
 };
 

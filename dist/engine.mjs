@@ -164,6 +164,15 @@ export const cards={
  nextChance:{title:'「次はどうすれば？」と聞く',kind:'talk',label:'次の方法を聞く',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'次に選ばれるための、方法を聞く。',hint:'次の目標が見えれば、今も変わる',icon:'bolt'},
  trainSee:{title:'選手の走りを見て学ぶ',kind:'think',label:'見て学ぶ',cost:1,atk:2,attr:'ath',up:'ath',desc:'選ばれた人の動きを、見て学ぶ。',hint:'見て学ぶと、次につながる',icon:'eye'},
  cheerHard:{title:'思い切り応援する',kind:'support',label:'思い切り応援',cost:1,bond:1,atk:2,attr:'ath',up:'ath',desc:'選手の背中を、大きな声で押す。',hint:'応援も、勝つための力になる',icon:'spark'},
+ pretendNot:{title:'見なかったことにする',kind:'think',label:'見ないふり',cost:0,atk:0,desc:'目をそらして、知らないことにする。',hint:'見ないふりでは、不公平は残る',icon:'eye'},
+ glare:{title:'にらむ',kind:'think',label:'にらむ',cost:0,atk:1,attr:'soc',desc:'じっと見て、圧をかける。',hint:'にらむだけでは、相手には伝わらない',icon:'bolt'},
+ spread:{title:'みんなに言いふらす',kind:'talk',label:'言いふらす',cost:0,strain:1,atk:0,desc:'「ズルしてたよ」と、みんなに言う。',hint:'広めると、相手が傷つく',icon:'message'},
+ tellFair:{title:'「公平じゃない」と先生に伝える',kind:'talk',label:'公平と伝える',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'誰かを売るのでなく、公平さのために言う。',hint:'「公平」のための伝えは、告げ口と違う',icon:'flag'},
+ quietTalk:{title:'本人に「それはズルだ」と言う',kind:'talk',label:'本人に言う',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'先生でなく、本人に直接言う。',hint:'本人に言うのも、勇気の一つ',icon:'hand'},
+ replayRule:{title:'「もう一回、ルール通りに」提案',kind:'talk',label:'やり直し提案',cost:1,bond:1,atk:1,attr:'soc',up:'soc',desc:'ズルの勝ちをなしにして、やり直す。',hint:'やり直しの提案は、みんなを救う',icon:'cards'},
+ sayToHim:{title:'本人にやめるよう言う',kind:'talk',label:'やめてと言う',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'「やめた方がいい」と、直接伝える。',hint:'友達だからこそ、注意できる',icon:'people'},
+ tellAdult2:{title:'先生に相談する',kind:'talk',label:'先生に相談',cost:1,bond:1,atk:1,attr:'soc',up:'soc',desc:'どうするべきか、大人に相談する。',hint:'相談は、告げ口と違う',icon:'flag'},
+ groupRule:{title:'みんなでルールを決める',kind:'support',label:'ルールを決める',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'次からズルが起きないよう、決める。',hint:'ルールがあれば、ズルは減る',icon:'list'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -995,6 +1004,51 @@ role:{
  },
  progress(s){const f=s.flags;return s.goal===0?(f.clearedR?3:f.felt?2:s.reason?1:0):s.goal===1?(f.cheered||f.roleValued?3:f.clearedR?2:s.reason?1:0):(f.nextKnow||f.learnedR?3:f.clearedR?2:s.reason?1:0)},
  situation(s){const f=s.flags;return f.clearedR?'役割を受け止められた。認める・聞く・考えるがある。':f.felt||f.roleValued?'気持ちを整理できた。':'納得いかないまま残っている。向き合い方は練習できる。'}
+},
+cheat:{
+ title:'ズルを見てしまった',nav:'ズルを見た',num:'18',attrs:['soc','study'],
+ goals:['公平さを保ちたい','友達を傷つけたくない','自分の気持ちを整理したい'],
+ chapters:['ゲームの時間','休み時間','放課後'],locations:['教室・ゲーム','教室・休み時間','教室・放課後'],
+ base:['pretendNot','glare','spread','anger','ignore'],start:{mind:4,energy:4},
+ monsters:[{name:'見てしまった重み',hp:4,power:0,turns:4,look:'知ってしまったことが、胸に重くのしかかる。'},{name:'黙るか言うかの天秤',hp:5,power:1,turns:5,look:'言うべきか黙るべきか、天秤が揺れている。'},{name:'ズルの影',hp:6,power:1,turns:5,look:'ズルで勝った影が、ゲーム全体にかかっている。'}],
+ talk:[['teacherX','先生に相談','どうするべきか、聞いてみる。'],['friendX','本人に直接言う','「それはズルだ」と伝える。']],
+ think:[['tellWhom','先生に言うべきか迷う','告げ口みたいで、気が進まない。'],['betray','友達を売るようで嫌だ','言ったら、友達が嫌われるかも。'],['unfairGame','ズルで勝つなら意味がない','ルールを守らない勝ちは、勝ちじゃない。']],
+ reasonKeys:['tellWhom','betray','unfairGame'],
+ stageGrants:[['groupRule'],[]],
+ onExplore(s,key){
+  const out={text:'',card:null};
+  if(key==='teacherX'){s.flags.askedX=true;note(s,'先生が、考えを聞いてくれた。');out.text='先生「公平のために言うのと、告げ口は違うよ」';out.card='tellAdult2'}
+  if(key==='friendX'){s.flags.saidHim=true;relation(s,'本人に言ったら、少し気まずくなったが聞いてくれた。');out.text='友達「…ごめん。次からちゃんとやる」\n直接言うと、届くこともある。';out.card='sayToHim'}
+  if(key==='tellWhom'){s.reason='tellWhom';note(s,'先生に言うべきか、迷っている。');out.text='「言うべき？　告げ口になる？」';out.card='tellFair'}
+  if(key==='betray'){s.reason='betray';note(s,'友達を売るようで、嫌な気持ち。');out.text='「言ったら、嫌われるかも」';out.card='quietTalk'}
+  if(key==='unfairGame'){s.reason='unfairGame';note(s,'ズルの勝ちは、勝ちじゃないと思う。');out.text='「ズルで勝っても、意味ないよ」';out.card='replayRule'}
+  return out;
+ },
+ onPlay(s,id){
+  const f=s.flags;let text='',meaning='';
+  if(id==='pretendNot'){f.pretended=true;text='見なかったことにした。\nでも、気持ちには残った。';meaning='見ないふりでは、不公平は残る。'}
+  if(id==='glare'){f.glared=true;text='にらんだ。\n相手は、気づいたか気づかないか分からない。';meaning='にらむだけでは、相手には伝わらない。'}
+  if(id==='spread'){f.spread=true;s.rep-=1;relation(s,'言いふらしたら、本人が泣いた。まわりも気まずい。');text='みんなに言いふらした。\nズルした子は、泣いてしまった。';meaning='広めると、相手が傷つく。伝え方がある。';grant(s,'quietTalk')}
+  if(id==='tellFair'){f.toldFair=true;f.clearedX=true;note(s,'「公平じゃない」と伝えたら、先生が対応してくれた。');text='先生「教えてくれてありがとう。みんなでルールを決め直そう」';meaning='公平のための伝えは、告げ口と違う。'}
+  if(id==='quietTalk'){f.talkedHim=true;f.clearedX=true;relation(s,'本人に直接言ったら、認めてくれた。');text='友達「…ばれてたか。ごめん」\n友達だからこそ、注意できる。';meaning='本人に言うのも、勇気の一つ。'}
+  if(id==='replayRule'){f.replayed=true;f.clearedX=true;note(s,'「もう一回、ルール通りに」の提案が通った。');text='みんな「もう一回やろう！」\nズルの勝ちは、なかったことになった。';meaning='やり直しの提案は、みんなを救う。'}
+  if(id==='sayToHim'){f.talkedHim=true;f.clearedX=true;relation(s,'「やめて」と言ったら、本人が止めた。');text='友達「分かった、やめる」\n友達だからこそ、言えることもある。';meaning='友達だからこそ、注意できる。'}
+  if(id==='tellAdult2'){f.toldAdult=true;f.clearedX=true;note(s,'先生に相談したら、次の手を教えてもらえた。');text='先生「そういうときは、こうするといいよ」\n相談は、告げ口と違う。';meaning='相談は、告げ口と違う。'}
+  if(id==='groupRule'){if(f.toldFair||f.talkedHim||f.toldAdult||f.replayed){f.ruled=true;f.clearedX=true;relation(s,'みんなでルールを決めたら、次からズルが減った。');text='みんなで「こうしよう」と決めた。\n次から、ズルは起きにくい。';meaning='ルールがあれば、ズルは減る。'}else{s.mind-=1;text='ルールを決めようとしたが、何を決めるか分からなかった。';meaning='まず伝えてから、ルールを考えると良い。';grant(s,'tellFair')}}
+  return {text,meaning};
+ },
+ watch(s){
+  if(s.stage===0)return '友達は、知らないふりをしている。';
+  if(s.stage===1)return 'ズルの話は、少し広がっている。';
+  return '明日のゲームは、ルール通りやるはず。';
+ },
+ scene(s){const f=s.flags;
+  if(s.stage===0)return {narrative:'ゲームの時間。友達が、こっそりズルをしているのを見た。',speaker:'友達',quote:'……（こっそりカードを抜いている）',look:'ズルの瞬間を、見てしまった。',self:'見てしまった… 言うべき？',hint:'見たことを、どう扱う？'};
+  if(s.stage===1)return {narrative:'休み時間。ズルの話が、少し広がっている。',speaker:'友達',quote:f.clearedX?'ごめん、もうしない':f.talkedHim?'…分かった':f.pretended?'……':'みんな、なんか言ってる',look:f.clearedX?'友達は、少し気まずそうだが落ち着いている。':'友達は、何事もなかった顔をしている。',self:s.reason==='tellWhom'?'言うべきか迷う。':s.reason==='betray'?'友達を売るようで嫌だ。':s.reason==='unfairGame'?'ズルの勝ちは意味がない。':'見たことと、どう向き合う？',hint:'伝える・本人に言う・やり直し提案、方法はある。'};
+  return {narrative:'放課後。ゲームの残りが、机に残っている。',speaker:'友達',quote:f.ruled?'次はルール通りやろう':f.clearedX?'明日はちゃんとやるよ':'……また明日',look:'友達は、少しだけ柔らかい顔だ。',self:f.clearedX?'公平さを保てた。':'まだ少し、残っている。',hint:'公平のための伝えは、告げ口と違う。'};
+ },
+ progress(s){const f=s.flags;return s.goal===0?(f.clearedX?3:f.toldFair||f.replayed?2:s.reason?1:0):s.goal===1?(f.talkedHim||f.ruled?3:f.clearedX?2:s.reason?1:0):(f.clearedX?3:f.askedX?2:s.reason?1:0)},
+ situation(s){const f=s.flags;return f.clearedX?'公平さを保てた。伝え方・言い方・ルールがある。':f.askedX||f.saidHim?'伝える方法が見つかった。':'見たことが残っている。伝え方は練習できる。'}
 }
 };
 

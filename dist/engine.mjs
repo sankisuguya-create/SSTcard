@@ -83,6 +83,15 @@ export const cards={
  askHow:{title:'サキに勝ち方を聞く',kind:'support',label:'聞く',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'勝った相手に、コツを教えてもらう。',hint:'負けから学べる',icon:'people'},
  reFrame:{title:'負けを練習の手がかりにする',kind:'think',label:'見方を変える',cost:1,atk:0,up:'study',desc:'負けたことで、次にやることが見える。',hint:'負けは、次の作戦のヒント',icon:'book'},
  congrats:{title:'「勝ってすごいね」と讃える',kind:'talk',label:'讃える',cost:1,strain:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'心から、相手を讃えてみる。',hint:'讃えると、関係も自分も楽になる',icon:'spark'},
+ complain:{title:'「ふざけるな」と言う',kind:'talk',label:'抗議する',cost:1,strain:1,atk:1,attr:'soc',desc:'気持ちを、強い言葉でそのまま出す。',hint:'気持ちは正当。伝え方を選べる',icon:'flag'},
+ sulk:{title:'べそをかく',kind:'think',label:'がっかりする',cost:0,atk:0,desc:'がっかりした気持ちを、少し出しておく。',hint:'がっかりしてもいい',icon:'heart'},
+ acceptQuick:{title:'すぐに「わかった」と言う',kind:'think',label:'飲み込む',cost:0,atk:0,desc:'気持ちを飲み込んで、すぐ従う。',hint:'従うのと納得は違う',icon:'door'},
+ swapLook:{title:'がっかりの気持ちに名前をつける',kind:'think',label:'気持ちに名前',cost:1,atk:0,up:'soc',desc:'「これはがっかりだ」と認める。',hint:'名前をつけると、気持ちが落ち着く',icon:'sun'},
+ whyAsk:{title:'「どうして？」と事情を聞く',kind:'support',label:'事情を聞く',cost:1,bond:1,atk:1,attr:'soc',up:'soc',desc:'変わった理由を、聞いてみる。',hint:'理由が分かると、納得しやすい',icon:'people'},
+ makeNew:{title:'新しい楽しみの計画を立てる',kind:'think',label:'新しい計画',cost:1,atk:2,attr:'study',up:'study',desc:'代わりの楽しみを、自分で作る。',hint:'計画は、作り直せる',icon:'puzzle'},
+ comfort:{title:'チカのがっかりに寄り添う',kind:'support',label:'寄り添う',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'一緒にがっかりして、気持ちを分ける。',hint:'がっかりは、分け合える',icon:'people'},
+ planNext:{title:'「じゃあ、いつできる？」と聞く',kind:'talk',label:'次を聞く',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'延期の先を、具体的に聞いてみる。',hint:'次が見えると、待てる',icon:'clock'},
+ helpFriend:{title:'一緒に別の計画を立てる',kind:'talk',label:'一緒に計画',cost:1,strain:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'チカと、別の楽しみを考える。',hint:'一緒だと、立て直しが楽になる',icon:'spark'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -509,6 +518,51 @@ lose:{
  },
  progress(s){const f=s.flags;return s.goal===0?(f.clearedL?3:f.cooled||f.soured?1:0):s.goal===1?(f.praised||f.clearedL?3:s.reason?1:0):(f.learned||f.reframed||f.clearedL?3:f.smart?2:0)},
  situation(s){const f=s.flags;return f.clearedL?'悔しさを乗りこなし、次の約束ができた。':f.learned||f.reframed?'負けを、次の作戦に変えられた。':f.cooled||f.soured?'悔しさは、少し扱いやすくなった。':'悔しさは残っている。冷ます・変える・伝える方法がある。'}
+},
+change:{
+ title:'急に、予定が変わった',nav:'予定が変わった',num:'09',attrs:['soc','study'],
+ goals:['気持ちを立て直したい','事情を納得したい','次の計画を作りたい'],
+ chapters:['3時間目の発表','放課後','翌朝'],locations:['教室・3時間目','教室・放課後','教室・朝'],
+ base:['complain','sulk','acceptQuick','anger','ignore'],start:{mind:4,energy:4},
+ monsters:[{name:'予定変更の落とし穴',hp:4,power:1,turns:4,look:'楽しみにしていた穴が、ポッカリと開く。'},{name:'失望の霧',hp:5,power:1,turns:5,look:'「なんで」の霧が、前を見えなくする。'},{name:'仕方なさ大王',hp:6,power:1,turns:5,look:'「仕方ないじゃん」の巨大な壁が、立ちはだかる。'}],
+ talk:[['chikaF','チカの話を聞く','同じくがっかりしている友達の話を聞く。'],['teacherP','先生に事情を聞く','変わった理由を聞いてみる。']],
+ think:[['disappointed','がっかりして動けない','楽しみにしていたのに、という気持ちが重い。'],['unfair','納得いかない','急すぎて、理不尽に感じる。'],['stuckPlan','予定がこわれると頭が真っ白','何をすればいいか分からなくなる。']],
+ reasonKeys:['disappointed','unfair','stuckPlan'],
+ stageGrants:[['helpFriend'],[]],
+ onExplore(s,key){
+  const out={text:'',card:null};
+  if(key==='chikaF'){s.flags.cared=true;relation(s,'チカもがっかりしていると分かった。');out.text='チカ「ずっと楽しみにしてたのに…」';out.card='comfort'}
+  if(key==='teacherP'){s.flags.knowsWhy=true;note(s,'参観日準備のため延期。実験自体は来週できる。');out.text='先生「ごめんね。実験は来週できるから、待ってて」';out.card='planNext'}
+  if(key==='disappointed'){s.reason='disappointed';note(s,'がっかりの気持ちが、体を重くしている。');out.text='「ずっと楽しみにしてたのに…」';out.card='swapLook'}
+  if(key==='unfair'){s.reason='unfair';note(s,'「なんで今さら」という納得いかなさがある。');out.text='「急に言われても、納得いかない」';out.card='whyAsk'}
+  if(key==='stuckPlan'){s.reason='stuckPlan';note(s,'予定がこわれて、頭が真っ白になっている。');out.text='「何をすればいいか、分からなくなった」';out.card='makeNew'}
+  return out;
+ },
+ onPlay(s,id){
+  const f=s.flags;let text='',meaning='';
+  if(id==='complain'){if(f.knowsWhy){relation(s,'気持ちを伝えつつ、事情も受け止められた。');text='「楽しみにしてたから残念です。でも、参観日の準備も大事ですよね」\n先生が少しほっとした顔をした。';meaning='事情を知っていれば、気持ちを伝えてもぶつからない。';f.clearedC=true}else{s.mind-=1;text='「ふざけるな！」と言った。\n先生は困った顔で、事情を説明し始めた。';meaning='強い言葉は、理由を知る前に出すとぶつかる。';grant(s,'whyAsk')}}
+  if(id==='sulk'){f.sulked=true;s.mind+=1;text='べそをかいて、がっかりを出した。\n出したら、少し気持ちが軽くなった。';meaning='がっかりは、出してもいい気持ち。'}
+  if(id==='acceptQuick'){f.swallowed=true;text='「わかりました」と言った。\nでも、胸の奥が少し重いままだ。';meaning='すぐ従うのと、納得するのは違う。気持ちは残ることがある。'}
+  if(id==='swapLook'){f.acknowledged=true;s.mind+=1;text='「これは、がっかりっていう気持ちだ」\n名前をつけたら、気持ちが少し扱いやすくなった。';meaning='気持ちに名前をつけると、落ち着いて考えられる。'}
+  if(id==='whyAsk'){f.knowsWhy=true;note(s,'参観日準備のため延期。実験は来週できる。');text='先生「実験は来週にずらすだけだよ。準備が間に合わなくて」\n理由が分かると、少し納得できた。';meaning='理由が分かると、変化が受け入れやすくなる。'}
+  if(id==='makeNew'){f.newPlan=true;f.clearedC=true;note(s,'今日は図工の続き、実験は来週。');text='「今日は図工の続きをして、実験は来週」\n新しい計画が立つと、気持ちに向きができた。';meaning='こわれた計画は、自分で作り直せる。'}
+  if(id==='comfort'){f.clearedC=true;f.cared=true;relation(s,'チカと一緒にがっかりして、仲直りの空気になった。');text='チカ「…ありがと。一緒にいると、少し楽」';meaning='がっかりは、分け合うと軽くなる。'}
+  if(id==='planNext'){f.rescheduled=true;f.clearedC=true;text='「じゃあ、来週の何曜日ですか？」\n先生「木曜だよ」\n次が具体的になると、待てる気がした。';meaning='次の約束が見えると、変化が怖くなくなる。'}
+  if(id==='helpFriend'){if(f.newPlan||f.rescheduled){f.clearedC=true;relation(s,'チカと一緒に、来週の実験の楽しみを話し合った。');text='チカ「来週、一緒の班だって。楽しみだね」';meaning='一緒に立て直すと、関係も強くなる。'}else{s.mind-=1;text='「別のことしようよ」と言ったが、チカはまだがっかりしていた。';meaning='気持ちの整理が先かもしれない。';grant(s,'comfort')}}
+  return {text,meaning};
+ },
+ watch(s){
+  if(s.stage===0)return 'チカも、しょんぼりしている。';
+  if(s.stage===1)return 'チカは、まだ少しがっかりしている。';
+  return 'チカは、来週のことを少し楽しみにしている。';
+ },
+ scene(s){const f=s.flags;
+  if(s.stage===0)return {narrative:'3時間目。楽しみにしていた理科の実験が、来週に延期になった。',speaker:'先生',quote:'ごめんなさい。参観日の準備で、実験は来週にします',look:'みんなが、がっかりしている。チカもうつむいている。',self:'えー、ずっと楽しみにしてたのに…',hint:'がっかりの理由は、まだ整理できていない。'};
+  if(s.stage===1)return {narrative:'放課後。教室には、まだ少し重い空気がある。',speaker:'チカ',quote:f.clearedC?'来週、また楽しみだね':f.knowsWhy?'参観日の準備って、そんなに大変なの？':'ずっと楽しみにしてたのに…',look:f.clearedC?'チカは、少し前を向いている。':'チカは、まだ下を向いている。',self:s.reason==='disappointed'?'がっかりで、体が重い。':s.reason==='unfair'?'なんで今さら、という気持ち。':s.reason==='stuckPlan'?'何をすればいいか、分からない。':'がっかりと、どう付き合う？',hint:'がっかりは、認める・聞く・立て直すで扱える。'};
+  return {narrative:'翌朝。教室に入ると、チカが待っていた。',speaker:'チカ',quote:f.clearedC?'おはよ！ 来週の実験、どんなだろうね':f.cared?'おはよ…ちょっと楽しみになってきたかも':f.knowsWhy?'参観日、がんばろうね':'…おはよ',look:'チカは、昨日より少し明るい顔をしている。',self:f.clearedC?'気持ちが、もう前を向いている。':'まだ少し、がっかりが残っている。',hint:'予定の変更は、立て直しの練習になる。'};
+ },
+ progress(s){const f=s.flags;return s.goal===0?(f.clearedC?3:f.acknowledged||f.sulked?1:0):s.goal===1?(f.knowsWhy?3:s.reason?1:0):(f.newPlan||f.rescheduled||f.clearedC?3:f.knowsWhy?2:0)},
+ situation(s){const f=s.flags;return f.clearedC?'予定の変更を乗りこなし、次の楽しみができた。':f.knowsWhy?'事情が分かって、気持ちが整理できた。':f.acknowledged||f.sulked?'がっかりの気持ちを、認められた。':'予定は変わった。がっかりの扱い方を、練習できる。'}
 }
 };
 

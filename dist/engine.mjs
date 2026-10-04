@@ -200,6 +200,15 @@ export const cards={
  laughSelf:{title:'「やっちゃった」と笑う',kind:'talk',label:'自分で笑う',cost:1,bond:1,atk:1,attr:'soc',up:'soc',desc:'自分のミスを、軽く笑いに変える。',hint:'自分で笑うと、まわりも楽になる',icon:'sun'},
  mopUp:{title:'雑巾で床をきれいにする',kind:'support',label:'雑巾でふく',cost:1,atk:2,attr:'ath',up:'ath',desc:'ちゃんとした道具で、片づける。',hint:'道具を使えば、早くきれいになる',icon:'cards'},
  cleanBoth:{title:'自分とまわりを両方きれいにする',kind:'support',label:'両方きれいに',cost:1,atk:2,attr:'ath',up:'soc',desc:'自分の服と、床の両方をきれいにする。',hint:'まわりまで片づけると、評判も戻る',icon:'heart'},
+ standStill:{title:'その場に立っている',kind:'think',label:'立っている',cost:0,atk:0,desc:'誰に声をかけるか、迷ったまま立つ。',hint:'立つだけでは、組はできない',icon:'skull'},
+ followCrowd:{title:'だれかの後ろについていく',kind:'think',label:'ついていく',cost:0,atk:1,attr:'soc',desc:'話しかけずに、近くについていく。',hint:'ついていくだけでは、組と言えない',icon:'door'},
+ pretendBusy:{title:'他のことをしているふり',kind:'think',label:'ふりをする',cost:0,strain:1,atk:0,desc:'余っているのを、ごまかす。',hint:'ふりは苦しい。余りは悪くない',icon:'eye'},
+ askPair:{title:'「一緒にやる？」と誘う',kind:'talk',label:'誘う',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'まだ決まっていない子に、声をかける。',hint:'自分から誘うと、組は早くできる',icon:'hand'},
+ oddThree:{title:'3人組に入れてもらう',kind:'talk',label:'3人に入る',cost:1,bond:1,atk:1,attr:'soc',up:'soc',desc:'「入っていい？」と、2人組に聞く。',hint:'入れてもらうのも、一つの方法',icon:'people'},
+ ownExp:{title:'一人で実験を始める',kind:'think',label:'一人でやる',cost:1,atk:2,attr:'study',up:'study',desc:'無理に組まず、一人でやってみる。',hint:'一人でやるのも、正当な選択肢',icon:'pen'},
+ teacherPair:{title:'先生に組を調整してもらう',kind:'support',label:'先生に言う',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'余ったことを、先生に伝える。',hint:'先生に言うのは、甘えじゃない',icon:'flag'},
+ pairUp:{title:'余った子同士で組む',kind:'talk',label:'余った子と組む',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'同じく余った子と、一緒に組む。',hint:'余った同士なら、声をかけやすい',icon:'people'},
+ offerNext:{title:'「次は一緒にね」と約束する',kind:'support',label:'次は一緒に',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'今回はこれで、次の約束をする。',hint:'次の約束で、関係は続く',icon:'sun'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -1211,6 +1220,51 @@ spill:{
  },
  progress(s){const f=s.flags;return s.goal===0?(f.clearedM?3:f.wipedGood||f.mopped?2:s.reason?1:0):s.goal===1?(f.laughed||f.saidSorry?3:f.clearedM?2:s.reason?1:0):(f.cleanedBoth?3:f.clearedM?2:s.reason?1:0)},
  situation(s){const f=s.flags;return f.clearedM?'ミスを片づけられた。謝る・拭く・頼む・笑うがある。':f.wipedGood||f.mopped?'片づけ方が分かった。':'ミスが残っている。対処法は練習できる。'}
+},
+pair:{
+ title:'2人組で余った',nav:'ペアで余る',num:'22',attrs:['soc'],
+ goals:['実験に参加したい','余っても落ち着いていたい','次につなげたい'],
+ chapters:['理科の時間前','ペア作り','実験中'],locations:['教室・理科','教室・ペア作り','教室・実験'],
+ base:['standStill','followCrowd','pretendBusy','anger','ignore'],start:{mind:4,energy:4},
+ monsters:[{name:'余り者の影',hp:4,power:0,turns:4,look:'自分だけが、ぽつんと残されている感じがする。'},{name:'伸びる沈黙',hp:5,power:1,turns:5,look:'誰も声をかけてくれない時間が、長く感じる。'},{name:'一人の重さ',hp:6,power:1,turns:5,look:'「一人は寂しい」の気持ちが、重くなる。'}],
+ talk:[['teacherA','先生に言う','余ったことを、先生に伝える。'],['leftKid','余った子に声をかける','同じく余った子が、いるかも。']],
+ think:[['noPairAsk','誘えない','自分から、誘えない。'],['hateLeft','余るのが嫌だ','一人だけ余るのが、嫌だ。'],['soloOK','一人でもいい','無理に組まなくても、いいかも。']],
+ reasonKeys:['noPairAsk','hateLeft','soloOK'],
+ stageGrants:[['offerNext'],[]],
+ onExplore(s,key){
+  const out={text:'',card:null};
+  if(key==='teacherA'){s.flags.toldA=true;note(s,'先生に言ったら、組を調整してくれた。');out.text='先生「あ、ごめん。ここに入ろうか」\n言ったら、調整してもらえた。';out.card='teacherPair'}
+  if(key==='leftKid'){s.flags.foundKid=true;relation(s,'同じく余った子がいた。一緒に組めそうだ。');out.text='あの子も、余っているみたいだ。\n声をかければ、一緒に組めるかも。';out.card='pairUp'}
+  if(key==='noPairAsk'){s.reason='noPairAsk';note(s,'自分から誘えない。');out.text='「誘うのが、苦手…」';out.card='askPair'}
+  if(key==='hateLeft'){s.reason='hateLeft';note(s,'余るのが、嫌だ。');out.text='「一人だけ余るのは、嫌だ」';out.card='oddThree'}
+  if(key==='soloOK'){s.reason='soloOK';note(s,'一人でもいいと思っている。');out.text='「一人でやっても、いいかも」';out.card='ownExp'}
+  return out;
+ },
+ onPlay(s,id){
+  const f=s.flags;let text='',meaning='';
+  if(id==='standStill'){f.stood=true;text='立ったまま、迷った。\nみんなは、どんどん組んでいく。';meaning='立つだけでは、組はできない。';grant(s,'askPair')}
+  if(id==='followCrowd'){f.followed=true;text='だれかの後ろについていった。\nでも、組とは言えないまま。';meaning='ついていくだけでは、組と言えない。';grant(s,'askPair')}
+  if(id==='pretendBusy'){f.pretended=true;text='他のことをしているふりをした。\n余っているのを、ごまかした。';meaning='ふりは苦しい。余るのは悪いことじゃない。';grant(s,'teacherPair')}
+  if(id==='askPair'){f.askedP=true;f.clearedP=true;relation(s,'「一緒にやる？」と誘ったら、組めた。');text='「一緒にやる？」\n相手「いいよ！」\n自分から誘えば、組める。';meaning='自分から誘うと、組は早くできる。'}
+  if(id==='oddThree'){f.three=true;f.clearedP=true;relation(s,'3人組に入れてもらった。');text='「入っていい？」\n「うん、3人でやろう」';meaning='入れてもらうのも、一つの方法。'}
+  if(id==='ownExp'){f.ownExp=true;f.clearedP=true;note(s,'一人で実験を始めたら、集中できた。');text='一人で実験を始めた。\n自分のペースで、進められた。';meaning='一人でやるのも、正当な選択肢。'}
+  if(id==='teacherPair'){f.teacherPaired=true;f.clearedP=true;note(s,'先生が組を調整してくれて、入れた。');text='先生が、組を調整してくれた。\n「ここに入りなさい」';meaning='先生に言うのは、甘えじゃない。'}
+  if(id==='pairUp'){f.pairedUp=true;f.clearedP=true;relation(s,'余った同士で組んだ。意外と話せた。');text='「一緒にやる？」\n「うん！」\n余った同士で、組めた。';meaning='余った同士なら、声をかけやすい。'}
+  if(id==='offerNext'){if(f.askedP||f.pairedUp||f.three){f.offered=true;f.clearedP=true;relation(s,'「次は一緒にね」と言ったら、次も約束できた。');text='「次は一緒にね」\n相手「うん、またね」\n関係は、続いていく。';meaning='次の約束で、関係は続く。'}else{s.mind-=1;text='「次は一緒に」と言おうとしたが、まだ組めていないので言えなかった。';meaning='まず組んでから、次の約束をすると良い。';grant(s,'askPair')}}
+  return {text,meaning};
+ },
+ watch(s){
+  if(s.stage===0)return '先生が、「2人組を作って」と言った。';
+  if(s.stage===1)return 'みんなが、あっという間に組んでいく。';
+  return '実験は、もう始まっている。';
+ },
+ scene(s){const f=s.flags;
+  if(s.stage===0)return {narrative:'理科の時間。先生が、「2人組を作って」と言った。',speaker:'先生',quote:'2人組を作ってください',look:'みんなが、あっという間に動き出した。',self:'え、もう始まる… どうしよう',hint:'余ったときの、つらさはどこ？'};
+  if(s.stage===1)return {narrative:'みんなが組んでいく。自分は、まだ余っている。',speaker:'友達',quote:f.clearedP?'一緒にやろう！':f.pairedUp?'じゃあ僕たちで組もう':'……',look:f.clearedP?'組めた。実験が始まる。':'まだ、余っている。',self:s.reason==='noPairAsk'?'誘えない。':s.reason==='hateLeft'?'余るのが嫌。':s.reason==='soloOK'?'一人でもいい。':'どうやって組に入る？',hint:'誘う・入る・一人・先生、方法はいろいろ。'};
+  return {narrative:'実験中。組めたか、一人か、どちらにしても実験は進む。',speaker:'先生',quote:f.clearedP?'いいペースだね':f.ownExp?'一人でしっかりやれてるね':'大丈夫？',look:'実験は、進んでいる。',self:f.clearedP?'組めた。余っても、終わらない。':'まだ少し、気になっている。',hint:'余っても、実験はできる。'};
+ },
+ progress(s){const f=s.flags;return s.goal===0?(f.clearedP?3:f.askedP||f.pairedUp?2:s.reason?1:0):s.goal===1?(f.ownExp||f.three?3:f.clearedP?2:s.reason?1:0):(f.offered?3:f.clearedP?2:s.reason?1:0)},
+ situation(s){const f=s.flags;return f.clearedP?'組めた。誘う・入る・一人・先生に言うがある。':f.askedP||f.pairedUp?'組み方が見つかった。':'まだ余っている。入り方は練習できる。'}
 }
 };
 

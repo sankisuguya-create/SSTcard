@@ -262,6 +262,15 @@ export const cards={
  breathRun:{title:'深呼吸で落ち着く',kind:'think',label:'深呼吸',cost:1,atk:1,attr:'study',up:'study',desc:'走る前に、深呼吸をする。',hint:'深呼吸すると、落ち着ける',icon:'sun'},
  batonPass:{title:'バトン練習を重ねる',kind:'think',label:'バトン練習',cost:1,atk:2,attr:'ath',up:'ath',desc:'バトンの受け渡しを、練習する。',hint:'バトンが決まれば、流れが変わる',icon:'bolt'},
  relayRun:{title:'本番を走り切る',kind:'support',label:'走り切る',cost:1,atk:2,attr:'ath',up:'ath',desc:'練習の成果で、本番を走り切る。',hint:'走り切った経験は、自信になる',icon:'flag'},
+ panicLate:{title:'慌てて全部やろうとする',kind:'think',label:'慌てる',cost:0,atk:1,attr:'study',desc:'遅れた分を、一気に全部やろうとする。',hint:'慌てると、どれも中途半端になる',icon:'bolt'},
+ hideLate:{title:'遅れを隠す',kind:'think',label:'遅れを隠す',cost:0,strain:1,atk:0,desc:'分からないのを、隠す。',hint:'隠すと、ますます分からなくなる',icon:'eye'},
+ copyOnly:{title:'友達のノートを写すだけ',kind:'think',label:'写すだけ',cost:0,strain:1,atk:0,desc:'内容を考えず、写すだけ。',hint:'写すだけでは、分からないまま',icon:'book'},
+ askMissed:{title:'休んだ日の内容を聞く',kind:'talk',label:'休んだ日を聞く',cost:1,bond:1,atk:1,attr:'soc',up:'soc',desc:'休んだ日に、何をやったか聞く。',hint:'何があったか聞けば、追いつける',icon:'message'},
+ askTeacherS:{title:'分からないところを先生に聞く',kind:'support',label:'先生に聞く',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'分からないところだけ、先生に聞く。',hint:'分からないところを絞ると、聞きやすい',icon:'flag'},
+ bitByBit:{title:'少しずつ追いつく',kind:'think',label:'少しずつ',cost:1,atk:2,attr:'study',up:'study',desc:'一気にでなく、少しずつやる。',hint:'少しずつなら、続けられる',icon:'ear'},
+ noteKey:{title:'友達に要点を聞く',kind:'talk',label:'要点を聞く',cost:1,bond:1,atk:1,attr:'soc',up:'soc',desc:'ノートの、大事なところを聞く。',hint:'要点だけなら、聞きやすい',icon:'puzzle'},
+ catchPlan:{title:'追いつく計画を立てる',kind:'think',label:'追いつく計画',cost:1,atk:2,attr:'study',up:'study',desc:'いつ・何をやるか、計画を立てる。',hint:'計画があれば、迷わない',icon:'list'},
+ caughtUp:{title:'追いつけた！',kind:'support',label:'追いついた',cost:1,atk:2,attr:'study',up:'study',desc:'遅れを、取り戻した。',hint:'追いついた経験は、自信になる',icon:'check'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -1587,6 +1596,51 @@ relay:{
  },
  progress(s){const f=s.flags;return s.goal===0?(f.ranIt?3:f.clearedRe?2:s.reason?1:0):s.goal===1?(f.talked||f.batonOk?3:f.clearedRe?2:s.reason?1:0):(f.ranIt?3:f.clearedRe?2:s.reason?1:0)},
  situation(s){const f=s.flags;return f.clearedRe?'準備ができた。短く・話す・深呼吸・コツがある。':f.shorted||f.breathed?'練習方法が見つかった。':'不安が残っている。準備は練習できる。'}
+},
+sickDay:{
+ title:'休んで授業に遅れた',nav:'授業の遅れ',num:'29',attrs:['study','soc'],
+ goals:['授業に追いつきたい','分からないところを減らしたい','休んでも大丈夫な自分になりたい'],
+ chapters:['登校日','休み時間','放課後'],locations:['教室・朝','教室・休み','教室・放課後'],
+ base:['panicLate','hideLate','copyOnly','anger','ignore'],start:{mind:5,energy:4},
+ monsters:[{name:'たまった連絡',hp:3,power:0,turns:4,look:'休んだ分の連絡が、たまっている。'},{name:'授業の遅れ',hp:4,power:1,turns:5,look:'みんなは、もう先に進んでいる。'},{name:'追いつけない不安',hp:5,power:1,turns:5,look:'追いつけない気がして、焦る。'}],
+ talk:[['friendSick','友達に聞く','休んだ日のことを、友達に聞く。'],['teacherSick','先生に相談','遅れていることを、先生に言う。']],
+ think:[['dontKnow','どこから分からない？','どこが分からないか、分からない。'],['shyAskS','聞くのが恥ずかしい','遅れたのを、知られたくない。'],['tooMuch','量が多すぎる','たまった分が、多すぎる。']],
+ reasonKeys:['dontKnow','shyAskS','tooMuch'],
+ stageGrants:[['catchPlan'],[]],
+ onExplore(s,key){
+  const out={text:'',card:null};
+  if(key==='friendSick'){s.flags.askedF=true;relation(s,'友達に聞いたら、ノートを貸してもらえた。');out.text='友達「ノート、貸すよ」\n休んだ日のことが、分かった。';out.card='noteKey'}
+  if(key==='teacherSick'){s.flags.toldS=true;note(s,'先生に言ったら、補習の時間をもらえた。');out.text='先生「分からないところだけ、聞こう」\n補習の時間を、もらえた。';out.card='askTeacherS'}
+  if(key==='dontKnow'){s.reason='dontKnow';note(s,'どこから分からないか、分からない。');out.text='「どこが分からないか、分からない」\nまず、聞くところから。';out.card='askMissed'}
+  if(key==='shyAskS'){s.reason='shyAskS';note(s,'遅れたのを、知られたくない。');out.text='「聞くのが、恥ずかしい」\nでも、聞かないと分からない。';out.card='noteKey'}
+  if(key==='tooMuch'){s.reason='tooMuch';note(s,'たまった分が、多すぎる。');out.text='「量が、多すぎる」\n少しずつなら、いける。';out.card='bitByBit'}
+  return out;
+ },
+ onPlay(s,id){
+  const f=s.flags;let text='',meaning='';
+  if(id==='panicLate'){f.panicked=true;s.mind-=1;relation(s,'慌てて全部やったら、どれも中途半端になった。');text='慌てて全部やった。\nでも、どれも中途半端に。';meaning='慌てると、どれも中途半端になる。';grant(s,'bitByBit')}
+  if(id==='hideLate'){f.hidL=true;s.rep-=1;relation(s,'遅れを隠したら、テストで困った。');text='分からないのを、隠した。\n次のテストで、困った。';meaning='隠すと、ますます分からなくなる。';grant(s,'askMissed')}
+  if(id==='copyOnly'){f.copied=true;s.mind-=1;relation(s,'写すだけでは、分からないまま。');text='友達のノートを、写しただけ。\nでも、内容は分からないまま。';meaning='写すだけでは、分からないまま。';grant(s,'noteKey')}
+  if(id==='askMissed'){f.askedM=true;f.clearedS=true;note(s,'休んだ日の内容を聞いたら、何をやるか分かった。');text='「休んだ日、何やった？」\n何をやるかが、分かった。';meaning='何があったか聞けば、追いつける。'}
+  if(id==='askTeacherS'){f.askedT=true;f.clearedS=true;note(s,'分からないところを先生に聞いたら、すっきりした。');text='「ここが、分からないです」\n先生が、教えてくれた。';meaning='分からないところを絞ると、聞きやすい。'}
+  if(id==='bitByBit'){f.bitBy=true;f.clearedS=true;note(s,'少しずつやったら、追いつけそうになった。');text='少しずつ、やった。\n「あと少しで、追いつく」';meaning='少しずつなら、続けられる。'}
+  if(id==='noteKey'){f.notek=true;f.clearedS=true;relation(s,'要点を聞いたら、大事なところが分かった。');text='「大事なのは、ここだよ」\n要点が、分かった。';meaning='要点だけなら、聞きやすい。'}
+  if(id==='catchPlan'){if(f.askedM||f.bitBy||f.notek||f.askedT){f.planned=true;f.clearedS=true;note(s,'追いつく計画を立てた。見通しが持てた。');text='「明日はこれ、明後日はこれ」\n計画を立てた。';meaning='計画があれば、迷わない。'}else{s.mind-=1;text='計画を立てようとしたが、何を追いつくかまだ分からない。';meaning='まず内容を聞いてから、計画を立てると良い。';grant(s,'askMissed')}}
+  if(id==='caughtUp'){if(f.planned||f.clearedS){f.caught=true;note(s,'遅れを取り戻せた。自信がついた。');text='「追いついた！」\n授業に、ついていける。';meaning='追いついた経験は、自信になる。'}else{s.mind-=1;text='追いつこうとしたが、準備が足りなかった。';meaning='まず聞いて計画を立ててから、追いつくと良い。';grant(s,'askMissed')}}
+  return {text,meaning};
+ },
+ watch(s){
+  if(s.stage===0)return '休んでいた分が、たまっている。';
+  if(s.stage===1)return 'みんなは、もう先に進んでいる。';
+  return '放課後。まだ、少し残っている。';
+ },
+ scene(s){const f=s.flags;
+  if(s.stage===0)return {narrative:'登校日。休んだ分の連絡が、たまっている。',speaker:'先生',quote:'おはよう。休んでた分、これね',look:'机に、プリントがのっている。',self:'うわ… たくさんある',hint:'遅れたときの、つらさはどこ？'};
+  if(s.stage===1)return {narrative:'休み時間。授業は、先に進んでいる。',speaker:'友達',quote:f.clearedS?'追いついた？':'ノート、見る？',look:'みんなは、もう先のページ。',self:s.reason==='dontKnow'?'どこから分からないか、分からない。':s.reason==='shyAskS'?'聞くのが恥ずかしい。':s.reason==='tooMuch'?'量が多すぎる。':'追いつき方を考えよう。',hint:'聞く・要点・少しずつ・計画、方法はある。'};
+  return {narrative:'放課後。追いつき作業が、続いている。',speaker:'先生',quote:f.clearedS?'いい調子だね':'分からないところ、ある？',look:'放課後の教室が、静かだ。',self:f.clearedS?'少しずつ、追いつけた。':'まだ、少し残っている。',hint:'追いつき方は、工夫できる。'};
+ },
+ progress(s){const f=s.flags;return s.goal===0?(f.caught?3:f.clearedS?2:s.reason?1:0):s.goal===1?(f.askedT||f.planned?3:f.clearedS?2:s.reason?1:0):(f.caught?3:f.clearedS?2:s.reason?1:0)},
+ situation(s){const f=s.flags;return f.clearedS?'追いつき方が見つかった。聞く・要点・少しずつ・計画がある。':f.askedM||f.notek?'聞き方が見つかった。':'遅れが残っている。追いつき方は練習できる。'}
 }
 };
 

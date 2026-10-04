@@ -28,14 +28,15 @@ export const stories={
  fight:{title:'ふたりで作ったはずなのに',nav:'クラスの子とのケンカ',num:'01',goals:['大切なことを伝えたい','一緒に作品を直したい','まず言い争いを止めたい'],chapters:['図工の時間','どう伝えよう？','翌日の班活動'],locations:['教室・図工の時間','教室・片づけの前','教室・次の日'],base:['boundary','ask','distance']},
  sports:{title:'あと一週間、どうしよう',nav:'苦手な運動会',num:'02',goals:['不安の理由を知りたい','自分に合う参加をしたい','困ったときに備えたい'],chapters:['運動会まで7日','練習の日','運動会当日'],locations:['教室・帰りの会','校庭・練習の日','校庭・運動会当日'],base:['practice','schedule','sora']}
 };
-export function initial(story='fight'){return {story,stage:0,stress:story==='fight'?4:3,energy:story==='fight'?3:4,progress:0,goal:0,hand:[...stories[story].base],discovered:[],used:[],flags:{},clues:[],relations:[],growth:[],log:[],explored:[],rested:[],feedback:null,finished:false,reason:null,reflection:null};}
+export function initial(story='fight'){return {story,stage:0,stress:story==='fight'?4:3,energy:story==='fight'?3:4,progress:0,goal:0,hand:[...stories[story].base],discovered:[],used:[],flags:{},clues:[],relations:[],growth:[],log:[],explored:[],rested:[],observed:[],passed:[],feedback:null,finished:false,reason:null,reflection:null};}
 const add=(arr,v)=>{if(!arr.includes(v))arr.push(v)};
 function grant(s,id){if(!s.hand.includes(id))s.hand.push(id);add(s.discovered,id)}
 function note(s,t){add(s.clues,t)}
 function relation(s,t){add(s.relations,t)}
 function growth(s,t){add(s.growth,t)}
+export function canExplore(s){return !s.finished&&!s.feedback&&s.stress<5}
 export function explore(s,key){
- if(s.finished||s.feedback||s.explored.includes(key))return null;
+ if(!canExplore(s)||s.explored.includes(key))return null;
  const out={text:'',card:null};
  const opts=s.story==='fight'?['haru','mina','why','respect','feeling']:['teacher','friend','movement','judgment','noise','unknown'];
  if(!opts.includes(key))return null;
@@ -95,13 +96,29 @@ function updateProgress(s){const f=s.flags;if(s.story==='fight'){s.progress=s.go
 export function setGoal(s,n){if(!Number.isInteger(n)||n<0||n>2)return false;s.goal=n;updateProgress(s);return true}
 export function advance(s){if(!s.feedback)return false;s.feedback=null;if(s.stage===2){s.finished=true;return true}s.stage++;s.energy=Math.min(5,s.energy+1);if(s.story==='fight'){for(const c of s.stage===1?['repair','together','later']:['promise','together','later']){if(!s.used.includes(c)&&!s.hand.includes(c))s.hand.push(c)}}else{for(const c of s.stage===1?['observe','adjust']:['participate','adjust'])if(!s.used.includes(c)&&!s.hand.includes(c))s.hand.push(c)}return true}
 export function safety(s,type){if(s.finished||s.feedback)return false;if(type==='rest'){if(s.rested.includes(s.stage))return false;s.rested.push(s.stage);s.stress=Math.max(0,s.stress-2);s.energy=Math.min(5,s.energy+2);growth(s,'休んで、次の作戦を考える余力をつくった。');return true}if(type==='help'||type==='leave'){s.flags[type]=true;updateProgress(s);s.stress=Math.max(0,s.stress-1);s.finished=true;growth(s,type==='help'?'困りごとを大人に伝えた。':'安全な場所へ移る選択をした。');return true}return false}
-export function scene(s){const f=s.flags;if(s.story==='fight'){
- if(s.stage===0)return {narrative:'教室に戻ると、自分が作った飾りが外されていた。',speaker:'ハル',quote:'そこにあるとじゃまだから、取ったよ。',self:'勝手に取るなんて、ひどい！',hint:'外した理由は、まだ分からない。'};
- if(s.stage===1)return {narrative:f.distance?'少し離れて、気持ちを整えた。作品のことを、どうしよう。':'片づけの時間が近づいてきた。作品も、自分の気持ちも気になっている。',speaker:f.mina?'ミナ':'ハル',quote:f.mina?'必要なら、一緒に話そうか？':f.reason?'ふたが閉まればいいんだけど、どうしよう？':f.boundary?'そんなに大事だったんだね。':'こっちにも理由があったんだよ。',self:'何を大切にして、次を選ぼう？',hint:'作品を直すことと、気持ちを伝えることは別々に選べる。'};
- return {narrative:'次の日、また同じ班で作品を作る時間になった。昨日の選択が、今日の会話につながっている。',speaker:'ハル',quote:f.promise?'ここ、動かしてもいい？':f.fixed?'昨日のところ、ちゃんと閉まってるよ。':f.later?'昨日の続き、今なら話せる？':f.mediated?'今日はミナも一緒に決める？':'このあと、どうやって作ろうか。',self:f.boundary||f.promise?'大切なことは伝えられた。今日はどうしよう。':'まだ伝えていない気持ちがある。今からでも話せるかな。',hint:'同じ相手との、次の関わり方を選ぼう。'};
+function watch(s){
+ if(s.story==='fight'){
+  if(s.stage===0)return 'ハルは「じゃまだから」と言った。飾りやふたのことで、理由がありそうだ。';
+  if(s.stage===1)return '片づけの時間が近い。ハルは、こちらの出方をうかがっている。';
+  return 'ハルは、昨日のことをまだ少し気にしている様子だ。';
  }
- if(s.stage===0)return {narrative:'黒板に「運動会まで、あと7日」。明日から校庭での練習が始まる。',speaker:'ソラ',quote:'今年こそ、かけっこで一番になりたいな！',self:'……運動会、なくなればいいのに。',hint:'何が一番つらいのか、まだ分からない。'};
- if(s.stage===1)return {narrative:'校庭での練習が始まった。走る友達や、放送の音が気になる。',speaker:s.flags.sora?'ソラ':'先生',quote:s.flags.sora?'どんなやり方なら、一緒に試せそう？':'練習を始めるよ。困ったことがあったら教えてね。',self:s.reason==='noise'?'大きな音が、つらいのかもしれない。':s.reason==='judgment'?'走るところを見られるのが、気になる。':s.reason==='movement'?'スタートの動きを、少し確かめたい。':'どこでつらくなるか、確かめてみよう。',hint:'苦手の理由によって、合う作戦は変わる。'};
- return {narrative:'運動会当日。校庭にはたくさんの人がいる。少しドキドキする。',speaker:'ソラ',quote:f.sora?'今日はどうする？ 一緒に待てる時間もあるよ。':'そろそろ出番だね。今日はどうする？',self:f.signal?'つらくなったときの合図は、決めてある。':f.place?'自分に合う待つ場所を、相談できた。':'今の自分に合う過ごし方を選ぼう。',hint:'準備した作戦は、当日でも選び直せる。'};
+ if(s.stage===0)return 'ソラは楽しみにしている。不安の理由は、まだはっきりしない。';
+ if(s.stage===1)return 'スピーカーの音、走る列、見ている人。負担になりそうなものが見えてくる。';
+ return '人の多さが気になる。先生は、こちらの様子を気にかけている。';
+}
+export function free(s,type){
+ if(s.finished||s.feedback)return false;
+ if(type==='observe'){if(s.observed.includes(s.stage))return false;s.observed.push(s.stage);const w=watch(s);note(s,w);growth(s,'相手の様子や、その場の手がかりを確かめた。');return {title:'様子を確かめた',text:w,meaning:'じっくり見るだけでも、分かることが増える。'}}
+ if(type==='pass'){if(s.passed.includes(s.stage))return false;s.passed.push(s.stage);s.energy=Math.min(5,s.energy+1);const t='すぐには動かず、その場をやり過ごした。\n何も変わらなかったが、少し余力が戻った。';s.log.push({stage:s.stage,title:'何もしない',text:t,meaning:'何もしないことも、選べる作戦の一つ。'});growth(s,'何もしないで、様子を見る時間をつくった。');return {title:'何もしない',text:t,meaning:'何もしないことも、選べる作戦の一つ。'}}
+ return false;
+}
+export function scene(s){const f=s.flags;if(s.story==='fight'){
+ if(s.stage===0)return {narrative:'教室に戻ると、自分が作った飾りが外されていた。',speaker:'ハル',quote:'そこにあるとじゃまだから、取ったよ。',look:'ハルは、どこか強がった様子で答えた。',self:'勝手に取るなんて、ひどい！',hint:'外した理由は、まだ分からない。'};
+ if(s.stage===1)return {narrative:f.distance?'少し離れて、気持ちを整えた。作品のことを、どうしよう。':'片づけの時間が近づいてきた。作品も、自分の気持ちも気になっている。',speaker:f.mina?'ミナ':'ハル',quote:f.mina?'必要なら、一緒に話そうか？':f.reason?'ふたが閉まればいいんだけど、どうしよう？':f.boundary?'そんなに大事だったんだね。':'こっちにも理由があったんだよ。',look:f.mina?'ミナが、二人の様子を気にかけている。':'ハルも、少し気まずそうにしている。',self:'何を大切にして、次を選ぼう？',hint:'作品を直すことと、気持ちを伝えることは別々に選べる。'};
+ return {narrative:'次の日、また同じ班で作品を作る時間になった。昨日の選択が、今日の会話につながっている。',speaker:'ハル',quote:f.promise?'ここ、動かしてもいい？':f.fixed?'昨日のところ、ちゃんと閉まってるよ。':f.later?'昨日の続き、今なら話せる？':f.mediated?'今日はミナも一緒に決める？':'このあと、どうやって作ろうか。',look:'ハルは、昨日より少しやわらかい顔をしている。',self:f.boundary||f.promise?'大切なことは伝えられた。今日はどうしよう。':'まだ伝えていない気持ちがある。今からでも話せるかな。',hint:'同じ相手との、次の関わり方を選ぼう。'};
+ }
+ if(s.stage===0)return {narrative:'黒板に「運動会まで、あと7日」。明日から校庭での練習が始まる。',speaker:'ソラ',quote:'今年こそ、かけっこで一番になりたいな！',look:'ソラは、目を輝かせている。',self:'……運動会、なくなればいいのに。',hint:'何が一番つらいのか、まだ分からない。'};
+ if(s.stage===1)return {narrative:'校庭での練習が始まった。走る友達や、放送の音が気になる。',speaker:s.flags.sora?'ソラ':'先生',quote:s.flags.sora?'どんなやり方なら、一緒に試せそう？':'練習を始めるよ。困ったことがあったら教えてね。',look:s.flags.sora?'ソラは、こちらのペースを気にかけている。':'先生は、ゆっくりした声で話している。',self:s.reason==='noise'?'大きな音が、つらいのかもしれない。':s.reason==='judgment'?'走るところを見られるのが、気になる。':s.reason==='movement'?'スタートの動きを、少し確かめたい。':'どこでつらくなるか、確かめてみよう。',hint:'苦手の理由によって、合う作戦は変わる。'};
+ return {narrative:'運動会当日。校庭にはたくさんの人がいる。少しドキドキする。',speaker:'ソラ',quote:f.sora?'今日はどうする？ 一緒に待てる時間もあるよ。':'そろそろ出番だね。今日はどうする？',look:'ソラは、少し心配そうにこちらを見ている。',self:f.signal?'つらくなったときの合図は、決めてある。':f.place?'自分に合う待つ場所を、相談できた。':'今の自分に合う過ごし方を選ぼう。',hint:'準備した作戦は、当日でも選び直せる。'};
 }
 export function summary(s){const f=s.flags;let situation;if(f.help)situation='大人に困りごとを伝え、次のことを一緒に考えることにした。';else if(f.leave)situation='安全な場所へ移った。問題の続きは、落ち着いてから考えられる。';else if(s.story==='fight')situation=f.fixed?'飾りを残し、ふたも閉まる形に直せた。':f.later?'話す時間を決めて、いったん保留にした。':'気持ちや事情を確かめた。作品を直す方法は、まだ相談できる。';else situation=f.restPlan?'合図を使って休憩した。その後の参加は、休んでから相談する。':f.adjusted?'先生と、自分に合う参加のしかたを相談した。':f.participated?'自分で決めた範囲で参加した。順位とは別に、試した経験が残った。':'準備の作戦を試した。当日の過ごし方は、これからも選べる。';return {situation,relation:s.relations.length?s.relations.join(' '):'今回は、相手との新しい約束や気持ちの共有はまだない。あとから話すこともできる。',growth:s.growth,goal:stories[s.story].goals[s.goal],progress:s.progress,stress:s.stress,energy:s.energy}}

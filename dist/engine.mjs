@@ -173,6 +173,15 @@ export const cards={
  sayToHim:{title:'本人にやめるよう言う',kind:'talk',label:'やめてと言う',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'「やめた方がいい」と、直接伝える。',hint:'友達だからこそ、注意できる',icon:'people'},
  tellAdult2:{title:'先生に相談する',kind:'talk',label:'先生に相談',cost:1,bond:1,atk:1,attr:'soc',up:'soc',desc:'どうするべきか、大人に相談する。',hint:'相談は、告げ口と違う',icon:'flag'},
  groupRule:{title:'みんなでルールを決める',kind:'support',label:'ルールを決める',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'次からズルが起きないよう、決める。',hint:'ルールがあれば、ズルは減る',icon:'list'},
+ corner:{title:'隅でじっとする',kind:'think',label:'隅でじっと',cost:0,atk:0,desc:'教室の隅で、様子をうかがう。',hint:'隅にいるだけでは、仲間は増えない',icon:'eye'},
+ wait:{title:'話しかけられるのを待つ',kind:'think',label:'待つ',cost:0,atk:1,attr:'soc',desc:'向こうから、話しかけてくれるのを待つ。',hint:'待つだけでは、始まらないこともある',icon:'clock'},
+ fakeSmile:{title:'愛想笑いをする',kind:'talk',label:'愛想笑い',cost:0,strain:1,atk:0,desc:'とりあえず、笑っておく。',hint:'作り笑いだけでは、距離は縮まらない',icon:'sun'},
+ sayHi:{title:'「よろしく」とあいさつ',kind:'talk',label:'あいさつ',cost:1,bond:1,atk:1,attr:'soc',up:'soc',desc:'まず一言、あいさつをする。',hint:'あいさつが、仲間入りの第一歩',icon:'hand'},
+ visitOld:{title:'前のクラスの友達に会いに行く',kind:'support',label:'前の友達に会う',cost:1,bond:1,atk:1,attr:'soc',up:'soc',desc:'知っている友達に、会いに行く。',hint:'知っている友達がいると、安心できる',icon:'people'},
+ waitSee:{title:'様子を見て一言だけ話す',kind:'talk',label:'一言だけ',cost:1,atk:2,attr:'soc',up:'soc',desc:'勢いよくでなく、一言だけ話す。',hint:'一言だけでも、距離は縮まる',icon:'ear'},
+ commonTalk:{title:'共通の話題を探す',kind:'talk',label:'話題を探す',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'好きなゲームや本など、共通の話題を探す。',hint:'共通点があれば、話は進む',icon:'puzzle'},
+ classMix:{title:'クラスで仲良くなる時間を作る',kind:'support',label:'仲良くなる時間',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'先生と相談して、なじむ時間を作る。',hint:'時間を作ってもらうのも、作戦の一つ',icon:'clock'},
+ lunchJoin:{title:'昼休みに一緒に食べる人を探す',kind:'support',label:'一緒に食べる',cost:1,atk:2,attr:'soc',up:'soc',desc:'昼休みは、仲良くなるチャンス。',hint:'一緒に食べると、仲が深まる',icon:'sun'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -1049,6 +1058,51 @@ cheat:{
  },
  progress(s){const f=s.flags;return s.goal===0?(f.clearedX?3:f.toldFair||f.replayed?2:s.reason?1:0):s.goal===1?(f.talkedHim||f.ruled?3:f.clearedX?2:s.reason?1:0):(f.clearedX?3:f.askedX?2:s.reason?1:0)},
  situation(s){const f=s.flags;return f.clearedX?'公平さを保てた。伝え方・言い方・ルールがある。':f.askedX||f.saidHim?'伝える方法が見つかった。':'見たことが残っている。伝え方は練習できる。'}
+},
+newClass:{
+ title:'クラス替えで知らない子ばかり',nav:'クラス替え',num:'19',attrs:['soc'],
+ goals:['新しいクラスになじみたい','自分から話せるようになりたい','安心できる場所を見つけたい'],
+ chapters:['初日の朝','休み時間','一週間後'],locations:['新しい教室','教室・休み時間','教室・一週間後'],
+ base:['corner','wait','fakeSmile','anger','ignore'],start:{mind:4,energy:4},
+ monsters:[{name:'知らない顔の群れ',hp:4,power:0,turns:4,look:'知らない顔が、ざわざわと動いている。'},{name:'一人ぼっちの影',hp:5,power:1,turns:5,look:'「仲間がいない」の影が、足元に落ちている。'},{name:'心を閉じる扉',hp:6,power:1,turns:5,look:'自分から話せない気持ちが、扉になっている。'}],
+ talk:[['newKid','隣の子に話しかける','隣の席の子に、一言かける。'],['teacherNC','先生に話す','不安なことを、先生に話す。']],
+ think:[['noFriends','話しかける友達がいない','知っている子が、一人もいない。'],['missOld','前のクラスが恋しい','ユウと離れて、さびしい。'],['shut','自分から話せない','何を話せばいいか、分からない。']],
+ reasonKeys:['noFriends','missOld','shut'],
+ stageGrants:[['lunchJoin'],[]],
+ onExplore(s,key){
+  const out={text:'',card:null};
+  if(key==='newKid'){s.flags.saidNC=true;relation(s,'隣の子が、こっちを見て笑った。');out.text='隣の子「よろしくね」\n一言で、笑ってくれた。';out.card='commonTalk'}
+  if(key==='teacherNC'){s.flags.toldNC=true;note(s,'先生が、様子を見てくれることになった。');out.text='先生「みんなもドキドキしてるよ。ゆっくりで大丈夫」';out.card='classMix'}
+  if(key==='noFriends'){s.reason='noFriends';note(s,'知っている子がいなくて、不安。');out.text='「誰に話せばいいか分からない」';out.card='sayHi'}
+  if(key==='missOld'){s.reason='missOld';note(s,'前のクラスの友達が恋しい。');out.text='「ユウに会いたいな」';out.card='visitOld'}
+  if(key==='shut'){s.reason='shut';note(s,'自分から話せない気持ちがある。');out.text='「何を話せばいいかな」';out.card='waitSee'}
+  return out;
+ },
+ onPlay(s,id){
+  const f=s.flags;let text='',meaning='';
+  if(id==='corner'){f.cornered=true;text='隅でじっとしていた。\n誰も、話しかけてこなかった。';meaning='隅にいるだけでは、仲間は増えない。'}
+  if(id==='wait'){f.waited=true;text='待っていたら、誰かが近くを通った。\nでも、話しかけられなかった。';meaning='待つだけでは、始まらないこともある。';grant(s,'sayHi')}
+  if(id==='fakeSmile'){f.faked=true;text='愛想笑いをした。\n何も、始まらなかった。';meaning='作り笑いだけでは、距離は縮まらない。'}
+  if(id==='sayHi'){f.saidHi=true;f.clearedNC=true;relation(s,'「よろしく」と言ったら、返してもらえた。');text='隣の子「よろしく！」\n一言で、始まった。';meaning='あいさつが、仲間入りの第一歩。'}
+  if(id==='visitOld'){f.visited=true;f.clearedNC=true;relation(s,'前の友達に会えて、少し安心した。');text='ユウ「おっ、元気？」\n知っている顔を見ると、安心する。';meaning='知っている友達がいると、安心できる。'}
+  if(id==='waitSee'){f.spoke=true;f.clearedNC=true;relation(s,'一言だけ話したら、意外と続いた。');text='「その本、おもしろい？」\n一言だけでも、距離は縮まった。';meaning='一言だけでも、話は始まる。'}
+  if(id==='commonTalk'){f.commond=true;f.clearedNC=true;relation(s,'共通の話題で、話が弾んだ。');text='「そのゲーム、俺もやってる！」\n共通点があると、話は進む。';meaning='共通点があれば、仲良くなりやすい。'}
+  if(id==='classMix'){f.mixed=true;f.clearedNC=true;note(s,'先生が、みんなで遊ぶ時間を作ってくれた。');text='先生「じゃあ、班の人と自己紹介してみよう」\n時間を作ってもらうと、なじみやすい。';meaning='時間を作ってもらうのも、作戦の一つ。'}
+  if(id==='lunchJoin'){if(f.saidHi||f.commond||f.spoke){f.lunched=true;f.clearedNC=true;relation(s,'昼休みに一緒に食べたら、仲が深まった。');text='一緒に食べたら、\nいろんな話ができた。';meaning='一緒に食べると、仲が深まる。'}else{s.mind-=1;text='一緒に食べようとしたが、誘い方が分からなかった。';meaning='まず一言かけてから、一緒に食べると良い。';grant(s,'sayHi')}}
+  return {text,meaning};
+ },
+ watch(s){
+  if(s.stage===0)return '新しいクラスの子たちが、ざわざわしている。';
+  if(s.stage===1)return 'まわりは、少しずつ話し始めている。';
+  return '一週間で、少しずつ顔が分かってきた。';
+ },
+ scene(s){const f=s.flags;
+  if(s.stage===0)return {narrative:'新学期の朝。新しいクラスは、知らない子ばかり。',speaker:'先生',quote:'今日から、このクラスで一年間よろしくね',look:'知らない顔が、ずらっと並んでいる。',self:'ユウと別クラス… 誰に話せばいい？',hint:'不安の、どこが一番つらい？'};
+  if(s.stage===1)return {narrative:'休み時間。まわりは、少しずつ話し始めている。',speaker:'隣の子',quote:f.clearedNC?'ねえ、一緒に遊ぼう':f.saidHi?'よろしく！':f.commond?'そのゲーム、おもしろいよね':'……',look:f.clearedNC?'まわりは、もう少し柔らかい顔だ。':'みんな、まだ探り合っている。',self:s.reason==='noFriends'?'話せる人がいない。':s.reason==='missOld'?'前のクラスが恋しい。':s.reason==='shut'?'自分から話せない。':'どうなじんでいく？',hint:'あいさつ・一言・共通の話題、方法はある。'};
+  return {narrative:'一週間後。少しずつ、顔と名前が一致してきた。',speaker:'隣の子',quote:f.clearedNC?'今日も一緒にやろう':f.lunched?'ごはん、一緒に食べよう':'おはよう',look:'教室が、少しずつなじんでいる。',self:f.clearedNC?'新しいクラスに、なじんできた。':'まだ少し、遠い気がする。',hint:'時間がたつと、なじみやすい。'};
+ },
+ progress(s){const f=s.flags;return s.goal===0?(f.clearedNC?3:f.saidHi||f.visited?2:s.reason?1:0):s.goal===1?(f.commond||f.lunched?3:f.saidHi||f.spoke?2:s.reason?1:0):(f.visited||f.mixed?3:f.clearedNC?2:s.reason?1:0)},
+ situation(s){const f=s.flags;return f.clearedNC?'新しいクラスになじんできた。あいさつ・一言・共通点がある。':f.saidHi||f.spoke?'少し話せるようになった。':'知らないまま残っている。一歩の出し方は練習できる。'}
 }
 };
 

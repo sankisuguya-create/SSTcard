@@ -119,6 +119,15 @@ export const cards={
  askWhy:{title:'「どう見えましたか？」と聞く',kind:'support',label:'聞く',cost:1,bond:1,atk:1,attr:'soc',up:'soc',desc:'先生にどう見えたか、聞いてみる。',hint:'相手の見え方が分かると、会話になる',icon:'people'},
  vent:{title:'友達に愚痴を聞いてもらう',kind:'support',label:'愚痴る',cost:0,bond:1,atk:0,desc:'納得いかない気持ちを、友達に聞いてもらう。',hint:'吐き出すと、少し整理できる',icon:'people'},
  bothSides:{title:'両方の見え方を考える',kind:'think',label:'両方を考える',cost:1,atk:2,attr:'study',up:'study',desc:'自分の見え方と、先生の見え方の両方を考える。',hint:'両方見えると、納得が作れる',icon:'puzzle'},
+ hideForgot:{title:'忘れたのを隠す',kind:'think',label:'隠す',cost:0,atk:0,desc:'バレないように、何も言わない。',hint:'隠すと、ずっと気になるかも',icon:'eye'},
+ excuse:{title:'「家に忘れた」とだけ言う',kind:'talk',label:'言い訳だけ',cost:1,strain:1,atk:1,attr:'soc',desc:'事実だけ言って、謝らない。',hint:'言い訳だけだと、次がない',icon:'door'},
+ panicF:{title:'あわてて固まる',kind:'think',label:'固まる',cost:0,atk:0,desc:'どうしようと思って、固まる。',hint:'固まるのも自然な反応',icon:'heart'},
+ tellTruth:{title:'「忘れました」と正直に言う',kind:'talk',label:'正直に言う',cost:1,strain:1,bond:1,atk:1,attr:'soc',up:'soc',desc:'隠さず、正直に言って謝る。',hint:'正直は、いちばん楽になる',icon:'flag'},
+ sayFirst:{title:'自分から先に先生に言う',kind:'talk',label:'先に言う',cost:1,bond:1,atk:1,attr:'soc',up:'soc',desc:'指摘される前に、自分から言う。',hint:'先に言うと、誠実に見える',icon:'hand'},
+ prepareNight:{title:'前の晩に準備する習慣を考える',kind:'think',label:'習慣を考える',cost:1,atk:2,attr:'study',up:'study',desc:'朝じゃなく、前の晩に準備する。',hint:'忘れ物は、習慣で防げる',icon:'book'},
+ askLend:{title:'「明日持ってきます」と約束',kind:'support',label:'約束する',cost:1,bond:1,atk:1,attr:'soc',up:'soc',desc:'今日できない分の約束を立てる。',hint:'約束があると、信頼が戻る',icon:'people'},
+ shareBook:{title:'友達に見せてもらう',kind:'support',label:'見せてもらう',cost:1,bond:1,atk:1,attr:'soc',up:'soc',desc:'今日の分は、友達と分け合う。',hint:'助けてもらってもいい',icon:'people'},
+ checklist:{title:'持ち物チェックリストを作る',kind:'think',label:'リストを作る',cost:1,atk:2,attr:'study',up:'study',desc:'明日から忘れないための仕組み。',hint:'仕組みは、意志より強い',icon:'puzzle'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -725,6 +734,51 @@ scold:{
  },
  progress(s){const f=s.flags;return s.goal===0?(f.clearedS?3:f.saidSide||f.explained?2:s.reason?1:0):s.goal===1?(f.balanced||f.askedHow?3:f.heard||f.vented?2:s.reason?1:0):(f.clearedS||f.balanced?3:f.heard||f.vented?2:0)},
  situation(s){const f=s.flags;return f.clearedS?'先生と分かり合えた。言い分は届け方で変わる。':f.heard||f.explained?'相手の見え方が分かって、気持ちが整理できた。':f.vented?'気持ちを吐き出せて、少し楽になった。':'納得いかなさは残っている。伝える方法を練習できる。'}
+},
+forgot:{
+ title:'宿題を忘れた朝',nav:'忘れ物',num:'13',attrs:['study','soc'],
+ goals:['正直に対処したい','次から忘れないようにしたい','信頼を保ちたい'],
+ chapters:['朝の提出時間','休み時間','帰りの会'],locations:['教室・朝','教室・休み時間','教室・帰りの会'],
+ base:['hideForgot','excuse','panicF','anger','ignore'],start:{mind:4,energy:4},
+ monsters:[{name:'忘れ物の落とし穴',hp:4,power:1,turns:4,look:'提出の穴が、朝の机にポッカリ開く。'},{name:'バレたらどうしようの影',hp:5,power:1,turns:5,look:'「見つかったら」の影が、後ろについてくる。'},{name:'言い訳大王',hp:6,power:1,turns:5,look:'「家に忘れただけ」が、大きな声で誘う。'}],
+ talk:[['teacherF','先生に話す','忘れたことを、自分から言う。'],['friendF','友達に相談する','見せてもらうなど、助けを求める。']],
+ think:[['lateForgot','今朝急いで忘れた','準備する時間が、なかった。'],['fear','怒られるのが怖い','指摘されると、怒られそう。'],['repeat','よく忘れてしまう','また忘れた。何度目か分からない。']],
+ reasonKeys:['lateForgot','fear','repeat'],
+ stageGrants:[['checklist'],[]],
+ onExplore(s,key){
+  const out={text:'',card:null};
+  if(key==='teacherF'){s.flags.proactive=true;relation(s,'自分から言うと、先生は理解してくれた。');out.text='先生「自分から言えたのは、えらいね。明日持ってきて」';out.card='askLend'}
+  if(key==='friendF'){s.flags.shared=true;relation(s,'ユウが、ノートを見せてくれた。');out.text='ユウ「俺のノート、一緒に見る？」';out.card='shareBook'}
+  if(key==='lateForgot'){s.reason='lateForgot';note(s,'今朝、急いでいて忘れた。');out.text='「朝、急いでいて忘れた」';out.card='tellTruth'}
+  if(key==='fear'){s.reason='fear';note(s,'怒られるのが怖くて、言えずにいる。');out.text='「怒られるのが、怖い」';out.card='sayFirst'}
+  if(key==='repeat'){s.reason='repeat';note(s,'忘れ物は、初めてじゃない。');out.text='「また忘れた。何度目だろう」';out.card='prepareNight'}
+  return out;
+ },
+ onPlay(s,id){
+  const f=s.flags;let text='',meaning='';
+  if(id==='hideForgot'){f.hid=true;text='何も言わず、隠した。\n授業中も、ずっと気が気じゃなかった。';meaning='隠すと、その日ずっと気になる。'}
+  if(id==='excuse'){if(f.honest||f.proactive){f.excused=true;text='「忘れました。明日持ってきます」\n正直に言った上でなら、言い訳も事情説明になる。';meaning='正直があってこそ、言い訳も事情になる。'}else{s.mind-=1;text='「家に忘れた」とだけ言った。\n先生は、少し怪訝な顔をした。';meaning='言い訳だけだと、信頼が残らない。';grant(s,'tellTruth')}}
+  if(id==='panicF'){f.panicked=true;s.mind+=1;text='あわてて、固まった。\n深呼吸したら、少し動けるようになった。';meaning='固まるのは自然。深呼吸で戻れる。'}
+  if(id==='tellTruth'){f.honest=true;f.clearedF=true;relation(s,'「忘れました。ごめんなさい」と正直に言えた。');text='先生「正直に言ってくれてありがとう。明日ね」\n正直は、怖くなかった。';meaning='正直に言うと、信用される。'}
+  if(id==='sayFirst'){f.proactive=true;f.clearedF=true;relation(s,'自分から先に言うと、怒られなかった。');text='先生「自分から言えたのはえらい」\n先に言うと、場がやわらいだ。';meaning='指摘される前に言うと、誠実に見える。'}
+  if(id==='prepareNight'){f.habitPlan=true;f.clearedF=true;note(s,'前の晩に準備する、という習慣。');text='「前の晩に準備すれば、朝は忘れない」\n明日からの作戦が、見えた。';meaning='忘れ物は、習慣で防げる。'}
+  if(id==='askLend'){f.promised=true;f.clearedF=true;relation(s,'「明日持ってきます」と約束できた。');text='先生「うん、待ってるよ」\n約束があると、信頼が戻った。';meaning='約束を立てると、忘れ物も次に活きる。'}
+  if(id==='shareBook'){f.shared=true;f.clearedF=true;relation(s,'ユウに見せてもらって、今日の分をこなせた。');text='ユウ「ここ、今日のとこ」\n助けてもらうのも、向社会的だ。';meaning='助けてもらうのも、一つの方法。'}
+  if(id==='checklist'){if(f.habitPlan||f.promised){f.checklisted=true;f.clearedF=true;note(s,'持ち物チェックリストができた。');text='「ランドセル・宿題・体操服…」\nリストがあると、確認が楽になる。';meaning='仕組みは、意志より確実。'}else{s.mind-=1;text='リストを作ろうとしたが、まず何を書くか分からなかった。';meaning='まず習慣の考えがあってから、リストは作れる。';grant(s,'prepareNight')}}
+  return {text,meaning};
+ },
+ watch(s){
+  if(s.stage===0)return '先生は、宿題を集めているところだ。';
+  if(s.stage===1)return 'ユウは、隣の席でノートを開いている。';
+  return '先生は、明日を待ってくれそうだ。';
+ },
+ scene(s){const f=s.flags;
+  if(s.stage===0)return {narrative:'朝の提出時間。宿題が、ランドセルにない。',speaker:'先生',quote:'宿題を出してくださいね',look:'先生が、机の間を回っている。',self:'忘れた…！ どうしよう',hint:'忘れたことは、もう起きた。対処を考える。'};
+  if(s.stage===1)return {narrative:'休み時間。先生の目が、こちらに向いている。',speaker:'先生',quote:f.clearedF?'明日、持ってきてね':f.proactive?'自分から言えたね':f.honest?'正直に言ってくれてありがとう':'宿題、どうした？',look:f.clearedF?'先生は、穏やかな顔だ。':'先生は、まだ聞いている途中だ。',self:s.reason==='lateForgot'?'急いでいて、忘れた。':s.reason==='fear'?'怒られるのが怖い。':s.reason==='repeat'?'また忘れてしまった。':'忘れたことと、どう向き合う？',hint:'正直に言う・先に言う・習慣を作る。'};
+  return {narrative:'帰りの会。明日への気持ちが、少し軽い。',speaker:'先生',quote:f.clearedF?'明日は忘れないようにね':f.habitPlan?'前の晩に準備するといいよ':f.promised?'明日、待ってるよ':'明日、持ってきてね',look:'先生は、待ってくれそうだ。',self:f.clearedF?'明日は、ちゃんと準備する。':'まだ少し、不安が残っている。',hint:'忘れ物は、習慣と正直で防げる。'};
+ },
+ progress(s){const f=s.flags;return s.goal===0?(f.clearedF?3:f.honest||f.proactive?2:s.reason?1:0):s.goal===1?(f.habitPlan||f.checklisted?3:f.promised?2:s.reason?1:0):(f.clearedF||f.shared?3:f.proactive?2:0)},
+ situation(s){const f=s.flags;return f.clearedF?'忘れ物を正直に対処し、次の作戦も見つかった。':f.honest||f.proactive?'正直に言えた。信頼が戻っている。':f.shared?'助けてもらって、今日を切り抜けた。':'忘れたままだと、ずっと気になる。正直に言うのが一番楽。'}
 }
 };
 

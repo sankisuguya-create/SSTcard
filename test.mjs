@@ -42,11 +42,15 @@ let it3=initial('item');explore(it3,'hard');assert(available(it3).includes('clea
 let sc=initial('scold');assert.equal(sc.mind,4);explore(sc,'notMe');assert(available(sc).includes('explain'));assert.equal(explore(sc,'tooHard'),null);sc.energy=5;const sm=sc.mind;play(sc,'backTalk');assert(sc.mind<sm);assert(!sc.flags.clearedS);sc.feedback=null;sc.mind=5;play(sc,'explain');assert(sc.flags.clearedS);
 let sc2=initial('scold');explore(sc2,'friendS');sc2.energy=5;play(sc2,'vent');assert(sc2.flags.vented);assert.equal(sc2.mind,4); // +1からカウンター-1
 let sc3=initial('scold');explore(sc3,'scared');assert(available(sc3).includes('smallSay'));sc3.energy=5;play(sc3,'smallSay');assert(sc3.flags.clearedS); // 小さく言っても届く
-for(const story of ['fight','sports','test','join','blame','hurt','alone','lose','change','picked','item','scold']){const s=initial(story);s.energy=0;s.mind=0;s.finished=true;const t=initial(story);assert(safety(t,'rest'));const e=t.energy;assert(!safety(t,'rest'));assert.equal(t.energy,e);assert(!play(t,'not-a-card'));assert(!setGoal(t,9));}
+// forgot: 言い訳だけでは信頼が残らない。正直・先に言う・習慣化で対処
+let fg=initial('forgot');assert.equal(fg.mind,4);explore(fg,'lateForgot');assert(available(fg).includes('tellTruth'));assert.equal(explore(fg,'fear'),null);fg.energy=5;const fm=fg.mind;play(fg,'excuse');assert(fg.mind<fm);assert(available(fg).includes('tellTruth'));fg.feedback=null;fg.mind=5;play(fg,'tellTruth');assert(fg.flags.clearedF);
+let fg2=initial('forgot');explore(fg2,'repeat');assert(available(fg2).includes('prepareNight'));fg2.energy=5;play(fg2,'prepareNight');assert(fg2.flags.clearedF);
+let fg3=initial('forgot');play(fg3,'hideForgot');assert(fg3.flags.hid);assert(!fg3.flags.clearedF); // 隠すは残る
+for(const story of ['fight','sports','test','join','blame','hurt','alone','lose','change','picked','item','scold','forgot']){const s=initial(story);s.energy=0;s.mind=0;s.finished=true;const t=initial(story);assert(safety(t,'rest'));const e=t.energy;assert(!safety(t,'rest'));assert.equal(t.energy,e);assert(!play(t,'not-a-card'));assert(!setGoal(t,9));}
 
 // いつでも選べる作戦（カード不要・場面ごとに1回）と、気持ちがいっぱい時の相談不可
-const MAP={fight:{talk:'haru',think:'why',bond:'ask',free1:'distance',strain:'boundary',dark:'anger',repTest:'distance',explore:['haru','mina','why','respect','feeling']},sports:{talk:'teacher',think:'movement',bond:'schedule',free1:'practice',strain:'practice',dark:'anger',repTest:'practice',explore:['noise','teacher','friend']},test:{talk:'teacherT',think:'gaps',bond:'range',free1:'breathe',strain:'easyFirst',dark:'ignore',repTest:'easyFirst',explore:['gaps','teacherT','kei']},join:{talk:'teacherJ',think:'fear',bond:'peekJoin',free1:'soloPlay',strain:'peekJoin',dark:'anger',repTest:'watchPlay',explore:['fear','teacherJ','friend2']},blame:{talk:'teacherB',think:'panicB',bond:'deny',free1:'stay',strain:'deny',dark:'anger',repTest:'stay',explore:['panicB','teacherB','eye']},hurt:{talk:'friendC',think:'sting',bond:'sayStop',free1:'walkAway',strain:'sayStop',dark:'boast',repTest:'walkAway',explore:['sting','friendC','teacherC']},alone:{talk:'teacherD',think:'noWords',bond:'politeNo',free1:'runOff',strain:'politeNo',dark:'ignore',repTest:'runOff',explore:['noWords','teacherD','friendD']},lose:{talk:'teacherE',think:'face',bond:'praiseWin',free1:'quitGame',strain:'rematch',dark:'boast',repTest:'quitGame',explore:['frustrate','teacherE','winnerS']},change:{talk:'teacherP',think:'unfair',bond:'whyAsk',free1:'acceptQuick',strain:'complain',dark:'anger',repTest:'acceptQuick',explore:['unfair','teacherP','chikaF']},picked:{talk:'teacherH',think:'unfairPick',bond:'pickRule',free1:'bigSigh',strain:'keepHand',dark:'ignore',repTest:'bigSigh',explore:['unfairPick','teacherH','pickedKid']},item:{talk:'teacherI',think:'shy',bond:'sayMine',free1:'keepQuiet',strain:'takeBack',dark:'anger',repTest:'keepQuiet',explore:['shy','teacherI','kenB']},scold:{talk:'teacherS',think:'notMe',bond:'saySorry',free1:'goQuiet',strain:'backTalk',dark:'anger',repTest:'goQuiet',explore:['notMe','teacherS','friendS']}};
-for(const story of ['fight','sports','test','join','blame','hurt','alone','lose','change','picked','item','scold']){
+const MAP={fight:{talk:'haru',think:'why',bond:'ask',free1:'distance',strain:'boundary',dark:'anger',repTest:'distance',explore:['haru','mina','why','respect','feeling']},sports:{talk:'teacher',think:'movement',bond:'schedule',free1:'practice',strain:'practice',dark:'anger',repTest:'practice',explore:['noise','teacher','friend']},test:{talk:'teacherT',think:'gaps',bond:'range',free1:'breathe',strain:'easyFirst',dark:'ignore',repTest:'easyFirst',explore:['gaps','teacherT','kei']},join:{talk:'teacherJ',think:'fear',bond:'peekJoin',free1:'soloPlay',strain:'peekJoin',dark:'anger',repTest:'watchPlay',explore:['fear','teacherJ','friend2']},blame:{talk:'teacherB',think:'panicB',bond:'deny',free1:'stay',strain:'deny',dark:'anger',repTest:'stay',explore:['panicB','teacherB','eye']},hurt:{talk:'friendC',think:'sting',bond:'sayStop',free1:'walkAway',strain:'sayStop',dark:'boast',repTest:'walkAway',explore:['sting','friendC','teacherC']},alone:{talk:'teacherD',think:'noWords',bond:'politeNo',free1:'runOff',strain:'politeNo',dark:'ignore',repTest:'runOff',explore:['noWords','teacherD','friendD']},lose:{talk:'teacherE',think:'face',bond:'praiseWin',free1:'quitGame',strain:'rematch',dark:'boast',repTest:'quitGame',explore:['frustrate','teacherE','winnerS']},change:{talk:'teacherP',think:'unfair',bond:'whyAsk',free1:'acceptQuick',strain:'complain',dark:'anger',repTest:'acceptQuick',explore:['unfair','teacherP','chikaF']},picked:{talk:'teacherH',think:'unfairPick',bond:'pickRule',free1:'bigSigh',strain:'keepHand',dark:'ignore',repTest:'bigSigh',explore:['unfairPick','teacherH','pickedKid']},item:{talk:'teacherI',think:'shy',bond:'sayMine',free1:'keepQuiet',strain:'takeBack',dark:'anger',repTest:'keepQuiet',explore:['shy','teacherI','kenB']},scold:{talk:'teacherS',think:'notMe',bond:'saySorry',free1:'goQuiet',strain:'backTalk',dark:'anger',repTest:'goQuiet',explore:['notMe','teacherS','friendS']},forgot:{talk:'teacherF',think:'lateForgot',bond:'tellTruth',free1:'panicF',strain:'excuse',dark:'ignore',repTest:'panicF',explore:['lateForgot','teacherF','friendF']}};
+for(const story of ['fight','sports','test','join','blame','hurt','alone','lose','change','picked','item','scold','forgot']){
  const s=initial(story),clueCount=s.clues.length,en=s.energy;
  assert(free(s,'observe'));assert(!free(s,'observe'));assert(s.clues.length>clueCount);
  assert(free(s,'pass'));assert(!free(s,'pass'));assert.equal(s.energy,Math.min(5,en+1));
@@ -59,7 +63,7 @@ for(const story of ['fight','sports','test','join','blame','hurt','alone','lose'
 assert(!free(initial('fight'),'bogus'));
 
 // 評判: 向社会的な行動で増え、一人でやる行動・自問では増えない（上限5）
-for(const story of ['fight','sports','test','join','blame','hurt','alone','lose','change','picked','item','scold']){
+for(const story of ['fight','sports','test','join','blame','hurt','alone','lose','change','picked','item','scold','forgot']){
  const s=initial(story);assert.equal(s.rep,1);
  explore(s,MAP[story].talk);assert.equal(s.rep,2);
  explore(s,MAP[story].think);assert.equal(s.rep,2);
@@ -75,7 +79,7 @@ for(const story of ['fight','sports','test','join','blame','hurt','alone','lose'
 }
 
 // 精神力コストとマイナスカード（精神力1以下で手札がマイナス化）
-for(const story of ['fight','sports','test','join','blame','hurt','alone','lose','change','picked','item','scold']){
+for(const story of ['fight','sports','test','join','blame','hurt','alone','lose','change','picked','item','scold','forgot']){
  const s=initial(story);assert(!canMinus(s));
  const strainId=MAP[story].strain;
  const before=s.mind;s.energy=5;assert(play(s,strainId));assert(s.mind<before);s.feedback=null;
@@ -95,7 +99,7 @@ for(const story of ['fight','sports','test','join','blame','hurt','alone','lose'
 assert.equal(minus(initial('fight'),'vent'),null); // 精神力が足りていれば出せない
 
 // モンスター戦闘: 攻撃・反撃・ターン上限・撃破・逃走
-for(const story of ['fight','sports','test','join','blame','hurt','alone','lose','change','picked','item','scold']){
+for(const story of ['fight','sports','test','join','blame','hurt','alone','lose','change','picked','item','scold','forgot']){
  const s=initial(story),m=monster(s);
  assert.equal(s.monsterHp,m.hp);assert.equal(s.turns,0);
  // ダークカードは攻撃しないが、評判と社交性を下げて精神力を回復する
@@ -164,6 +168,6 @@ Math.random=origRandom;
 
 let explored=0;function walk(s,depth){assert(s.mind>=0&&s.mind<=6);assert(s.energy>=0&&s.energy<=5);assert(s.progress>=0&&s.progress<=3);assert(s.rep>=0&&s.rep<=5);for(const k of ['study','ath','soc'])assert(s.stats[k]>=-2&&s.stats[k]<=2);assert(s.monsterHp>=-20);if(depth===0||s.finished)return;const ids=available(s).filter(id=>canPlay(s,id));for(const id of ids){const t=structuredClone(s);assert(play(t,id));assert(t.feedback.text.length>0,id);advance(t);explored++;walk(t,depth-1)}}
 Math.random=()=>0.99;
-for(const story of ['fight','sports','test','join','blame','hurt','alone','lose','change','picked','item','scold']){for(const goal of [0,1,2]){const s=initial(story);setGoal(s,goal);for(const k of MAP[story].explore)explore(s,k);s.energy=5;s.mind=6;walk(s,3)}}
+for(const story of ['fight','sports','test','join','blame','hurt','alone','lose','change','picked','item','scold','forgot']){for(const goal of [0,1,2]){const s=initial(story);setGoal(s,goal);for(const k of MAP[story].explore)explore(s,k);s.energy=5;s.mind=6;walk(s,3)}}
 Math.random=origRandom;
 console.log('PASS: branches, context-sensitive outcomes, monster battle, dark/minus cards, buffs, safety, resource bounds; explored',explored,'moves');

@@ -359,6 +359,16 @@ export const cards={
  approachSlow:{title:'少しずつ近づく',kind:'think',label:'少しずつ',cost:1,atk:2,attr:'study',up:'study',desc:'あいさつ・目を合わせる、小さく始める。',hint:'小さいことから、始められる',icon:'spark'},
  makeUpDone:{title:'仲直りできた',kind:'support',label:'仲直り',cost:2,atk:3,attr:'soc',up:'soc',desc:'ちゃんと、仲直りできた。',hint:'仲直りの経験は、強くなる',icon:'flag'},
  reBond:{title:'前より仲良くなった',kind:'support',label:'もっと仲良く',cost:2,atk:3,attr:'soc',up:'soc',desc:'けんかを越えて、仲が深まった。',hint:'仲直りできる関係は、強い',icon:'check'},
+ confront:{title:'問い詰める',kind:'talk',label:'問い詰める',cost:0,strain:1,atk:1,attr:'soc',desc:'「なんで言ったの」と、問い詰める。',hint:'問い詰めると、けんかになるかも',icon:'bolt'},
+ spreadBack:{title:'仕返しに言いふらす',kind:'talk',label:'仕返し',cost:0,strain:1,atk:1,attr:'soc',desc:'相手の秘密を、言いふらす。',hint:'仕返しは、評判が下がる',icon:'eye'},
+ askCalm:{title:'落ち着いて理由を聞く',kind:'talk',label:'理由を聞く',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'「どうして言ったの」と、落ち着いて聞く。',hint:'理由を聞くと、事情が分かる',icon:'ear'},
+ distanceTake:{title:'少し距離を置く',kind:'think',label:'距離を置く',cost:1,atk:2,attr:'study',up:'study',desc:'すぐ決めず、少し距離を置く。',hint:'距離も、答えの一つ',icon:'door'},
+ tellFeeling:{title:'「バラされてつらかった」と言う',kind:'talk',label:'気持ちを言う',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'気持ちを、正直に伝える。',hint:'伝えると、相手に届く',icon:'heart'},
+ checkTruth:{title:'本当にバラしたか確かめる',kind:'think',label:'確かめる',cost:1,atk:2,attr:'study',up:'study',desc:'誰が言ったか、確かめてから動く。',hint:'確かめてから、動こう',icon:'search'},
+ keepSecret:{title:'秘密の守り方を決める',kind:'think',label:'守り方を決める',cost:1,atk:2,attr:'study',up:'study',desc:'誰にどこまで話すか、決めておく。',hint:'決めておくと、安心',icon:'list'},
+ forgiveF:{title:'許して仲直りする',kind:'support',label:'許す',cost:2,atk:3,attr:'soc',up:'soc',desc:'謝ってもらって、仲直りする。',hint:'許せる関係は、強い',icon:'hand'},
+ chooseFriend:{title:'話す相手を選ぶ',kind:'support',label:'相手を選ぶ',cost:2,atk:3,attr:'study',up:'study',desc:'秘密は、信頼できる人だけに話す。',hint:'選ぶことも、守り方',icon:'check'},
+ trustStep:{title:'少しずつ信頼を戻す',kind:'support',label:'信頼を戻す',cost:2,atk:3,attr:'soc',up:'soc',desc:'小さい約束から、信頼を戻す。',hint:'信頼は、積み重ね',icon:'spark'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -2169,6 +2179,55 @@ makeUp:{
  },
  progress(s){const f=s.flags;return f.madeUp||f.rebonded?3:f.sorry||f.invited||f.approached?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.rebonded?'仲直りを越えて、仲が深まった。':f.madeUp?'ちゃんと仲直りできた。':f.sorry||f.invited?'動き出せた。謝る・誘う・少しずつ。':'けんかのまま。仲直りの仕方は、ある。'}
+},
+
+// STORY 39 ── 友達に秘密をバラされた ──
+secret:{
+ title:'友達に秘密をバラされた',nav:'秘密をバラされた',num:'39',attrs:['soc','study'],
+ goals:['気持ちを整理したい','相手とどう向き合うか決めたい','次の守り方を考えたい'],
+ chapters:['秘密が広まった','友達と向き合う','これから'],locations:['教室','教室','帰り道'],
+ base:['confront','spreadBack','anger','ignore','boast'],start:{mind:4,energy:4},
+ monsters:[{name:'バレタの影',hp:4,power:1,turns:4,look:'秘密が、みんなに知られている。'},{name:'ウラギリの影',hp:4,power:1,turns:4,look:'裏切られた気持ちが、ずっと残っている。'},{name:'シンライの影',hp:6,power:2,turns:5,look:'これから、誰を信じればいいか分からない。'}],
+ talk:[['calmAsk','落ち着いて理由を聞く','「どうして言ったの」と、聞く。'],['feelingTell','気持ちを正直に言う','「バラされてつらかった」と伝える。'],['teacherSec','先生に相談','秘密をバラされたことを、先生に言う。']],
+ think:[['betrayed','裏切られた','信じていたのに、裏切られた。'],['shame','みんなに知られて恥ずかしい','秘密が広まって、恥ずかしい。'],['notSure','本当にその子が言ったか不明','誰が言ったか、確かではない。']],
+ reasonKeys:['betrayed','shame','notSure'],
+ stageGrants:[['distanceTake','keepSecret'],['forgiveF','chooseFriend','trustStep']],
+ onExplore(s,key){
+  const out={text:'',card:null};
+  if(key==='calmAsk'){s.flags.askedC=true;relation(s,'「ごめん、つい言っちゃった」と言われた。');out.text='「ごめん、つい言っちゃった」\n事情が、分かった。';out.card='askCalm'}
+  if(key==='feelingTell'){s.flags.toldF2=true;relation(s,'気持ちを伝えたら、相手も「ごめん」と言った。');out.text='「ごめんね。悪かった」\n気持ちが、届いた。';out.card='tellFeeling'}
+  if(key==='teacherSec'){s.flags.toldT5=true;note(s,'先生に「まず確かめて、気持ちを伝えよう」と言われた。');out.text='先生「まず確かめて、気持ちを伝えよう」\n先生と、考えた。';out.card='checkTruth'}
+  if(key==='betrayed'){s.reason='betrayed';note(s,'裏切りの気持ちは、伝えると軽くなる。');out.text='「裏切られた…」\n気持ちを、伝えよう。';out.card='tellFeeling'}
+  if(key==='shame'){s.reason='shame';note(s,'恥ずかしさは、距離を置くと楽になる。');out.text='「みんなに知られて、恥ずかしい」\n少し、距離を置こう。';out.card='distanceTake'}
+  if(key==='notSure'){s.reason='notSure';note(s,'確かでないなら、まず確かめる。');out.text='「本当に、その子が言ったの？」\nまず、確かめよう。';out.card='checkTruth'}
+  return out;
+ },
+ onPlay(s,id){
+  const f=s.flags;let text='',meaning='';
+  if(id==='confront'){f.confronted=true;s.mind-=1;relation(s,'問い詰めたら、言い争いになった。');text='「なんで言ったの！」\n言い争いに、なった。';meaning='問い詰めると、けんかになる。';grant(s,'askCalm')}
+  if(id==='spreadBack'){f.spreadB=true;s.rep-=1;relation(s,'仕返しに言いふらしたら、もめごとが大きくなった。');text='相手の秘密を、言いふらした。\nもめごとが、大きくなった。';meaning='仕返しは、評判を下げる。';grant(s,'distanceTake')}
+  if(id==='askCalm'){f.askedC=true;relation(s,'落ち着いて聞いたら、事情が分かった。');text='「どうして、言ったの？」\n「つい、言っちゃった…ごめん」';meaning='理由を聞くと、事情が分かる。'}
+  if(id==='distanceTake'){f.distanced=true;note(s,'距離を置いたら、気持ちが落ち着いた。');text='少し、距離を置いた。\n気持ちが、落ち着いた。';meaning='距離も、答えの一つ。'}
+  if(id==='tellFeeling'){f.toldF2=true;relation(s,'気持ちを伝えたら、相手が謝ってくれた。');text='「バラされて、つらかった」\n「ごめんね」';meaning='伝えると、相手に届く。'}
+  if(id==='checkTruth'){f.checked=true;note(s,'確かめたら、誤解だと分かった。');text='確かめたら、本人は「言ってない」と言った。\n誤解だったかも。';meaning='確かめてから、動こう。'}
+  if(id==='keepSecret'){f.plannedS2=true;note(s,'誰にどこまで話すか、決めた。');text='「秘密は、信頼できる人だけに」\n守り方を、決めた。';meaning='決めておくと、安心。'}
+  if(id==='forgiveF'){if(f.askedC||f.toldF2){f.forgave=true;relation(s,'許して仲直りした。');text='「もう、いいよ」\n許して、仲直りした。';meaning='許せる関係は、強い。'}else{s.mind-=1;text='許そうとしたが、まだ気持ちが追いつかなかった。';meaning='まず聞く・伝えてから、許すと良い。';grant(s,'tellFeeling')}}
+  if(id==='chooseFriend'){if(f.plannedS2||f.distanced){f.chooses=true;note(s,'話す相手を、選べるようになった。');text='「この人なら、安心して話せる」\n相手を、選べた。';meaning='選ぶことも、守り方。'}else{s.mind-=1;text='相手を選ぼうとしたが、まだ気持ちが定まらなかった。';meaning='まず距離を置く・守り方を決めてから、選ぶと良い。';grant(s,'keepSecret')}}
+  if(id==='trustStep'){if(f.forgave||f.askedC){f.trustBack=true;note(s,'小さい約束から、信頼を戻し始めた。');text='「今度は、絶対に言わない」\n小さい約束から、始めた。';meaning='信頼は、積み重ね。'}else{s.mind-=1;text='信頼を戻そうとしたが、まだ整理できていなかった。';meaning='まず聞く・許してから、信頼を戻すと良い。';grant(s,'askCalm')}}
+  return {text,meaning};
+ },
+ watch(s){
+  if(s.stage===0)return '秘密が、みんなに知られている。';
+  if(s.stage===1)return '裏切られた気持ちが、ずっと残っている。';
+  return 'これから、誰を信じればいいか分からない。';
+ },
+ scene(s){const f=s.flags;
+  if(s.stage===0)return {narrative:'秘密にしていたことが、みんなに知られていた。教えたのは、あの子だけのはず。',speaker:'友達',quote:'ねえ、アレって本当？',look:'みんなが、こちらを見ている。',self:'バラされた…',hint:'秘密がバレたとき、何がつらい？'};
+  if(s.stage===1)return {narrative:'バラしたと思う友達が、目の前にいる。どう向き合うか。',speaker:'友達',quote:f.askedC?'ごめん…':'（目をそらしている）',look:'友達が、うつむいている。',self:s.reason==='betrayed'?'裏切られた。':s.reason==='shame'?'恥ずかしい。':s.reason==='notSure'?'本当にその子？':'どうしよう…',hint:'聞く・伝える・確かめる・距離を置く、方法はある。'};
+  return {narrative:'帰り道。これから、誰に何を話すか考える。',speaker:'友達',quote:f.forgave?'今度は絶対、言わないから':'…',look:'帰り道が、続いている。',self:f.forgave?'許せて、少し楽になった。':'まだ、整理できていない。',hint:'守り方と信頼の戻し方を、決めよう。'};
+ },
+ progress(s){const f=s.flags;return f.forgave||f.trustBack||f.chooses?3:f.askedC||f.toldF2||f.checked||f.distanced||f.plannedS2?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.forgave||f.trustBack?'許して、信頼を戻し始めた。':f.checked||f.askedC?'事情が分かった。次の守り方を決められる。':'裏切られたまま。聞く・伝える・確かめる、方法はある。'}
 }
 };
 

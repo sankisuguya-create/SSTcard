@@ -110,6 +110,15 @@ export const cards={
  lendRule:{title:'「使うときは聞いて」と約束',kind:'support',label:'約束する',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'ケンと、貸し借りの決まりを作る。',hint:'約束は、次からのルールになる',icon:'people'},
  classRule:{title:'クラスで貸し借りルールを決める',kind:'support',label:'クラスルール',cost:1,bond:1,atk:2,attr:'study',up:'study',desc:'みんなで決まりを作ると、安心できる。',hint:'みんなの決まりは強い',icon:'book'},
  lendBox:{title:'貸し借り用の箱を作る',kind:'talk',label:'貸し借り箱',cost:1,atk:2,attr:'study',up:'study',desc:'「貸していいもの箱」を作って、迷いをなくす。',hint:'仕組みで、断りやすくなる',icon:'spark'},
+ backTalk:{title:'「やってない！」と反論',kind:'talk',label:'反論する',cost:1,strain:1,atk:1,attr:'soc',desc:'やってないことを、強く否定する。',hint:'気持ちは正しい。伝え方を選べる',icon:'flag'},
+ saySorry:{title:'とりあえず「ごめんなさい」',kind:'talk',label:'謝る',cost:0,bond:1,atk:0,desc:'その場を収めるために、謝っておく。',hint:'収まるが、気持ちは残るかも',icon:'door'},
+ goQuiet:{title:'何も言わずにうなずく',kind:'think',label:'うなずく',cost:0,atk:0,desc:'反論もせず、その場をやり過ごす。',hint:'黙ることもできる',icon:'eye'},
+ explain:{title:'「走ってはいません」と説明',kind:'talk',label:'説明する',cost:1,bond:1,atk:1,attr:'soc',up:'soc',desc:'事実を、冷静に伝える。',hint:'事実は、冷静に伝えると届く',icon:'pen'},
+ hearOut:{title:'まず最後まで聞く',kind:'think',label:'最後まで聞く',cost:1,atk:0,up:'soc',desc:'先生の言い分を、最後まで聞く。',hint:'聞いてから言うと、届きやすい',icon:'ear'},
+ smallSay:{title:'「実は…」と小さく言い分を言う',kind:'talk',label:'小さく言う',cost:1,strain:1,atk:1,attr:'soc',up:'soc',desc:'反論ではなく、小さく自分の側を言う。',hint:'小さくても、言うことは言える',icon:'flag'},
+ askWhy:{title:'「どう見えましたか？」と聞く',kind:'support',label:'聞く',cost:1,bond:1,atk:1,attr:'soc',up:'soc',desc:'先生にどう見えたか、聞いてみる。',hint:'相手の見え方が分かると、会話になる',icon:'people'},
+ vent:{title:'友達に愚痴を聞いてもらう',kind:'support',label:'愚痴る',cost:0,bond:1,atk:0,desc:'納得いかない気持ちを、友達に聞いてもらう。',hint:'吐き出すと、少し整理できる',icon:'people'},
+ bothSides:{title:'両方の見え方を考える',kind:'think',label:'両方を考える',cost:1,atk:2,attr:'study',up:'study',desc:'自分の見え方と、先生の見え方の両方を考える。',hint:'両方見えると、納得が作れる',icon:'puzzle'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -671,6 +680,51 @@ item:{
  },
  progress(s){const f=s.flags;return s.goal===0?(f.clearedI?3:f.said||f.watched?2:s.reason?1:0):s.goal===1?(f.clearedI&&f.agreed||f.rules?3:f.said?2:s.reason?1:0):(f.rules||f.classAgreed||f.clearedI?3:f.said||f.talked?2:0)},
  situation(s){const f=s.flags;return f.clearedI?'貸し借りのルールができて、安心して使える。':f.said||f.talked?'自分の気持ちを伝えられた。':'嫌な気持ちは残っている。伝える方法を練習できる。'}
+},
+scold:{
+ title:'納得いかない注意',nav:'注意された',num:'12',attrs:['soc','study'],
+ goals:['自分の言い分を伝えたい','先生と分かり合いたい','気持ちを整理したい'],
+ chapters:['廊下で注意された','休み時間','放課後'],locations:['廊下','教室・休み時間','教室・放課後'],
+ base:['backTalk','saySorry','goQuiet','anger','ignore'],start:{mind:4,energy:4},
+ monsters:[{name:'注意の稲妻',hp:4,power:1,turns:4,look:'突然の「走ったでしょ」が、稲妻のように落ちる。'},{name:'納得いかなさの雲',hp:5,power:1,turns:5,look:'「やってないのに」の雲が、頭を覆う。'},{name:'言い分大王',hp:6,power:1,turns:5,look:'言いたいことが、大きくて出てこない。'}],
+ talk:[['teacherS','先生に話す','自分の言い分を、聞いてもらう。'],['friendS','友達に愚痴を聞いてもらう','納得いかない気持ちを吐き出す。']],
+ think:[['notMe','やってないのに注意された','走ってないのに、走ったと言われた。'],['tooHard','言い方が強すぎる','急に強く言われて、びっくりした。'],['scared','反論するともっと怒られそう','言い返すと、もっと怒られる気がする。']],
+ reasonKeys:['notMe','tooHard','scared'],
+ stageGrants:[['bothSides'],[]],
+ onExplore(s,key){
+  const out={text:'',card:null};
+  if(key==='teacherS'){s.flags.heard=true;note(s,'先生は「走っているように見えた」と言う。');out.text='先生「走っているように見えたんだ。でも、話は聞くよ」';out.card='askWhy'}
+  if(key==='friendS'){s.flags.vented=true;relation(s,'ユウが、愚痴を聞いてくれた。');out.text='ユウ「それは嫌だったね。俺も同じことあったよ」';out.card='vent'}
+  if(key==='notMe'){s.reason='notMe';note(s,'やってないのに注意された、という納得いかなさ。');out.text='「走ってないのに、なんで怒られるんだ」';out.card='explain'}
+  if(key==='tooHard'){s.reason='tooHard';note(s,'強い言い方に、びっくりして固まった。');out.text='「急に怒られて、頭が真っ白になった」';out.card='hearOut'}
+  if(key==='scared'){s.reason='scared';note(s,'反論すると怒られそうで、怖い。');out.text='「言い返すと、もっと怒られそう」';out.card='smallSay'}
+  return out;
+ },
+ onPlay(s,id){
+  const f=s.flags;let text='',meaning='';
+  if(id==='backTalk'){if(f.heard||f.saidSide){f.clearedS=true;relation(s,'「実は走ってません。でも速く見えたかも」と伝えられた。');text='先生「そうか、歩くのが速かったんだね。ごめん」\nお互いの見え方が、合った。';meaning='先に聞いてから言うと、言い分が届く。'}else{s.mind-=1;text='「やってない！」と大声で言った。\n先生は、もっと強い顔になった。';meaning='強く言うと、言い争いになることがある。';grant(s,'explain')}}
+  if(id==='saySorry'){f.apologized=true;text='「ごめんなさい」と言った。\n先生は離れた。でも、心には残った。';meaning='謝ると収まる。でも、やってない気持ちは残ることがある。'}
+  if(id==='goQuiet'){f.quiet=true;text='何も言わず、うなずいた。\nモヤモヤだけが、残った。';meaning='黙るのも一つの選択。でも、気持ちは残る。'}
+  if(id==='explain'){f.explained=true;f.clearedS=true;relation(s,'「走ってはいません」と冷静に伝えた。');text='先生「そうか。速く歩いていたように見えたんだ」\n冷静に言うと、届いた。';meaning='事実を冷静に言うと、誤解がほどける。'}
+  if(id==='hearOut'){f.heard=true;s.mind+=1;text='先生の話を、最後まで聞いた。\n「廊下で足音が速かった」と、事情が分かった。';meaning='まず聞くと、相手も聞いてくれやすい。'}
+  if(id==='smallSay'){f.saidSide=true;f.clearedS=true;relation(s,'「実は…」と小さく言うと、先生が聞いてくれた。');text='先生「うん、どうした？」\n小さくても、言うことはできた。';meaning='小さな声でも、言い分は届く。'}
+  if(id==='askWhy'){f.askedHow=true;f.heard=true;note(s,'先生には「走っているように見えた」。');text='先生「走っているように見えたんだ。悪かったね」\n相手の見え方が、分かった。';meaning='相手の見え方が分かると、誤解がほどける。'}
+  if(id==='vent'){f.vented=true;s.mind+=1;text='ユウに、全部聞いてもらった。\n吐き出したら、少し楽になった。';meaning='吐き出すと、気持ちが整理できる。'}
+  if(id==='bothSides'){if(f.heard||f.askedHow||f.explained){f.clearedS=true;f.balanced=true;note(s,'自分: 走っていない。先生: 速く見えた。');text='「俺は走ってない。先生には走って見えた」\n両方が見えると、納得ができた。';meaning='両方の見え方が分かると、納得が作れる。'}else{s.mind-=1;text='両方を考えようとしたが、相手の側がまだ分からなかった。';meaning='まず聞いてから考えると、両方が見えやすい。';grant(s,'hearOut')}}
+  return {text,meaning};
+ },
+ watch(s){
+  if(s.stage===0)return '先生は、まだ少し厳しい顔をしている。';
+  if(s.stage===1)return '先生は、こちらに話しかけようとしている。';
+  return '先生は、もう穏やかな顔だ。';
+ },
+ scene(s){const f=s.flags;
+  if(s.stage===0)return {narrative:'廊下で、先生に「走ったでしょ」と注意された。',speaker:'先生',quote:'廊下を走ったでしょ。危ないよ',look:'先生は、少し厳しい顔をしている。',self:'走ってないのに…',hint:'納得いかない気持ちが、残っている。'};
+  if(s.stage===1)return {narrative:'休み時間。先生が、話しかけてきた。',speaker:'先生',quote:f.clearedS?'さっきはごめんね':f.heard?'どうだった？ 話してみるか':f.vented?'ユウに聞いてもらったそうだね':'さっきのこと、話せる？',look:f.clearedS?'先生は、穏やかな顔だ。':'先生は、話を待っている。',self:s.reason==='notMe'?'やってないのに、注意された。':s.reason==='tooHard'?'強い言い方に、びっくりした。':s.reason==='scared'?'言い返すと怒られそう。':'納得いかない気持ちと、どう付き合う？',hint:'聞く・説明・小さく言う、方法はある。'};
+  return {narrative:'放課後。先生が、もう一度話してくれた。',speaker:'先生',quote:f.clearedS?'今日はごめんね。お互い分かり合えてよかった':f.heard?'次はゆっくり歩いてくれると嬉しい':f.saidSide?'言ってくれてありがとう':'今日はここまでにしよう',look:'先生は、落ち着いた顔をしている。',self:f.clearedS?'気持ちが、もう整理できている。':'まだ少し、もやもやがある。',hint:'言い分は、届け方で変わる。'};
+ },
+ progress(s){const f=s.flags;return s.goal===0?(f.clearedS?3:f.saidSide||f.explained?2:s.reason?1:0):s.goal===1?(f.balanced||f.askedHow?3:f.heard||f.vented?2:s.reason?1:0):(f.clearedS||f.balanced?3:f.heard||f.vented?2:0)},
+ situation(s){const f=s.flags;return f.clearedS?'先生と分かり合えた。言い分は届け方で変わる。':f.heard||f.explained?'相手の見え方が分かって、気持ちが整理できた。':f.vented?'気持ちを吐き出せて、少し楽になった。':'納得いかなさは残っている。伝える方法を練習できる。'}
 }
 };
 

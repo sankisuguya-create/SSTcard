@@ -291,6 +291,8 @@ let mk4=initial('makeUp');explore(mk4,'mutualAsk');mk4.energy=5;play(mk4,'invite
 // ── 到達可能性チェック: ストーリー内で参照される全カードが (base ∪ stageGrants ∪ explore付与 ∪ 到達済みカードのgrant) から辿れること ──
 import {readFileSync} from 'node:fs';
 import {cards} from './dist/engine.mjs';
+// U+FFFD (文字化け) が混入していないこと
+for(const f of ['dist/engine.mjs','dist/app.js','test.mjs','README.md'])assert(!readFileSync(f,'utf8').includes('\uFFFD'),`U+FFFD in ${f}`);
 const src=readFileSync('dist/engine.mjs','utf8');
 let storiesRegion=src.slice(src.indexOf('export const stories'));
 storiesRegion=storiesRegion.slice(0,storiesRegion.indexOf('\n};')+3);

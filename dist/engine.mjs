@@ -245,6 +245,14 @@ export const cards={
  askCook:{title:'給食の先生に相談',kind:'support',label:'給食の先生に',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'苦手なことを、給食の先生に伝える。',hint:'作る人に言うと、量を調整してもらえる',icon:'flag'},
  mixFood:{title:'他のものと混ぜて食べる',kind:'think',label:'混ぜる',cost:1,atk:2,attr:'study',up:'study',desc:'好きなものと混ぜて、食べやすくする。',hint:'混ぜると、食べやすくなる',icon:'spark'},
  fullTry:{title:'量を調整して完食する',kind:'support',label:'量を調整して完食',cost:1,atk:2,attr:'ath',up:'ath',desc:'少なめで始めて、完食する。',hint:'完食できた経験は、次の自信になる',icon:'heart'},
+ biggerLie:{title:'もっと嘘を重ねる',kind:'talk',label:'嘘を重ねる',cost:0,atk:0,desc:'バレないように、嘘をもう一つ重ねる。',hint:'嘘を重ねると、あとで苦しくなる',icon:'eye'},
+ blameOther:{title:'他の人のせいにする',kind:'talk',label:'人のせいに',cost:0,strain:1,atk:1,attr:'soc',desc:'嘘がバレそうな時、別の子のせいにする。',hint:'人のせいにすると、信頼を失う',icon:'bolt'},
+ shutMouth:{title:'何も言わないでいる',kind:'think',label:'黙る',cost:0,strain:1,atk:0,desc:'嘘のことを、黙ってやり過ごす。',hint:'黙ると、心に残る',icon:'eye'},
+ admitLie:{title:'「ごめん、嘘ついた」と言う',kind:'talk',label:'嘘を認める',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'嘘をついたことを、正直に言う。',hint:'認めるのは怖いが、信頼が戻る',icon:'flag'},
+ whyLie:{title:'なぜ嘘をついたか考える',kind:'think',label:'理由を考える',cost:1,atk:2,attr:'study',up:'study',desc:'どうして嘘をついたのか、自分に聞く。',hint:'理由が分かると、次は言える',icon:'puzzle'},
+ fixTruth:{title:'本当のことを言い直す',kind:'talk',label:'言い直す',cost:1,bond:1,atk:1,attr:'soc',up:'soc',desc:'嘘をやめて、本当のことを言い直す。',hint:'言い直せば、まだ間に合う',icon:'message'},
+ writeSorry:{title:'手紙やメモで謝る',kind:'think',label:'手紙で謝る',cost:1,bond:1,atk:1,attr:'soc',up:'soc',desc:'口で言えなければ、書いて伝える。',hint:'書くのも、謝り方の一つ',icon:'book'},
+ promiseTrue:{title:'「もう嘘はつかない」と約束',kind:'support',label:'嘘をやめる約束',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'これからは正直に言うと、約束する。',hint:'約束して、守ると信頼が戻る',icon:'heart'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -1481,6 +1489,50 @@ lunch:{
  },
  progress(s){const f=s.flags;return s.goal===0?(f.clearedL?3:f.bit||f.mixed?2:s.reason?1:0):s.goal===1?(f.toldAmount||f.askedC?3:f.clearedL?2:s.reason?1:0):(f.fullTried?3:f.clearedL?2:s.reason?1:0)},
  situation(s){const f=s.flags;return f.clearedL?'向き合えた。一口・少なめ・混ぜる・相談がある。':f.bit||f.mixed?'工夫が見つかった。':'まだ残っている。向き合い方は練習できる。'}
+},
+lie:{
+ title:'友達に嘘をついてしまった',nav:'嘘をついた',num:'27',attrs:['soc'],
+ goals:['正直に言いたい','関係を戻したい','もう嘘をつかない自分になりたい'],
+ chapters:['放課後','翌日','翌日・放課後'],locations:['教室・放課後','教室・朝','教室・放課後'],
+ base:['biggerLie','blameOther','shutMouth','anger','ignore'],start:{mind:5,energy:4},
+ monsters:[{name:'小さな嘘',hp:3,power:0,turns:4,look:'最初は、小さな嘘だった。'},{name:'大きくなる嘘',hp:4,power:1,turns:5,look:'嘘が、重なって大きくなる。'},{name:'胸のもやもや',hp:5,power:1,turns:5,look:'正直になれない、もやもやが残る。'}],
+ talk:[['lieKid','友達に聞く','嘘をついた相手の様子を見る。'],['teacherLie','先生に相談','正直に言えないことを相談する。']],
+ think:[['scaredTell','正直に言うのが怖い','認めたら、嫌われそう。'],['whyFirst','どうして嘘をついた？','そもそも、なぜ嘘をついたのか。'],['whatNow','このままが楽？','正直に言うか、黙るか。']],
+ reasonKeys:['scaredTell','whyFirst','whatNow'],
+ stageGrants:[['fixTruth'],[]],
+ onExplore(s,key){
+  const out={text:'',card:null};
+  if(key==='lieKid'){s.flags.sawL=true;relation(s,'相手は、何も知らない様子だった。');out.text='友達は、何も知らない様子。\n余計に、言いにくくなった。';out.card='writeSorry'}
+  if(key==='teacherLie'){s.flags.toldLi=true;note(s,'先生「正直に言えたら、えらい」');out.text='先生「言えたら、えらいよ」\n先生は、正直さを見てくれる。';out.card='promiseTrue'}
+  if(key==='scaredTell'){s.reason='scaredTell';note(s,'正直に言うのが、怖い。');out.text='「認めたら、嫌われそう」';out.card='writeSorry'}
+  if(key==='whyFirst'){s.reason='whyFirst';note(s,'恥ずかしくて、つい嘘をついた。');out.text='「恥ずかしかったから、つい」\n理由が分かった。';out.card='whyLie'}
+  if(key==='whatNow'){s.reason='whatNow';note(s,'黙るか、正直に言うか。');out.text='「このままにするか、言うか」\n決めるのは自分。';out.card='admitLie'}
+  return out;
+ },
+ onPlay(s,id){
+  const f=s.flags;let text='',meaning='';
+  if(id==='biggerLie'){f.moreLie=true;s.rep-=1;relation(s,'嘘を重ねたら、ますますバレそうになった。');text='嘘をもう一つ重ねた。\nでも、つじつまが合わなくなってきた。';meaning='嘘を重ねると、あとで苦しくなる。';grant(s,'admitLie')}
+  if(id==='blameOther'){f.blamedO=true;s.rep-=1;relation(s,'別の子のせいにしたら、その子が泣きそうになった。');text='「あの子が言ったんだ」\n別の子のせいにしたら、泣きそうになった。';meaning='人のせいにすると、信頼を失う。';grant(s,'admitLie')}
+  if(id==='shutMouth'){f.shutM=true;s.mind-=1;text='黙っていた。\nでも、胸のもやもやが残った。';meaning='黙ると、心に残る。';grant(s,'writeSorry')}
+  if(id==='admitLie'){f.admitted=true;f.clearedLie=true;note(s,'「ごめん、嘘ついた」と言えた。');text='「ごめん、さっき嘘ついた」\n相手は驚いたが、「教えてくれてありがとう」と言った。';meaning='認めるのは怖いが、信頼が戻る。'}
+  if(id==='whyLie'){f.askedWhy=true;f.clearedLie=true;note(s,'嘘の理由を考えたら、次は正直に言える気がした。');text='「恥ずかしかったんだ」\n理由が分かると、次は言える。';meaning='理由が分かると、次は言える。'}
+  if(id==='fixTruth'){if(f.admitted||f.askedWhy||f.toldLi){f.truthed=true;f.clearedLie=true;note(s,'本当のことを言い直した。');text='「本当は、こうなんだ」\n正直に言い直せた。';meaning='言い直せば、まだ間に合う。'}else{s.mind-=1;text='言い直そうとしたが、まだ認めていないので難しかった。';meaning='まず嘘を認めてから、言い直すと良い。';grant(s,'admitLie')}}
+  if(id==='writeSorry'){f.wrote=true;f.clearedLie=true;note(s,'手紙で謝ったら、伝わった。');text='メモで「ごめん」を書いた。\n相手から「いいよ」の返事が来た。';meaning='書くのも、謝り方の一つ。'}
+  if(id==='promiseTrue'){if(f.admitted||f.wrote||f.truthed){f.promisedT=true;f.clearedLie=true;note(s,'「もう嘘はつかない」と約束して、守る気持ちになった。');text='「もう、嘘はつかない」\n約束して、守るつもり。';meaning='約束して守ると、信頼が戻る。'}else{s.mind-=1;text='約束しようとしたが、まだ認めていないので形だけになった。';meaning='まず認めてから、約束すると良い。';grant(s,'admitLie')}}
+  return {text,meaning};
+ },
+ watch(s){
+  if(s.stage===0)return 'つい、嘘をついてしまった。';
+  if(s.stage===1)return '嘘が、心に残っている。';
+  return '放課後。まだ、胸がもやもやする。';
+ },
+ scene(s){const f=s.flags;
+  if(s.stage===0)return {narrative:'放課後。友達に、つい嘘をついてしまった。',speaker:'友達',quote:'そうなんだ',look:'相手は、信じている様子。',self:'あ… 嘘ついちゃった',hint:'嘘をついたときの、つらさはどこ？'};
+  if(s.stage===1)return {narrative:'翌日。嘘が、心に残っている。',speaker:'友達',quote:'おはよう',look:'相手は、普通に話してくる。',self:s.reason==='scaredTell'?'言うのが怖い。':s.reason==='whyFirst'?'なぜ嘘をついたんだろう。':s.reason==='whatNow'?'このままにするか、言うか。':'どうする？',hint:'認める・書く・言い直す・先生、方法はある。'};
+  return {narrative:'翌日の放課後。まだ、もやもやしている。',speaker:'先生',quote:f.clearedLie?'正直に言えて、えらかったね':'何かあった？',look:'放課後の教室が、静かだ。',self:f.clearedLie?'正直に言えた。':'まだ、少し残っている。',hint:'正直さは、取り戻せる。'};
+ },
+ progress(s){const f=s.flags;return s.goal===0?(f.clearedLie?3:f.admitted||f.wrote?2:s.reason?1:0):s.goal===1?(f.truthed||f.wrote?3:f.admitted?2:s.reason?1:0):(f.promisedT?3:f.clearedLie?2:s.reason?1:0)},
+ situation(s){const f=s.flags;return f.clearedLie?'正直になれた。認める・書く・言い直す・約束がある。':f.admitted||f.wrote?'認め方が見つかった。':'嘘が残っている。正直さは練習できる。'}
 }
 };
 

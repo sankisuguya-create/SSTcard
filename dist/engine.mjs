@@ -528,6 +528,16 @@ export const cards={
  vegBrave:{title:'苦手なものを一つずつ攻略',kind:'think',label:'一つずつ攻略',cost:1,atk:2,attr:'ath',up:'ath',desc:'苦手なものを、一つずつ攻略。',hint:'一つずつは、現実的',icon:'up'},
  tellLunch:{title:'給食当番に正直に言う',kind:'talk',label:'正直に言う',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'当番に、「苦手で」と正直に言う。',hint:'正直は、助けを呼ぶ',icon:'hand'},
  ownPace3:{title:'無理せず自分のペースで',kind:'think',label:'自分のペース',cost:1,atk:2,attr:'ath',up:'ath',desc:'無理せず、自分のペースで挑戦。',hint:'ペースが、続く',icon:'sun'},
+ stopSing:{title:'歌うのをやめる',kind:'think',label:'歌わない',cost:0,strain:1,atk:1,attr:'soc',desc:'怖くて、歌うのをやめる。',hint:'やめると、練習にならない',icon:'door'},
+ mouthWord:{title:'口パクだけする',kind:'think',label:'口パク',cost:0,strain:1,atk:1,attr:'soc',desc:'声を出さず、口だけ動かす。',hint:'ふりでは、上手くならない',icon:'eye'},
+ humAlong:{title:'小さな声でハミング',kind:'think',label:'ハミング',cost:1,atk:2,attr:'soc',up:'soc',desc:'小さな声で、ハミングしてみる。',hint:'小さくても、声は出せる',icon:'ear'},
+ askPart:{title:'「自分のパート」を確かめる',kind:'think',label:'パートを確かめる',cost:1,atk:2,attr:'study',up:'study',desc:'自分のパートと、入る場所を確かめる。',hint:'場所が分かれば、迷わない',icon:'search'},
+ practiceSong:{title:'間違えたところだけ練習',kind:'think',label:'部分練習',cost:1,atk:2,attr:'study',up:'study',desc:'間違えたところだけ、繰り返し練習。',hint:'一点集中は、効率的',icon:'up'},
+ askMusicT:{title:'音楽の先生に教わる',kind:'talk',label:'音楽の先生に',cost:1,bond:1,atk:2,attr:'study',up:'study',desc:'先生に、入り方を教わる。',hint:'相談は、逃げじゃない',icon:'message'},
+ singLow:{title:'低めの声で確実に',kind:'think',label:'低めで確実に',cost:1,atk:2,attr:'study',up:'study',desc:'低めの声で、確実に歌う。',hint:'確実な方が、続く',icon:'check'},
+ learnTune:{title:'ピアノの音に耳を澄ませる',kind:'think',label:'音を聞く',cost:1,atk:2,attr:'study',up:'study',desc:'ピアノの音を、よく聞く。',hint:'聞くと、合わせられる',icon:'ear'},
+ singTogether:{title:'隣の人と一緒に歌う',kind:'talk',label:'一緒に歌う',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'隣の人の声に合わせて歌う。',hint:'一緒なら、怖くない',icon:'people'},
+ ownPart:{title:'自分のパートに自信を持つ',kind:'think',label:'自分のパート',cost:1,atk:2,attr:'study',up:'study',desc:'自分のパートを、堂々と歌う。',hint:'自信は、声を大きくする',icon:'spark'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -3079,6 +3089,48 @@ picky:{title:'給食が苦手で残した',nav:'給食で残した',num:55,attrs
  },
  progress(s){const f=s.flags;return f.swapped||f.braved||f.ownPaced3||f.toldL?3:f.tinyed||f.askedLess||f.triedS||f.askedLn?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.swapped||f.braved||f.ownPaced3?'少しずつ、攻略できそう。':f.tinyed||f.askedLess?'一口から、挑戦できた。':'まだ、残したまま。少なめ・一口・相談、方法はある。'}
+},
+choirMiss:{title:'合唱でミスした',nav:'合唱でミスした',num:56,attrs:['study','soc'],goals:['間違えても歌い続けたい','練習で立て直したい','本番を楽しみたい'],chapters:['練習で音を外した','立て直しの練習','本番の合唱'],locations:['音楽室','音楽室','体育館'],base:['stopSing','mouthWord','humAlong','anger','ignore'],
+ start:{mind:4,energy:3},
+ monsters:[{name:'外れた音',hp:5,power:1,turns:4,look:'さっきの音、変だったかも。'},{name:'怖くなる声',hp:5,power:1,turns:4,look:'また間違えたら、どうしよう。'},{name:'本番の合唱',hp:6,power:2,turns:4,look:'本番は、みんなの前。'}],
+ talk:[['askPart2','先生にパートを確かめる','自分のパートを、聞いてみる。'],['askMusicT2','音楽の先生に教わる','入り方を、教わる。'],['singTogether2','隣の人と一緒に歌う','隣の声に、合わせてみる。']],
+ think:[['wrongNote','音を外してしまった','さっきの音、ずれてたかも。'],['fear2','また間違えそうで怖い','間違えるのが、怖い。'],['wantSing','ちゃんと歌いたい','本当は、上手く歌いたい。']],
+ reasonKeys:['wrongNote','fear2','wantSing'],
+ stageGrants:[['askPart','practiceSong','askMusicT'],['singLow','learnTune','singTogether','ownPart']],
+ subs:[
+  {title:'先生が「もう一回」と言ってくれた',text:'間違えたところを、もう一度やる時間をもらった。',stat:'study',min:0,good:{text:'ゆっくり入れた。',mind:1},ok:{text:'練習になった。',mind:1}},
+  {title:'隣の人が「一緒にやろ」と誘ってくれた',text:'隣の子が、パート練習に付き合ってくれた。',stat:'soc',min:0,good:{text:'一緒だと、歌いやすい。',rep:1,mind:1},ok:{text:'心強かった。',mind:1}}
+ ],
+ onExplore(s,key){const out={text:'',card:null};
+  if(key==='askPart2'){s.flags.askedP2=true;out.text='「私のパート、ここ？」\n「そう、そこから入るよ」';out.card='askPart'}
+  if(key==='askMusicT2'){s.flags.askedM2=true;relation(s,'教わったら、「ここで息を吸うといい」と教えてもらえた。');out.text='「入る場所が分かりません」\n「ここで息を吸うと、入りやすいよ」';out.card='askMusicT'}
+  if(key==='singTogether2'){s.flags.sangT2=true;relation(s,'隣の子の声に合わせたら、歌いやすかった。');out.text='「一緒に歌っていい？」\n「うん、合わせよう」';out.card='singTogether'}
+  if(key==='wrongNote'){s.reason='wrongNote';out.text='さっきの音、ずれてたかも。\n「部分練習」で、そこだけ直せる。';out.card='practiceSong'}
+  if(key==='fear2'){s.reason='fear2';out.text='また間違えそうで、怖い。\n「低めの声」で確実に歌うと、怖さが減る。';out.card='singLow'}
+  if(key==='wantSing'){s.reason='wantSing';out.text='本当は、上手く歌いたい。\n「耳を澄ませる」「ハミング」で少しずつ。';out.card='learnTune'}
+  return out;
+ },
+ onPlay(s,id){const f=s.flags;
+  if(id==='humAlong'){f.hummed=true;return{text:'小さな声で、ハミングした。',meaning:'小さくても、声は出せる。'}}
+  if(id==='askPart'){f.askedP3=true;return{text:'自分のパートを、確かめた。',meaning:'場所が分かれば、迷わない。'}}
+  if(id==='practiceSong'){f.practiced2=true;return{text:'間違えたところだけ、練習した。',meaning:'一点集中は、効率的。'}}
+  if(id==='askMusicT'){f.askedMT=true;return{text:'先生に、教わった。',meaning:'相談は、逃げじゃない。'}}
+  if(id==='singLow'){f.sangL=true;return{text:'低めの声で、確実に歌った。',meaning:'確実な方が、続く。'}}
+  if(id==='learnTune'){f.learnedT=true;return{text:'ピアノの音に、耳を澄ませた。',meaning:'聞くと、合わせられる。'}}
+  if(id==='singTogether'){f.sangT=true;return{text:'隣の人と、一緒に歌った。',meaning:'一緒なら、怖くない。'}}
+  if(id==='ownPart'){f.ownedP=true;return{text:'自分のパートを、堂々と歌った。',meaning:'自信は、声を大きくする。'}}
+  if(id==='stopSing'){f.stoppedS=true;return{text:'歌うのを、やめた。',meaning:'やめると、練習にならない。'}}
+  if(id==='mouthWord'){f.mouthed=true;return{text:'口だけ、動かした。',meaning:'ふりでは、上手くならない。'}}
+  return{text:'',meaning:''};
+ },
+ watch(s){return s.stage===0?'外れても、歌は続く。':s.stage===1?'部分練習が、一番効く。':'本番は、みんなで作る。'},
+ scene(s){const f=s.flags;
+  if(s.stage===0)return{narrative:'合唱練習。自分の音が、ずれた気がした。',speaker:'音楽の先生',quote:'もう一度、そこから。',look:'楽譜が、目の前にある。',self:'今の、変だったかも…',hint:'合唱でミスして、何がつらい？'};
+  if(s.stage===1)return{narrative:'練習時間。間違えたところを、どう立て直すか。',speaker:'音楽の先生',quote:'分からないところは、聞いて。',look:'ピアノの音が、聞こえる。',self:s.reason==='fear2'?'また間違えそう…':s.reason==='wantSing'?'上手く歌いたい…':'音、外れたな…',hint:'確かめる・練習・教わる、方法はある。'};
+  return{narrative:'本番。体育館に、みんなの声が響く。',speaker:'指揮の人',quote:f.sangL||f.ownedP?'（微笑んで、手を振る）':'「大きな声でー」',look:'みんなの視線が、前を向く。',self:f.sangT||f.ownedP||f.learnedT?'歌えそう。':'まだ、不安なまま。',hint:'低め・耳・一緒・自信、選ぼう。'};
+ },
+ progress(s){const f=s.flags;return f.sangT||f.ownedP||f.learnedT?3:f.askedP3||f.practiced2||f.askedMT||f.sangL?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.sangT||f.ownedP?'立て直して、歌えそう。':f.askedP3||f.practiced2?'練習で、立て直せた。':'まだ、不安なまま。部分練習・教わる・一緒に歌う、方法はある。'}
 }
 };
 

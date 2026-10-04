@@ -101,6 +101,15 @@ export const cards={
  learnWay:{title:'当たった人にコツを聞く',kind:'support',label:'コツを聞く',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'発表の上手さの秘訣を、聞いてみる。',hint:'当たった人から学べる',icon:'people'},
  otherRole:{title:'発表以外の役割を探す',kind:'think',label:'別の役割',cost:1,atk:2,attr:'study',up:'study',desc:'記録係・補助など、別の貢献を見つける。',hint:'発表以外にも役割はある',icon:'puzzle'},
  nextTime:{title:'「次は当たる」と準備する',kind:'talk',label:'次に備える',cost:1,strain:1,atk:2,attr:'study',up:'study',desc:'次に当たったときのために、準備しておく。',hint:'準備は、当たる日のためにある',icon:'spark'},
+ takeBack:{title:'黙って取り返す',kind:'talk',label:'取り返す',cost:1,strain:1,atk:1,attr:'soc',desc:'断りなしに、自分のものを戻す。',hint:'ことばがないと、驚かせてしまう',icon:'hand'},
+ keepQuiet:{title:'何も言わずに我慢',kind:'think',label:'我慢する',cost:0,atk:0,desc:'嫌だけど、何も言わないでおく。',hint:'我慢もできる。でも気持ちは残る',icon:'door'},
+ watchUse:{title:'もう少し様子を見る',kind:'think',label:'様子を見る',cost:0,atk:0,up:'soc',desc:'まずは、様子を見て考える。',hint:'様子を見ることも、選択肢',icon:'eye'},
+ sayMine:{title:'「それ、俺のだよ」と伝える',kind:'talk',label:'自分のと伝える',cost:1,strain:1,bond:1,atk:1,attr:'soc',up:'soc',desc:'自分のものだと、冷静に伝える。',hint:'伝えると、相手も気づける',icon:'flag'},
+ ruleTalk:{title:'貸し借りのルールを決める',kind:'talk',label:'ルールを決める',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'「使うときは聞いてね」と約束する。',hint:'ルールがあると、また使われにくい',icon:'puzzle'},
+ clearNo:{title:'「今回は貸せない」とはっきり言う',kind:'talk',label:'はっきり断る',cost:1,strain:1,atk:1,attr:'soc',up:'soc',desc:'嫌なときは、はっきり断る。',hint:'断るのも、大事な権利',icon:'flag'},
+ lendRule:{title:'「使うときは聞いて」と約束',kind:'support',label:'約束する',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'ケンと、貸し借りの決まりを作る。',hint:'約束は、次からのルールになる',icon:'people'},
+ classRule:{title:'クラスで貸し借りルールを決める',kind:'support',label:'クラスルール',cost:1,bond:1,atk:2,attr:'study',up:'study',desc:'みんなで決まりを作ると、安心できる。',hint:'みんなの決まりは強い',icon:'book'},
+ lendBox:{title:'貸し借り用の箱を作る',kind:'talk',label:'貸し借り箱',cost:1,atk:2,attr:'study',up:'study',desc:'「貸していいもの箱」を作って、迷いをなくす。',hint:'仕組みで、断りやすくなる',icon:'spark'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -617,6 +626,51 @@ picked:{
  },
  progress(s){const f=s.flags;return s.goal===0?(f.persist||f.clearedP?3:f.brave?2:s.reason?1:0):s.goal===1?(f.roleFound||f.listened?3:f.knowsRule?2:s.reason?1:0):(f.clearedP||f.learnedP?3:f.knowsRule?2:0)},
  situation(s){const f=s.flags;return f.clearedP?'当たらなくても、自分の参加の仕方が見つかった。':f.knowsRule?'選ばれ方が分かって、少し納得できた。':f.listened?'聞くことでも、学べると分かった。':'当たるかは決められない。でも、次のためにできることがある。'}
+},
+item:{
+ title:'物を勝手に使われた',nav:'貸し借り',num:'11',attrs:['soc','study'],
+ goals:['自分のものを守りたい','ケンと仲良くしたい','ルールを作りたい'],
+ chapters:['図工の時間','休み時間','放課後'],locations:['教室・図工','教室・休み時間','教室・放課後'],
+ base:['takeBack','keepQuiet','watchUse','anger','ignore'],start:{mind:4,energy:4},
+ monsters:[{name:'借りっぱなしの手',hp:4,power:1,turns:4,look:'断りなしの手が、また伸びてくる。'},{name:'言えないモヤモヤの壁',hp:5,power:1,turns:5,look:'「言いたい」が、壁になって積み上がる。'},{name:'貸し借り大王',hp:6,power:1,turns:5,look:'「貸してよ」が、大きくのしかかる。'}],
+ talk:[['kenB','ケンに話を聞く','なんで勝手に使うのか、聞いてみる。'],['teacherI','先生に相談する','貸し借りの仕方を相談する。']],
+ think:[['shy','断るのが苦しい','「いいよ」以外が、言いにくい。'],['angry','勝手に使われて腹が立つ','断りなしは、やっぱり嫌だ。'],['hard','もう貸したくない','大事なものだから、貸したくない。']],
+ reasonKeys:['shy','angry','hard'],
+ stageGrants:[['lendBox'],[]],
+ onExplore(s,key){
+  const out={text:'',card:null};
+  if(key==='kenB'){s.flags.talked=true;note(s,'ケンは悪気なく、借りていた。');out.text='ケン「ごめん、ちゃんと言うべきだったね」';out.card='lendRule'}
+  if(key==='teacherI'){s.flags.advisedI=true;note(s,'クラスで貸し借りルールを決めるとよい。');out.text='先生「みんなで決まりを作ると、安心だね」';out.card='classRule'}
+  if(key==='shy'){s.reason='shy';note(s,'「嫌」と言うのが、苦しい。');out.text='「嫌だとは言えない。でも、嫌だ」';out.card='sayMine'}
+  if(key==='angry'){s.reason='angry';note(s,'断りなしに使われて、腹が立っている。');out.text='「なんで勝手に使うんだ」';out.card='ruleTalk'}
+  if(key==='hard'){s.reason='hard';note(s,'大事なものを貸すのは、怖い。');out.text='「大事なやつだから、もう貸したくない」';out.card='clearNo'}
+  return out;
+ },
+ onPlay(s,id){
+  const f=s.flags;let text='',meaning='';
+  if(id==='takeBack'){if(f.talked||f.said){f.clearedI=true;relation(s,'「もう終わり？」と聞いて返してもらった。');text='ケン「あ、ごめん。もう終わり？」\nことばを添えてからだと、角が立たなかった。';meaning='先に伝えてからなら、取り戻しも角が立たない。'}else{s.mind-=1;text='黙って取り返した。\nケンが、びっくりして睨んできた。';meaning='ことばがないと、相手は驚く。先に伝えた方がいい。';grant(s,'sayMine')}}
+  if(id==='keepQuiet'){f.bottled=true;text='何も言わなかった。\n気持ちは、中に残ったまま。';meaning='我慢もできる。でも、気持ちは消えない。'}
+  if(id==='watchUse'){f.watched=true;s.mind+=1;text='もう少し様子を見た。\nケンは、悪気なさそうに使っている。';meaning='様子を見てから、動くのもあり。'}
+  if(id==='sayMine'){f.said=true;f.clearedI=true;relation(s,'「それ俺のだよ」と伝えると、ケンが気づいた。');text='ケン「あ、ごめん！　知らなかった」\n伝えると、相手も分かってくれた。';meaning='「自分の」と伝えるだけで、相手が気づくことがある。'}
+  if(id==='ruleTalk'){f.rules=true;f.clearedI=true;relation(s,'ケンと、貸し借りのルールを決めた。');text='「使うときは聞いてね」\nケン「分かった。守るよ」';meaning='ルールを決めると、次から安心できる。'}
+  if(id==='clearNo'){if(f.said||f.talked){f.clearedI=true;f.declinedI=true;relation(s,'「今回は貸せない」とはっきり伝えられた。');text='ケン「分かった。また今度ね」\n断っても、関係は続いた。';meaning='はっきり断るのは、悪いことじゃない。'}else{s.mind-=1;text='急に「貸せない」と言った。\nケンは、少し戸惑っていた。';meaning='断る前に、気持ちの素地があると伝わりやすい。';grant(s,'sayMine')}}
+  if(id==='lendRule'){f.agreed=true;f.clearedI=true;relation(s,'ケンと「使うときは聞く」を約束した。');text='ケン「約束する。明日から聞くよ」';meaning='約束があると、次から言いやすい。'}
+  if(id==='classRule'){f.classAgreed=true;f.clearedI=true;relation(s,'クラスで貸し借りルールができた。');text='みんなで「断りなしで使わない」を決めた。\n安心感が、増えた。';meaning='みんなの決まりは、一人より強い。'}
+  if(id==='lendBox'){if(f.rules||f.said){f.clearedI=true;relation(s,'貸し借り箱ができて、迷いがなくなった。');text='「これは貸していい、これは大事」\n箱があると、断ることばが要らない。';meaning='仕組みがあると、気持ちの負担が減る。'}else{s.mind-=1;text='箱を作ったが、ケンには伝わらなかった。';meaning='仕組みも、先に気持ちを伝えると動きやすい。';grant(s,'sayMine')}}
+  return {text,meaning};
+ },
+ watch(s){
+  if(s.stage===0)return 'ケンは、悪気なさそうに鉛筆を使っている。';
+  if(s.stage===1)return 'ケンは、こちらの様子をうかがっている。';
+  return 'ケンは、もう借りるときは聞いている。';
+ },
+ scene(s){const f=s.flags;
+  if(s.stage===0)return {narrative:'図工の時間。大事な鉛筆を、ケンが断りなしに使っている。',speaker:'ケン',quote:'あ、借りるね',look:'ケンは、悪気なさそうに使っている。',self:'勝手に使われるの、嫌だな…',hint:'嫌な気持ちは、まだ相手に伝わっていない。'};
+  if(s.stage===1)return {narrative:'休み時間。ケンは、まだ鉛筆を使っている。',speaker:'ケン',quote:f.clearedI?'ごめん、もう終わり？':f.said?'これ、お前のだったんだ':'なんで睨むの？',look:f.clearedI?'ケンは、返そうとしている。':'ケンは、まだ気づいていない。',self:s.reason==='shy'?'断るのが、苦しい。':s.reason==='angry'?'勝手に使われて、腹が立つ。':s.reason==='hard'?'もう貸したくない。':'嫌な気持ちを、どう伝える？',hint:'伝える・断る・ルールを作る、方法はある。'};
+  return {narrative:'放課後。ケンが、鉛筆を持ってきた。',speaker:'ケン',quote:f.clearedI?'これ、返すよ。次から聞くね':f.said?'ごめん、借りてた':'……はい、返す',look:'ケンは、少し申し訳なさそうだ。',self:f.clearedI?'貸し借りの決まりが、できた。':'まだ少し、もやもやが残っている。',hint:'貸し借りは、決まりがあると安心。'};
+ },
+ progress(s){const f=s.flags;return s.goal===0?(f.clearedI?3:f.said||f.watched?2:s.reason?1:0):s.goal===1?(f.clearedI&&f.agreed||f.rules?3:f.said?2:s.reason?1:0):(f.rules||f.classAgreed||f.clearedI?3:f.said||f.talked?2:0)},
+ situation(s){const f=s.flags;return f.clearedI?'貸し借りのルールができて、安心して使える。':f.said||f.talked?'自分の気持ちを伝えられた。':'嫌な気持ちは残っている。伝える方法を練習できる。'}
 }
 };
 

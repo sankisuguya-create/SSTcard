@@ -256,24 +256,50 @@ rt{font-size:.55em}
  .hand.fan .game-card{transform:none}
 }
 
-/* モンスター（立ちはだかるもの）パネル */
-.monster-panel{background:#f7f8fb;border-bottom:1px solid var(--line);padding:16px 22px 14px}
-.monster-head{display:flex;align-items:center;gap:13px;flex-wrap:wrap}
-.monster-icon{width:46px;height:46px;display:grid;place-items:center;border-radius:12px;background:var(--ink);color:#fff;flex-shrink:0}
-.monster-icon svg{width:26px;height:26px}
-.monster-name{font-size:18px;font-weight:800;line-height:1.4}
-.monster-look{font-size:12.5px;color:var(--sub);line-height:1.5}
-.monster-meta{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+/* モンスターアリーナ（パズドラ風の上半分）: 大きなイラスト＋上部に名前・体力・反撃 */
+.arena{position:relative;background:linear-gradient(180deg,#f2ecdf 60%,#e9e0cf);border-radius:0;overflow:hidden}
+.arena-img{display:block;width:100%;height:auto;aspect-ratio:720/427;object-fit:cover;object-position:center 30%}
+.arena-top{position:absolute;inset:0 0 auto 0;display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:14px 18px;background:linear-gradient(180deg,#fffffff2,#ffffff00)}
+.arena-name{font-size:18px;font-weight:800;line-height:1.4;text-shadow:0 1px 0 #fff}
+.arena-look{display:block;font-size:12px;font-weight:600;color:var(--sub);margin-top:2px}
+.arena-meta{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.arena-bottom{position:absolute;inset:auto 0 0 0;padding:10px 16px 12px;background:linear-gradient(0deg,#fffffff2,#ffffff00)}
 .monster-power{color:var(--red);background:var(--red-pale);font-weight:700}
-.hp-bar{position:relative;display:flex;gap:4px;margin-top:12px}
-.hp-bar i{flex:1;height:14px;border-radius:4px;background:#e4e8ee;display:block}
+.hp-bar{position:relative;display:flex;gap:4px}
+.hp-bar i{flex:1;height:14px;border-radius:4px;background:#ddd3c0;display:block;box-shadow:inset 0 1px 0 #ffffff88}
 .hp-bar i.on{background:var(--red)}
-.monster-panel.beaten{opacity:.55}
-.monster-panel.changed{animation:panelFlash .5s ease}
-@keyframes panelFlash{0%{background:#fdeaea}100%{background:#f7f8fb}}
+.arena.beaten .arena-img{opacity:.4;filter:grayscale(.4)}
+.arena.changed .arena-img{animation:arenaShake .45s ease}
+@keyframes arenaShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}50%{transform:translateX(5px)}75%{transform:translateX(-3px)}}
 
-/* 左サイドのバフ・デバフ行 */
-.stats-section{}
+/* ダイアログボックス: タップで履歴を表示 */
+.dlg-box{display:block;width:100%;text-align:left;border:0;border-top:1px solid var(--line);border-radius:0;background:white;padding:18px 22px 12px;position:relative;box-shadow:none}
+.dlg-box:hover:not(:disabled){box-shadow:inset 0 0 0 2px var(--pale);border-color:var(--line)}
+.dlg-narr{font-size:15px;line-height:1.85;margin-bottom:12px;color:var(--ink)}
+.dlg-speech{display:flex;align-items:flex-start;gap:12px;margin-top:10px}
+.dlg-lines{min-width:0}
+.dlg-speech.self{margin-top:8px}
+.dlg-hint{display:inline-flex;align-items:center;gap:6px;position:absolute;right:14px;bottom:10px;font-size:11px;color:var(--sub)}
+.dlg-hint svg{width:14px;height:14px}
+
+/* 履歴モーダル */
+.history-list{display:grid;gap:16px}
+.hist-scene{border-left:3px solid var(--pale);padding-left:14px}
+.hist-scene .dlg-speech{margin-top:8px}
+.hist-line{padding-left:14px}
+.hist-tag{font-size:11px;font-weight:800;letter-spacing:.08em;color:var(--blue);display:block;margin-bottom:4px}
+.hist-line p{font-size:14px;color:var(--sub);line-height:1.7;white-space:pre-line}
+.hist-line.minus .hist-tag{color:var(--red)}
+.hist-line.event .hist-tag{color:var(--orange)}
+
+/* 手札上部のバフ・デバフ・ストリップ（パラメータ） */
+.stats-strip{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.stats-caption{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--sub);white-space:nowrap}
+.stats-caption svg{width:15px;height:15px}
+.stats-strip .stat{display:inline-flex;align-items:center;gap:7px;position:relative}
+.side-clue{font-size:13px;line-height:1.7;padding:7px 0;border-bottom:1px dashed #edf0f3}
+.side-clue:last-child{border-bottom:0}
+.side-clue.dim{color:var(--sub)}
 .stat{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px dashed #edf0f3;position:relative}
 .stat:last-of-type{border-bottom:0}
 .stat-icon{color:var(--sub)}

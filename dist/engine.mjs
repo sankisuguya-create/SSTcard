@@ -332,6 +332,15 @@ export const cards={
  retraceSteps:{title:'通った道を探す',kind:'think',label:'道を探す',cost:1,atk:2,attr:'study',up:'study',desc:'今日通ったところを、探す。',hint:'戻って探すと、見つかる',icon:'runner'},
  foundIt:{title:'見つかった！',kind:'support',label:'見つかった',cost:2,atk:3,attr:'study',up:'study',desc:'探したら、見つかった。',hint:'見つけた経験は、自信になる',icon:'flag'},
  ownUp:{title:'ちゃんと詫びて済ませる',kind:'support',label:'詫びる',cost:2,atk:3,attr:'soc',up:'soc',desc:'「ごめんなさい」と、きちんと言う。',hint:'詫びた分だけ、前に進める',icon:'check'},
+ sulkSeat:{title:'文句を言う',kind:'think',label:'文句',cost:0,strain:1,atk:1,attr:'soc',desc:'「こんな席、いやだ」と文句を言う。',hint:'文句だけでは、変わらない',icon:'bolt'},
+ ignoreNew:{title:'新しい隣と話さない',kind:'think',label:'話さない',cost:0,strain:1,atk:0,desc:'新しい隣の子と、話さない。',hint:'話さないと、距離のまま',icon:'eye'},
+ meetBreak:{title:'休み時間に会う約束',kind:'talk',label:'会う約束',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'仲良しと、休み時間に会う約束をする。',hint:'離れても、つながれる',icon:'hand'},
+ newFriend:{title:'新しい隣の子と話す',kind:'talk',label:'新しく話す',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'新しい隣の子に、話してみる。',hint:'話すと、新しい友達になる',icon:'message'},
+ okSeat:{title:'この席のいいところを探す',kind:'think',label:'いいとこ探し',cost:1,atk:2,attr:'study',up:'study',desc:'この席の、いいところを探す。',hint:'見方を変えると、気持ちが変わる',icon:'search'},
+ oldCall:{title:'仲良しに気持ちを伝える',kind:'talk',label:'気持ちを伝える',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'「離れてさびしい」と、伝える。',hint:'伝えると、さびしさが軽くなる',icon:'heart'},
+ seatPlan:{title:'離れても仲良しでいる作戦',kind:'think',label:'離れても作戦',cost:1,atk:2,attr:'study',up:'study',desc:'帰り・休み・遊びの約束を立てる。',hint:'約束があれば、離れても大丈夫',icon:'list'},
+ smileSeat:{title:'新しい席を楽しむ',kind:'support',label:'楽しむ',cost:2,atk:3,attr:'soc',up:'soc',desc:'新しい席での、毎日を楽しむ。',hint:'楽しめれば、新しい毎日になる',icon:'sun'},
+ keepBond:{title:'仲良しのままでいる',kind:'support',label:'仲良しのまま',cost:2,atk:3,attr:'soc',up:'soc',desc:'離れても、仲良しは続く。',hint:'離れても続く、友達関係',icon:'check'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -1997,6 +2006,54 @@ lostBook:{
  },
  progress(s){const f=s.flags;return f.found||f.owned||f.replaced?3:f.told||f.searched?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.found?'本が見つかった。探して、返せた。':f.told||f.askedL?'正直に言えた。済ませ方が決まった。':'本がないまま。正直・探す・弁償、方法はある。'}
+},
+
+// STORY 36 ── 席替えで仲良しと離れる ──
+seat:{
+ title:'席替えで仲良しと離れる',nav:'席替え',num:'36',attrs:['soc'],
+ goals:['新しい席になじみたい','離れても仲良しでいたい','さびしい気持ちの自分を知りたい'],
+ chapters:['席替え','休み時間','数日後'],locations:['教室','教室・休み','教室'],
+ base:['sulkSeat','ignoreNew','anger','ignore','boast'],start:{mind:5,energy:4},
+ monsters:[{name:'ハナレの影',hp:4,power:1,turns:4,look:'仲良しと、席が離れてしまった。'},{name:'サビシイの影',hp:4,power:1,turns:4,look:'さびしさが、じんわりにじんでくる。'},{name:'アタラシイの影',hp:6,power:2,turns:5,look:'新しい席が、まだなじまない。'}],
+ talk:[['oldTalk','仲良しに気持ちを伝える','「さびしい」と、仲良しに言う。'],['newTalk','新しい隣に話す','新しい隣の子に、話してみる。'],['teacherSeat','先生に相談','席替えのことを、先生に言う。']],
+ think:[['lonely','さびしい','仲良しと離れて、さびしい。'],['noEnergy','やる気が出ない','新しい席に、なじめない。'],['wantOld','前の席に戻りたい','できれば、前の席に戻りたい。']],
+ reasonKeys:['lonely','noEnergy','wantOld'],
+ stageGrants:[['meetBreak'],['smileSeat']],
+ onExplore(s,key){
+  const out={text:'',card:null};
+  if(key==='oldTalk'){s.flags.toldO=true;relation(s,'「さびしい」と言ったら、仲良しも「私も」と言ってくれた。');out.text='「私も、さびしいよ」\n仲良しも、同じ気持ちだった。';out.card='oldCall'}
+  if(key==='newTalk'){s.flags.newTalked=true;relation(s,'新しい隣の子に話したら、返してくれた。');out.text='「あ、おはよう」\n新しい隣の子も、返してくれた。';out.card='newFriend'}
+  if(key==='teacherSeat'){s.flags.toldT2=true;note(s,'先生に「離れても会える作戦を立てよう」と言われた。');out.text='先生「離れても、会えるよ」\n作戦の、ヒントをもらった。';out.card='seatPlan'}
+  if(key==='lonely'){s.reason='lonely';note(s,'さびしさは、伝えると軽くなる。');out.text='「さびしい」\nさびしさは、伝えると軽くなる。';out.card='oldCall'}
+  if(key==='noEnergy'){s.reason='noEnergy';note(s,'なじめないなら、いいところを探す。');out.text='「やる気が、出ない」\nいいところを、探そう。';out.card='okSeat'}
+  if(key==='wantOld'){s.reason='wantOld';note(s,'戻れなくても、離れても仲良しでいられる。');out.text='「前の席に、戻りたい」\n離れても、仲良しでいられる。';out.card='meetBreak'}
+  return out;
+ },
+ onPlay(s,id){
+  const f=s.flags;let text='',meaning='';
+  if(id==='sulkSeat'){f.sulked=true;s.mind-=1;relation(s,'文句を言ったら、余計にさびしくなった。');text='「こんな席、いやだ」と文句を言った。\n余計に、さびしくなった。';meaning='文句だけでは、変わらない。';grant(s,'meetBreak')}
+  if(id==='ignoreNew'){f.ignoredN=true;s.mind-=1;relation(s,'話さなかったら、距離のままだった。');text='新しい隣の子と、話さなかった。\n距離のまま、だった。';meaning='話さないと、距離のまま。';grant(s,'newFriend')}
+  if(id==='meetBreak'){f.meetPlanned=true;relation(s,'休み時間に会う約束をしたら、さびしさが軽くなった。');text='「休み時間、一緒に遊ぼう」\n約束ができた。';meaning='離れても、つながれる。'}
+  if(id==='newFriend'){f.madeNew=true;relation(s,'新しい隣の子と話したら、楽しかった。');text='「ねえ、それ何？」\n新しい隣の子と、話せた。';meaning='話すと、新しい友達になる。'}
+  if(id==='okSeat'){f.seatOk=true;note(s,'この席のいいところを見つけた。');text='「窓側だし、前も見やすい」\nこの席の、いいところを見つけた。';meaning='見方を変えると、気持ちが変わる。'}
+  if(id==='oldCall'){f.toldO=true;relation(s,'気持ちを伝えたら、さびしさが軽くなった。');text='「離れて、さびしいよ」\n「私も。でも、すぐ近くだよ」';meaning='伝えると、さびしさが軽くなる。'}
+  if(id==='seatPlan'){f.plannedS=true;note(s,'帰りと休みの約束を立てたら、見通しが持てた。');text='「帰りは一緒に、休み時間も���おう」\n作戦が、できた。';meaning='約束があれば、離れても大丈夫。'}
+  if(id==='smileSeat'){if(f.seatOk||f.madeNew||f.meetPlanned){f.enjoyed=true;note(s,'新しい席を、楽しめるようになった。');text='「この席も、いいかも」\n新しい席を、楽しめた。';meaning='楽しめれば、新しい毎日になる。'}else{s.mind-=1;text='楽しもうとしたが、まだなじめていなかった。';meaning='まず話す・探す・約束してから、楽しむと良い。';grant(s,'newFriend')}}
+  if(id==='keepBond'){if(f.meetPlanned||f.toldO||f.plannedS){f.bondKept=true;note(s,'離れても、仲良しのままでいられた。');text='「明日も、休み時間ね」\n離れても、仲良しのまま。';meaning='離れても続く、友達関係。'}else{s.mind-=1;text='仲良しでいようとしたが、つながり方が分からなかった。';meaning='まず伝える・約束してから、つながると良い。';grant(s,'meetBreak')}}
+  return {text,meaning};
+ },
+ watch(s){
+  if(s.stage===0)return '仲良しと、席が離れてしまった。';
+  if(s.stage===1)return 'さびしさが、じんわりにじんでくる。';
+  return '数日後。新しい席が、まだなじまない。';
+ },
+ scene(s){const f=s.flags;
+  if(s.stage===0)return {narrative:'席替えの日。仲良しと、席が離れてしまった。',speaker:'仲良し',quote:'えー、離れちゃった…',look:'仲良しが、遠い席に座っている。',self:'さびしい…',hint:'席替えでつらいのは、どこ？'};
+  if(s.stage===1)return {narrative:'休み時間。仲良しが、遠い席にいる。',speaker:'仲良し',quote:f.meetPlanned?'休み時間、遊ぼうね':'さびしいね…',look:'仲良しも、こちらを見ている。',self:s.reason==='lonely'?'さびしい。':s.reason==='noEnergy'?'やる気が出ない。':s.reason==='wantOld'?'前の席に戻りたい。':'どうしよう…',hint:'伝える・約束・新しく話す・いいとこ探し、方法はある。'};
+  return {narrative:'数日後。新しい席での毎日が、始まっている。',speaker:'新しい隣',quote:f.madeNew?'今日もよろしく！':'…',look:'新しい席に、座っている。',self:f.seatOk||f.madeNew?'この席も、悪くない。':'まだ、なじまない。',hint:'新しい席を、楽しもう。'};
+ },
+ progress(s){const f=s.flags;return f.enjoyed||f.bondKept?3:f.meetPlanned||f.seatOk||f.madeNew||f.toldO?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.enjoyed||f.bondKept?'新しい席を楽しめ、仲良しも続いた。':f.meetPlanned||f.seatOk?'やり方が見つかった。伝える・約束・新しく話す・いいとこ探し。':'さびしいまま。つながり方は、見つけられる。'}
 }
 };
 

@@ -458,6 +458,16 @@ export const cards={
  compareSelf:{title:'前の自分と比べる',kind:'think',label:'前と比べる',cost:1,atk:2,attr:'study',up:'study',desc:'人の点より、前の自分と比べる。',hint:'前よりできたら、成長',icon:'up'},
  makePromise2:{title:'「次はがんばる」と約束する',kind:'support',label:'約束する',cost:2,atk:3,attr:'soc',up:'soc',desc:'「次はがんばる」と、家で約束する。',hint:'約束は、支えになる',icon:'flag'},
  restEasy:{title:'今日は、気にしない',kind:'support',label:'気にしない',cost:2,atk:3,attr:'ath',up:'ath',desc:'今日は切り替えて、気にしない。',hint:'切り替えも、立て直し',icon:'check'},
+ yellCut:{title:'「割り込むな！」と怒鳴る',kind:'talk',label:'怒鳴る',cost:0,strain:1,atk:1,attr:'soc',desc:'前に、大声で怒鳴る。',hint:'怒鳴ると、まわりも嫌になる',icon:'bolt'},
+ pretendOk:{title:'何も言わず我慢する',kind:'think',label:'黙って我慢',cost:0,strain:1,atk:1,attr:'soc',desc:'黙って、我慢する。',hint:'我慢すると、心が重い',icon:'eye'},
+ sayTurn:{title:'「後ろに並んで」と伝える',kind:'talk',label:'後ろにと伝える',cost:1,atk:2,attr:'soc',up:'soc',desc:'静かに、「後ろに並んで」と言う。',hint:'静かに言うと、伝わる',icon:'message'},
+ tapShoulder:{title:'肩を軽くたたいて伝える',kind:'talk',label:'たたいて伝える',cost:1,atk:2,attr:'soc',up:'soc',desc:'肩を軽くたたいて、穏やかに言う。',hint:'穏やかだと、相手も聞く',icon:'hand'},
+ tellWatcher:{title:'見ている人・先生に言う',kind:'talk',label:'見ている人に言う',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'見ていた人や、先生に伝える。',hint:'一人で解決しなくてもいい',icon:'heart'},
+ coolVoice:{title:'「僕の順番だよ」と自分の意見を言う',kind:'talk',label:'自分の意見を言う',cost:1,atk:2,attr:'soc',up:'soc',desc:'「僕の順番だよ」と、自分の意見を言う。',hint:'自分の意見を言うのは、正しい',icon:'pen'},
+ explainRule:{title:'「列のルール」を説明する',kind:'think',label:'ルールを説明',cost:1,atk:2,attr:'study',up:'study',desc:'列のルールを、説明する。',hint:'ルールなら、相手も納得しやすい',icon:'list'},
+ letSlide:{title:'今回は見送る',kind:'think',label:'今回は見送る',cost:1,atk:2,attr:'soc',up:'soc',desc:'「今回はいいか」と、見送る。',hint:'許せることも、強さ',icon:'sun'},
+ askEnd:{title:'「一番後ろはどこ？」と聞く',kind:'talk',label:'後ろを聞く',cost:1,atk:2,attr:'soc',up:'soc',desc:'相手に、「一番後ろはどこ？」と聞く。',hint:'聞くと、気づいてもらえる',icon:'search'},
+ standUp2:{title:'みんなで「順番だよ」と言う',kind:'support',label:'みんなで言う',cost:2,atk:3,attr:'soc',up:'soc',desc:'まわりの人と一緒に、「順番だよ」と言う。',hint:'みんなで言うと、届く',icon:'people'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -2715,6 +2725,48 @@ sign:{title:'テストの点を見せたくない',nav:'点を見せたくない
  },
  progress(s){const f=s.flags;return f.ownPaced||f.compared||f.planned3||f.promised2?3:f.toldH||f.showedW||f.askedH4||f.talkedH||f.talkedT?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.ownPaced||f.planned3||f.promised2?'次の作戦が、立った。':f.toldH||f.showedW?'正直に、できた。':'まだ、隠したまま。正直・見せる・計画、方法はある。'}
+},
+lineCut:{title:'列に割り込まれた',nav:'割り込まれた',num:49,attrs:['soc'],goals:['自分の順番を守りたい','相手とぶつからず解決したい','ルールを守れる関係にしたい'],chapters:['列に並んでいた','割り込まれた','明日からの列'],locations:['給食の列','休み時間','翌日の列'],base:['yellCut','pretendOk','sayTurn','anger','ignore'],
+ start:{mind:4,energy:3},
+ monsters:[{name:'割り込む足',hp:5,power:1,turns:4,look:'前に、誰かが入った。'},{name:'割り込んだ子',hp:5,power:1,turns:4,look:'知らんぷりしている。'},{name:'明日の列',hp:6,power:2,turns:4,look:'明日も、列がある。'}],
+ talk:[['talkCut','「後ろに並んで」と言う','自分の順番を、伝える。'],['tellWatch2','見ている人・先生に言う','困ったことは、相談する。'],['askBack','「一番後ろはどこ？」と聞く','気づいてもらう聞き方。']],
+ think:[['unfair','ずるい・腹が立つ','割り込まれて、ずるいと思った。'],['hesitant3','言っていいか不安','言っても、いいのかな。'],['ruleThink','ルールはどうだったか','列のルール、どうだったか。']],
+ reasonKeys:['unfair','hesitant3','ruleThink'],
+ stageGrants:[['tapShoulder','tellWatcher','coolVoice'],['explainRule','letSlide','askEnd','standUp2']],
+ subs:[
+  {title:'割り込んだ子が「ごめん」と言った',text:'その子が、謝って後ろに行った。',stat:'soc',min:0,good:{text:'「ありがとう」と言えた。',rep:1,mind:1},ok:{text:'ほっとした。',mind:1}},
+  {title:'前の子が「代わろうか」と言ってくれた',text:'前の子が、優しく声をかけてくれた。',stat:'soc',min:0,good:{text:'「いいよ、ありがとう」と言えた。',rep:1},ok:{text:'あたたかい気持ちになった。',mind:1}}
+ ],
+ onExplore(s,key){const out={text:'',card:null};
+  if(key==='talkCut'){s.flags.talkedCut=true;relation(s,'「後ろに並んで」と言ったら、相手が動いた。');out.text='「後ろに並んで」\n「あ、ごめん」';out.card='sayTurn'}
+  if(key==='tellWatch2'){s.flags.toldW=true;relation(s,'見ていた人に言ったら、一緒に言ってくれた。');out.text='「割り込まれた」\n「そうだよね、順番だよ」';out.card='tellWatcher'}
+  if(key==='askBack'){s.flags.askedB=true;relation(s,'「一番後ろはどこ？」と聞いたら、気づいてくれた。');out.text='「一番後ろ、どこ？」\n「あ、僕が悪かった」';out.card='askEnd'}
+  if(key==='unfair'){s.reason='unfair';out.text='割り込まれて、ずるいと思った。\n「ずるい」は、正しい気持ち。';out.card='sayTurn'}
+  if(key==='hesitant3'){s.reason='hesitant3';out.text='言ってもいいか、不安だった。\n「静かに言う」なら、大丈夫。';out.card='coolVoice'}
+  if(key==='ruleThink'){s.reason='ruleThink';out.text='列のルール、どうだったか。\nルールを説明すれば、相手も納得しやすい。';out.card='explainRule'}
+  return out;
+ },
+ onPlay(s,id){const f=s.flags;
+  if(id==='sayTurn'){f.saidT=true;return{text:'「後ろに並んで」と、伝えた。',meaning:'静かに言うと、伝わる。'}}
+  if(id==='tapShoulder'){f.tapped=true;return{text:'肩を軽くたたいて、穏やかに言った。',meaning:'穏やかだと、相手も聞く。'}}
+  if(id==='tellWatcher'){f.toldW2=true;return{text:'見ている人に、伝えた。',meaning:'一人で解決しなくてもいい。'}}
+  if(id==='coolVoice'){f.coolV=true;return{text:'「僕の順番だよ」と言えた。',meaning:'自分の意見を言うのは、正しい。'}}
+  if(id==='explainRule'){f.explained=true;return{text:'列のルールを、説明した。',meaning:'ルールなら、相手も納得しやすい。'}}
+  if(id==='letSlide'){f.letS=true;return{text:'「今回はいいか」と、見送った。',meaning:'許せることも、強さ。'}}
+  if(id==='askEnd'){f.askedE=true;return{text:'「一番後ろはどこ？」と聞いた。',meaning:'聞くと、気づいてもらえる。'}}
+  if(id==='standUp2'){f.stood=true;return{text:'みんなで、「順番だよ」と言った。',meaning:'みんなで言うと、届く。'}}
+  if(id==='yellCut'){f.yelled=true;s.rep-=1;relation(s,'怒鳴ったら、まわりが引いた。');return{text:'「割り込むな！」と怒鳴った。まわりが引いた。',meaning:'怒鳴ると、まわりも嫌になる。'}}
+  if(id==='pretendOk'){f.pretended=true;return{text:'黙って、我慢した。',meaning:'我慢すると、心が重い。'}}
+  return{text:'',meaning:''};
+ },
+ watch(s){return s.stage===0?'順番は、みんなの約束。':s.stage===1?'言い方次第で、関係は変わる。':'明日も、列はある。'},
+ scene(s){const f=s.flags;
+  if(s.stage===0)return{narrative:'給食の列に、ちゃんと並んでいた。',speaker:'前の子',quote:'（割り込んでくる）',look:'前に、誰かが入った。',self:'ずるい…',hint:'割り込まれて、何がつらい？'};
+  if(s.stage===1)return{narrative:'その子は、知らんぷりしている。',speaker:'割り込んだ子',quote:'（後ろを見ない）',look:'その子は、目をそらした。',self:s.reason==='hesitant3'?'言っていいか不安…':s.reason==='ruleThink'?'ルールは…？':'ずるい…',hint:'言う・聞く・相談、方法はある。'};
+  return{narrative:'翌日。また、列に並ぶ。',speaker:'友達',quote:f.saidT||f.coolV||f.stood?'「順番だよね」':'「今日はどうなるかな」',look:'今日も、列がある。',self:f.letS||f.explained||f.askedE?'落ち着いて、対処できそう。':'まだ、少し嫌な気持ち。',hint:'ルール・見送る・聞く・みんなで、選ぼう。'};
+ },
+ progress(s){const f=s.flags;return f.letS||f.explained||f.askedE||f.stood?3:f.saidT||f.tapped||f.toldW2||f.coolV?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.letS||f.explained||f.stood?'列を、守れる関係ができた。':f.saidT||f.coolV?'自分の順番を、伝えられた。':'まだ、モヤモヤ。言う・聞く・相談、方法はある。'}
 }
 };
 

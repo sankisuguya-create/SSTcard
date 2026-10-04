@@ -227,6 +227,15 @@ export const cards={
  doOwn:{title:'自分の分だけきちんとやる',kind:'think',label:'自分の分だけ',cost:1,atk:2,attr:'ath',up:'ath',desc:'全部でなく、自分の分だけ。',hint:'自分の分だけなら、疲れすぎない',icon:'pen'},
  switchJob:{title:'交代制を提案する',kind:'support',label:'交代制にする',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'毎回同じだと逃げやすい。交代にする。',hint:'交代制だと、公平になる',icon:'clock'},
  finishWell:{title:'丁寧に仕上げて自慢する',kind:'support',label:'丁寧に仕上げる',cost:1,atk:2,attr:'ath',up:'ath',desc:'きれいに仕上げて、達成感を持つ。',hint:'きちんとやった達成感は、自分のもの',icon:'spark'},
+ denyR:{title:'「違う！」と大声で否定',kind:'talk',label:'大声で否定',cost:0,atk:0,desc:'みんなの前で、大きな声で否定する。',hint:'大声の否定は、かえって広がる',icon:'bolt'},
+ snapBack:{title:'流した人を怒鳴りつける',kind:'talk',label:'怒鳴る',cost:0,strain:1,atk:1,attr:'soc',desc:'うわさを流した子を、怒鳴る。',hint:'怒鳴ると、まわりは離れていく',icon:'bolt'},
+ pretendR:{title:'聞こえないふりをする',kind:'think',label:'聞こえないふり',cost:0,strain:1,atk:0,desc:'うわさを、聞こえないことにする。',hint:'聞こえないふりは、心に残る',icon:'eye'},
+ findOut:{title:'うわさを聞いた子に直接聞く',kind:'talk',label:'直接聞く',cost:1,bond:1,atk:1,attr:'soc',up:'soc',desc:'まわりでなく、本人に聞く。',hint:'直接聞くと、間違いが分かる',icon:'ear'},
+ laughOff2:{title:'「ほんとかもよ」と笑い飛ばす',kind:'talk',label:'笑い飛ばす',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'軽く笑って、流す。',hint:'笑い飛ばすと、勢いが止まる',icon:'sun'},
+ askSource:{title:'元をたどって確認する',kind:'think',label:'元をたどる',cost:1,atk:2,attr:'study',up:'study',desc:'誰が言い始めたか、落ち着いて確かめる。',hint:'元をたどると、間違いに気づける',icon:'puzzle'},
+ teacherStop:{title:'先生にうわさを止めてもらう',kind:'support',label:'先生に止めてもらう',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'広がる前に、先生に止めてもらう。',hint:'先生に言うのは、頼り方の一つ',icon:'flag'},
+ tellTruth2:{title:'「本当はこう」と静かに言う',kind:'talk',label:'静かに言う',cost:1,bond:1,atk:1,attr:'soc',up:'soc',desc:'大きな声でなく、静かに伝える。',hint:'静かに言うと、聞いてもらえる',icon:'message'},
+ keepAct:{title:'いつもどおりにする',kind:'think',label:'いつもどおり',cost:1,atk:2,attr:'soc',up:'soc',desc:'うわさに動じず、いつもどおりにする。',hint:'いつもどおりが、いちばん強い',icon:'heart'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -1373,6 +1382,51 @@ duty:{
  },
  progress(s){const f=s.flags;return s.goal===0?(f.clearedD?3:f.didOwn||f.split?2:s.reason?1:0):s.goal===1?(f.toldD2||f.calledBack?3:f.clearedD?2:s.reason?1:0):(f.switched||f.finishedWell?3:f.clearedD?2:s.reason?1:0)},
  situation(s){const f=s.flags;return f.clearedD?'当番を回せた。声かけ・分担・相談・自分の分だけがある。':f.didOwn||f.split?'回し方が見つかった。':'一人で抱えている。回し方は練習できる。'}
+},
+rumor:{
+ title:'自分のうわさが流れている',nav:'うわさ',num:'25',attrs:['soc'],
+ goals:['うわさを止めたい','落ち着いていたい','関係を守りたい'],
+ chapters:['休み時間','うわさの広がり','翌日'],locations:['教室・休み時間','廊下・うわさ','教室・翌日'],
+ base:['denyR','snapBack','pretendR','anger','ignore'],start:{mind:4,energy:4},
+ monsters:[{name:'ささやきの群れ',hp:4,power:0,turns:4,look:'あっちこっちで、こそこそ声がする。'},{name:'大きくなるうわさ',hp:5,power:1,turns:5,look:'うわさが、伝わるたびに大きくなる。'},{name:'みんなの目',hp:6,power:1,turns:5,look:'みんなの目が、こっちを見ている気がする。'}],
+ talk:[['rumorKid','うわさを聞いた子に話す','まわりの子に、静かに聞く。'],['teacherRu','先生に相談','広がる前に、止めてもらう。']],
+ think:[['whoDid','誰が流したか気になる','誰が言い始めたか、知りたい。'],['whatThey','内容が恥ずかしい','うわさの中身が、恥ずかしい。'],['angry','腹が立つ','勝手に言われて、腹が立つ。']],
+ reasonKeys:['whoDid','whatThey','angry'],
+ stageGrants:[['keepAct'],[]],
+ onExplore(s,key){
+  const out={text:'',card:null};
+  if(key==='rumorKid'){s.flags.heardR=true;note(s,'聞いた子に聞いたら、間違いだったと分かった。');out.text='友達「それ、違うみたいだよ」\n間違いが、伝わっていた。';out.card='askSource'}
+  if(key==='teacherRu'){s.flags.toldRu=true;note(s,'先生が、うわさを止めてくれた。');out.text='先生「うわさ話はやめようね」\n先生が、みんなに言ってくれた。';out.card='teacherStop'}
+  if(key==='whoDid'){s.reason='whoDid';note(s,'誰が流したか、気になる。');out.text='「誰が言い始めたの？」';out.card='findOut'}
+  if(key==='whatThey'){s.reason='whatThey';note(s,'うわさの内容が、恥ずかしい。');out.text='「あんなこと、言われてるの？」';out.card='laughOff2'}
+  if(key==='angry'){s.reason='angry';note(s,'勝手に言われて、腹が立つ。');out.text='「勝手に言うなよ…」';out.card='tellTruth2'}
+  return out;
+ },
+ onPlay(s,id){
+  const f=s.flags;let text='',meaning='';
+  if(id==='denyR'){f.deniedR=true;s.rep-=1;relation(s,'大声で否定したら、かえって目立ってしまった。');text='「違うよ！！」\n大声で言ったら、かえって目立った。';meaning='大声の否定は、かえって広がる。';grant(s,'tellTruth2')}
+  if(id==='snapBack'){f.snapped=true;s.rep-=1;relation(s,'怒鳴りつけたら、まわりが離れていった。');text='「お前が言ったんだろ！」\nまわりは、引いていった。';meaning='怒鳴ると、まわりは離れていく。';grant(s,'findOut')}
+  if(id==='pretendR'){f.pretR=true;text='聞こえないふりをした。\nでも、うわさは残っている。';meaning='聞こえないふりは、心に残る。';grant(s,'laughOff2')}
+  if(id==='findOut'){f.found=true;f.clearedRu=true;note(s,'直接聞いたら、間違いだったと分かった。');text='「それ、本当？」\n相手「あれ？違うの？」\n間違いが、分かった。';meaning='直接聞くと、間違いが分かる。'}
+  if(id==='laughOff2'){f.laughedOff=true;f.clearedRu=true;relation(s,'笑い飛ばしたら、うわさの勢いが止まった。');text='「ほんとかもよ（笑）」\n軽く流したら、みんなも笑って終わった。';meaning='笑い飛ばすと、勢いが止まる。'}
+  if(id==='askSource'){f.sourced=true;f.clearedRu=true;note(s,'元をたどったら、勘違いだったと分かった。');text='元をたどったら、\n話がひとりでに大きくなっていた。';meaning='元をたどると、間違いに気づける。'}
+  if(id==='teacherStop'){f.stoppedT=true;f.clearedRu=true;note(s,'先生が止めてくれて、うわさは静まった。');text='先生が、みんなに言ってくれた。\nうわさは、静まった。';meaning='先生に言うのは、頼り方の一つ。'}
+  if(id==='tellTruth2'){f.toldT2=true;f.clearedRu=true;relation(s,'静かに「本当はこう」と言ったら、聞いてもらえた。');text='「本当は、こうなんだ」\n静かに言ったら、ちゃんと聞いてもらえた。';meaning='静かに言うと、聞いてもらえる。'}
+  if(id==='keepAct'){if(f.found||f.laughedOff||f.stoppedT||f.toldT2){f.kept=true;f.clearedRu=true;relation(s,'いつもどおりにしたら、うわさは消えていった。');text='いつもどおりにしていたら、\nうわさは、いつの間にか消えた。';meaning='いつもどおりが、いちばん強い。'}else{s.mind-=1;text='いつもどおりにしようとしたが、まだ止まっていないので気になった。';meaning='まず対処してから、いつもどおりにすると良い。';grant(s,'findOut')}}
+  return {text,meaning};
+ },
+ watch(s){
+  if(s.stage===0)return '廊下で、こそこそ声が聞こえる。';
+  if(s.stage===1)return 'うわさが、どんどん広がっている気がする。';
+  return 'うわさは、もう静まったようだ。';
+ },
+ scene(s){const f=s.flags;
+  if(s.stage===0)return {narrative:'休み時間。自分についてのうわさが、流れている。',speaker:'友達',quote:'ねえ、聞いた？あの人…',look:'こそこそ声が、あちこちからする。',self:'なんの話…？私のこと？',hint:'うわさが流れたときの、つらさはどこ？'};
+  if(s.stage===1)return {narrative:'うわさが、広がっている。',speaker:'友達',quote:f.clearedRu?'あのうわさ、違うんだね':f.found?'間違いだったみたい':'……',look:f.clearedRu?'みんなは、もう別の話題だ。':'うわさは、まだ流れている。',self:s.reason==='whoDid'?'誰が言い始めた？':s.reason==='whatThey'?'恥ずかしい。':s.reason==='angry'?'腹が立つ。':'どう対処する？',hint:'聞く・流す・静かに言う・先生、方法はある。'};
+  return {narrative:'翌日。うわさは、もう誰も話していない。',speaker:'先生',quote:f.clearedRu?'みんな、落ち着いたね':f.stoppedT?'うわさは、もういいね':'今日もがんばろう',look:'何事もなかったように、一日が始まる。',self:f.clearedRu?'うわさを乗り越えられた。':'まだ少し、気になっている。',hint:'うわさは、時間と対処で消える。'};
+ },
+ progress(s){const f=s.flags;return s.goal===0?(f.clearedRu?3:f.found||f.stoppedT?2:s.reason?1:0):s.goal===1?(f.laughedOff||f.kept?3:f.clearedRu?2:s.reason?1:0):(f.kept?3:f.clearedRu?2:s.reason?1:0)},
+ situation(s){const f=s.flags;return f.clearedRu?'うわさを乗り越えた。聞く・流す・静かに言う・先生がある。':f.found||f.stoppedT?'対処法が見つかった。':'うわさが残っている。対処法は練習できる。'}
 }
 };
 

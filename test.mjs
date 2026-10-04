@@ -428,3 +428,22 @@ console.log('new-spec checks OK: sub-events, trauma, monster acts, mindMax, carr
  const s=initial('fight');free(s,'observe');assert.equal(s.clarity,1);
 }
 console.log('clarity checks OK');
+
+// ── ストーリー構造lint: メイン3-7・部品の個数・キー一意性 ──
+{
+ const bad=[];
+ for(const [name,d] of Object.entries(stories)){
+  if(d.monsters.length<3||d.monsters.length>7)bad.push(name+':monsters');
+  if((d.talk.length+d.think.length)<2)bad.push(name+':explore');
+  if(d.goals.length!==3)bad.push(name+':goals');
+  if(d.chapters.length!==d.monsters.length)bad.push(name+':chapters');
+  if(d.locations.length!==d.monsters.length)bad.push(name+':locations');
+  if(d.base.length<4)bad.push(name+':base');
+  if((d.stageGrants||[]).length!==d.monsters.length-1)bad.push(name+':stageGrants');
+  const keys=[...d.talk.map(o=>o[0]),...d.think.map(o=>o[0])];
+  if(new Set(keys).size!==keys.length)bad.push(name+':dup-keys');
+  for(const m of d.monsters)if(m.acts)for(const a of m.acts)if(!['attack','stress','steal','wait'].includes(a))bad.push(name+':acts');
+ }
+ assert(bad.length===0,'story structure: '+bad.join(','));
+ console.log('structure lint OK:',Object.keys(stories).length,'stories');
+}

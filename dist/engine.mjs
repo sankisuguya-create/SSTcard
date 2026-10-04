@@ -74,6 +74,15 @@ export const cards={
  scriptNo:{title:'断ることばを練習',kind:'think',label:'練習する',cost:1,atk:0,up:'soc',desc:'「今日は一人がいい」「明日なら」などを練習。',hint:'ことばを持っていると断りやすい',icon:'flag'},
  tagDecline:{title:'リクと「明日ね」と言う',kind:'support',label:'協力する',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'一人で断りにくければ、仲間と。',hint:'一人じゃなくてもいい',icon:'people'},
  planB:{title:'「今度一緒に」と約束する',kind:'support',label:'約束する',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'別の日の約束を作って、今日は断る。',hint:'断りつつ、つながりを残す',icon:'clock'},
+ rematch:{title:'すぐに再戦を挑む',kind:'talk',label:'再戦する',cost:1,strain:1,atk:1,attr:'ath',up:'ath',desc:'悔しさのまま、もう一度勝負。',hint:'勢いだけでは、また負けるかも',icon:'flag'},
+ quitGame:{title:'もうやらないと言う',kind:'support',label:'やめる',cost:0,atk:0,desc:'ゲームから降りて、悔しさから離れる。',hint:'やめることもできる',icon:'door'},
+ sourFace:{title:'むっとする気持ちを出す',kind:'think',label:'気持ちを出す',cost:0,atk:0,up:'soc',desc:'悔しさを、顔に出しておく。',hint:'隠すより、表に出してもいい',icon:'heart'},
+ cooldown:{title:'悔しさを体に出しておく',kind:'think',label:'冷ます',cost:1,atk:0,up:'ath',desc:'深呼吸や体を動かして、熱を冷ます。',hint:'熱いままだと、判断がぶれる',icon:'sun'},
+ praiseWin:{title:'「上手かったね」と言う',kind:'talk',label:'讃える',cost:1,strain:1,bond:1,atk:1,attr:'soc',up:'soc',desc:'相手の強さを、認めて伝える。',hint:'讃えると、悔しさが軽くなる',icon:'hand'},
+ smartRematch:{title:'負けた理由を考えて再戦',kind:'think',label:'考えて挑む',cost:1,atk:2,attr:'ath',up:'ath',desc:'何が敗因か考えてから、挑む。',hint:'準備があると、結果が変わる',icon:'puzzle'},
+ askHow:{title:'サキに勝ち方を聞く',kind:'support',label:'聞く',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'勝った相手に、コツを教えてもらう。',hint:'負けから学べる',icon:'people'},
+ reFrame:{title:'負けを練習の手がかりにする',kind:'think',label:'見方を変える',cost:1,atk:0,up:'study',desc:'負けたことで、次にやることが見える。',hint:'負けは、次の作戦のヒント',icon:'book'},
+ congrats:{title:'「勝ってすごいね」と讃える',kind:'talk',label:'讃える',cost:1,strain:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'心から、相手を讃えてみる。',hint:'讃えると、関係も自分も楽になる',icon:'spark'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -452,6 +461,54 @@ alone:{
  },
  progress(s){const f=s.flags;return s.goal===0?(f.declined?3:f.scripted||f.allyD?1:0):s.goal===1?(f.aloneWays||f.declined||f.dodged?3:s.reason?1:0):(f.declined&&s.rep>=3?3:f.bothWays||f.promised?2:f.declined?1:0)},
  situation(s){const f=s.flags;return f.declined&&f.promised?'気持ちよく断りつつ、次の約束も作れた。':f.declined?'「今日は一人がいい」を伝えられた。関係は続いている。':f.aloneWays?'一人の時間を、自分で選んだ。':'誘いはまだ残っている。断り方のことばは、練習できる。'}
+},
+lose:{
+ title:'負けた！ どうする',nav:'ゲームに負けた',num:'08',attrs:['soc','ath'],
+ goals:['悔しさを乗りこなしたい','相手を認めたい','次につなげたい'],
+ chapters:['休み時間のドッジボール','放課後','次の日'],locations:['校庭・ドッジボール','教室・放課後','校庭・朝'],
+ base:['rematch','quitGame','sourFace','anger','boast'],start:{mind:4,energy:4},
+ monsters:[{name:'悔しさの炎',hp:4,power:1,turns:4,look:'負けた悔しさが、胸に火をつける。'},{name:'くやしさの鎖',hp:5,power:1,turns:5,look:'「また負けるかも」が、鎖になって足を引く。'},{name:'再戦魔王',hp:6,power:1,turns:5,look:'「もう一度」の誘惑が、大きくのしかかる。'}],
+ talk:[['winnerS','勝ったサキに話を聞く','強さの理由を聞いてみる。'],['teacherE','先生に相談する','悔しさの扱い方を聞く。']],
+ think:[['frustrate','悔しくて仕方ない','あと少しだったのに、と思い続けている。'],['face','みんなに負けたのが恥ずかしい','負けた姿を、見られたくない。'],['again','すぐに再戦したい','今すぐにでも、取り返したい。']],
+ reasonKeys:['frustrate','face','again'],
+ stageGrants:[['congrats'],[]],
+ onExplore(s,key){
+  const out={text:'',card:null};
+  if(key==='winnerS'){s.flags.learned=true;relation(s,'サキが、強さのコツを教えてくれた。');out.text='サキ「守りを見てから投げるんだ。じゃないと、すぐ取られるよ」';out.card='askHow'}
+  if(key==='teacherE'){s.flags.reframed=true;note(s,'負けは、次の練習の手がかりになる。');out.text='先生「負けたことで、次に何をすればいいか分かったんじゃない？」';out.card='reFrame'}
+  if(key==='frustrate'){s.reason='frustrate';note(s,'悔しさで、体が熱くなっている。');out.text='「あと少しだったのに、悔しい」';out.card='cooldown'}
+  if(key==='face'){s.reason='face';note(s,'負けた姿を、見られたくない気持ちがある。');out.text='「みんなの前で負けたのが、恥ずかしい」';out.card='praiseWin'}
+  if(key==='again'){s.reason='again';note(s,'今すぐ取り返したい気持ちが強い。');out.text='「すぐに、もう一度やりたい」';out.card='smartRematch'}
+  return out;
+ },
+ onPlay(s,id){
+  const f=s.flags;let text='',meaning='';
+  if(id==='rematch'){
+   if(f.smart||f.reframed){f.clearedL=true;relation(s,'準備して挑んだ再戦で、いい勝負ができた。');text='守りを見てから投げた。\n「惜しかった！」サキも本気の顔だ。';meaning='準備があると、同じ相手でも違う結果になる。'}
+   else{s.mind-=1;text='勢いで再戦したが、また負けた。\n悔しさが、さらに大きくなった。';meaning='勢いだけの再戦は、同じ結果になりがち。';grant(s,'smartRematch')}
+  }
+  if(id==='quitGame'){s.mind+=1;text='「もうやらない」と言って、離れた。\n楽になった。でも、少しもやもやが残った。';meaning='やめることもできる。でも、悔しさは残ることがある。'}
+  if(id==='sourFace'){f.soured=true;s.mind+=1;text='むっとした顔で、悔しさを出した。\n隠すより、少し楽になった。';meaning='悔しさを出すことも、悪くない。'}
+  if(id==='cooldown'){f.cooled=true;s.mind+=1;s.energy+=1;text='深呼吸して、熱を冷ました。\n頭が少し、すっきりした。';meaning='熱いままだと判断がぶれる。冷ますことも作戦。'}
+  if(id==='praiseWin'){f.praised=true;relation(s,'「上手かったね」と伝えると、サキが照れていた。');text='サキ「えっ、そ、そう？」\n讃えたら、悔しさが少し軽くなった。';meaning='相手を認めると、自分の悔しさも扱いやすくなる。'}
+  if(id==='smartRematch'){f.smart=true;note(s,'敗因: 守りを見ずに投げていた。');text='「投げる前に、守りを見てなかった」\n負けた理由が、少し見えた。';meaning='負けた理由が分かると、次の作戦が立つ。'}
+  if(id==='askHow'){f.clearedL=true;f.learned=true;relation(s,'サキにコツを聞いて、次の約束をした。');text='サキ「明日、練習してみる？」\n負けた相手が、教えてくれることになった。';meaning='負けた相手から学ぶと、関係も強くなる。'}
+  if(id==='reFrame'){f.reframed=true;s.mind+=1;text='「負けたから、守りの練習が必要って分かった」\n見方を変えると、気持ちが向きを変えた。';meaning='負けは、次の練習の地図になる。'}
+  if(id==='congrats'){if(f.praised||f.learned){f.clearedL=true;relation(s,'「勝ってすごいね」と讃えて、関係が戻った。');text='サキ「……ありがと。明日もやろう」';meaning='心から讃えると、自分も楽になる。'}else{s.mind-=1;text='「すごいね」と言ったが、心がついていかなかった。';meaning='讃えるには、気持ちの整理が先かもしれない。';grant(s,'praiseWin')}}
+  return {text,meaning};
+ },
+ watch(s){
+  if(s.stage===0)return 'サキは、勝ったことをまだ喜んでいる。';
+  if(s.stage===1)return 'サキは、こちらの様子をちらちら見ている。';
+  return 'サキは、もう一度やる気配を見せている。';
+ },
+ scene(s){const f=s.flags;
+  if(s.stage===0)return {narrative:'休み時間のドッジボールで、負けてしまった。',speaker:'サキ',quote:'ざまあみろ！ 俺、強いだろ？',look:'サキは、勝ち誇った顔でこっちを見ている。',self:'悔しい！ なんで負けたんだ……',hint:'悔しさの理由は、まだ分からない。'};
+  if(s.stage===1)return {narrative:'放課後。悔しさが、まだ残っている。',speaker:f.learned?'サキ':'サキ',quote:f.learned?'明日、練習してみる？':f.clearedL?'今日はいい勝負だったな':'ざまあみろ、って顔されてたな',look:f.learned?'サキは、教える気分でいる。':'サキは、少し得意げだ。',self:s.reason==='frustrate'?'悔しさで、体が熱い。':s.reason==='face'?'負けた姿を、見られたくない。':s.reason==='again'?'すぐに、取り返したい。':'悔しさと、どう付き合う？',hint:'悔しさは、冷ます・変える・伝えるで扱える。'};
+  return {narrative:'次の日の朝。サキが、また誘いに来た。',speaker:'サキ',quote:f.clearedL?'おはよ！ 今日もやろうぜ':f.praised?'昨日の、すごかったな':f.learned?'教えたやつ、試してみる？':'……やる？',look:'サキは、昨日よりも話しやすそうだ。',self:f.clearedL?'悔しさは、もう向きを変えた。':'まだ少し、もやもやが残っている。',hint:'負けは、次の力になる。'};
+ },
+ progress(s){const f=s.flags;return s.goal===0?(f.clearedL?3:f.cooled||f.soured?1:0):s.goal===1?(f.praised||f.clearedL?3:s.reason?1:0):(f.learned||f.reframed||f.clearedL?3:f.smart?2:0)},
+ situation(s){const f=s.flags;return f.clearedL?'悔しさを乗りこなし、次の約束ができた。':f.learned||f.reframed?'負けを、次の作戦に変えられた。':f.cooled||f.soured?'悔しさは、少し扱いやすくなった。':'悔しさは残っている。冷ます・変える・伝える方法がある。'}
 }
 };
 

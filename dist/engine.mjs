@@ -182,6 +182,24 @@ export const cards={
  commonTalk:{title:'共通の話題を探す',kind:'talk',label:'話題を探す',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'好きなゲームや本など、共通の話題を探す。',hint:'共通点があれば、話は進む',icon:'puzzle'},
  classMix:{title:'クラスで仲良くなる時間を作る',kind:'support',label:'仲良くなる時間',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'先生と相談して、なじむ時間を作る。',hint:'時間を作ってもらうのも、作戦の一つ',icon:'clock'},
  lunchJoin:{title:'昼休みに一緒に食べる人を探す',kind:'support',label:'一緒に食べる',cost:1,atk:2,attr:'soc',up:'soc',desc:'昼休みは、仲良くなるチャンス。',hint:'一緒に食べると、仲が深まる',icon:'sun'},
+ mumble:{title:'もごもご読む',kind:'talk',label:'もごもご',cost:0,atk:0,desc:'口の中だけで、読む。',hint:'もごもごでは、読んだことにならない',icon:'eye'},
+ smallVoice:{title:'小さな声で読む',kind:'talk',label:'小さな声',cost:0,atk:1,attr:'soc',desc:'聞こえるか聞こえないかの声で読む。',hint:'小さくても、声を出したことは一歩',icon:'ear'},
+ skipTurn:{title:'順番をパスしてもらう',kind:'talk',label:'パスする',cost:0,strain:1,atk:0,desc:'今回だけ、読まないでおく。',hint:'パスは逃げるだけ。次も怖いまま',icon:'door'},
+ lookOne:{title:'一人の友達だけ見て読む',kind:'talk',label:'一人を見て読む',cost:1,bond:1,atk:1,attr:'soc',up:'soc',desc:'みんなでなく、友達一人に向けて読む。',hint:'一人に向けると、気持ちが楽',icon:'people'},
+ slowRead:{title:'ゆっくり丁寧に読む',kind:'talk',label:'ゆっくり読む',cost:1,atk:2,attr:'soc',up:'soc',desc:'速くなくていい。一つずつ読む。',hint:'ゆっくりは、恥ずかしくない',icon:'book'},
+ practiceRead:{title:'一度練習してから読む',kind:'think',label:'練習して読む',cost:1,atk:2,attr:'study',up:'study',desc:'心の中や、小さな声で一度読む。',hint:'一度読めば、二回目は楽',icon:'pen'},
+ rehearse:{title:'先生と練習する',kind:'support',label:'先生と練習',cost:1,bond:1,atk:1,attr:'soc',up:'soc',desc:'放課後、先生と一度読んでみる。',hint:'練習の相手は、先生でもいい',icon:'flag'},
+ buddyRead:{title:'友達の前で一度読む',kind:'support',label:'友達の前で読む',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'一人相手に、まず読んでみる。',hint:'一人の前で読めたら、みんなの前も近い',icon:'people'},
+ breatheRead:{title:'深呼吸してから読む',kind:'think',label:'深呼吸して読む',cost:1,atk:2,attr:'soc',up:'soc',desc:'落ち着いてから、読み始める。',hint:'落ち着いて始めると、声が出やすい',icon:'heart'},
+ freeze:{title:'固まって何もしない',kind:'think',label:'固まる',cost:0,atk:0,desc:'びっくりして、動けなくなる。',hint:'固まるだけでは、汚れは広がる',icon:'skull'},
+ hideMistake:{title:'見て見ぬふりをする',kind:'think',label:'見ぬふり',cost:0,strain:1,atk:0,desc:'こぼしたのを、知らないことにする。',hint:'ふせぐと、あとでバレてもっと困る',icon:'eye'},
+ wipeHalf:{title:'適当にふく',kind:'think',label:'適当にふく',cost:0,atk:1,attr:'ath',desc:'拭き方を知らないまま、ふく。',hint:'拭き方が分かると、早く片づく',icon:'pen'},
+ saySorry2:{title:'「ごめんなさい」とすぐ言う',kind:'talk',label:'すぐ謝る',cost:1,bond:1,atk:1,attr:'soc',up:'soc',desc:'ミスを、すぐに認めて謝る。',hint:'すぐ謝ると、まわりの目はやわらぐ',icon:'hand'},
+ wipeGood:{title:'拭き方を聞いて、きちんとふく',kind:'support',label:'きちんとふく',cost:1,atk:2,attr:'ath',up:'ath',desc:'拭き方を聞いて、きれいにする。',hint:'拭き方を聞くと、早くきれいになる',icon:'spark'},
+ askHelp:{title:'「手伝って」と頼む',kind:'talk',label:'手伝いを頼む',cost:1,bond:1,atk:1,attr:'soc',up:'soc',desc:'一人でなく、手伝いを頼む。',hint:'頼むのも、対処の一つ',icon:'people'},
+ laughSelf:{title:'「やっちゃった」と笑う',kind:'talk',label:'自分で笑う',cost:1,bond:1,atk:1,attr:'soc',up:'soc',desc:'自分のミスを、軽く笑いに変える。',hint:'自分で笑うと、まわりも楽になる',icon:'sun'},
+ mopUp:{title:'雑巾で床をきれいにする',kind:'support',label:'雑巾でふく',cost:1,atk:2,attr:'ath',up:'ath',desc:'ちゃんとした道具で、片づける。',hint:'道具を使えば、早くきれいになる',icon:'cards'},
+ cleanBoth:{title:'自分とまわりを両方きれいにする',kind:'support',label:'両方きれいに',cost:1,atk:2,attr:'ath',up:'soc',desc:'自分の服と、床の両方をきれいにする。',hint:'まわりまで片づけると、評判も戻る',icon:'heart'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -1103,6 +1121,96 @@ newClass:{
  },
  progress(s){const f=s.flags;return s.goal===0?(f.clearedNC?3:f.saidHi||f.visited?2:s.reason?1:0):s.goal===1?(f.commond||f.lunched?3:f.saidHi||f.spoke?2:s.reason?1:0):(f.visited||f.mixed?3:f.clearedNC?2:s.reason?1:0)},
  situation(s){const f=s.flags;return f.clearedNC?'新しいクラスになじんできた。あいさつ・一言・共通点がある。':f.saidHi||f.spoke?'少し話せるようになった。':'知らないまま残っている。一歩の出し方は練習できる。'}
+},
+present:{
+ title:'みんなの前で読む番',nav:'前で読む',num:'20',attrs:['soc','study'],
+ goals:['最後まで読み切りたい','怖さと上手に向き合いたい','次も読めるようになりたい'],
+ chapters:['音読の前','自分の番','翌日'],locations:['教室・国語','教室・自分の番','教室・翌日'],
+ base:['mumble','smallVoice','skipTurn','anger','ignore'],start:{mind:4,energy:4},
+ monsters:[{name:'注目の目玉群',hp:4,power:0,turns:4,look:'たくさんの目が、こっちをじっと見ている。'},{name:'かみかみ舌',hp:5,power:1,turns:5,look:'舌がもつれて、ことばが出てこない。'},{name:'笑われるかもの影',hp:6,power:1,turns:5,look:'「間違えたら笑われる」の影が、大きくなる。'}],
+ talk:[['teacherP2','先生に相談','読むのが怖いことを、先生に言う。'],['buddyP','友達に聞いてもらう','一人相手に、練習させてもらう。']],
+ think:[['eyes','みんなの目が怖い','注目されると、固まる。'],['stumble','噛むのが怖い','言いよどんで、恥ずかしくなる。'],['laugh','間違えて笑われるのが怖い','失敗したら、笑われそう。']],
+ reasonKeys:['eyes','stumble','laugh'],
+ stageGrants:[['breatheRead'],[]],
+ onExplore(s,key){
+  const out={text:'',card:null};
+  if(key==='teacherP2'){s.flags.toldV=true;note(s,'先生が、練習に付き合ってくれることになった。');out.text='先生「ゆっくりでいいよ。練習しようか」';out.card='rehearse'}
+  if(key==='buddyP'){s.flags.buddyV=true;relation(s,'友達が、聞いてくれることになった。');out.text='友達「いいよ、聞くよ」\n一人相手なら、気が楽だ。';out.card='buddyRead'}
+  if(key==='eyes'){s.reason='eyes';note(s,'みんなの目が、怖い。');out.text='「見られると、固まる」';out.card='lookOne'}
+  if(key==='stumble'){s.reason='stumble';note(s,'噛むのが、怖い。');out.text='「カミカミになりそう」';out.card='slowRead'}
+  if(key==='laugh'){s.reason='laugh';note(s,'間違えて笑われるのが、怖い。');out.text='「失敗したら、笑われるかも」';out.card='practiceRead'}
+  return out;
+ },
+ onPlay(s,id){
+  const f=s.flags;let text='',meaning='';
+  if(id==='mumble'){f.mumbled=true;text='もごもごと、読んだ。\n先生「もう少し大きな声で」';meaning='もごもごでは、読んだことにならない。'}
+  if(id==='smallVoice'){f.smallVoiced=true;note(s,'小さな声でも、読み切った。');text='小さな声で、読み切った。\n先生「最後まで読めたね」';meaning='小さくても、読み切れば一歩。'}
+  if(id==='skipTurn'){f.skippedV=true;text='順番をパスしてもらった。\nでも、次も怖いままだ。';meaning='パスは逃げるだけ。怖さは残る。';grant(s,'slowRead')}
+  if(id==='lookOne'){f.lookedOne=true;f.clearedV=true;relation(s,'友達一人だけを見て読んだら、楽に読めた。');text='友達だけに向けて読んだ。\nみんなの目は、気にならなかった。';meaning='一人に向けると、気持ちが楽になる。'}
+  if(id==='slowRead'){f.slowed=true;f.clearedV=true;note(s,'ゆっくり読んだら、噛まずに読めた。');text='ゆっくり、一つずつ読んだ。\n噛まずに、読み切れた。';meaning='ゆっくりは、恥ずかしくない。'}
+  if(id==='practiceRead'){f.practiced=true;f.clearedV=true;note(s,'一度練習したら、本番は読めた。');text='練習してから読んだら、\nすらすら読めた。';meaning='一度読めば、二回目は楽になる。'}
+  if(id==='rehearse'){f.rehearsed=true;f.clearedV=true;note(s,'先生と練習して、自信がついた。');text='先生と読んだら、\n「できるじゃん」と思えた。';meaning='練習の相手は、先生でもいい。'}
+  if(id==='buddyRead'){f.buddyRead=true;f.clearedV=true;relation(s,'友達の前で読めたら、自信が出た。');text='友達「上手だね！」\n一人の前で読めたら、自信がつく。';meaning='一人の前で読めたら、みんなの前も近い。'}
+  if(id==='breatheRead'){if(f.practiced||f.slowed||f.rehearsed){f.breathedV=true;f.clearedV=true;note(s,'深呼吸してから読んだら、落ち着いて読めた。');text='深呼吸して、読み始めた。\n落ち着いて、最後まで読めた。';meaning='落ち着いて始めると、声が出やすい。'}else{s.mind-=1;text='深呼吸したが、準備していないので固まったままだった。';meaning='準備してから深呼吸すると、効きやすい。';grant(s,'practiceRead')}}
+  return {text,meaning};
+ },
+ watch(s){
+  if(s.stage===0)return '前の子が、読んでいる。もうすぐ自分の番。';
+  if(s.stage===1)return 'みんなが、こっちを見ている。';
+  return '昨日の自分より、少し読める気がする。';
+ },
+ scene(s){const f=s.flags;
+  if(s.stage===0)return {narrative:'国語の時間。音読の番が、回ってきた。',speaker:'先生',quote:'次、カンくんお願いします',look:'みんなの顔が、こっちを向いた。',self:'うわ、来ちゃった… 読めるかな',hint:'読むことへの怖さの、どこが一番？'};
+  if(s.stage===1)return {narrative:'自分の番。みんなが、こっちを見ている。',speaker:'友達',quote:f.clearedV?'上手だね！':f.lookedOne?'こっち見て読んでいいよ':f.slowed?'ゆっくりでいいよ':'……',look:f.clearedV?'まわりは、聞き終わって落ち着いている。':'みんなの目が、こっちを見ている。',self:s.reason==='eyes'?'目が怖い。':s.reason==='stumble'?'噛むのが怖い。':s.reason==='laugh'?'笑われそうで怖い。':'どう読み切る？',hint:'一人を見る・ゆっくり・練習、方法はある。'};
+  return {narrative:'翌日。昨日の読みが、少し残っている。',speaker:'先生',quote:f.clearedV?'昨日、上手に読めたね':f.practiced?'練習した甲斐があったね':'今日も読んでみようか',look:'先生は、昨日を覚えている。',self:f.clearedV?'読み切れた。次も読めそうだ。':'まだ少し、怖さが残る。',hint:'読めた経験は、次の力になる。'};
+ },
+ progress(s){const f=s.flags;return s.goal===0?(f.clearedV?3:f.slowed||f.lookedOne?2:s.reason?1:0):s.goal===1?(f.clearedV&&f.practiced?3:f.clearedV?2:s.reason?1:0):(f.practiced||f.rehearsed||f.buddyRead?3:f.clearedV?2:s.reason?1:0)},
+ situation(s){const f=s.flags;return f.clearedV?'読み切れた。準備・一人に向ける・ゆっくりがある。':f.practiced||f.slowed?'読む方法が見つかった。':'怖さが残っている。読み方は練習できる。'}
+},
+spill:{
+ title:'牛乳をこぼして皆に見られた',nav:'ミスの恥ずかしさ',num:'21',attrs:['soc','ath'],
+ goals:['ミスを片づけたい','恥ずかしさと向き合いたい','みんなの前で立て直したい'],
+ chapters:['給食の時間','片づけ','午後の授業'],locations:['教室・給食','床・片づけ','教室・午後'],
+ base:['freeze','hideMistake','wipeHalf','anger','ignore'],start:{mind:4,energy:4},
+ monsters:[{name:'注目の目玉群',hp:4,power:0,turns:4,look:'たくさんの目が、こっちをじっと見ている。'},{name:'広がる牛乳の海',hp:5,power:1,turns:5,look:'こぼれた牛乳が、どんどん広がっていく。'},{name:'恥ずかしさの顔',hp:6,power:1,turns:5,look:'みんなの前での失敗が、赤い顔になって残る。'}],
+ talk:[['teacherM','先生に言う','こぼしたことを、すぐ伝える。'],['friendM','近くの友達に頼む','「手伝って」と声をかける。']],
+ think:[['embarrass','恥ずかしくて動けない','みんなに見られて、固まる。'],['how2wipe','拭き方が分からない','どう片づければいいか、分からない。'],['laughAt','笑われそうで嫌だ','失敗を、からかわれそう。']],
+ reasonKeys:['embarrass','how2wipe','laughAt'],
+ stageGrants:[['cleanBoth'],[]],
+ onExplore(s,key){
+  const out={text:'',card:null};
+  if(key==='teacherM'){s.flags.toldM=true;note(s,'先生に言ったら、拭き方を教えてくれた。');out.text='先生「大丈夫、こうして拭くんだよ」\n伝えたら、方法を教えてもらえた。';out.card='wipeGood'}
+  if(key==='friendM'){s.flags.helpedM=true;relation(s,'友達が、一緒に拭いてくれた。');out.text='友達「手伝うよ」\n頼んだら、助けてもらえた。';out.card='askHelp'}
+  if(key==='embarrass'){s.reason='embarrass';note(s,'恥ずかしさで、固まっている。');out.text='「見られちゃった…」';out.card='saySorry2'}
+  if(key==='how2wipe'){s.reason='how2wipe';note(s,'拭き方が、分からない。');out.text='「どうやって拭けばいい？」';out.card='wipeGood'}
+  if(key==='laughAt'){s.reason='laughAt';note(s,'笑われそうで、嫌な気持ち。');out.text='「からかわれるかも」';out.card='laughSelf'}
+  return out;
+ },
+ onPlay(s,id){
+  const f=s.flags;let text='',meaning='';
+  if(id==='freeze'){f.froze=true;text='固まった。\n牛乳は、どんどん広がっていく。';meaning='固まるだけでは、汚れは広がる。';grant(s,'askHelp')}
+  if(id==='hideMistake'){f.hidM=true;s.rep-=1;relation(s,'見ぬふりしたら、後で見つかって怒られた。');text='見ぬふりしたら、\nあとで先生に見つかった。';meaning='ふせぐと、あとでバレてもっと困る。';grant(s,'saySorry2')}
+  if(id==='wipeHalf'){f.wipedHalf=true;text='適当にふいたが、\n牛乳は広がるばかりだった。';meaning='拭き方が分かると、早く片づく。';grant(s,'wipeGood')}
+  if(id==='saySorry2'){f.saidSorry=true;f.clearedM=true;relation(s,'「ごめんなさい」と言ったら、まわりの目がやわらいだ。');text='「ごめんなさい、こぼしました」\n言ったら、まわりが手伝ってくれた。';meaning='すぐ謝ると、まわりの目はやわらぐ。'}
+  if(id==='wipeGood'){f.wipedGood=true;f.clearedM=true;note(s,'拭き方を聞いて、きれいにふけた。');text='教えてもらったとおりにふいたら、\n床がきれいになった。';meaning='拭き方を聞くと、早くきれいになる。'}
+  if(id==='askHelp'){f.helpedM=true;f.clearedM=true;relation(s,'「手伝って」と頼んだら、みんなが手伝ってくれた。');text='「手伝って！」と言ったら、\n何人かがふきんを持ってきてくれた。';meaning='頼むのも、対処の一つ。'}
+  if(id==='laughSelf'){f.laughed=true;f.clearedM=true;relation(s,'「やっちゃった」と笑ったら、まわりも笑った。');text='「やっちゃったー！」と笑った。\nまわりも、一緒に笑ってくれた。';meaning='自分で笑うと、まわりも楽になる。'}
+  if(id==='mopUp'){f.mopped=true;f.clearedM=true;note(s,'雑巾できれいにふけた。');text='雑巾で、床をきれいにした。\nあとは、自分の服だけ。';meaning='道具を使えば、早くきれいになる。'}
+  if(id==='cleanBoth'){if(f.saidSorry||f.wipedGood||f.mopped){f.cleanedBoth=true;f.clearedM=true;relation(s,'自分と床の両方をきれいにしたら、完全に戻った。');text='服も床も、きれいになった。\n午後の授業に、間に合う。';meaning='まわりまで片づけると、評判も戻る。'}else{s.mind-=1;text='両方きれいにしようとしたが、どこから手をつけるか分からなかった。';meaning='まず一つ片づけてから、両方やると良い。';grant(s,'wipeGood')}}
+  return {text,meaning};
+ },
+ watch(s){
+  if(s.stage===0)return '床に、牛乳が広がっている。';
+  if(s.stage===1)return 'みんなが、こっちを見ている。';
+  return '午後の授業が、もうすぐ始まる。';
+ },
+ scene(s){const f=s.flags;
+  if(s.stage===0)return {narrative:'給食の時間。牛乳パックが、手から滑り落ちた。',speaker:'友達',quote:'あっ、こぼれた！',look:'床に、白い海が広がっている。',self:'やっちゃった… みんな見てる',hint:'ミスしたときの、一番つらいのはどこ？'};
+  if(s.stage===1)return {narrative:'片づけの時間。みんなが、こっちを見ている。',speaker:'友達',quote:f.clearedM?'大丈夫？手伝うよ':f.saidSorry?'ふくの、手伝うね':f.laughed?'わはは、やっちゃったね':'……',look:f.clearedM?'まわりは、手伝ってくれそうだ。':'みんなが、様子を見ている。',self:s.reason==='embarrass'?'恥ずかしい。':s.reason==='how2wipe'?'拭き方が分からない。':s.reason==='laughAt'?'からかわれそう。':'どう立て直す？',hint:'謝る・拭く・頼む・笑う、方法はある。'};
+  return {narrative:'午後の授業。床は、もう乾いている。',speaker:'先生',quote:f.clearedM?'きれいに片づけられたね':f.saidSorry?'すぐ謝れて、えらかったよ':'次から気をつけよう',look:'何事もなかったように、授業が始まる。',self:f.clearedM?'片づけられた。ミスは、対処できる。':'まだ少し、気になっている。',hint:'ミスは、対処すれば終わる。'};
+ },
+ progress(s){const f=s.flags;return s.goal===0?(f.clearedM?3:f.wipedGood||f.mopped?2:s.reason?1:0):s.goal===1?(f.laughed||f.saidSorry?3:f.clearedM?2:s.reason?1:0):(f.cleanedBoth?3:f.clearedM?2:s.reason?1:0)},
+ situation(s){const f=s.flags;return f.clearedM?'ミスを片づけられた。謝る・拭く・頼む・笑うがある。':f.wipedGood||f.mopped?'片づけ方が分かった。':'ミスが残っている。対処法は練習できる。'}
 }
 };
 

@@ -137,6 +137,15 @@ export const cards={
  listenDeep:{title:'落ち込みの理由を聞く',kind:'support',label:'話を聞く',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'話せるなら、聞いてあげる。',hint:'聞くことは、いちばんの助け',icon:'ear'},
  tellAdult:{title:'先生にケイのことを伝える',kind:'support',label:'先生に伝える',cost:1,bond:1,atk:1,attr:'soc',up:'soc',desc:'友達の様子を、大人に伝える。',hint:'大人に伝えるのも、助けの一つ',icon:'flag'},
  quietWith:{title:'何も聞かずに一緒にいる',kind:'talk',label:'一緒にいる',cost:1,atk:2,attr:'soc',up:'soc',desc:'理由を聞かず、ただ一緒にいる。',hint:'ことばより、そばにいるだけでも',icon:'sun'},
+ stare:{title:'板書をじっと見る',kind:'think',label:'じっと見る',cost:0,atk:1,attr:'study',desc:'もう一度、板書を見つめ直す。',hint:'見返すだけでも、少し進むことがある',icon:'eye'},
+ copyDown:{title:'とりあえず写す',kind:'think',label:'写す',cost:0,atk:0,desc:'分からなくても、板書を写しておく。',hint:'写すだけでは、分からないまま',icon:'pen'},
+ guess:{title:'適当に答えを書く',kind:'talk',label:'適当に書く',cost:0,strain:1,atk:0,desc:'合ってなくても、何か書いておく。',hint:'書くだけでは、分かったことにならない',icon:'door'},
+ handUp:{title:'小さく手を挙げて質問',kind:'talk',label:'挙手して質問',cost:1,strain:1,bond:1,atk:1,attr:'soc',up:'soc',desc:'みんなの前でも、小さく挙げてみる。',hint:'小さな挙手でも、質問は届く',icon:'hand'},
+ askAfter:{title:'授業後に先生に聞く',kind:'talk',label:'後で聞く',cost:1,bond:1,atk:1,attr:'soc',up:'soc',desc:'授業中でなくても、聞ける。',hint:'後で聞くのも、質問の一つ',icon:'clock'},
+ breakDown:{title:'どこから分からないか探る',kind:'think',label:'壁を探す',cost:1,atk:2,attr:'study',up:'study',desc:'「ここまでは分かる」所を見つける。',hint:'分かるところを見つけると、聞きやすい',icon:'puzzle'},
+ showWork:{title:'「ここから分からない」と見せる',kind:'talk',label:'壁を見せる',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'ノートを見せて、分からない所を指す。',hint:'場所を示すと、教えてもらいやすい',icon:'book'},
+ togetherQ:{title:'友達と一緒に考える',kind:'support',label:'一緒に考える',cost:1,bond:1,atk:2,attr:'study',up:'soc',desc:'分かってる友達と、一緒に考える。',hint:'一緒だと、分からないも怖くない',icon:'people'},
+ askSmall:{title:'「ちょっとだけ」部分を聞く',kind:'talk',label:'部分だけ聞く',cost:1,atk:2,attr:'soc',up:'soc',desc:'全部でなく、分からない所だけ聞く。',hint:'一部分でも、質問は質問',icon:'ear'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -833,6 +842,51 @@ friend:{
  },
  progress(s){const f=s.flags;return s.goal===0?(f.clearedG?3:f.askedG||f.sat?2:s.reason?1:0):s.goal===1?(f.heardStory||f.quietT?3:f.sat||f.nearby?2:s.reason?1:0):(f.clearedG&&f.balancedG?3:f.balancedG?2:f.clearedG?2:s.reason?1:0)},
  situation(s){const f=s.flags;return f.clearedG?'ケイの気持ちに寄り添えた。助け方はいろいろある。':f.askedG||f.sat?'気にかけが、少し届いている。':f.balancedG?'自分を保ちつつ、考えられている。':'ケイは一人でいる。気にかけ方は、練習できる。'}
+},
+confused:{
+ title:'授業で分からない',nav:'分からない',num:'15',attrs:['study','soc'],
+ goals:['分からないを解決したい','質問する勇気を持ちたい','自分のやり方を見つけたい'],
+ chapters:['算数の時間','休み時間','放課後'],locations:['教室・算数','教室・休み時間','教室・放課後'],
+ base:['stare','copyDown','guess','anger','ignore'],start:{mind:4,energy:4},
+ monsters:[{name:'分からなさの迷路',hp:4,power:1,turns:4,look:'板書が、迷路のように入り組んで見える。'},{name:'質問の恥ずかしさの影',hp:5,power:1,turns:5,look:'「聞くのは恥ずかしい」の影が、手を重くする。'},{name:'放置大王',hp:6,power:1,turns:5,look:'「あとでいいや」の溜まったものが、大きくのしかかる。'}],
+ talk:[['teacherQ','先生に聞く','分からない所を、聞いてみる。'],['friendQ','分かってる友達に聞く','リンに聞いてみる。']],
+ think:[['shyQ','質問が恥ずかしい','みんな分かってそうで、聞きにくい。'],['everyone','みんな分かってそうで言えない','自分だけ分かってない気がする。'],['snowball','分からないが積もっている','どこから分からないか、分からない。']],
+ reasonKeys:['shyQ','everyone','snowball'],
+ stageGrants:[['askSmall'],[]],
+ onExplore(s,key){
+  const out={text:'',card:null};
+  if(key==='teacherQ'){s.flags.shown=true;relation(s,'先生が、分からない所を一緒に見てくれた。');out.text='先生「どこから分からない？　ここまで分かってるんだね」';out.card='showWork'}
+  if(key==='friendQ'){s.flags.together=true;relation(s,'リンが、一緒に考えてくれた。');out.text='リン「ここね、こうすると分かるよ」';out.card='togetherQ'}
+  if(key==='shyQ'){s.reason='shyQ';note(s,'質問が恥ずかしくて、手が挙がらない。');out.text='「聞きたいけど、恥ずかしい」';out.card='handUp'}
+  if(key==='everyone'){s.reason='everyone';note(s,'自分だけ分かってない気がする。');out.text='「みんな分かってそう。俺だけかも」';out.card='askAfter'}
+  if(key==='snowball'){s.reason='snowball';note(s,'どこから分からないか、分からなくなっている。');out.text='「全部、分からなくなってきた」';out.card='breakDown'}
+  return out;
+ },
+ onPlay(s,id){
+  const f=s.flags;let text='',meaning='';
+  if(id==='stare'){f.stared=true;text='板書を、もう一度じっくり見た。\n最初より、少し分かる気がした。';meaning='見返すだけでも、少し進むことがある。'}
+  if(id==='copyDown'){f.copied=true;text='とりあえず、写した。\nでも、分かった気にはならない。';meaning='写すだけでは、分からないまま。'}
+  if(id==='guess'){f.guessed=true;text='適当に答えを書いた。\n書いただけでは、分かったことにならない。';meaning='何か書いても、分かったことにはならない。'}
+  if(id==='handUp'){f.askedClass=true;f.clearedQ=true;relation(s,'小さく挙げた手に、先生が気づいてくれた。');text='先生「はい、どこ？」\n挙げたら、先生が来てくれた。';meaning='小さな挙手でも、質問は届く。'}
+  if(id==='askAfter'){f.after=true;f.clearedQ=true;relation(s,'授業後に聞くと、ゆっくり教えてもらえた。');text='先生「ここが分からなかったんだね。説明するね」\n後で聞くのも、質問の一つ。';meaning='後で聞くのも、立派な質問。'}
+  if(id==='breakDown'){f.located=true;f.clearedQ=true;note(s,'「通分」から分からないと分かった。');text='「あ、通分から分からないんだ」\n壁の場所が、見えた。';meaning='分かる所を見つけると、聞きやすくなる。'}
+  if(id==='showWork'){f.shown=true;f.clearedQ=true;relation(s,'「ここから分からない」と見せると、先生が丁寧に教えてくれた。');text='先生「そこか！　じゃあここから説明するね」\n壁を見せると、教えてもらいやすい。';meaning='場所を示すと、教えてもらいやすい。'}
+  if(id==='togetherQ'){f.together=true;f.clearedQ=true;relation(s,'リンと一緒に考えて、糸口が見えた。');text='リン「ここはこうするんだ」\n一緒だと、分からないも怖くない。';meaning='友達と考えるのも、学びの一つ。'}
+  if(id==='askSmall'){if(f.located||f.shown){f.partAsked=true;f.clearedQ=true;relation(s,'「ここだけ」聞くと、すぐに教えてもらえた。');text='先生「そこだけ？　分かった、ここだよ」\n部分だけでも、質問になる。';meaning='一部分だけ聞くのも、質問。'}else{s.mind-=1;text='「ちょっとだけ」と言ったが、どこが分からないか自分も分かっていなかった。';meaning='まず壁の場所を見つけると、聞きやすい。';grant(s,'breakDown')}}
+  return {text,meaning};
+ },
+ watch(s){
+  if(s.stage===0)return '先生は、答えを回収している。';
+  if(s.stage===1)return 'リンは、ノートを開いている。';
+  return '先生は、質問を待っている。';
+ },
+ scene(s){const f=s.flags;
+  if(s.stage===0)return {narrative:'算数の時間。分数の足し算が、分からない。',speaker:'先生',quote:'分かった人、手を挙げて',look:'まわりは、どんどん手を挙げている。',self:'分からない… みんな分かってるのかな',hint:'分からないことを、どう扱う？'};
+  if(s.stage===1)return {narrative:'休み時間。ノートの数字が、まだ目に入る。',speaker:'リン',quote:f.clearedQ?'分かった？':f.located?'どこが分からないの？':f.askedClass?'先生、来たね':'……',look:f.clearedQ?'リンは、一緒に見てくれそうだ。':'リンは、自分のことをしている。',self:s.reason==='shyQ'?'聞くのが恥ずかしい。':s.reason==='everyone'?'自分だけ分かってない気がする。':s.reason==='snowball'?'どこから分からないか分からない。':'分からなさと、どう向き合う？',hint:'聞く・見せる・壁を探す、方法はある。'};
+  return {narrative:'放課後。ノートが、少し埋まった。',speaker:'先生',quote:f.clearedQ?'分かってよかったね':f.located?'どこが分からなかったか、分かると聞きやすいよ':f.shown?'ここね、分かるようになったね':'明日、またやろう',look:'先生は、教える気分だ。',self:f.clearedQ?'分からないは、聞けば解決できる。':'まだ少し、残っている。',hint:'分からないは、聞くと消える。'};
+ },
+ progress(s){const f=s.flags;return s.goal===0?(f.clearedQ?3:f.located||f.shown?2:s.reason?1:0):s.goal===1?(f.askedClass||f.after?3:f.shown?2:s.reason?1:0):(f.clearedQ?3:f.located?2:0)},
+ situation(s){const f=s.flags;return f.clearedQ?'分からないを解決できた。質問の形はいろいろある。':f.located||f.shown?'壁の場所が見つかって、聞きやすくなった。':'分からないまま残っている。聞き方は練習できる。'}
 }
 };
 

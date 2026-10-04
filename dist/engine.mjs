@@ -518,6 +518,16 @@ export const cards={
  proudName:{title:'名前の由来を話す',kind:'think',label:'由来を話す',cost:1,atk:2,attr:'soc',up:'soc',desc:'名前の由来を、話してみる。',hint:'由来を話すと、興味を持ってもらえる',icon:'book'},
  askParents2:{title:'家の人に相談する',kind:'talk',label:'家で相談',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'家の人に、相談する。',hint:'相談は、逃げじゃない',icon:'people'},
  quietTake:{title:'一度だけ優しく直す',kind:'support',label:'優しく直す',cost:2,atk:3,attr:'soc',up:'soc',desc:'一度だけ、優しく名前を直す。',hint:'優しい訂正は、角が立たない',icon:'sun'},
+ leaveAll:{title:'全部残してしまう',kind:'think',label:'全部残す',cost:0,strain:1,atk:1,attr:'ath',desc:'苦手なものを、全部残す。',hint:'残すと、体が育たない',icon:'eye'},
+ forceEat:{title:'泣きながら無理に食べる',kind:'think',label:'無理に食べる',cost:0,strain:1,atk:1,attr:'ath',desc:'つらいのに、無理に食べる。',hint:'無理は、続かない',icon:'bolt'},
+ tinyBite:{title:'一口だけ食べてみる',kind:'think',label:'一口だけ',cost:1,atk:2,attr:'ath',up:'ath',desc:'一口だけ、食べてみる。',hint:'一口は、始まり',icon:'check'},
+ askLess:{title:'「少なめにして」とお願いする',kind:'talk',label:'少なめに',cost:1,atk:2,attr:'soc',up:'soc',desc:'配膳の時、「少なめにして」と言う。',hint:'量を変えると、食べられる',icon:'message'},
+ trySlow:{title:'ゆっくり味わってみる',kind:'think',label:'味わう',cost:1,atk:2,attr:'ath',up:'ath',desc:'急がず、ゆっくり味わう。',hint:'味わうと、美味しく感じる',icon:'sun'},
+ askLunch:{title:'給食の先生に相談する',kind:'talk',label:'給食の先生に相談',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'給食の先生に、相談する。',hint:'相談は、逃げじゃない',icon:'heart'},
+ swapVeg:{title:'「少しだけチャレンジ」と宣言する',kind:'talk',label:'チャレンジ宣言',cost:1,atk:2,attr:'ath',up:'ath',desc:'「今日はこれだけチャレンジ」と宣言。',hint:'宣言すると、頑張れる',icon:'flag'},
+ vegBrave:{title:'苦手なものを一つずつ攻略',kind:'think',label:'一つずつ攻略',cost:1,atk:2,attr:'ath',up:'ath',desc:'苦手なものを、一つずつ攻略。',hint:'一つずつは、現実的',icon:'up'},
+ tellLunch:{title:'給食当番に正直に言う',kind:'talk',label:'正直に言う',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'当番に、「苦手で」と正直に言う。',hint:'正直は、助けを呼ぶ',icon:'hand'},
+ ownPace3:{title:'無理せず自分のペースで',kind:'think',label:'自分のペース',cost:1,atk:2,attr:'ath',up:'ath',desc:'無理せず、自分のペースで挑戦。',hint:'ペースが、続く',icon:'sun'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -3027,6 +3037,48 @@ nameWrong:{title:'名前を間違えられ続ける',nav:'名前を間違えら�
  },
  progress(s){const f=s.flags;return f.ownedN||f.quieted||f.prouded||f.askedP2?3:f.corrected||f.wrote||f.askedF||f.joked?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.ownedN||f.quieted?'名前を、守れた。':f.corrected||f.askedF?'訂正、できた。':'まだ、間違えたまま。直す・見せる・教える、方法はある。'}
+},
+picky:{title:'給食が苦手で残した',nav:'給食で残した',num:55,attrs:['ath','soc'],goals:['少しずつ食べられるようになりたい','無理せず挑戦したい','正直に苦手を伝えたい'],chapters:['苦手なものが出た','どう挑戦するか','明日の給食'],locations:['給食の時間','教室','翌日'],base:['leaveAll','forceEat','tinyBite','anger','ignore'],
+ start:{mind:4,energy:3},
+ monsters:[{name:'苦手な一品',hp:5,power:1,turns:4,look:'苦手なものが、目の前にある。'},{name:'残すか残さないか',hp:5,power:1,turns:4,look:'食べるか、残すか。'},{name:'明日の給食',hp:6,power:2,turns:4,look:'明日も、給食はある。'}],
+ talk:[['askLess2','「少なめに」とお願いする','量を、変えてもらう。'],['askLunch2','給食の先生に相談する','どうすればいいか、聞く。'],['tellFriend6','友達に相談する','「苦手なんだけど」と言う。']],
+ think:[['hate2','苦手で食べたくない','苦手なものが、出てきた。'],['shame4','残すのが恥ずかしい','残すと、目立つ。'],['wantEat','食べられるようになりたい','本当は、食べられるようになりたい。']],
+ reasonKeys:['hate2','shame4','wantEat'],
+ stageGrants:[['askLess','trySlow','askLunch'],['swapVeg','vegBrave','tellLunch','ownPace3']],
+ subs:[
+  {title:'友達が「僕も苦手」と言ってくれた',text:'同じ苦手な子が、いた。',stat:'soc',min:0,good:{text:'「一緒に頑張ろう」と言えた。',rep:1,mind:1},ok:{text:'ほっとした。',mind:1}},
+  {title:'一口食べたら、意外と美味しかった',text:'食べてみたら、悪くなかった。',stat:'ath',min:0,good:{text:'「もう一口」と思えた。',stat:'ath',mind:1},ok:{text:'挑戦できた。',mind:1}}
+ ],
+ onExplore(s,key){const out={text:'',card:null};
+  if(key==='askLess2'){s.flags.askedL=true;relation(s,'「少なめにして」と言ったら、量を変えてもらえた。');out.text='「少なめにして」\n「わかった」';out.card='askLess'}
+  if(key==='askLunch2'){s.flags.askedL2=true;relation(s,'相談したら、「一口ずつがいいよ」と言ってもらえた。');out.text='「苦手で…」\n「一口ずつ、試せばいいよ」';out.card='askLunch'}
+  if(key==='tellFriend6'){s.flags.toldF6=true;relation(s,'「苦手」と言ったら、「僕も」って言ってくれた。');out.text='「苦手なんだ」\n「僕もだよ、一緒に頑張ろう」';out.card='tellLunch'}
+  if(key==='hate2'){s.reason='hate2';out.text='苦手なものが、出てきた。\n「苦手」は、正直に言っていい。';out.card='tellLunch'}
+  if(key==='shame4'){s.reason='shame4';out.text='残すと、目立って恥ずかしい。\n「少なめ」なら、残さず食べられる。';out.card='askLess'}
+  if(key==='wantEat'){s.reason='wantEat';out.text='本当は、食べられるようになりたい。\n「一口」「ゆっくり」で、少しずつ。';out.card='tinyBite'}
+  return out;
+ },
+ onPlay(s,id){const f=s.flags;
+  if(id==='tinyBite'){f.tinyed=true;return{text:'一口だけ、食べてみた。',meaning:'一口は、始まり。'}}
+  if(id==='askLess'){f.askedLess=true;return{text:'「少なめにして」と、お願いした。',meaning:'量を変えると、食べられる。'}}
+  if(id==='trySlow'){f.triedS=true;return{text:'ゆっくり、味わってみた。',meaning:'味わうと、美味しく感じる。'}}
+  if(id==='askLunch'){f.askedLn=true;return{text:'給食の先生に、相談した。',meaning:'相談は、逃げじゃない。'}}
+  if(id==='swapVeg'){f.swapped=true;return{text:'「少しだけチャレンジ」と、宣言した。',meaning:'宣言すると、頑張れる。'}}
+  if(id==='vegBrave'){f.braved=true;return{text:'苦手なものを、一つずつ攻略した。',meaning:'一つずつは、現実的。'}}
+  if(id==='tellLunch'){f.toldL=true;return{text:'「苦手で」と、正直に言った。',meaning:'正直は、助けを呼ぶ。'}}
+  if(id==='ownPace3'){f.ownPaced3=true;return{text:'自分のペースで、挑戦した。',meaning:'ペースが、続く。'}}
+  if(id==='leaveAll'){f.leftAll=true;return{text:'全部、残してしまった。',meaning:'残すと、体が育たない。'}}
+  if(id==='forceEat'){f.forcedE=true;return{text:'無理に、食べた。',meaning:'無理は、続かない。'}}
+  return{text:'',meaning:''};
+ },
+ watch(s){return s.stage===0?'苦手は、みんなにある。':s.stage===1?'一口ずつが、現実的。':'明日も、給食はある。'},
+ scene(s){const f=s.flags;
+  if(s.stage===0)return{narrative:'今日の給食。苦手なものが、配膳された。',speaker:'給食当番',quote:'今日は○○だよ',look:'苦手なものが、目の前にある。',self:'食べたくない…',hint:'給食が苦手で、何がつらい？'};
+  if(s.stage===1)return{narrative:'食べるか、残すか。周りは食べている。',speaker:'友達',quote:'早く食べないと、休み時間なくなるよ',look:'お盆が、まだ半分残っている。',self:s.reason==='shame4'?'残すの恥ずかしい…':s.reason==='wantEat'?'食べられるようになりたい…':'苦手だ…',hint:'少なめ・一口・味わう・相談、方法はある。'};
+  return{narrative:'翌日。また、給食がある。',speaker:'給食当番',quote:f.tinyed||f.askedLess?'「今日はどう？」':'「また残すの？」',look:'今日も、お盆がある。',self:f.swapped||f.braved||f.ownPaced3?'少しずつ、食べられそう。':'まだ、苦手のまま。',hint:'宣言・攻略・正直・ペース、選ぼう。'};
+ },
+ progress(s){const f=s.flags;return f.swapped||f.braved||f.ownPaced3||f.toldL?3:f.tinyed||f.askedLess||f.triedS||f.askedLn?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.swapped||f.braved||f.ownPaced3?'少しずつ、攻略できそう。':f.tinyed||f.askedLess?'一口から、挑戦できた。':'まだ、残したまま。少なめ・一口・相談、方法はある。'}
 }
 };
 

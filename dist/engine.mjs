@@ -92,6 +92,15 @@ export const cards={
  comfort:{title:'チカのがっかりに寄り添う',kind:'support',label:'寄り添う',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'一緒にがっかりして、気持ちを分ける。',hint:'がっかりは、分け合える',icon:'people'},
  planNext:{title:'「じゃあ、いつできる？」と聞く',kind:'talk',label:'次を聞く',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'延期の先を、具体的に聞いてみる。',hint:'次が見えると、待てる',icon:'clock'},
  helpFriend:{title:'一緒に別の計画を立てる',kind:'talk',label:'一緒に計画',cost:1,strain:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'チカと、別の楽しみを考える。',hint:'一緒だと、立て直しが楽になる',icon:'spark'},
+ keepHand:{title:'それでも手を挙げ続ける',kind:'think',label:'挙げ続ける',cost:1,strain:1,atk:2,attr:'study',up:'study',desc:'当たらなくても、挙げ続ける。',hint:'挙げ続けること自体が力になる',icon:'hand'},
+ stopHand:{title:'もう挙げないことにする',kind:'think',label:'やめる',cost:0,atk:0,desc:'期待しないように、挙げるのをやめる。',hint:'やめることもできる',icon:'door'},
+ bigSigh:{title:'大きくため息をつく',kind:'think',label:'ため息',cost:0,atk:0,desc:'残念な気持ちを、ため息で出す。',hint:'気持ちを出してもいい',icon:'heart'},
+ listenWell:{title:'当たった人の発表をよく聞く',kind:'think',label:'聞いて学ぶ',cost:1,atk:1,attr:'study',up:'study',desc:'聞くことも、参加の一つ。',hint:'聞くことから学べる',icon:'ear'},
+ braveHand:{title:'小さくても手を挙げる',kind:'think',label:'小さく挙げる',cost:1,atk:1,attr:'soc',up:'soc',desc:'恥ずかしくても、小さく挙げてみる。',hint:'小さな一歩も、挙げることになる',icon:'flag'},
+ pickRule:{title:'当て方のルールを先生に聞く',kind:'support',label:'ルールを聞く',cost:1,bond:1,atk:1,attr:'soc',up:'soc',desc:'どうやって選んでいるか、聞いてみる。',hint:'ルールが分かると、納得しやすい',icon:'people'},
+ learnWay:{title:'当たった人にコツを聞く',kind:'support',label:'コツを聞く',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'発表の上手さの秘訣を、聞いてみる。',hint:'当たった人から学べる',icon:'people'},
+ otherRole:{title:'発表以外の役割を探す',kind:'think',label:'別の役割',cost:1,atk:2,attr:'study',up:'study',desc:'記録係・補助など、別の貢献を見つける。',hint:'発表以外にも役割はある',icon:'puzzle'},
+ nextTime:{title:'「次は当たる」と準備する',kind:'talk',label:'次に備える',cost:1,strain:1,atk:2,attr:'study',up:'study',desc:'次に当たったときのために、準備しておく。',hint:'準備は、当たる日のためにある',icon:'spark'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -563,6 +572,51 @@ change:{
  },
  progress(s){const f=s.flags;return s.goal===0?(f.clearedC?3:f.acknowledged||f.sulked?1:0):s.goal===1?(f.knowsWhy?3:s.reason?1:0):(f.newPlan||f.rescheduled||f.clearedC?3:f.knowsWhy?2:0)},
  situation(s){const f=s.flags;return f.clearedC?'予定の変更を乗りこなし、次の楽しみができた。':f.knowsWhy?'事情が分かって、気持ちが整理できた。':f.acknowledged||f.sulked?'がっかりの気持ちを、認められた。':'予定は変わった。がっかりの扱い方を、練習できる。'}
+},
+picked:{
+ title:'手を挙げても、当てられない',nav:'当てられない',num:'10',attrs:['study','soc'],
+ goals:['諦めずに挙げ続けたい','当たらなくても役に立ちたい','次につなげたい'],
+ chapters:['国語の音読発表','放課後','次の日の授業'],locations:['教室・国語','教室・放課後','教室・朝'],
+ base:['keepHand','stopHand','bigSigh','anger','ignore'],start:{mind:4,energy:4},
+ monsters:[{name:'期待の風船',hp:4,power:0,turns:4,look:'「今度こそ」が膨らんで、大きく割れる。'},{name:'なんで自分じゃないの渦',hp:5,power:1,turns:5,look:'比べる気持ちが、渦になって引きずり込む。'},{name:'当てられなさ大王',hp:6,power:1,turns:5,look:'「どうせ当たらない」の巨大な影が、手を重くする。'}],
+ talk:[['teacherH','先生に相談する','当て方や気持ちを聞いてもらう。'],['pickedKid','当たった人に聞く','発表のコツを聞いてみる。']],
+ think:[['unfairPick','なんで自分じゃないんだ','挙げているのに、選ばれない。'],['giveUpPick','もう挙げるのをやめたい','当たらないなら、挙げる意味がない気がする。'],['embarrassPick','挙げて当たらないのが恥ずかしい','みんなの前で、外れ続けるのが辛い。']],
+ reasonKeys:['unfairPick','giveUpPick','embarrassPick'],
+ stageGrants:[['nextTime'],[]],
+ onExplore(s,key){
+  const out={text:'',card:null};
+  if(key==='teacherH'){s.flags.knowsRule=true;note(s,'先生は順番と内容で選んでいる。');out.text='先生「みんなに回るようにしてるんだ。次は期待してて」';out.card='pickRule'}
+  if(key==='pickedKid'){s.flags.learnedP=true;relation(s,'当たったリンに、コツを教えてもらった。');out.text='リン「大きな声で言うと、選ばれやすいよ」';out.card='learnWay'}
+  if(key==='unfairPick'){s.reason='unfairPick';note(s,'「挙げているのに」という気持ちが強い。');out.text='「ちゃんと挙げてるのに、なんで俺じゃないんだ」';out.card='keepHand'}
+  if(key==='giveUpPick'){s.reason='giveUpPick';note(s,'当たらないなら、やめたい気持ち。');out.text='「もう挙げても、意味ないかも」';out.card='listenWell'}
+  if(key==='embarrassPick'){s.reason='embarrassPick';note(s,'外れ続ける姿を、見られたくない。');out.text='「挙げて外れるのが、恥ずかしい」';out.card='braveHand'}
+  return out;
+ },
+ onPlay(s,id){
+  const f=s.flags;let text='',meaning='';
+  if(id==='keepHand'){f.persist=true;f.clearedP=true;text='今日も、手を挙げ続けた。\n当たらなかった。でも、挙げたことは事実。';meaning='当たるかは先生の決めること。挙げるかは、自分の決めること。'}
+  if(id==='stopHand'){f.stopped=true;text='手を挙げるのを、やめた。\n期待はなくなった。でも、少しさみしい。';meaning='やめると楽になる。でも、参加からは少し離れる。'}
+  if(id==='bigSigh'){f.sighed=true;s.mind+=1;text='大きなため息をついた。\n残念さが、少し外に出た。';meaning='残念を出すことは、悪いことじゃない。'}
+  if(id==='listenWell'){f.listened=true;note(s,'リンの発表は、ゆっくりで分かりやすかった。');text='リンの発表を、最後まで聞いた。\n「ゆっくり話すと、伝わるんだな」';meaning='聞くことも、参加の一つ。学びにもなる。'}
+  if(id==='braveHand'){f.brave=true;relation(s,'小さく挙げた手を、先生が見てくれた。');text='恥ずかしいけど、小さく挙げた。\n先生が、こっちを見てうなずいた。';meaning='小さな一歩でも、挙げることになる。'}
+  if(id==='pickRule'){f.knowsRule=true;text='先生「順番と内容で選んでるんだ。次、期待してて」\nルールが分かると、少し納得できた。';meaning='選ばれ方が分かると、諦めずに待てる。'}
+  if(id==='learnWay'){f.learnedP=true;f.clearedP=true;relation(s,'リンから発表のコツを聞いた。');text='リン「大きな声で、ゆっくり言うといいよ」\n次へのヒントが、もらえた。';meaning='当たった人は、ライバルじゃなくて先生になる。'}
+  if(id==='otherRole'){f.roleFound=true;f.clearedP=true;note(s,'記録係や準備係でも、授業に参加できる。');text='「発表じゃなくても、記録係とかあるかも」\n別の貢献が、見えてきた。';meaning='役に立つ道は、一つじゃない。'}
+  if(id==='nextTime'){if(f.persist||f.learnedP||f.knowsRule){f.clearedP=true;relation(s,'次に当たるための準備を始めた。');text='「次は当たるかもしれない。準備しておこう」';meaning='準備は、当たる日のためにある。'}else{s.mind-=1;text='「次は当たる」と思いたいが、気持ちが追いつかなかった。';meaning='先に気持ちや理由を整理してからのほうが、前を向きやすい。';grant(s,'listenWell')}}
+  return {text,meaning};
+ },
+ watch(s){
+  if(s.stage===0)return 'リンは、当たって嬉しそうだ。';
+  if(s.stage===1)return 'リンは、発表の練習をしている。';
+  return 'リンは、発表を終えてすっきりした顔だ。';
+ },
+ scene(s){const f=s.flags;
+  if(s.stage===0)return {narrative:'国語の音読発表。手を挙げたが、選ばれたのはリンだった。',speaker:'先生',quote:'じゃあ、今日の発表はリンさんね',look:'リンが、にっこりして立っている。',self:'挙げてたのに、俺じゃないんだ…',hint:'当たらなかった気持ちは、まだ整理できていない。'};
+  if(s.stage===1)return {narrative:'放課後。リンは、発表の練習をしている。',speaker:'リン',quote:f.clearedP?'一緒に練習しようよ':f.knowsRule?'次はきっと当たるって':f.learnedP?'コツ、教えるよ':'発表、ちょっと緊張する',look:f.clearedP?'リンは、話しやすそうだ。':'リンは、練習に集中している。',self:s.reason==='unfairPick'?'挙げてるのに、なんで俺じゃないんだ。':s.reason==='giveUpPick'?'もう挙げても、意味ないかも。':s.reason==='embarrassPick'?'外れ続けるのが、恥ずかしい。':'当たらなかった気持ちと、どう付き合う？',hint:'挙げ続ける・聞いて学ぶ・別の役割、いろいろある。'};
+  return {narrative:'次の日の授業。先生が、また質問を投げた。',speaker:'先生',quote:f.clearedP?'さあ、今日は誰が挙げるかな？':f.knowsRule?'次は君に期待してるよ':f.listened?'今日は発表、がんばってくれたね':'さあ、誰か挙げる人いる？',look:'先生が、みんなを見渡している。',self:f.clearedP?'また、挙げてみよう。':'まだ少し、ためらいがある。',hint:'挙げるかどうかは、自分で決められる。'};
+ },
+ progress(s){const f=s.flags;return s.goal===0?(f.persist||f.clearedP?3:f.brave?2:s.reason?1:0):s.goal===1?(f.roleFound||f.listened?3:f.knowsRule?2:s.reason?1:0):(f.clearedP||f.learnedP?3:f.knowsRule?2:0)},
+ situation(s){const f=s.flags;return f.clearedP?'当たらなくても、自分の参加の仕方が見つかった。':f.knowsRule?'選ばれ方が分かって、少し納得できた。':f.listened?'聞くことでも、学べると分かった。':'当たるかは決められない。でも、次のためにできることがある。'}
 }
 };
 

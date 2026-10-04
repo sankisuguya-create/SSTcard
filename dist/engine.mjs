@@ -116,7 +116,6 @@ export const cards={
  explain:{title:'「走ってはいません」と説明',kind:'talk',label:'説明する',cost:1,bond:1,atk:1,attr:'soc',up:'soc',desc:'事実を、冷静に伝える。',hint:'事実は、冷静に伝えると届く',icon:'pen'},
  hearOut:{title:'まず最後まで聞く',kind:'think',label:'最後まで聞く',cost:1,atk:0,up:'soc',desc:'先生の言い分を、最後まで聞く。',hint:'聞いてから言うと、届きやすい',icon:'ear'},
  smallSay:{title:'「実は…」と小さく言い分を言う',kind:'talk',label:'小さく言う',cost:1,strain:1,atk:1,attr:'soc',up:'soc',desc:'反論ではなく、小さく自分の側を言う。',hint:'小さくても、言うことは言える',icon:'flag'},
- askWhy:{title:'「どう見えましたか？」と聞く',kind:'support',label:'聞く',cost:1,bond:1,atk:1,attr:'soc',up:'soc',desc:'先生にどう見えたか、聞いてみる。',hint:'相手の見え方が分かると、会話になる',icon:'people'},
  vent:{title:'友達に愚痴を聞いてもらう',kind:'support',label:'愚痴る',cost:0,bond:1,atk:0,desc:'納得いかない気持ちを、友達に聞いてもらう。',hint:'吐き出すと、少し整理できる',icon:'people'},
  bothSides:{title:'両方の見え方を考える',kind:'think',label:'両方を考える',cost:1,atk:2,attr:'study',up:'study',desc:'自分の見え方と、先生の見え方の両方を考える。',hint:'両方見えると、納得が作れる',icon:'puzzle'},
  hideForgot:{title:'忘れたのを隠す',kind:'think',label:'隠す',cost:0,atk:0,desc:'バレないように、何も言わない。',hint:'隠すと、ずっと気になるかも',icon:'eye'},
@@ -854,7 +853,7 @@ picked:{
  onPlay(s,id){
   const f=s.flags;let text='',meaning='';
   if(id==='keepHand'){f.persist=true;f.clearedP=true;text='今日も、手を挙げ続けた。\n当たらなかった。でも、挙げたことは事実。';meaning='当たるかは先生の決めること。挙げるかは、自分の決めること。'}
-  if(id==='stopHand'){f.stopped=true;text='手を挙げるのを、やめた。\n期待はなくなった。でも、少しさみしい。';meaning='やめると楽になる。でも、参加からは少し離れる。'}
+  if(id==='stopHand'){f.stopped=true;grant(s,'otherRole');text='手を挙げるのを、やめた。\n期待はなくなった。でも、少しさみしい。';meaning='やめると楽になる。でも、参加からは少し離れる。'}
   if(id==='bigSigh'){f.sighed=true;s.mind+=1;text='大きなため息をついた。\n残念さが、少し外に出た。';meaning='残念を出すことは、悪いことじゃない。'}
   if(id==='listenWell'){f.listened=true;note(s,'リンの発表は、ゆっくりで分かりやすかった。');text='リンの発表を、最後まで聞いた。\n「ゆっくり話すと、伝わるんだな」';meaning='聞くことも、参加の一つ。学びにもなる。'}
   if(id==='braveHand'){f.brave=true;relation(s,'小さく挙げた手を、先生が見てくれた。');text='恥ずかしいけど、小さく挙げた。\n先生が、こっちを見てうなずいた。';meaning='小さな一歩でも、挙げることになる。'}
@@ -1352,7 +1351,7 @@ spill:{
   if(id==='hideMistake'){f.hidM=true;s.rep-=1;relation(s,'見ぬふりしたら、後で見つかって怒られた。');text='見ぬふりしたら、\nあとで先生に見つかった。';meaning='ふせぐと、あとでバレてもっと困る。';grant(s,'saySorry2')}
   if(id==='wipeHalf'){f.wipedHalf=true;text='適当にふいたが、\n牛乳は広がるばかりだった。';meaning='拭き方が分かると、早く片づく。';grant(s,'wipeGood')}
   if(id==='saySorry2'){f.saidSorry=true;f.clearedM=true;relation(s,'「ごめんなさい」と言ったら、まわりの目がやわらいだ。');text='「ごめんなさい、こぼしました」\n言ったら、まわりが手伝ってくれた。';meaning='すぐ謝ると、まわりの目はやわらぐ。'}
-  if(id==='wipeGood'){f.wipedGood=true;f.clearedM=true;note(s,'拭き方を聞いて、きれいにふけた。');text='教えてもらったとおりにふいたら、\n床がきれいになった。';meaning='拭き方を聞くと、早くきれいになる。'}
+  if(id==='wipeGood'){f.wipedGood=true;f.clearedM=true;note(s,'拭き方を聞いて、きれいにふけた。');grant(s,'mopUp');text='教えてもらったとおりにふいたら、\n床がきれいになった。';meaning='拭き方を聞くと、早くきれいになる。'}
   if(id==='askHelp'){f.helpedM=true;f.clearedM=true;relation(s,'「手伝って」と頼んだら、みんなが手伝ってくれた。');text='「手伝って！」と言ったら、\n何人かがふきんを持ってきてくれた。';meaning='頼むのも、対処の一つ。'}
   if(id==='laughSelf'){f.laughed=true;f.clearedM=true;relation(s,'「やっちゃった」と笑ったら、まわりも笑った。');text='「やっちゃったー！」と笑った。\nまわりも、一緒に笑ってくれた。';meaning='自分で笑うと、まわりも楽になる。'}
   if(id==='mopUp'){f.mopped=true;f.clearedM=true;note(s,'雑巾できれいにふけた。');text='雑巾で、床をきれいにした。\nあとは、自分の服だけ。';meaning='道具を使えば、早くきれいになる。'}
@@ -1471,7 +1470,7 @@ duty:{
  talk:[['slacker','サボった子に声をかける','逃げた相手に、声をかける。'],['teacherD2','先生に相談','一人で抱えず、先生に伝える。']],
  think:[['unfairD','ずるいと思う','一人だけ働くのは、不公平。'],['tired','疲れてきた','一人では、疲れてしまう。'],['dutyOK','当番自体は嫌じゃない','仕事は嫌じゃない、一人が嫌だ。']],
  reasonKeys:['unfairD','tired','dutyOK'],
- stageGrants:[['finishWell'],[]],
+ stageGrants:[['switchJob','finishWell'],[]],
  onExplore(s,key){
   const out={text:'',card:null};
   if(key==='slacker'){s.flags.called=true;note(s,'声をかけたら、相手が戻ってきた。');out.text='「一緒にやろうよ」\n相手「…ごめん、手伝う」\n声をかけたら、戻ってきた。';out.card='callBack'}
@@ -1561,7 +1560,7 @@ lunch:{
  talk:[['teacherL','先生に言う','苦手なことを、先生に伝える。'],['friendL','友達に聞く','好きな子に、食べ方を聞く。']],
  think:[['shame','残すのが恥ずかしい','残すのを見られたくない。'],['texture','食感が苦手','口の中の感じが、無理。'],['fearTry','食べるのが怖い','一口すら、入れたくない。']],
  reasonKeys:['shame','texture','fearTry'],
- stageGrants:[['fullTry'],[]],
+ stageGrants:[['askWhyFood','askCook','fullTry'],[]],
  onExplore(s,key){
   const out={text:'',card:null};
   if(key==='teacherL'){s.flags.toldL=true;note(s,'先生に言ったら、少なめにしてもらえた。');out.text='先生「少なめにしようか」\n量を減らしてもらえた。';out.card='tellAmount'}
@@ -1650,7 +1649,7 @@ relay:{
  talk:[['captain','キャプテンに聞く','リレーのコツを、キャプテンに聞く。'],['teacherRe','先生に相談','不安なことを、先生に言う。']],
  think:[['fearFall','転んだらどうしよう','本番で転ぶことを、想像する。'],['slowSelf','足が遅い','自分の走りに、自信がない。'],['teamPress','みんなに迷惑','チームに迷惑をかけそう。']],
  reasonKeys:['fearFall','slowSelf','teamPress'],
- stageGrants:[['batonPass'],[]],
+ stageGrants:[['askPace','batonPass'],['relayRun']],
  onExplore(s,key){
   const out={text:'',card:null};
   if(key==='captain'){s.flags.askedC=true;relation(s,'キャプテンにバトンのコツを聞いた。');out.text='キャプテン「バトンは腕を伸ばして」\nコツを教えてもらった。';out.card='batonPass'}
@@ -1695,7 +1694,7 @@ sickDay:{
  talk:[['friendSick','友達に聞く','休んだ日のことを、友達に聞く。'],['teacherSick','先生に相談','遅れていることを、先生に言う。']],
  think:[['dontKnow','どこから分からない？','どこが分からないか、分からない。'],['shyAskS','聞くのが恥ずかしい','遅れたのを、知られたくない。'],['tooMuch','量が多すぎる','たまった分が、多すぎる。']],
  reasonKeys:['dontKnow','shyAskS','tooMuch'],
- stageGrants:[['catchPlan'],[]],
+ stageGrants:[['catchPlan'],['caughtUp']],
  onExplore(s,key){
   const out={text:'',card:null};
   if(key==='friendSick'){s.flags.askedF=true;relation(s,'友達に聞いたら、ノートを貸してもらえた。');out.text='友達「ノート、貸すよ」\n休んだ日のことが、分かった。';out.card='noteKey'}
@@ -1742,7 +1741,7 @@ craft:{
  talk:[['teacherArt','先生に相談','どう直すか、先生に聞く。'],['friendArt','友達に見てもらう','壊れた作品を、友達に見せる。'],['skillKid','図工が得意な子に聞く','上手な子の、作り方を聞く。']],
  think:[['perfect','完璧じゃなきゃ嫌','直しても、元どおりにならない。'],['noTime','直す時間がない','次の図工まで、時間がない。'],['gaveUp','もう作りたくない','壊れて、作る気がなくなった。']],
  reasonKeys:['perfect','noTime','gaveUp'],
- stageGrants:[['mendBit'],['finishWork']],
+ stageGrants:[['mendBit'],['finishWork','fixIdea','forceSubmit']],
  onExplore(s,key){
   const out={text:'',card:null};
   if(key==='teacherArt'){s.flags.consulted=true;relation(s,'先生に相談したら、直し方のヒントをもらえた。');out.text='先生「壊れたところをいかす形も、あるよ」\n直し方のヒントを、もらえた。';out.card='consultArt'}
@@ -1792,7 +1791,7 @@ vault:{
  talk:[['coachAsk','先生にコツを聞く','跳び方のコツを、先生に聞く。'],['mateWatch','跳べる子に聞く','跳べる子の、やり方を聞く。'],['mateTogether','友達と練習する','休み時間、一緒に練習する。']],
  think:[['fearFall','着地がこわい','跳んだあと、こけるのがこわい。'],['tooHigh','高すぎる','跳び箱が、高すぎる。'],['slowRun','助走が遅い','走るのが遅くて、勢いがない。']],
  reasonKeys:['fearFall','tooHigh','slowRun'],
- stageGrants:[['splitJump'],['clearJump']],
+ stageGrants:[['splitJump'],['clearJump','bigTry']],
  onExplore(s,key){
   const out={text:'',card:null};
   if(key==='coachAsk'){s.flags.tipped=true;note(s,'先生にコツを聞いたら、「手をついて、足を開く」と分かった。');out.text='先生「手をついて、足を開くだけでいいよ」\nコツが、分かった。';out.card='askCoach'}
@@ -1840,7 +1839,7 @@ meeting:{
  talk:[['askOppose','反対した子に聞く','なぜ反対したか、聞く。'],['teacherMeet','先生に相談','提案の通し方を、先生に聞く。'],['allyTalk','賛成した子と話す','賛成してくれた子と、案を練る。']],
  think:[['whyNo','なぜ反対された？','反対された理由を、考える。'],['notMine','独りよがりだった？','自分だけの提案だったかも。'],['badWords','言い方が強すぎた？','「こうすべき」と、言いすぎたかも。']],
  reasonKeys:['whyNo','notMine','badWords'],
- stageGrants:[['askReason'],['rePropose']],
+ stageGrants:[['askReason','nextPlan'],['rePropose','acceptNo']],
  onExplore(s,key){
   const out={text:'',card:null};
   if(key==='askOppose'){s.flags.askedO=true;relation(s,'反対した子に聞いたら、「みんなが困るから」と言われた。');out.text='「それだと、掃除の時間がなくなるよ」\n反対の理由が、分かった。';out.card='askReason'}
@@ -1889,7 +1888,7 @@ leader:{
  talk:[['kidWhy','本人に理由を聞く','なぜやらないか、本人に聞く。'],['teacherLead','先生に相談','まとめ方を、先生に聞く。'],['senpaiAsk','去年の班長に聞く','上の子の、まとめ方を聞く。']],
  think:[['tooYoung','年下だから？','年下だから、言うことを聞かない？'],['orderBad','言い方が悪い？','命令っぽく、言いすぎたかも。'],['notFun','楽しくない？','会の練習が、楽しくないのかも。']],
  reasonKeys:['tooYoung','orderBad','notFun'],
- stageGrants:[['kidCalm'],['tryLead']],
+ stageGrants:[['kidCalm','cheerKid'],['tryLead','leadWay']],
  onExplore(s,key){
   const out={text:'',card:null};
   if(key==='kidWhy'){s.flags.askedK2=true;relation(s,'本人に聞いたら、「跳べないからやりたくない」と言われた。');out.text='「だって、跳べないし…」\n理由が、分かった。';out.card='askWhyKid'}
@@ -1938,7 +1937,7 @@ late:{
  talk:[['callFirst','先生に先に言う','遅れることを、先に言う。'],['teacherHabit','先生に習慣を相談','遅刻ぐせを、先生に相談する。'],['friendMorning','友達と登校の約束','友達と、一緒に登校する約束をする。']],
  think:[['sleepy','夜更かしした','夜、遅くまで起きていた。'],['noPrep','準備をしてなかった','持ち物も服も、決めてなかった。'],['weakMorning','朝が苦手','そもそも、朝が苦手だ。']],
  reasonKeys:['sleepy','noPrep','weakMorning'],
- stageGrants:[['calmWalk'],['arriveCalm']],
+ stageGrants:[['calmWalk'],['arriveCalm','newHabit']],
  onExplore(s,key){
   const out={text:'',card:null};
   if(key==='callFirst'){s.flags.toldFirst=true;relation(s,'先に連絡したら、「気をつけてね」と言われた。');out.text='「遅れます」と、先に言った。\n先生「分かった。気をつけてね」';out.card='callAhead'}
@@ -1987,7 +1986,7 @@ lostBook:{
  talk:[['askLend','貸したか聞く','友達に、貸したか聞く。'],['askLib','図書の先生に相談','図書の先生に、なくしたと言う。'],['teacherBook','担任に相談','担任に、どうするか聞く。']],
  think:[['borrowed','誰かに貸したかも','貸したかもしれない。'],['dropped','どこかに落としたかも','落としたかもしれない。'],['forgotPlace','置き場所を忘れた','どこに置いたか、忘れた。']],
  reasonKeys:['borrowed','dropped','forgotPlace'],
- stageGrants:[['checkBag'],['ownUp']],
+ stageGrants:[['checkBag','askLibrarian'],['ownUp','replaceBook','foundIt']],
  onExplore(s,key){
   const out={text:'',card:null};
   if(key==='askLend'){s.flags.askedF2=true;relation(s,'友達に聞いたら、「借りてないよ」と言われた。');out.text='「借りてないよ」\n貸してはいない、と分かった。';out.card='askFriends'}
@@ -2037,7 +2036,7 @@ seat:{
  talk:[['oldTalk','仲良しに気持ちを伝える','「さびしい」と、仲良しに言う。'],['newTalk','新しい隣に話す','新しい隣の子に、話してみる。'],['teacherSeat','先生に相談','席替えのことを、先生に言う。']],
  think:[['lonely','さびしい','仲良しと離れて、さびしい。'],['noEnergy','やる気が出ない','新しい席に、なじめない。'],['wantOld','前の席に戻りたい','できれば、前の席に戻りたい。']],
  reasonKeys:['lonely','noEnergy','wantOld'],
- stageGrants:[['meetBreak'],['smileSeat']],
+ stageGrants:[['meetBreak'],['smileSeat','keepBond']],
  onExplore(s,key){
   const out={text:'',card:null};
   if(key==='oldTalk'){s.flags.toldO=true;relation(s,'「さびしい」と言ったら、仲良しも「私も」と言ってくれた。');out.text='「私も、さびしいよ」\n仲良しも、同じ気持ちだった。';out.card='oldCall'}
@@ -2085,7 +2084,7 @@ visit:{
  talk:[['talkParent','親に緊張と言う','「緊張する」と、親に言う。'],['talkTeacher2','先生に相談','参観日の緊張を、先生に言う。'],['askFriend','友達と励まし合う','友達と「頑張ろう」と言い合う。']],
  think:[['shyWatch','見られて恥ずかしい','見られるのが、恥ずかしい。'],['missFear','間違えたら恥ずかしい','間違えるのが、こわい。'],['wantShow','頑張って見せたい','いいところを、見せたい。']],
  reasonKeys:['shyWatch','missFear','wantShow'],
- stageGrants:[['askOnce'],['handRaised']],
+ stageGrants:[['askOnce'],['handRaised','honestDay']],
  onExplore(s,key){
   const out={text:'',card:null};
   if(key==='talkParent'){s.flags.toldP=true;relation(s,'「緊張する」と言ったら、「いつもどおりでいいよ」と言われた。');out.text='「いつもどおりで、いいよ」\n親が、分かってくれた。';out.card='tellParent'}
@@ -2133,7 +2132,7 @@ makeUp:{
  talk:[['mutualAsk','共通の友達に相談','仲直りの仕方を、友達に聞く。'],['teacherMake','先生に相談','仲直りを、先生に言う。'],['inviteTry','遊びに誘ってみる','「一緒に遊ぼう」と、誘う。']],
  think:[['myFault','自分も悪かった','自分も、悪いところがあった。'],['pride','意地を張っている','意地を張って、動けない。'],['scared','断られるのがこわい','謝っても、断られそうでこわい。']],
  reasonKeys:['myFault','pride','scared'],
- stageGrants:[['approachSlow'],['makeUpDone']],
+ stageGrants:[['approachSlow','noteSorry','askMutual'],['makeUpDone','reBond']],
  onExplore(s,key){
   const out={text:'',card:null};
   if(key==='mutualAsk'){s.flags.askedM=true;relation(s,'「一緒に遊ぼうって誘えば？」と言われた。');out.text='「誘ってみたら？」\n友達が、橋渡ししてくれた。';out.card='invitePlay'}

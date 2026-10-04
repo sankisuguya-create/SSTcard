@@ -287,3 +287,42 @@ let mk=initial('makeUp');explore(mk,'myFault');assert(available(mk).includes('re
 let mk2=initial('makeUp');mk2.energy=5;play(mk2,'waitSorry');assert(mk2.flags.waited);assert(available(mk2).includes('approachSlow')); // 待つ→少しずつへ
 let mk3=initial('makeUp');mk3.energy=5;mk3.hand.push('reBond');play(mk3,'reBond');assert(mk3.mind<5);assert(available(mk3).includes('realSorry')); // 素地なし深まるは空回り
 let mk4=initial('makeUp');explore(mk4,'mutualAsk');mk4.energy=5;play(mk4,'invitePlay');assert(mk4.flags.invited);mk4.feedback=null;mk4.mind=5;mk4.stage=2;mk4.hand.push('makeUpDone');play(mk4,'makeUpDone');assert(mk4.flags.madeUp); // 誘う→仲直り
+
+// ── 到達可能性チェック: ストーリー内で参照される全カードが (base ∪ stageGrants ∪ explore付与 ∪ 到達済みカードのgrant) から辿れること ──
+import {readFileSync} from 'node:fs';
+import {cards} from './dist/engine.mjs';
+const src=readFileSync('dist/engine.mjs','utf8');
+let storiesRegion=src.slice(src.indexOf('export const stories'));
+storiesRegion=storiesRegion.slice(0,storiesRegion.indexOf('\n};')+3);
+const markers=[...storiesRegion.matchAll(/^([a-zA-Z]+):\{/gm)];
+const storyBlocks={};
+for(let i=0;i<markers.length;i++){const name=markers[i][1];const start=markers[i].index;const end=i+1<markers.length?markers[i+1].index:storiesRegion.length;storyBlocks[name]=storiesRegion.slice(start,end)}
+const missing=[];for(const name of Object.keys(stories))if(!storyBlocks[name])missing.push(name);
+assert(missing.length===0,`story block not found: ${missing}`);
+const referenced=new Set();
+for(const [name,body] of Object.entries(storyBlocks)){
+ // talk/thinkオプションキー＋reasonKeys はカードIDではないので除外
+ const keyNames=new Set();
+ for(const arr of body.matchAll(/(?:talk|think|reasonKeys):\[([\s\S]*?)\]\s*[,\n]/g))for(const mm of arr[1].matchAll(/'([a-zA-Z][a-zA-Z0-9]*)'/g))keyNames.add(mm[1]);
+ const ids=new Set();
+ for(const mm of body.matchAll(/'([a-zA-Z][a-zA-Z0-9]*)'/g)){const id=mm[1];if(cards[id]&&!keyNames.has(id))ids.add(id)}
+ for(const id of ids)referenced.add(id);
+ // roots: base + stageGrants + out.card (explore)
+ const roots=new Set();
+ const baseM=body.match(/base:\[([^\]]+)\]/);if(baseM)for(const mm of baseM[1].matchAll(/'([^']+)'/g))roots.add(mm[1]);
+ const sgM=body.match(/stageGrants:\[([\s\S]*?)\]\]/);if(sgM)for(const mm of sgM[1].matchAll(/'([^']+)'/g))roots.add(mm[1]);
+ for(const mm of body.matchAll(/out\.card='([^']+)'/g))roots.add(mm[1]);
+ // onExplore内のgrant(s,'X')も直接付与＝roots
+ for(const mm of body.matchAll(/if\(key==='[^']+'\)\{([\s\S]*?)(?=if\(key===|if\(id===|$)/g))for(const g of mm[1].matchAll(/grant\(s,'([^']+)'\)/g))roots.add(g[1]);
+ // edges: per if(id==='Y') block grants
+ const edges={};
+ for(const mm of body.matchAll(/if\(id==='([^']+)'\)\{([\s\S]*?)(?=if\(id===|$)/g)){const from=mm[1];for(const g of mm[2].matchAll(/grant\(s,'([^']+)'\)/g)){(edges[from]??=[]).push(g[1])}}
+ const reach=new Set(roots);let grew=true;
+ while(grew){grew=false;for(const [from,tos] of Object.entries(edges)){if(reach.has(from))for(const to of tos)if(!reach.has(to)){reach.add(to);grew=true}}}
+ const dead=[...ids].filter(id=>!reach.has(id));
+ assert(dead.length===0,`${name}: unreachable cards ${dead}`);
+}
+// orphan check: 全非ダークカードがどこかのストーリーで参照されていること
+const orphans=Object.keys(cards).filter(id=>!cards[id].dark&&!cards[id].minus&&!referenced.has(id));
+assert(orphans.length===0,`orphan cards: ${orphans}`);
+console.log('reachability OK:',Object.keys(storyBlocks).length,'stories,',referenced.size,'cards referenced');

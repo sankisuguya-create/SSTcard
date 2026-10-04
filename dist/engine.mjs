@@ -498,6 +498,16 @@ export const cards={
  beCareful:{title:'次は丁寧に借りる',kind:'think',label:'丁寧に借りる',cost:1,atk:2,attr:'study',up:'study',desc:'借りるときは、丁寧に扱う。',hint:'丁寧は、約束の形',icon:'pen'},
  ownMistake:{title:'「私がやった」と責任を持つ',kind:'think',label:'責任を持つ',cost:1,atk:2,attr:'soc',up:'soc',desc:'言い訳せず、責任を持つ。',hint:'責任は、信頼の土台',icon:'check'},
  ownTruth:{title:'真実を自分に認める',kind:'support',label:'真実を認める',cost:2,atk:3,attr:'study',up:'study',desc:'ごまかさず、真実を認める。',hint:'真実は、後腐れがない',icon:'sun'},
+ chaseRun:{title:'必死に追いかける',kind:'think',label:'追いかける',cost:0,strain:1,atk:1,attr:'ath',desc:'走って、必死に追いかける。',hint:'追うほど、疲れて悲しくなる',icon:'runner'},
+ pretendFine:{title:'「どうでもいい」とふるまう',kind:'think',label:'強がる',cost:0,strain:1,atk:1,attr:'soc',desc:'「どうでもいい」と、強がる。',hint:'強がると、心が疲れる',icon:'eye'},
+ sayWait2:{title:'「待って！」と声をかける',kind:'talk',label:'待ってと言う',cost:1,atk:2,attr:'soc',up:'soc',desc:'「待って！」と、声をかける。',hint:'声をかけると、気づいてもらえる',icon:'message'},
+ tellHow3:{title:'「寂しかった」と気持ちを伝える',kind:'talk',label:'気持ちを伝える',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'「置いて行かれて寂しかった」と言う。',hint:'気持ちを言うと、分かってもらえる',icon:'heart'},
+ askWhyRun:{title:'「なんで行っちゃったの？」と聞く',kind:'talk',label:'理由を聞く',cost:1,atk:2,attr:'soc',up:'soc',desc:'行ってしまった理由を、聞く。',hint:'理由が分かると、気が楽になる',icon:'search'},
+ findOwn2:{title:'自分の遊びを見つける',kind:'think',label:'自分の遊び',cost:1,atk:2,attr:'soc',up:'soc',desc:'追いかけず、自分の遊びを見つける。',hint:'一人の遊びも、楽しい',icon:'sun'},
+ otherFriends:{title:'他の子と遊ぶ',kind:'think',label:'他の子と遊ぶ',cost:1,atk:2,attr:'soc',up:'soc',desc:'その子以外の、他の子と遊ぶ。',hint:'友達は、一人じゃない',icon:'people'},
+ slowDown:{title:'追いかけず深呼吸する',kind:'think',label:'深呼吸',cost:1,atk:2,attr:'ath',up:'ath',desc:'追いかける前に、深呼吸する。',hint:'深呼吸で、気持ちが落ち着く',icon:'sun'},
+ waitPatience:{title:'戻ってくるのを待つ',kind:'support',label:'待つ',cost:1,atk:2,attr:'soc',up:'soc',desc:'「そのうち戻ってくるかな」と待つ。',hint:'待てるのも、力',icon:'clock'},
+ nextTime:{title:'「次は一緒に行こう」と約束する',kind:'support',label:'次の約束',cost:2,atk:3,attr:'soc',up:'soc',desc:'「次は一緒に行こう」と、約束する。',hint:'約束で、次が変わる',icon:'flag'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -2923,6 +2933,48 @@ broke:{title:'借りたものを壊した',nav:'壊した',num:52,attrs:['soc'],
  },
  progress(s){const f=s.flags;return f.owned||f.ownedT||f.careful||f.askedA2?3:f.toldO||f.fixed||f.sorryA||f.paid?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.owned||f.ownedT?'責任を、取れた。':f.toldO||f.fixed||f.paid?'正直に、対応できた。':'まだ、隠したまま。正直・直す・弁償、方法はある。'}
+},
+leftOut:{title:'遊びから置いて行かれた',nav:'置いて行かれた',num:53,attrs:['soc'],goals:['寂しさを伝えたい','一人でも楽しくいたい','次は一緒にいたい'],chapters:['置いて行かれた','一人の時間','明日の遊び'],locations:['校庭','休み時間','翌日'],base:['chaseRun','pretendFine','sayWait2','anger','ignore'],
+ start:{mind:4,energy:3},
+ monsters:[{name:'遠ざかる背中',hp:5,power:1,turns:4,look:'友達の背中が、遠くなる。'},{name:'一人の時間',hp:5,power:1,turns:4,look:'一人、取り残された。'},{name:'明日の遊び',hp:6,power:2,turns:4,look:'明日は、一緒にいられるか。'}],
+ talk:[['callOut','「待って！」と声をかける','置いて行かれて、声をかける。'],['askReason','「なんで行っちゃったの？」と聞く','理由を、聞いてみる。'],['talkOther','他の子と話してみる','その子以外にも、話せる。']],
+ think:[['lonely','寂しい・悲しい','置いて行かれて、寂しかった。'],['wantAlong','一緒にいたかった','本当は、一緒にいたかった。'],['ownFun','一人でも楽しいこと','一人でも、楽しいことはある。']],
+ reasonKeys:['lonely','wantAlong','ownFun'],
+ stageGrants:[['tellHow3','askWhyRun','slowDown'],['findOwn2','otherFriends','waitPatience','nextTime']],
+ subs:[
+  {title:'友達が戻ってきて「ごめん、忘れてた」と言った',text:'その子が、戻ってきて謝った。',stat:'soc',min:0,good:{text:'「気にしてないよ」と言えた。',rep:1,mind:1},ok:{text:'ほっとした。',mind:1}},
+  {title:'一人で遊んでいたら、誰かが寄ってきた',text:'別の子が、「一緒にやろう」と来てくれた。',stat:'soc',min:0,good:{text:'新しい遊びが、できた。',rep:1},ok:{text:'楽しかった。',mind:1}}
+ ],
+ onExplore(s,key){const out={text:'',card:null};
+  if(key==='callOut'){s.flags.called=true;relation(s,'「待って！」と言ったら、立ち止まってくれた。');out.text='「待って！」\n「あ、ごめん！　気づかなかった」';out.card='sayWait2'}
+  if(key==='askReason'){s.flags.askedR2=true;relation(s,'聞いたら、「急いでて」と分かった。');out.text='「なんで行っちゃったの？」\n「先に行きたくて…ごめん」';out.card='askWhyRun'}
+  if(key==='talkOther'){s.flags.talkedO=true;relation(s,'他の子と話したら、楽しかった。');out.text='「何してるの？」\n「これ、面白いよ」';out.card='otherFriends'}
+  if(key==='lonely'){s.reason='lonely';out.text='置いて行かれて、寂しかった。\n「寂しい」は、伝えていい気持ち。';out.card='tellHow3'}
+  if(key==='wantAlong'){s.reason='wantAlong';out.text='本当は、一緒にいたかった。\n「待って」「次は」と、言おう。';out.card='sayWait2'}
+  if(key==='ownFun'){s.reason='ownFun';out.text='一人でも、楽しいことはある。\n追いかけなくても、いい。';out.card='findOwn2'}
+  return out;
+ },
+ onPlay(s,id){const f=s.flags;
+  if(id==='sayWait2'){f.saidW2=true;return{text:'「待って！」と、声をかけた。',meaning:'声をかけると、気づいてもらえる。'}}
+  if(id==='tellHow3'){f.toldH3=true;return{text:'「寂しかった」と、伝えた。',meaning:'気持ちを言うと、分かってもらえる。'}}
+  if(id==='askWhyRun'){f.askedW3=true;return{text:'「なんで行っちゃったの？」と聞いた。',meaning:'理由が分かると、気が楽になる。'}}
+  if(id==='findOwn2'){f.found2=true;return{text:'自分の遊びを、見つけた。',meaning:'一人の遊びも、楽しい。'}}
+  if(id==='otherFriends'){f.othered=true;return{text:'他の子と、遊んだ。',meaning:'友達は、一人じゃない。'}}
+  if(id==='slowDown'){f.slowed=true;return{text:'追いかけず、深呼吸した。',meaning:'深呼吸で、気持ちが落ち着く。'}}
+  if(id==='waitPatience'){f.waited=true;return{text:'戻ってくるのを、待った。',meaning:'待てるのも、力。'}}
+  if(id==='nextTime'){f.nexted=true;return{text:'「次は一緒に行こう」と、約束した。',meaning:'約束で、次が変わる。'}}
+  if(id==='chaseRun'){f.chased=true;return{text:'必死に、追いかけた。',meaning:'追うほど、疲れて悲しくなる。'}}
+  if(id==='pretendFine'){f.pretendF=true;return{text:'「どうでもいい」と、強がった。',meaning:'強がると、心が疲れる。'}}
+  return{text:'',meaning:''};
+ },
+ watch(s){return s.stage===0?'置いて行かれると、寂しい。':s.stage===1?'一人の時間も、悪くない。':'明日も、遊べる。'},
+ scene(s){const f=s.flags;
+  if(s.stage===0)return{narrative:'友達と遊んでいたのに、気づいたら一人だった。',speaker:'友達',quote:'（遠くで笑い声）',look:'友達の背中が、遠くに見える。',self:'置いて行かれた…',hint:'置いて行かれて、何がつらい？'};
+  if(s.stage===1)return{narrative:'一人の時間。追いかけるか、自分のことをするか。',speaker:'心の声',quote:'どうしよう',look:'校庭が、広い。',self:s.reason==='wantAlong'?'一緒にいたい…':s.reason==='ownFun'?'一人でも…':'寂しい…',hint:'伝える・聞く・深呼吸、方法はある。'};
+  return{narrative:'翌日。また、遊ぶ時間が来る。',speaker:'友達',quote:f.toldH3||f.nexted?'「ごめんね、昨日」':'「今日は何して遊ぶ？」',look:'今日も、遊べる。',self:f.found2||f.othered||f.waited?'一人でも、大丈夫。':'まだ、寂しさが残る。',hint:'自分の遊び・他の子・待つ・約束、選ぼう。'};
+ },
+ progress(s){const f=s.flags;return f.found2||f.othered||f.waited||f.nexted?3:f.saidW2||f.toldH3||f.askedW3||f.slowed?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.found2||f.othered||f.nexted?'一人でも、楽しくいられる。':f.saidW2||f.toldH3?'気持ちを、伝えられた。':'まだ、置いて行かれたまま。伝える・自分の遊び・待つ、方法はある。'}
 }
 };
 

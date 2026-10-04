@@ -1,0 +1,13 @@
+initialize: |
+  true
+maintenance: |
+  true
+knowledge:
+  - name: run
+    contents: |
+      # 静的サイト(依存なし)。http://localhost:4173 で表示
+      python3 -m http.server 4173 --directory dist
+  - name: test
+    contents: |
+      # エンジン全探索テスト（PASS/FAILと探索手数が出る）
+      node test.mjs

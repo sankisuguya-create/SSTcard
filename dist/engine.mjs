@@ -212,12 +212,21 @@ export const cards={
  waitLong:{title:'そのまま待ち続ける',kind:'think',label:'待つ',cost:0,atk:0,desc:'来るかもと、ずっと待つ。',hint:'待つだけでは、気持ちが晴れない',icon:'clock'},
  accuse:{title:'「嘘つき！」と責める',kind:'talk',label:'責める',cost:0,strain:1,atk:0,desc:'会うなり、強く責める。',hint:'責めると、相手は黙る',icon:'bolt'},
  actNormal:{title:'何もなかったように遊ぶ',kind:'think',label:'気にしないふり',cost:0,atk:1,attr:'soc',desc:'気にしていないふりをする。',hint:'気にしないふりは、心の中に残る',icon:'eye'},
- askWhy:{title:'「どうして？」と理由を聞く',kind:'talk',label:'理由を聞く',cost:1,bond:1,atk:1,attr:'soc',up:'soc',desc:'責めずに、理由だけ聞く。',hint:'理由を聞くと、怒らずに済む',icon:'ear'},
+ askWhy2:{title:'「どうして？」と理由を聞く',kind:'talk',label:'理由を聞く',cost:1,bond:1,atk:1,attr:'soc',up:'soc',desc:'責めずに、理由だけ聞く。',hint:'理由を聞くと、怒らずに済む',icon:'ear'},
  tellFeel:{title:'「寂しかった」と気持ちを言う',kind:'talk',label:'気持ちを言う',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'責めずに、自分の気持ちを伝える。',hint:'気持ちを言うと、相手は聞ける',icon:'heart'},
  newPlan:{title:'新しい約束を立てる',kind:'support',label:'新しい約束',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'終わったことより、次の約束をする。',hint:'次の約束で、関係は続く',icon:'sun'},
  dayAlone:{title:'一人で遊ぶ日にする',kind:'think',label:'一人の日',cost:1,atk:2,attr:'study',up:'study',desc:'来ないなら、一人で楽しむ。',hint:'一人の日も、無駄じゃない',icon:'book'},
- hearOut:{title:'話を最後まで聞く',kind:'talk',label:'最後まで聞く',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'相手の言い分を、最後まで聞く。',hint:'全部聞いてから、決めていい',icon:'ear'},
+ hearOut2:{title:'話を最後まで聞く',kind:'talk',label:'最後まで聞く',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'相手の言い分を、最後まで聞く。',hint:'全部聞いてから、決めていい',icon:'ear'},
  bigPromise:{title:'「約束は大事」と伝えて次を約束',kind:'support',label:'約束の大事さ',cost:1,atk:2,attr:'soc',up:'soc',desc:'気持ちを伝えて、次も約束する。',hint:'気持ちを伝えた約束は、守られやすい',icon:'flag'},
+ doAll:{title:'黙って全部一人でやる',kind:'think',label:'一人でやる',cost:0,atk:1,attr:'ath',desc:'文句も言わず、全部やる。',hint:'全部一人でやると、疲れてしまう',icon:'skull'},
+ slackOff:{title:'自分もサボる',kind:'think',label:'自分もサボる',cost:0,strain:1,atk:0,desc:'相手がサボるなら、自分も。',hint:'二人ともサボると、仕事が残る',icon:'door'},
+ complainD:{title:'「ずるい！」と文句を言う',kind:'talk',label:'文句を言う',cost:0,strain:1,atk:0,desc:'不満を、そのままぶつける。',hint:'文句だけでは、相手は動かない',icon:'bolt'},
+ callBack:{title:'「一緒にやろう」と声をかける',kind:'talk',label:'声をかける',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'逃げた相手に、普通に声をかける。',hint:'責めず声をかけると、戻りやすい',icon:'hand'},
+ splitWork:{title:'分担をはっきりする',kind:'talk',label:'分担する',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'「こっちやるね」と、分ける。',hint:'分かれた仕事は、サボりにくい',icon:'puzzle'},
+ tellTeacherD:{title:'先生に相談する',kind:'support',label:'先生に相談',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'一人で抱えず、先生に伝える。',hint:'相談は、チクリじゃない',icon:'flag'},
+ doOwn:{title:'自分の分だけきちんとやる',kind:'think',label:'自分の分だけ',cost:1,atk:2,attr:'ath',up:'ath',desc:'全部でなく、自分の分だけ。',hint:'自分の分だけなら、疲れすぎない',icon:'pen'},
+ switchJob:{title:'交代制を提案する',kind:'support',label:'交代制にする',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'毎回同じだと逃げやすい。交代にする。',hint:'交代制だと、公平になる',icon:'clock'},
+ finishWell:{title:'丁寧に仕上げて自慢する',kind:'support',label:'丁寧に仕上げる',cost:1,atk:2,attr:'ath',up:'ath',desc:'きれいに仕上げて、達成感を持つ。',hint:'きちんとやった達成感は、自分のもの',icon:'spark'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -226,7 +235,7 @@ export const cards={
 // 気持ちがいっぱい（精神力1以下）の時だけ出せる赤いカード。気持ちを出して落ち着く。
 // 回復はできるが、まわりへの影響が残るものもある。一人で整える（休む・離れる）手段でも回復は可能。
 export const minusCards={
- vent:{title:'文句をいう',recover:2,rep:-1,dn:'soc',icon:'message',note:'イライラを文句にして、周りにぶつけてしまった。',desc:'不満をその場で口に出す。',text:'「なんでこうなるの」と、周りに聞こえるように文句を言った。\n少しすっきりしたけれど、近くの人は少し困った顔をしていた。',meaning:'気持ちを出すと楽になる。でも、出し方はまわりへの印象に残る。'},
+ grumble:{title:'文句をいう',recover:2,rep:-1,dn:'soc',icon:'message',note:'イライラを文句にして、周りにぶつけてしまった。',desc:'不満をその場で口に出す。',text:'「なんでこうなるの」と、周りに聞こえるように文句を言った。\n少しすっきりしたけれど、近くの人は少し困った顔をしていた。',meaning:'気持ちを出すと楽になる。でも、出し方はまわりへの印象に残る。'},
  lash:{title:'やつあたりする',recover:3,rep:-1,dn:'soc',icon:'bolt',note:'イライラを、関係ないところでぶつけてしまった。',desc:'イライラを、強い言葉でぶつける。',text:'イライラがあふれて、強い言葉をぶつけてしまった。\n気持ちは軽くなったけれど、相手はびっくりしていた。',meaning:'いちばん楽になるけれど、まわりへの影響もいちばん大きい。'},
  cry:{title:'泣く',recover:2,rep:0,icon:'heart',desc:'涙で気持ちを出す。',text:'涙が出てきて、その場で少し泣いた。\n泣き止むと、少し気持ちが楽になった。',meaning:'泣くことも、気持ちを整える方法のひとつ。'},
  fail:{title:'失敗する',recover:3,rep:0,dn:'study',icon:'flag',desc:'うまくやるのを、いったんやめる。',text:'うまくやろうとするのをやめて、失敗したままにした。\n力を抜くと、胸のつかえが少しおりた。',meaning:'頑張るのを止めると楽になる。でも、やり抜く自信は少し削れる。'},
@@ -792,10 +801,10 @@ scold:{
  stageGrants:[['bothSides'],[]],
  onExplore(s,key){
   const out={text:'',card:null};
-  if(key==='teacherS'){s.flags.heard=true;note(s,'先生は「走っているように見えた」と言う。');out.text='先生「走っているように見えたんだ。でも、話は聞くよ」';out.card='askWhy'}
+  if(key==='teacherS'){s.flags.heard=true;note(s,'先生は「走っているように見えた」と言う。');out.text='先生「走っているように見えたんだ。でも、話は聞くよ」';out.card='askWhy2'}
   if(key==='friendS'){s.flags.vented=true;relation(s,'ユウが、愚痴を聞いてくれた。');out.text='ユウ「それは嫌だったね。俺も同じことあったよ」';out.card='vent'}
   if(key==='notMe'){s.reason='notMe';note(s,'やってないのに注意された、という納得いかなさ。');out.text='「走ってないのに、なんで怒られるんだ」';out.card='explain'}
-  if(key==='tooHard'){s.reason='tooHard';note(s,'強い言い方に、びっくりして固まった。');out.text='「急に怒られて、頭が真っ白になった」';out.card='hearOut'}
+  if(key==='tooHard'){s.reason='tooHard';note(s,'強い言い方に、びっくりして固まった。');out.text='「急に怒られて、頭が真っ白になった」';out.card='hearOut2'}
   if(key==='scared'){s.reason='scared';note(s,'反論すると怒られそうで、怖い。');out.text='「言い返すと、もっと怒られそう」';out.card='smallSay'}
   return out;
  },
@@ -805,9 +814,9 @@ scold:{
   if(id==='saySorry'){f.apologized=true;text='「ごめんなさい」と言った。\n先生は離れた。でも、心には残った。';meaning='謝ると収まる。でも、やってない気持ちは残ることがある。'}
   if(id==='goQuiet'){f.quiet=true;text='何も言わず、うなずいた。\nモヤモヤだけが、残った。';meaning='黙るのも一つの選択。でも、気持ちは残る。'}
   if(id==='explain'){f.explained=true;f.clearedS=true;relation(s,'「走ってはいません」と冷静に伝えた。');text='先生「そうか。速く歩いていたように見えたんだ」\n冷静に言うと、届いた。';meaning='事実を冷静に言うと、誤解がほどける。'}
-  if(id==='hearOut'){f.heard=true;s.mind+=1;text='先生の話を、最後まで聞いた。\n「廊下で足音が速かった」と、事情が分かった。';meaning='まず聞くと、相手も聞いてくれやすい。'}
+  if(id==='hearOut2'){f.heard=true;s.mind+=1;text='先生の話を、最後まで聞いた。\n「廊下で足音が速かった」と、事情が分かった。';meaning='まず聞くと、相手も聞いてくれやすい。'}
   if(id==='smallSay'){f.saidSide=true;f.clearedS=true;relation(s,'「実は…」と小さく言うと、先生が聞いてくれた。');text='先生「うん、どうした？」\n小さくても、言うことはできた。';meaning='小さな声でも、言い分は届く。'}
-  if(id==='askWhy'){f.askedHow=true;f.heard=true;note(s,'先生には「走っているように見えた」。');text='先生「走っているように見えたんだ。悪かったね」\n相手の見え方が、分かった。';meaning='相手の見え方が分かると、誤解がほどける。'}
+  if(id==='askWhy2'){f.askedHow=true;f.heard=true;note(s,'先生には「走っているように見えた」。');text='先生「走っているように見えたんだ。悪かったね」\n相手の見え方が、分かった。';meaning='相手の見え方が分かると、誤解がほどける。'}
   if(id==='vent'){f.vented=true;s.mind+=1;text='ユウに、全部聞いてもらった。\n吐き出したら、少し楽になった。';meaning='吐き出すと、気持ちが整理できる。'}
   if(id==='bothSides'){if(f.heard||f.askedHow||f.explained){f.clearedS=true;f.balanced=true;note(s,'自分: 走っていない。先生: 速く見えた。');text='「俺は走ってない。先生には走って見えた」\n両方が見えると、納得ができた。';meaning='両方の見え方が分かると、納得が作れる。'}else{s.mind-=1;text='両方を考えようとしたが、相手の側がまだ分からなかった。';meaning='まず聞いてから考えると、両方が見えやすい。';grant(s,'hearOut')}}
   return {text,meaning};
@@ -1287,10 +1296,10 @@ promise:{
  stageGrants:[['bigPromise'],[]],
  onExplore(s,key){
   const out={text:'',card:null};
-  if(key==='kenP'){s.flags.faced=true;note(s,'本人に話したら、謝られた。');out.text='相手「ごめん！本当に忘れてた」\n話したら、ちゃんと謝られた。';out.card='hearOut'}
+  if(key==='kenP'){s.flags.faced=true;note(s,'本人に話したら、謝られた。');out.text='相手「ごめん！本当に忘れてた」\n話したら、ちゃんと謝られた。';out.card='hearOut2'}
   if(key==='teacherPr'){s.flags.toldPr=true;note(s,'先生に話したら、気持ちが軽くなった。');out.text='先生「待っていたんだね。それは悲しかったね」\n話すだけで、気持ちが軽くなった。';out.card='newPlan'}
   if(key==='sad'){s.reason='sad';note(s,'寂しくて、怒っている。');out.text='「待っていたのに…」';out.card='tellFeel'}
-  if(key==='doubt'){s.reason='doubt';note(s,'自分は軽い存在かも、と疑っている。');out.text='「私は、軽い存在なのかな」';out.card='askWhy'}
+  if(key==='doubt'){s.reason='doubt';note(s,'自分は軽い存在かも、と疑っている。');out.text='「私は、軽い存在なのかな」';out.card='askWhy2'}
   if(key==='worryRel'){s.reason='worryRel';note(s,'関係が壊れそうで、不安。');out.text='「このまま、仲が悪くなりそう」';out.card='newPlan'}
   return out;
  },
@@ -1299,11 +1308,11 @@ promise:{
   if(id==='waitLong'){f.waited=true;text='そのまま、ずっと待った。\n結局、来なかった。';meaning='待つだけでは、気持ちが晴れない。';grant(s,'dayAlone')}
   if(id==='accuse'){f.accused=true;s.rep-=1;relation(s,'「嘘つき！」と責めたら、相手が黙ってしまった。');text='「嘘つき！」\n相手は、黙ってしまった。';meaning='責めると、相手は黙る。';grant(s,'tellFeel')}
   if(id==='actNormal'){f.actedN=true;text='何もなかったように遊んだ。\nでも、心の中には残っている。';meaning='気にしないふりは、心に残る。';grant(s,'tellFeel')}
-  if(id==='askWhy'){f.askedWhy=true;f.clearedPr=true;note(s,'理由を聞いたら、事情が分かった。');text='「どうして来なかったの？」\n相手「おばあちゃんの家に行ってた」\n事情があって、忘れてただけだった。';meaning='理由を聞くと、怒らずに済む。'}
+  if(id==='askWhy2'){f.askedWhy=true;f.clearedPr=true;note(s,'理由を聞いたら、事情が分かった。');text='「どうして来なかったの？」\n相手「おばあちゃんの家に行ってた」\n事情があって、忘れてただけだった。';meaning='理由を聞くと、怒らずに済む。'}
   if(id==='tellFeel'){f.toldFeel=true;f.clearedPr=true;relation(s,'「寂しかった」と言ったら、相手がちゃんと謝った。');text='「寂しかったよ」\n相手「ごめん。次は絶対来る」\n気持ちを言うと、届く。';meaning='気持ちを言うと、相手は聞ける。'}
   if(id==='newPlan'){f.newPlanned=true;f.clearedPr=true;relation(s,'新しい約束を立てたら、また会える日ができた。');text='「じゃあ、今度の土曜にね」\n次の約束が、できた。';meaning='次の約束で、関係は続く。'}
   if(id==='dayAlone'){f.aloneDay=true;f.clearedPr=true;note(s,'一人で遊んだら、悪くない一日になった。');text='一人で公園を回った。\n自分のペースで、悪くない一日だった。';meaning='一人の日も、無駄じゃない。'}
-  if(id==='hearOut'){f.heard=true;f.clearedPr=true;relation(s,'最後まで聞いたら、相手の事情が分かった。');text='話を全部聞いたら、\n悪気がなかったことが分かった。';meaning='全部聞いてから、決めていい。'}
+  if(id==='hearOut2'){f.heard=true;f.clearedPr=true;relation(s,'最後まで聞いたら、相手の事情が分かった。');text='話を全部聞いたら、\n悪気がなかったことが分かった。';meaning='全部聞いてから、決めていい。'}
   if(id==='bigPromise'){if(f.toldFeel||f.heard){f.bigPromised=true;f.clearedPr=true;relation(s,'約束の大事さを伝えて、次も約束できた。');text='「約束は大事だからね」\n相手「うん、分かった」\n気持ちを伝えた約束は、守られやすい。';meaning='気持ちを伝えた約束は、守られやすい。'}else{s.mind-=1;text='約束の大事さを言おうとしたが、まだ話せていないので届かなかった。';meaning='まず気持ちを伝えてから、約束の大事さを言うと良い。';grant(s,'tellFeel')}}
   return {text,meaning};
  },
@@ -1319,6 +1328,51 @@ promise:{
  },
  progress(s){const f=s.flags;return s.goal===0?(f.clearedPr?3:f.toldFeel||f.heard?2:s.reason?1:0):s.goal===1?(f.toldFeel?3:f.clearedPr?2:s.reason?1:0):(f.bigPromised||f.newPlanned?3:f.clearedPr?2:s.reason?1:0)},
  situation(s){const f=s.flags;return f.clearedPr?'約束の件を、整理できた。聞く・伝える・一人・新約束がある。':f.toldFeel||f.heard?'気持ちを届けられた。':'まだ、モヤモヤが残っている。伝え方は練習できる。'}
+},
+duty:{
+ title:'係当番をサボられた',nav:'当番サボられ',num:'24',attrs:['soc','ath'],
+ goals:['当番の仕事を終わらせたい','一人で抱え込まない','次から公平にしたい'],
+ chapters:['放課後・当番','仕事中','翌日'],locations:['教室・放課後','教室・仕事','教室・翌日'],
+ base:['doAll','slackOff','complainD','anger','ignore'],start:{mind:4,energy:4},
+ monsters:[{name:'残った仕事の山',hp:4,power:0,turns:4,look:'机の山が、まだ残っている。'},{name:'ずるいの影',hp:5,power:1,turns:5,look:'「ずるい」の気持ちが、大きくなる。'},{name:'疲れの重さ',hp:6,power:1,turns:5,look:'一人でやる疲れが、重くのしかかる。'}],
+ talk:[['slacker','サボった子に声をかける','逃げた相手に、声をかける。'],['teacherD2','先生に相談','一人で抱えず、先生に伝える。']],
+ think:[['unfairD','ずるいと思う','一人だけ働くのは、不公平。'],['tired','疲れてきた','一人では、疲れてしまう。'],['dutyOK','当番自体は嫌じゃない','仕事は嫌じゃない、一人が嫌だ。']],
+ reasonKeys:['unfairD','tired','dutyOK'],
+ stageGrants:[['finishWell'],[]],
+ onExplore(s,key){
+  const out={text:'',card:null};
+  if(key==='slacker'){s.flags.called=true;note(s,'声をかけたら、相手が戻ってきた。');out.text='「一緒にやろうよ」\n相手「…ごめん、手伝う」\n声をかけたら、戻ってきた。';out.card='callBack'}
+  if(key==='teacherD2'){s.flags.toldD=true;note(s,'先生に言ったら、明日から交代にしてくれた。');out.text='先生「明日から交代にしよう」\n一人で抱えなくて、済んだ。';out.card='tellTeacherD'}
+  if(key==='unfairD'){s.reason='unfairD';note(s,'一人だけ働くのは、ずるいと思う。');out.text='「一人だけ、ずるい」';out.card='splitWork'}
+  if(key==='tired'){s.reason='tired';note(s,'疲れてきた。');out.text='「一人じゃ、疲れる…」';out.card='doOwn'}
+  if(key==='dutyOK'){s.reason='dutyOK';note(s,'仕事自体は嫌じゃない。');out.text='「仕事はいい。一人が嫌だ」';out.card='doOwn'}
+  return out;
+ },
+ onPlay(s,id){
+  const f=s.flags;let text='',meaning='';
+  if(id==='doAll'){f.didAll=true;text='黙って、全部一人でやった。\n疲れた。\nでも、誰も気づいていない。';meaning='全部一人でやると、疲れてしまう。';grant(s,'tellTeacherD')}
+  if(id==='slackOff'){f.slackOff=true;s.rep-=1;relation(s,'自分もサボったら、仕事が残って怒られた。');text='自分もサボった。\n仕事が残って、先生に怒られた。';meaning='二人ともサボると、仕事が残る。';grant(s,'doOwn')}
+  if(id==='complainD'){f.complained=true;text='「ずるい！」と言った。\n相手は逃げたまま。';meaning='文句だけでは、相手は動かない。';grant(s,'callBack')}
+  if(id==='callBack'){f.calledBack=true;f.clearedD=true;relation(s,'声をかけたら、相手が戻って手伝ってくれた。');text='「一緒にやろう」\n相手「ごめん、手伝うよ」\n二人でやったら、すぐ終わった。';meaning='責めず声をかけると、戻りやすい。'}
+  if(id==='splitWork'){f.split=true;f.clearedD=true;relation(s,'「こっちやるね」と分けたら、相手もやった。');text='「机を拭くね。そっちの分、お願い」\n分けたら、相手も動いた。';meaning='分かれた仕事は、サボりにくい。'}
+  if(id==='tellTeacherD'){f.toldD2=true;f.clearedD=true;note(s,'先生が交代制にしてくれて、公平になった。');text='先生「今日から交代にしよう」\n先生に言ったら、解決した。';meaning='相談は、チクリじゃない。'}
+  if(id==='doOwn'){f.didOwn=true;f.clearedD=true;note(s,'自分の分だけを、きちんとやった。');text='自分の分だけ、きちんとやった。\n全部は一人の仕事じゃない。';meaning='自分の分だけなら、疲れすぎない。'}
+  if(id==='switchJob'){f.switched=true;f.clearedD=true;relation(s,'交代制を提案したら、みんなが公平にやるようになった。');text='「交代にしない？」\nみんな「いいね」\n交代制で、公平になった。';meaning='交代制だと、公平になる。'}
+  if(id==='finishWell'){if(f.calledBack||f.split||f.didOwn){f.finishedWell=true;f.clearedD=true;note(s,'丁寧に仕上げたら、達成感があった。');text='教室が、きれいになった。\nきちんとやった達成感がある。';meaning='きちんとやった達成感は、自分のもの。'}else{s.mind-=1;text='仕上げようとしたが、仕事がまだ片づいていなくて疲れただけだった。';meaning='まず分担してから、仕上げると良い。';grant(s,'splitWork')}}
+  return {text,meaning};
+ },
+ watch(s){
+  if(s.stage===0)return 'もう一人の当番が、さっきからいない。';
+  if(s.stage===1)return '仕事が、まだ残っている。';
+  return '今日の当番は、もう終わる。';
+ },
+ scene(s){const f=s.flags;
+  if(s.stage===0)return {narrative:'放課後。当番の時間なのに、相手がいない。',speaker:'友達',quote:'あいつ、また逃げたよ',look:'机の山が、残っている。',self:'一人でやるの…',hint:'当番をサボられたときの、つらさはどこ？'};
+  if(s.stage===1)return {narrative:'仕事中。相手はまだいない。',speaker:'友達',quote:f.clearedD?'手伝うよ':f.calledBack?'ごめん、やるね':'……',look:f.clearedD?'仕事が、進んでいる。':'仕事が、まだ残っている。',self:s.reason==='unfairD'?'ずるい。':s.reason==='tired'?'疲れた。':s.reason==='dutyOK'?'仕事はいい、一人が嫌だ。':'どう立て直す？',hint:'声をかける・分担・先生・自分の分だけ、方法はある。'};
+  return {narrative:'翌日。今日も当番がある。',speaker:'先生',quote:f.clearedD?'今日は交代制にしよう':f.toldD2?'相談してくれてありがとう':'今日も当番、お願いね',look:'今日も、仕事がある。',self:f.clearedD?'昨日、上手く回せた。今日も大丈夫。':'まだ少し、残っている。',hint:'当番の回し方は、練習できる。'};
+ },
+ progress(s){const f=s.flags;return s.goal===0?(f.clearedD?3:f.didOwn||f.split?2:s.reason?1:0):s.goal===1?(f.toldD2||f.calledBack?3:f.clearedD?2:s.reason?1:0):(f.switched||f.finishedWell?3:f.clearedD?2:s.reason?1:0)},
+ situation(s){const f=s.flags;return f.clearedD?'当番を回せた。声かけ・分担・相談・自分の分だけがある。':f.didOwn||f.split?'回し方が見つかった。':'一人で抱えている。回し方は練習できる。'}
 }
 };
 

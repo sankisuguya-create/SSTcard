@@ -236,6 +236,15 @@ export const cards={
  teacherStop:{title:'先生にうわさを止めてもらう',kind:'support',label:'先生に止めてもらう',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'広がる前に、先生に止めてもらう。',hint:'先生に言うのは、頼り方の一つ',icon:'flag'},
  tellTruth2:{title:'「本当はこう」と静かに言う',kind:'talk',label:'静かに言う',cost:1,bond:1,atk:1,attr:'soc',up:'soc',desc:'大きな声でなく、静かに伝える。',hint:'静かに言うと、聞いてもらえる',icon:'message'},
  keepAct:{title:'いつもどおりにする',kind:'think',label:'いつもどおり',cost:1,atk:2,attr:'soc',up:'soc',desc:'うわさに動じず、いつもどおりにする。',hint:'いつもどおりが、いちばん強い',icon:'heart'},
+ forceAll:{title:'我慢して全部食べる',kind:'think',label:'我慢して全部',cost:0,atk:1,attr:'ath',desc:'苦手でも、無理して全部食べる。',hint:'無理すると、給食が嫌になる',icon:'skull'},
+ hideFood:{title:'こっそり残す・隠す',kind:'think',label:'隠す',cost:0,strain:1,atk:0,desc:'苦手なものを、隠してしまう。',hint:'隠すと、あとでバレる',icon:'eye'},
+ swapFood:{title:'誰かにあげる・もらう',kind:'talk',label:'あげる',cost:0,strain:1,atk:0,desc:'他の子に、押しつける。',hint:'押しつけると、相手が困る',icon:'hand'},
+ littleBite:{title:'一口だけ食べてみる',kind:'think',label:'一口だけ',cost:1,atk:2,attr:'ath',up:'ath',desc:'全部でなく、一口だけ試す。',hint:'一口だけなら、挑戦できる',icon:'ear'},
+ tellAmount:{title:'「少なめで」とお願いする',kind:'talk',label:'少なめで',cost:1,bond:1,atk:1,attr:'soc',up:'soc',desc:'量を減らしてもらう。',hint:'量を変えるのも、方法の一つ',icon:'message'},
+ askWhyFood:{title:'なぜ苦手か考える',kind:'think',label:'理由を考える',cost:1,atk:2,attr:'study',up:'study',desc:'匂い？食感？理由を知ると対策が見える。',hint:'理由が分かると、工夫できる',icon:'puzzle'},
+ askCook:{title:'給食の先生に相談',kind:'support',label:'給食の先生に',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'苦手なことを、給食の先生に伝える。',hint:'作る人に言うと、量を調整してもらえる',icon:'flag'},
+ mixFood:{title:'他のものと混ぜて食べる',kind:'think',label:'混ぜる',cost:1,atk:2,attr:'study',up:'study',desc:'好きなものと混ぜて、食べやすくする。',hint:'混ぜると、食べやすくなる',icon:'spark'},
+ fullTry:{title:'量を調整して完食する',kind:'support',label:'量を調整して完食',cost:1,atk:2,attr:'ath',up:'ath',desc:'少なめで始めて、完食する。',hint:'完食できた経験は、次の自信になる',icon:'heart'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -1427,6 +1436,51 @@ rumor:{
  },
  progress(s){const f=s.flags;return s.goal===0?(f.clearedRu?3:f.found||f.stoppedT?2:s.reason?1:0):s.goal===1?(f.laughedOff||f.kept?3:f.clearedRu?2:s.reason?1:0):(f.kept?3:f.clearedRu?2:s.reason?1:0)},
  situation(s){const f=s.flags;return f.clearedRu?'うわさを乗り越えた。聞く・流す・静かに言う・先生がある。':f.found||f.stoppedT?'対処法が見つかった。':'うわさが残っている。対処法は練習できる。'}
+},
+lunch:{
+ title:'苦手なものが給食に出た',nav:'苦手な給食',num:'26',attrs:['soc'],
+ goals:['少しでも食べたい','無理せず向き合いたい','食べるのが楽しみになる日にしたい'],
+ chapters:['給食の時間','食べる時間','午後'],locations:['教室・給食','机・食事','教室・午後'],
+ base:['forceAll','hideFood','swapFood','anger','ignore'],start:{mind:5,energy:4},
+ monsters:[{name:'苦手な一品',hp:3,power:0,turns:4,look:'皿にのった、苦手な食べもの。'},{name:'みんなの視線',hp:4,power:1,turns:5,look:'残すのを、見られる気がする。'},{name:'給食への苦手意識',hp:5,power:1,turns:5,look:'給食の時間が、憂うつになる感じ。'}],
+ talk:[['teacherL','先生に言う','苦手なことを、先生に伝える。'],['friendL','友達に聞く','好きな子に、食べ方を聞く。']],
+ think:[['shame','残すのが恥ずかしい','残すのを見られたくない。'],['texture','食感が苦手','口の中の感じが、無理。'],['fearTry','食べるのが怖い','一口すら、入れたくない。']],
+ reasonKeys:['shame','texture','fearTry'],
+ stageGrants:[['fullTry'],[]],
+ onExplore(s,key){
+  const out={text:'',card:null};
+  if(key==='teacherL'){s.flags.toldL=true;note(s,'先生に言ったら、少なめにしてもらえた。');out.text='先生「少なめにしようか」\n量を減らしてもらえた。';out.card='tellAmount'}
+  if(key==='friendL'){s.flags.askedL=true;relation(s,'好きな子に聞いたら、工夫を教えてもらった。');out.text='友達「混ぜると食べやすいよ」\n食べ方の工夫を、教えてもらった。';out.card='mixFood'}
+  if(key==='shame'){s.reason='shame';note(s,'残すのが、恥ずかしい。');out.text='「残すのを、見られたくない」';out.card='tellAmount'}
+  if(key==='texture'){s.reason='texture';note(s,'食感が、苦手だ。');out.text='「あの食感が、無理だ」';out.card='mixFood'}
+  if(key==='fearTry'){s.reason='fearTry';note(s,'食べるのが、怖い。');out.text='「一口も、入れたくない」';out.card='littleBite'}
+  return out;
+ },
+ onPlay(s,id){
+  const f=s.flags;let text='',meaning='';
+  if(id==='forceAll'){f.forced=true;s.mind-=1;text='我慢して全部食べた。\nでも、気持ち悪くなった。';meaning='無理すると、給食自体が嫌になる。';grant(s,'littleBite')}
+  if(id==='hideFood'){f.hidF=true;s.rep-=1;relation(s,'隠したら、あとで見つかって先生に言われた。');text='隠したら、あとで見つかった。\n先生に「言ってくれればいいのに」と言われた。';meaning='隠すと、あとでバレる。';grant(s,'tellAmount')}
+  if(id==='swapFood'){f.swapped=true;s.rep-=1;relation(s,'押しつけたら、相手が困った顔をした。');text='「食べてよ」\n相手「えー、僕も苦手だよ」';meaning='押しつけると、相手が困る。';grant(s,'tellAmount')}
+  if(id==='littleBite'){f.bit=true;f.clearedL=true;note(s,'一口だけ食べてみたら、思ったより大丈夫だった。');text='一口だけ、食べてみた。\n「…思ったより、いける」';meaning='一口だけなら、挑戦できる。'}
+  if(id==='tellAmount'){f.toldAmount=true;f.clearedL=true;relation(s,'「少なめで」と言ったら、量を変えてもらえた。');text='「少なめでお願いします」\n量を減らしてもらえた。';meaning='量を変えるのも、方法の一つ。'}
+  if(id==='askWhyFood'){f.askedW=true;f.clearedL=true;note(s,'苦手の理由を考えたら、工夫の仕方が見えた。');text='「匂いなのか、食感なのか」\n理由が分かれば、工夫できる。';meaning='理由が分かると、工夫できる。'}
+  if(id==='askCook'){f.askedC=true;f.clearedL=true;note(s,'給食の先生に言ったら、対策を考えてもらえた。');text='給食の先生「明日は工夫するね」\n作る人に言うと、変わる。';meaning='作る人に言うと、量を調整してもらえる。'}
+  if(id==='mixFood'){f.mixed=true;f.clearedL=true;note(s,'好きなものと混ぜたら、食べられた。');text='好きなものと混ぜたら、\n食べられた。';meaning='混ぜると、食べやすくなる。'}
+  if(id==='fullTry'){if(f.bit||f.toldAmount||f.mixed){f.fullTried=true;f.clearedL=true;note(s,'量を調整して完食できた。自信がついた。');text='少なめで完食した。\n「食べられた！」\n自信が、ついた。';meaning='完食できた経験は、次の自信になる。'}else{s.mind-=1;text='完食しようとしたが、まだ一口も試していないので無理だった。';meaning='まず一口試してから、完食に挑むと良い。';grant(s,'littleBite')}}
+  return {text,meaning};
+ },
+ watch(s){
+  if(s.stage===0)return '今日の給食に、苦手なものが入っている。';
+  if(s.stage===1)return 'みんなは、食べている。';
+  return '午後の授業が、始まる。';
+ },
+ scene(s){const f=s.flags;
+  if(s.stage===0)return {narrative:'給食の時間。今日の献立に、苦手なものがある。',speaker:'給食当番',quote:'今日は〇〇だよ',look:'皿に、苦手なものがのっている。',self:'うわ… これ、苦手なやつだ',hint:'苦手なものが出たときの、つらさはどこ？'};
+  if(s.stage===1)return {narrative:'食べる時間。みんなは、食べている。',speaker:'友達',quote:f.clearedL?'少なめでよかったね':f.mixed?'混ぜたら食べやすいよ':'……',look:f.clearedL?'量が減って、食べられそうだ。':'皿の中に、まだ残っている。',self:s.reason==='shame'?'残すのが恥ずかしい。':s.reason==='texture'?'食感が無理。':s.reason==='fearTry'?'一口も入れたくない。':'どう向き合う？',hint:'一口・少なめ・混ぜる・先生、方法はある。'};
+  return {narrative:'午後。給食は、終わった。',speaker:'先生',quote:f.clearedL?'一口でも食べられて、えらかったね':f.fullTried?'完食できたね':'明日も、がんばろう',look:'午後は、普通に進んでいる。',self:f.clearedL?'少しずつ、向き合えた。':'まだ少し、気になっている。',hint:'食べ方は、工夫できる。'};
+ },
+ progress(s){const f=s.flags;return s.goal===0?(f.clearedL?3:f.bit||f.mixed?2:s.reason?1:0):s.goal===1?(f.toldAmount||f.askedC?3:f.clearedL?2:s.reason?1:0):(f.fullTried?3:f.clearedL?2:s.reason?1:0)},
+ situation(s){const f=s.flags;return f.clearedL?'向き合えた。一口・少なめ・混ぜる・相談がある。':f.bit||f.mixed?'工夫が見つかった。':'まだ残っている。向き合い方は練習できる。'}
 }
 };
 

@@ -54,3 +54,20 @@
 
 ## 参考
 ユーザー指定リポジトリ sankisuguya-create/- の site-design-philosophy、color-coding に基づき、段階開示・大きいタッチ対象・日本語フォント・青/黄の二重符号化を採用。
+
+## GAS（Apps Script）版
+
+`node build.gas.mjs` で `gas/` 内に3ファイルを生成。Apps Script プロジェクトに同名ファイルとして貼り付ける:
+
+| ファイル | 内容 |
+|---|---|
+| `index.html` | UIと束ねたJS（~320KB） |
+| `img.html` | 全画像をdataURIで内蔵（~4MB。1行・貼るだけ） |
+| `Code.gs` | `doGet` で配信 + `include` ヘルパ |
+
+デプロイ手順:
+1. script.google.com で新規プロジェクト → ファイルを追加して `index.html`・`img.html`・`Code.gs`（マニフェスト `appsscript.json` は「プロジェクトの設定」で表示してから置き換え）
+2. デプロイ → ウェブアプリ → 実行ユーザー=自分、アクセス=全員（組織内だけにしたい場合は該当範囲に変更）
+3. 発行されたURLを開く
+
+画像は `img.html` にすべて内蔵しているため、GitHub Pages等の外部配信は不要。アプリ自体は静的JSなので保存データも外部送信もない。

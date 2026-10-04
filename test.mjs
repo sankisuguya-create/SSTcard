@@ -1,30 +1,31 @@
 import assert from 'node:assert/strict';
-import {initial,explore,play,advance,continueTurn,safety,available,canPlay,canExplore,canMinus,free,minus,setGoal,summary,monster,cardAtk,stories,monsterFaded,monsterPower} from './dist/engine.mjs';
+import {initial,explore,play,advance,continueTurn,safety,available,canPlay,canExplore,canMinus,free,minus,setGoal,summary,monster,cardAtk,stories,monsterFaded,monsterPower,chooseSub} from './dist/engine.mjs';
 // 乱数は決定的に（ランダムイベントはUI装飾。発動有無を別途検証）
 const origRandom=Math.random;Math.random=()=>0.99; // おまけイベントは原則offで探索
+function toNext(s){if(!advance(s))return false;while(s.subNow&&!s.finished){chooseSub(s,2);advance(s)}return true} // メイン場面へ進む（サブは『やり過ごす』で通過）
 
-let a=initial('fight');explore(a,'haru');assert(available(a).includes('relocate'));assert.equal(explore(a,'haru'),null);play(a,'boundary');assert(a.flags.boundary);advance(a);safety(a,'rest');explore(a,'respect');play(a,'promise');advance(a);assert(a.flags.promise);safety(a,'rest');play(a,'relocate');advance(a);assert(a.finished);assert(a.flags.fixed);assert(summary(a).relation.includes('約束'));
-let b=initial('sports');explore(b,'movement');const c=initial('sports');explore(c,'noise');play(b,'practice');play(c,'practice');assert(b.mind>c.mind);assert(b.flags.practiced);advance(c);safety(c,'rest');explore(c,'teacher');play(c,'place');advance(c);play(c,'adjust');advance(c);assert(c.finished);assert(c.flags.adjusted);
-let d=initial('test');assert.equal(d.mind,5);assert.equal(d.energy,4);explore(d,'teacherT');assert(available(d).includes('mistakes'));assert(available(d).includes('goodnight'));assert.equal(d.rep,2);explore(d,'gaps');assert.equal(explore(d,'panic'),null);play(d,'range');assert(available(d).includes('plan'));advance(d);safety(d,'rest');play(d,'mistakes');advance(d);play(d,'takeTest');advance(d);assert(d.finished);assert(d.flags.tested);assert(summary(d).situation.includes('取り組んだ'));
+let a=initial('fight');explore(a,'haru');assert(available(a).includes('relocate'));assert.equal(explore(a,'haru'),null);play(a,'boundary');assert(a.flags.boundary);toNext(a);safety(a,'rest');explore(a,'respect');play(a,'promise');toNext(a);assert(a.flags.promise);safety(a,'rest');play(a,'relocate');toNext(a);assert(a.finished);assert(a.flags.fixed);assert(summary(a).relation.includes('約束'));
+let b=initial('sports');explore(b,'movement');const c=initial('sports');explore(c,'noise');play(b,'practice');play(c,'practice');assert(b.mind>c.mind);assert(b.flags.practiced);toNext(c);safety(c,'rest');explore(c,'teacher');play(c,'place');toNext(c);play(c,'adjust');toNext(c);assert(c.finished);assert(c.flags.adjusted);
+let d=initial('test');assert.equal(d.mind,5);assert.equal(d.energy,4);explore(d,'teacherT');assert(available(d).includes('mistakes'));assert(available(d).includes('goodnight'));assert.equal(d.rep,2);explore(d,'gaps');assert.equal(explore(d,'panic'),null);play(d,'range');assert(available(d).includes('plan'));toNext(d);safety(d,'rest');play(d,'mistakes');toNext(d);play(d,'takeTest');toNext(d);assert(d.finished);assert(d.flags.tested);assert(summary(d).situation.includes('取り組んだ'));
 // join: 理由なしの直球は入れるが、理由が未対応だと足がすくむ。対応カードや仲間・一人遊びも正当解
-let j=initial('join');assert.equal(j.mind,4);explore(j,'fear');assert(available(j).includes('selfTalk'));assert.equal(explore(j,'words'),null);j.energy=5;const jm=j.mind;play(j,'peekJoin');assert(j.mind<jm);assert(!j.flags.joined);assert(available(j).includes('selfTalk'));j.feedback=null;play(j,'selfTalk');assert(j.flags.selfTalk);j.feedback={};advance(j);explore(j,'teacherJ');assert(available(j).includes('tipJoin'));play(j,'tipJoin');assert(j.flags.joined);assert(summary(j).situation.length>0);
+let j=initial('join');assert.equal(j.mind,4);explore(j,'fear');assert(available(j).includes('selfTalk'));assert.equal(explore(j,'words'),null);j.energy=5;const jm=j.mind;play(j,'peekJoin');assert(j.mind<jm);assert(!j.flags.joined);assert(available(j).includes('selfTalk'));j.feedback=null;play(j,'selfTalk');assert(j.flags.selfTalk);j.feedback={};toNext(j);explore(j,'teacherJ');assert(available(j).includes('tipJoin'));play(j,'tipJoin');assert(j.flags.joined);assert(summary(j).situation.length>0);
 let j2=initial('join');explore(j2,'soloOK');play(j2,'ownGame');assert(j2.flags.soloOK);assert(j2.rep>=2);
 // blame: あせった否定は逆効果、証拠・証言・順番で誤解がほどける
-let bl=initial('blame');assert.equal(bl.mind,4);explore(bl,'panicB');assert(available(bl).includes('compose'));assert.equal(explore(bl,'evidence'),null);bl.energy=5;const bm=bl.mind;play(bl,'deny');assert(bl.mind<bm);assert(!bl.flags.cleared);assert(available(bl).includes('compose'));bl.feedback=null;bl.mind=5;play(bl,'compose');assert(bl.flags.composed);bl.feedback={};advance(bl);explore(bl,'eye');assert(available(bl).includes('witness'));assert(available(bl).includes('proveCalm'));play(bl,'proveCalm');assert(bl.flags.cleared);assert(summary(bl).situation.includes('ほどけ'));
+let bl=initial('blame');assert.equal(bl.mind,4);explore(bl,'panicB');assert(available(bl).includes('compose'));assert.equal(explore(bl,'evidence'),null);bl.energy=5;const bm=bl.mind;play(bl,'deny');assert(bl.mind<bm);assert(!bl.flags.cleared);assert(available(bl).includes('compose'));bl.feedback=null;bl.mind=5;play(bl,'compose');assert(bl.flags.composed);bl.feedback={};toNext(bl);explore(bl,'eye');assert(available(bl).includes('witness'));assert(available(bl).includes('proveCalm'));play(bl,'proveCalm');assert(bl.flags.cleared);assert(summary(bl).situation.includes('ほどけ'));
 let bl2=initial('blame');explore(bl2,'evidence');play(bl2,'findClue');assert(bl2.flags.clueFound);
 let bl3=initial('blame');const b3m=bl3.mind;bl3.energy=5;play(bl3,'stay');assert(bl3.mind<b3m); // 黙っていると疑いが残る
 // hurt: 痛みが残ると伝えにくい。守る・流す・伝えるの3系統
-let h=initial('hurt');assert.equal(h.mind,4);explore(h,'sting');assert(available(h).includes('selfCare'));assert.equal(explore(h,'friendQ'),null);h.energy=5;const hm=h.mind;play(h,'sayStop');assert(h.mind<hm);assert(!h.flags.saidStop);assert(available(h).includes('selfCare'));h.feedback=null;h.mind=5;play(h,'selfCare');assert(h.flags.cared);h.feedback={};advance(h);assert(available(h).includes('replyKind'));play(h,'replyKind');assert(h.flags.mended);assert(summary(h).situation.includes('伝わ'));
-let h2=initial('hurt');explore(h2,'laughQ');assert(available(h2).includes('brush'));play(h2,'laughOff');assert(!h2.flags.laughed);assert(available(h2).includes('brush'));h2.feedback=null;play(h2,'brush');assert(h2.flags.brushed);h2.feedback={};advance(h2);h2.mind=5;play(h2,'replyKind');assert(h2.flags.mended); // brush済みならreplyKindが通る
+let h=initial('hurt');assert.equal(h.mind,4);explore(h,'sting');assert(available(h).includes('selfCare'));assert.equal(explore(h,'friendQ'),null);h.energy=5;const hm=h.mind;play(h,'sayStop');assert(h.mind<hm);assert(!h.flags.saidStop);assert(available(h).includes('selfCare'));h.feedback=null;h.mind=5;play(h,'selfCare');assert(h.flags.cared);h.feedback={};toNext(h);assert(available(h).includes('replyKind'));play(h,'replyKind');assert(h.flags.mended);assert(summary(h).situation.includes('伝わ'));
+let h2=initial('hurt');explore(h2,'laughQ');assert(available(h2).includes('brush'));play(h2,'laughOff');assert(!h2.flags.laughed);assert(available(h2).includes('brush'));h2.feedback=null;play(h2,'brush');assert(h2.flags.brushed);h2.feedback={};toNext(h2);h2.mind=5;play(h2,'replyKind');assert(h2.flags.mended); // brush済みならreplyKindが通る
 let h3=initial('hurt');play(h3,'walkAway');assert(h3.flags.left);assert(h3.mind>=4);
 // alone: 断ることも向社会的。ことばの型があれば気持ちよく断れる
-let al=initial('alone');assert.equal(al.mind,4);explore(al,'noWords');assert(available(al).includes('scriptNo'));assert.equal(explore(al,'guilt'),null);al.energy=5;const am=al.mind;play(al,'politeNo');assert(al.mind<am);assert(!al.flags.declined);assert(available(al).includes('scriptNo'));al.feedback=null;al.mind=5;play(al,'scriptNo');assert(al.flags.scripted);al.feedback={};advance(al);assert(available(al).includes('planB'));play(al,'planB');assert(al.flags.declined&&al.flags.promised);assert(summary(al).situation.includes('約束'));
+let al=initial('alone');assert.equal(al.mind,4);explore(al,'noWords');assert(available(al).includes('scriptNo'));assert.equal(explore(al,'guilt'),null);al.energy=5;const am=al.mind;play(al,'politeNo');assert(al.mind<am);assert(!al.flags.declined);assert(available(al).includes('scriptNo'));al.feedback=null;al.mind=5;play(al,'scriptNo');assert(al.flags.scripted);al.feedback={};toNext(al);assert(available(al).includes('planB'));play(al,'planB');assert(al.flags.declined&&al.flags.promised);assert(summary(al).situation.includes('約束'));
 let al2=initial('alone');explore(al2,'guilt');assert(available(al2).includes('bothWays'));play(al2,'bothWays');assert(al2.flags.declined);
 let al3=initial('alone');explore(al3,'wantAlone');al3.energy=5;const a3m=al3.mind;play(al3,'joinIn');assert(al3.mind<a3m); // 気が進まない付き合いは疲れる
 // lose: 勢いの再戦は敗北ループ。冷ます・学ぶ・讃えるで悔しさを転換
 let lo=initial('lose');assert.equal(lo.mind,4);explore(lo,'again');assert(available(lo).includes('smartRematch'));assert.equal(explore(lo,'frustrate'),null);lo.energy=5;const lm=lo.mind;play(lo,'rematch');assert(lo.mind<lm);assert(!lo.flags.clearedL);assert(available(lo).includes('smartRematch'));lo.feedback=null;lo.mind=5;play(lo,'smartRematch');assert(lo.flags.smart);lo.feedback=null;explore(lo,'winnerS');assert(available(lo).includes('askHow'));play(lo,'askHow');assert(lo.flags.clearedL);assert(summary(lo).situation.includes('約束'));
 let lo2=initial('lose');explore(lo2,'winnerS');assert(available(lo2).includes('askHow'));lo2.energy=5;play(lo2,'askHow');assert(lo2.flags.clearedL&&lo2.flags.learned);
-let lo3=initial('lose');lo3.energy=5;play(lo3,'rematch');lo3.feedback={};advance(lo3);assert(available(lo3).includes('congrats'));lo3.mind=5;const l3m=lo3.mind;play(lo3,'congrats');assert(lo3.mind<l3m);assert(available(lo3).includes('praiseWin')); // 準備なしの讃えは通らない
+let lo3=initial('lose');lo3.energy=5;play(lo3,'rematch');lo3.feedback={};toNext(lo3);assert(available(lo3).includes('congrats'));lo3.mind=5;const l3m=lo3.mind;play(lo3,'congrats');assert(lo3.mind<l3m);assert(available(lo3).includes('praiseWin')); // 準備なしの讃えは通らない
 // change: 理由を知らない抗議はぶつかる。認める・聞く・立て直すで適応
 let ch=initial('change');assert.equal(ch.mind,4);explore(ch,'unfair');assert(available(ch).includes('whyAsk'));assert.equal(explore(ch,'disappointed'),null);ch.energy=5;const cm=ch.mind;play(ch,'complain');assert(ch.mind<cm);assert(!ch.flags.clearedC);assert(available(ch).includes('whyAsk'));ch.feedback=null;ch.mind=5;play(ch,'whyAsk');assert(ch.flags.knowsWhy);ch.feedback=null;explore(ch,'chikaF');assert(available(ch).includes('comfort'));play(ch,'comfort');assert(ch.flags.clearedC);
 let ch2=initial('change');explore(ch2,'stuckPlan');assert(available(ch2).includes('makeNew'));ch2.energy=5;play(ch2,'makeNew');assert(ch2.flags.clearedC);assert(summary(ch2).situation.includes('楽しみ'));
@@ -33,7 +34,7 @@ let ch3=initial('change');play(ch3,'acceptQuick');assert(ch3.flags.swallowed);as
 let pk=initial('picked');assert.equal(pk.mind,4);explore(pk,'unfairPick');assert(available(pk).includes('keepHand'));assert.equal(explore(pk,'giveUpPick'),null);pk.energy=5;play(pk,'keepHand');assert(pk.flags.persist&&pk.flags.clearedP);
 let pk2=initial('picked');explore(pk2,'pickedKid');assert(available(pk2).includes('learnWay'));pk2.energy=5;play(pk2,'learnWay');assert(pk2.flags.clearedP);
 let pk3=initial('picked');pk3.energy=5;play(pk3,'stopHand');assert(pk3.flags.stopped);assert(!pk3.flags.clearedP); // やめるは楽だがクリアではない
-let pk4=initial('picked');pk4.energy=5;play(pk4,'keepHand');pk4.feedback={};advance(pk4);assert(available(pk4).includes('nextTime'));pk4.mind=5;play(pk4,'nextTime');assert(pk4.flags.clearedP); // persist後のnextTimeは通る
+let pk4=initial('picked');pk4.energy=5;play(pk4,'keepHand');pk4.feedback={};toNext(pk4);assert(available(pk4).includes('nextTime'));pk4.mind=5;play(pk4,'nextTime');assert(pk4.flags.clearedP); // persist後のnextTimeは通る
 // item: 黙って取り返すとぶつかる。先に伝えると、断るもルールも通る
 let it=initial('item');assert.equal(it.mind,4);explore(it,'shy');assert(available(it).includes('sayMine'));assert.equal(explore(it,'angry'),null);it.energy=5;const im=it.mind;play(it,'takeBack');assert(it.mind<im);assert(!it.flags.clearedI);assert(available(it).includes('sayMine'));it.feedback=null;it.mind=5;play(it,'sayMine');assert(it.flags.clearedI);
 let it2=initial('item');explore(it2,'kenB');assert(available(it2).includes('lendRule'));it2.energy=5;play(it2,'lendRule');assert(it2.flags.clearedI&&it2.flags.agreed);
@@ -52,7 +53,7 @@ let fr2=initial('friend');explore(fr2,'leaveIt');assert(available(fr2).includes(
 let fr3=initial('friend');explore(fr3,'teacherG');assert(available(fr3).includes('tellAdult'));fr3.energy=5;play(fr3,'tellAdult');assert(fr3.flags.clearedG);
 // confused: 壁を探す・見せる・聞く形はいろいろ。部分だけ聞くには壁が要る
 let cq=initial('confused');assert.equal(cq.mind,4);explore(cq,'shyQ');assert(available(cq).includes('handUp'));assert.equal(explore(cq,'everyone'),null);cq.energy=5;const cqm=cq.mind;play(cq,'guess');assert(cq.mind<cqm);assert(!cq.flags.clearedQ);cq.feedback=null;cq.mind=5;play(cq,'handUp');assert(cq.flags.clearedQ);
-let cq2=initial('confused');explore(cq2,'snowball');assert(available(cq2).includes('breakDown'));cq2.energy=5;play(cq2,'breakDown');assert(cq2.flags.clearedQ);cq2.mind=5;cq2.energy=5;advance(cq2);assert(available(cq2).includes('askSmall'));play(cq2,'askSmall');assert(cq2.flags.partAsked);
+let cq2=initial('confused');explore(cq2,'snowball');assert(available(cq2).includes('breakDown'));cq2.energy=5;play(cq2,'breakDown');assert(cq2.flags.clearedQ);cq2.mind=5;cq2.energy=5;toNext(cq2);assert(available(cq2).includes('askSmall'));play(cq2,'askSmall');assert(cq2.flags.partAsked);
 let cq3=initial('confused');explore(cq3,'friendQ');assert(available(cq3).includes('togetherQ'));cq3.energy=5;play(cq3,'togetherQ');assert(cq3.flags.clearedQ);
 let cq4=initial('confused');cq4.energy=5;cq4.hand.push('askSmall');play(cq4,'askSmall');assert(cq4.mind<4);assert(available(cq4).includes('breakDown')); // 壁なし部分質問は空回り
 // noise: 叫ぶと評判が下がる。守る・移る・伝えるが対処
@@ -138,7 +139,7 @@ for(const story of ['fight','sports','test','join','blame','hurt','alone','lose'
  const s=initial(story),clueCount=s.clues.length,en=s.energy;
  assert(free(s,'observe'));assert(!free(s,'observe'));assert(s.clues.length>clueCount);
  assert(free(s,'pass'));assert(!free(s,'pass'));assert.equal(s.energy,Math.min(5,en+1));
- assert.equal(advance(s),false); // feedbackが無いので進めない
+ assert.equal(toNext(s),false); // feedbackが無いので進めない
  s.mind=1;assert(!canExplore(s));
  const keys=MAP[story].talk;assert.equal(explore(s,keys),null);
  safety(s,'rest');assert(canExplore(s));assert(explore(s,keys));
@@ -178,7 +179,7 @@ for(const story of ['fight','sports','test','join','blame','hurt','alone','lose'
  s.mind=1;assert(minus(s,'fail'));assert.equal(s.mind,4);assert.equal(s.stats.study,stdB-1); // 失敗するはかしこさを下げる
  s.minused=[];s.mind=1;assert.equal(minus(s,'bogus'),null);assert(!minus(s,'sleep'));// 存在しないカード
  // 場面が変われば同じマイナスカードも再び使える
- s.feedback=null;s.mind=6;s.energy=5;const id0=available(s)[0];assert(play(s,id0));assert(advance(s));s.mind=1;assert(minus(s,'grumble'));
+ s.feedback=null;s.mind=6;s.energy=5;const id0=available(s)[0];assert(play(s,id0));assert(toNext(s));s.mind=1;assert(minus(s,'grumble'));
 }
 assert.equal(minus(initial('fight'),'vent'),null); // 精神力が足りていれば出せない
 
@@ -208,7 +209,7 @@ for(const story of ['fight','sports','test','join','blame','hurt','alone','lose'
  // ターン上限: 尽きるとモンスターは立ち去る（escaped）
  s.stage=0;s.monsterHp=99;s.turns=monster(s).turns;s.mind=6;s.feedback=null;
  const atk2=available(s).find(x=>canPlay(s,x));assert(play(s,atk2));assert(s.feedback.escaped);assert(!s.feedback.killed);
- advance(s);assert(s.escaped.includes(0));assert(s.slain.length===0);
+ toNext(s);assert(s.escaped.includes(0));assert(s.slain.length===0);
 }
 // ターン上限と撃破の進行を直接確認
 {
@@ -219,11 +220,11 @@ for(const story of ['fight','sports','test','join','blame','hurt','alone','lose'
  assert(f1.dmg>=2||f1.killed||s.monsterHp<3);
  if(!f1.killed){s.feedback=null;play(s,'range')}
  const f=s.feedback;assert(f.killed||f.escaped||s.monsterHp<=0);
- advance(s);assert(s.slain.includes(0)||s.escaped.includes(0));assert.equal(s.stage,1);assert.equal(s.turns,0);assert.equal(s.monsterHp,monster(s).hp);
+ toNext(s);assert(s.slain.includes(0)||s.escaped.includes(0));assert.equal(s.stage,1);assert.equal(s.turns,0);assert.equal(s.monsterHp,monster(s).hp);
  // ターンを尽きさせると escaped
  s.mind=6;s.energy=5;
  while(!s.finished&&monster(s)&&s.turns<monster(s).turns){const id=available(s).find(x=>canPlay(s,x));if(!id)break;s.feedback=null;play(s,id)}
- if(!s.finished){advance(s)}
+ if(!s.finished){toNext(s)}
  // 大失敗: 精神力0でfinished（mind2でstrain1+effect-1=0になるboundaryを撃つ）
  const f2=initial('fight');f2.mind=2;f2.energy=5;f2.stage=1;f2.monsterHp=99;f2.turns=0;
  assert(play(f2,'boundary'));assert(f2.dead);assert(f2.finished);assert.equal(summary(f2).outcome,'fail');
@@ -245,12 +246,12 @@ for(const story of ['fight','sports','test','join','blame','hurt','alone','lose'
 // ランダムイベントが発動する場合の効果
 Math.random=()=>0.1;
 {
- const s=initial('fight');s.energy=5;s.mind=5;play(s,'boundary');advance(s);
- assert(s.bonus); // おまけイベントが発動した
+ const s=initial('fight');s.energy=5;s.mind=5;play(s,'boundary');toNext(s);
+ assert(s.eventNodes.filter(n=>n.type==='sub').length>=1); // サブノードが構成される
 }
 Math.random=origRandom;
 
-let explored=0;function walk(s,depth){assert(s.mind>=0&&s.mind<=s.mindMax);assert(s.energy>=0&&s.energy<=5);assert(s.progress>=0&&s.progress<=3);assert(s.rep>=0&&s.rep<=5);for(const k of ['study','ath','soc'])assert(s.stats[k]>=-2&&s.stats[k]<=2);assert(s.monsterHp>=-20);if(depth===0||s.finished)return;const ids=available(s).filter(id=>canPlay(s,id));for(const id of ids){const t=structuredClone(s);assert(play(t,id));assert(t.feedback.text.length>0,id);advance(t);explored++;walk(t,depth-1)}}
+let explored=0;function walk(s,depth){assert(s.mind>=0&&s.mind<=s.mindMax);assert(s.energy>=0&&s.energy<=5);assert(s.progress>=0&&s.progress<=3);assert(s.rep>=0&&s.rep<=5);for(const k of ['study','ath','soc'])assert(s.stats[k]>=-2&&s.stats[k]<=2);assert(s.monsterHp>=-20);if(depth===0||s.finished)return;const ids=available(s).filter(id=>canPlay(s,id));for(const id of ids){const t=structuredClone(s);assert(play(t,id));assert(t.feedback.text.length>0,id);toNext(t);explored++;walk(t,depth-1)}}
 Math.random=()=>0.99;
 for(const story of ['fight','sports','test','join','blame','hurt','alone','lose','change','picked','item','scold','forgot','friend','confused','noise','role','cheat','newClass','present','spill','pair','promise','duty','rumor','lunch','lie','relay','sickDay','craft','vault','meeting','leader','late','lostBook','seat','visit','makeUp','secret','byWatch','score','trend']){for(const goal of [0,1,2]){const s=initial(story);setGoal(s,goal);for(const k of MAP[story].explore)explore(s,k);s.energy=5;s.mind=6;walk(s,3)}}
 Math.random=origRandom;
@@ -347,26 +348,46 @@ let tr4=initial('trend');explore(tr4,'honestSay2');assert(available(tr4).include
 
 // ── 新仕様: サブイベント／苦手意識／モンスター行動ローテーション／精神力上限／物語持ち越し ──
 Math.random=()=>0.99;
-{ // サブイベント: 高パラメータでgood結果（rep>=1でgood）
+{ // サブイベント: 高パラメータでgood結果（rep>=1でgood）。advanceでsubNowに入り、chooseSubで解決
  const s=initial('fight');s.energy=5;s.mind=6;s.rep=5;
- s.subQueue=[{id:'okashi',text:'お菓子をもらった。',stat:'rep',min:1,good:{text:'「ありがとう！」と笑いあった。',mind:1,rep:1},ok:{text:'少し元気が出た。',mind:1}}];
+ s.subPending=[{id:'okashi',text:'お菓子をもらった。',stat:'rep',min:1,good:{text:'「ありがとう！」と笑いあった。',mind:1,rep:1},ok:{text:'少し元気が出た。',mind:1}}];
+ s.eventNodes=[{type:'main',idx:0},{type:'sub'},{type:'main',idx:1},{type:'main',idx:2}];
  s.feedback={};s.monsterHp=0;advance(s);
- assert(Array.isArray(s.bonus)&&s.bonus[0].good,'sub good expected');assert.equal(s.rep,5);
+ assert(s.subNow,'sub event entered');assert(s.map,'map shown between events');
+ chooseSub(s,0);assert(s.feedback.sub);assert(s.feedback.text.includes('ありがとう'));
+ assert.equal(s.rep,5); // clamp
 }
 { // サブイベント: パラメータ不足でok結果
  const s=initial('fight');s.energy=5;s.mind=6;s.rep=0;
- s.subQueue=[{id:'home',text:'先生にほめられた。',stat:'rep',min:3,good:{text:'G',mind:1,rep:1},ok:{text:'「がんばってるね」と言われた。',mind:1}}];
+ s.subPending=[{id:'home',text:'先生にほめられた。',stat:'rep',min:3,good:{text:'G',mind:1,rep:1},ok:{text:'「がんばってるね」と言われた。',mind:1}}];
+ s.eventNodes=[{type:'main',idx:0},{type:'sub'},{type:'main',idx:1},{type:'main',idx:2}];
+ s.feedback={};s.monsterHp=0;advance(s);chooseSub(s,0);
+ assert(!s.feedback.text.includes('いつも助かる'),'ok not good');
+}
+{ // やり過ごす=何もしない／気にかける=気持ち+1
+ const s=initial('fight');s.mind=3;
+ s.subPending=[{id:'okashi',text:'お菓子をもらった。',stat:'rep',min:1,good:{text:'G',mind:1},ok:{text:'O',mind:1}}];
+ s.eventNodes=[{type:'main',idx:0},{type:'sub'},{type:'main',idx:1},{type:'main',idx:2}];
+ s.feedback={};s.monsterHp=0;advance(s);chooseSub(s,1);
+ assert(s.feedback.text.includes('気にかけておいた'));assert.equal(s.mind,4);
+}
+{ // サブ画面ではカードを出せない／advanceで次ノードへ
+ const s=initial('fight');s.energy=5;
+ s.subPending=[{id:'okashi',text:'x',stat:'rep',min:1,good:{text:'G'},ok:{text:'O'}}];
+ s.eventNodes=[{type:'main',idx:0},{type:'sub'},{type:'main',idx:1},{type:'main',idx:2}];
  s.feedback={};s.monsterHp=0;advance(s);
- assert(s.bonus&&!s.bonus[0].good,'sub ok expected');
+ assert(!canPlay(s,s.hand[0]),'no card play during sub');
+ chooseSub(s,0);assert(s.feedback.sub);
+ advance(s);assert.equal(s.stage,1);assert(!s.subNow);
 }
 { // 強敵討伐で精神力上限+1（fight最終面 hp6 → 上限6→7, 精神力も+1）
  const s=initial('fight');s.stage=2;s.monsterHp=0;s.mindMax=6;s.mind=5;
- s.feedback={};advance(s);assert.equal(s.mindMax,7);assert.equal(s.mind,6);assert(s.finished);
+ s.feedback={};toNext(s);assert.equal(s.mindMax,7);assert.equal(s.mind,6);assert(s.finished);
 }
 { // 同じ属性の課題に2度逃すと苦手意識がつき、同属性手札の消費が増える
  const s=initial('fight');s.energy=5;s.mind=6;
- s.feedback={};s.monsterHp=9;advance(s);assert(!s.traumas.soc);assert.equal(s.bolster,1);
- s.feedback={};s.monsterHp=9;advance(s);assert(s.traumas.soc,'trauma expected');
+ s.feedback={};s.monsterHp=9;toNext(s);assert(!s.traumas.soc);assert.equal(s.bolster,1);
+ s.feedback={};s.monsterHp=9;toNext(s);assert(s.traumas.soc,'trauma expected');
  s.feedback=null;s.energy=5;assert(play(s,'boundary'));
  assert(s.feedback.counter.includes('苦手意識'),'trauma surcharge in counter');
 }
@@ -387,8 +408,8 @@ Math.random=()=>0.99;
  const s=initial('join',{rep:4,traumas:{soc:true},mindMax:7});
  assert.equal(s.rep,4);assert.equal(s.mindMax,7);assert(s.traumas.soc);
 }
-{ // サブイベント抽選: subQueueが満たされる（既定2件,重複なし）
- const s=initial('fight');assert(s.subQueue.length===3);assert(new Set(s.subQueue.map(e=>e.id)).size===3);
+{ // サブイベント抽選: subPendingが満たされる（既定3件,重複なし）
+ const s=initial('fight');assert(s.subPending.length===3);assert(new Set(s.subPending.map(e=>e.id)).size===3);
 }
 Math.random=origRandom;
 console.log('new-spec checks OK: sub-events, trauma, monster acts, mindMax, carry');
@@ -422,7 +443,7 @@ console.log('new-spec checks OK: sub-events, trauma, monster acts, mindMax, carr
  s.feedback=null;s.energy=5;s.mind=6;assert(play(s,'stay')||play(s,available(s)[0]));
  assert.equal(s.feedback.mdmg,0,'no counter damage when faded');
  // 場面が変わると鮮明度はリセット
- s.feedback={};s.monsterHp=0;advance(s);assert.equal(s.clarity,0);assert(!monsterFaded(s));
+ s.feedback={};s.monsterHp=0;toNext(s);assert.equal(s.clarity,0);assert(!monsterFaded(s));
 }
 { // きき返す(observe)でも鮮明度が上がる
  const s=initial('fight');free(s,'observe');assert.equal(s.clarity,1);

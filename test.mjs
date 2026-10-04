@@ -384,12 +384,20 @@ Math.random=()=>0.99;
  const s=initial('fight');s.stage=2;s.monsterHp=0;s.mindMax=6;s.mind=5;
  s.feedback={};toNext(s);assert.equal(s.mindMax,7);assert.equal(s.mind,6);assert(s.finished);
 }
-{ // 同じ属性の課題に2度逃すと苦手意識がつき、同属性手札の消費が増える
+{ // 心が削られて力負けした場面が2度続くと苦手意識がつき、同属性手札の消費が増える
  const s=initial('fight');s.energy=5;s.mind=6;
- s.feedback={};s.monsterHp=9;toNext(s);assert(!s.traumas.soc);assert.equal(s.bolster,1);
- s.feedback={};s.monsterHp=9;toNext(s);assert(s.traumas.soc,'trauma expected');
- s.feedback=null;s.energy=5;assert(play(s,'boundary'));
+ s.mind=1;s.feedback={};s.monsterHp=9;toNext(s);assert(!s.traumas.soc);assert.equal(s.bolster,1);assert.equal(s.stageResults[0].kind,'plain');
+ s.mind=1;s.feedback={};s.monsterHp=9;toNext(s);assert(s.traumas.soc,'trauma expected');assert.equal(s.stageResults[1].kind,'plain');
+ s.feedback=null;s.energy=5;s.mind=6;assert(play(s,'boundary'));
  assert(s.feedback.counter.includes('苦手意識'),'trauma surcharge in counter');
+}
+{ // 心を保って耐え抜いた場面には苦手意識はつかない（endured）
+ const s=initial('fight');s.mind=6;
+ s.feedback={};s.monsterHp=9;toNext(s);assert.equal(s.stageResults[0].kind,'endured');assert(!Object.keys(s.losses).length,'no loss on endured');
+}
+{ // 敗れても力・評判・発見が育った場面は grown 判定（損失なし・成長記録）
+ const s=initial('fight');s.mind=6;s.stats.soc=1;
+ s.feedback={};s.monsterHp=9;toNext(s);assert.equal(s.stageResults[0].kind,'grown');assert(!Object.keys(s.losses).length,'no loss on grown');
 }
 { // モンスター行動ローテーション: hp4モンスターはattack/attack/wait/stress
  const s=initial('fight');s.mind=6;s.monsterHp=99;

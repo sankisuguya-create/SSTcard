@@ -2468,13 +2468,16 @@ function addLoss(s){
 }
 export function initial(story='fight',carry=null){
  const d=stories[story];
- const s={story,stage:0,mind:d.start.mind,energy:d.start.energy,rep:carry?carry.rep:1,repStart:carry?carry.rep:1,mindMax:carry?carry.mindMax:6,mindMaxStart:carry?carry.mindMax:6,stats:{study:0,ath:0,soc:0},monsterHp:d.monsters[0].hp,turns:0,slain:[],escaped:[],dead:false,mindLog:[],bonus:null,bolster:0,losses:{},traumas:carry?{...carry.traumas}:{},clarity:0,subPending:pickSubs(d.subs??3),subNow:null,eventIdx:0,map:false,progress:0,goal:0,hand:[...d.base],discovered:[],used:[],flags:{},clues:[],relations:[],growth:[],log:[],explored:[],rested:[],observed:[],passed:[],minused:[],transcript:[],feedback:null,finished:false,reason:null,reflection:null};
+ const s={story,stage:0,mind:d.start.mind,energy:d.start.energy,rep:carry?carry.rep:1,repStart:carry?carry.rep:1,mindMax:carry?carry.mindMax:6,mindMaxStart:carry?carry.mindMax:6,stats:{study:0,ath:0,soc:0},monsterHp:d.monsters[0].hp,turns:0,slain:[],escaped:[],dead:false,mindLog:[],bonus:null,bolster:0,losses:{},traumas:carry?{...carry.traumas}:{},clarity:0,subPending:pickSubs(d.subs??3),subNow:null,eventIdx:0,map:false,progress:0,goal:0,hand:[...d.base],discovered:[],used:[],flags:{},clues:[],relations:[],growth:[],log:[],explored:[],rested:[],observed:[],passed:[],minused:[],transcript:[],feedback:null,finished:false,reason:null,reflection:null,stageResults:[],stageStart:null};
  // イベント列: メイン(大)の間にサブ(小)を均等配分 → マップの⚪︎になる
  s.eventNodes=[];let qi=0;
  for(let i=0;i<d.monsters.length;i++){s.eventNodes.push({type:'main',idx:i});
   const left=d.monsters.length-1-i;
   if(left>0){const k=Math.ceil((s.subPending.length-qi)/left);for(let j=0;j<k&&qi<s.subPending.length;j++){s.eventNodes.push({type:'sub'});qi++}}}
- sayScene(s);return s;
+ sayScene(s);
+ // 場面開始時のスナップショット（終了時に「耐えた/敗れたが育った/力負け」を判定するため）
+ s.stageStart={mind:s.mind,rep:s.rep,statsSum:s.stats.study+s.stats.ath+s.stats.soc,discoveredN:s.discovered.length,mindMax:s.mindMax};
+ return s;
 }
 export function monster(s){const m=def(s).monsters[s.stage];if(s.progress>=3)return{...m,hp:Math.min(m.hp,2),power:0,weak:true};return m}
 export function available(s){return s.hand.filter(id=>!s.used.includes(id));}
@@ -2527,9 +2530,18 @@ export function advance(s){
   s.subNow=null;
  }else{
   const failed=s.monsterHp>0;
-  if(failed)add(s.escaped,s.stage);else add(s.slain,s.stage);
-  // 負け続けると、その属性に苦手意識がつく
-  if(failed)addLoss(s);
+  if(failed){
+   add(s.escaped,s.stage);
+   // 場面の結果分類: grown=敗れたが力・評判・発見が育った / endured=心を保って耐え抜いた / plain=心が削られて力負けした
+   const st=s.stageStart||{mind:s.mind,rep:s.rep,statsSum:0,discoveredN:0,mindMax:s.mindMax};
+   const statsSum=s.stats.study+s.stats.ath+s.stats.soc;
+   const grewSt=statsSum>st.statsSum||s.rep>st.rep||s.discovered.length>st.discoveredN||s.mindMax>st.mindMax;
+   const kind=grewSt?'grown':(s.mind>=2?'endured':'plain');
+   s.stageResults.push({stage:s.stage,kind});
+   // 苦手意識がつくのは「力負け」だけ。耐え抜いた・敗れても育った場面にはつかない
+   if(kind==='plain')addLoss(s);
+   if(kind==='grown')growth(s,'立ち向かって敗れたが、力や評判が育った。');
+  }else add(s.slain,s.stage);
   // 強敵（大きなモンスター）を退けると、稀に精神力の上限が上がる
   const m0=monster(s);
   if(!failed&&(m0.power>=2||m0.hp>=6)&&s.mindMax<8){s.mindMax++;s.mind=Math.min(s.mindMax,s.mind+1);growth(s,'強い課題を退けて、心の器が広がった（精神力上限+1）。');}
@@ -2545,6 +2557,7 @@ export function advance(s){
  if(n.type==='sub'){s.subNow=s.subPending.shift()}
  else{
   s.stage++;s.turns=0;s.clarity=0;s.monsterHp=monster(s).hp;s.energy=Math.min(5,s.energy+1);
+  s.stageStart={mind:s.mind,rep:s.rep,statsSum:s.stats.study+s.stats.ath+s.stats.soc,discoveredN:s.discovered.length,mindMax:s.mindMax};
   for(const c of def(s).stageGrants[s.stage-1]||[])if(!s.used.includes(c)&&!s.hand.includes(c))s.hand.push(c);
   sayScene(s);
  }
@@ -2621,9 +2634,14 @@ export function summary(s){const f=s.flags;let situation;if(s.dead)situation='�
  const repStart=s.repStart??1,repDelta=s.rep-repStart,traumaKeys=Object.keys(s.traumas||{});
  const grew=buffTotal>0||s.discovered.length>=2||repDelta>0||s.mindMax>(s.mindMaxStart??6);
  const praises=[],warns=[];
+ // 場面ごとの結果を3型に分ける: endured(耐え抜いた)/grown(敗れたが育った)/plain(力負け)
+ let endured=0,grownF=0,plainF=0;
+ if(s.stageResults&&s.stageResults.length)for(const r of s.stageResults){if(r.kind==='endured')endured++;else if(r.kind==='grown')grownF++;else plainF++;}
+ else{endured=s.escaped.length;grownF=(s.escaped.length&&grew)?1:0} // 記録なし(合成状態)の互換
  if(s.slain.length)praises.push(`立ち向かって、${s.slain.length}つの課題をやっつけた`);
- if(s.escaped.length)praises.push(`時間のかかる課題を、${s.escaped.length}つ耐えてやり過ごした`);
- if(s.escaped.length&&grew)praises.push('失敗しても、力や評判が育った');
+ if(endured)praises.push(`${endured}つの課題を、心を保って耐えてやり過ごした`);
+ if(grownF)praises.push(`${grownF}つの課題は失敗しても、力や評判が育った`);
+ if(plainF)warns.push('力負けして、苦手な気持ちが残りそうになった場面があった');
  if(repDelta>0)praises.push(`評判が ${repStart} → ${s.rep} に上がった`);
  if(s.discovered.length>=2)praises.push(`新しい作戦を ${s.discovered.length} 個見つけて、考え方が広がった`);
  if(s.mindMax>(s.mindMaxStart??6))praises.push('強い課題を退けて、心の器が広がった');
@@ -2631,7 +2649,7 @@ export function summary(s){const f=s.flags;let situation;if(s.dead)situation='�
  if(repDelta<0)warns.push(`評判が ${repStart} → ${s.rep} に下がった${repDelta<=-2?'（大きく下がった）':''}`);
  if(buffTotal<=0&&s.discovered.length<2)warns.push('力の成長が少なかった');
  if(mindAvg<=3)warns.push('気持ちがいっぱいになる場面が多かった（いつもしんどかった）');
- const score=s.slain.length*3+s.escaped.length+Math.max(0,repDelta)+buffTotal+Math.min(2,s.discovered.length)+(mindAvg>=4?1:0)
-  -traumaKeys.length*2+Math.min(0,repDelta)-(buffTotal<=0&&s.discovered.length<2?1:0)-(mindAvg<=3?1:0)-(s.dead?4:0);
+ const score=s.slain.length*3+endured+grownF*2+Math.max(0,repDelta)+buffTotal+Math.min(2,s.discovered.length)+(mindAvg>=4?1:0)
+  -traumaKeys.length*2+Math.min(0,repDelta)+(repDelta<=-2?-1:0)-plainF-(buffTotal<=0&&s.discovered.length<2?1:0)-(mindAvg<=3?1:0)-(s.dead?4:0);
  const tier=score>=10?'すばらしい作戦だった！':score>=6?'よくがんばった':score>=2?'もう少し作戦を広げよう':'次は立て直しから';
- return {situation,relation:s.relations.length?s.relations.join(' '):'今回は、相手との新しい約束や気持ちの共有はまだない。あとから話すこともできる。',growth:s.growth,goal:def(s).goals[s.goal],progress:s.progress,mind:s.mind,energy:s.energy,rep:s.rep,repStart,repDelta,stats:{...s.stats},discovered:s.discovered.length,outcome,slain:s.slain.length,escaped:s.escaped.length,mindAvg,buffTotal,handSize,tier,praises,warns,grew,lowMind:mindAvg<=3,traumas:{...s.traumas},mindMax:s.mindMax}}
+ return {situation,relation:s.relations.length?s.relations.join(' '):'今回は、相手との新しい約束や気持ちの共有はまだない。あとから話すこともできる。',growth:s.growth,goal:def(s).goals[s.goal],progress:s.progress,mind:s.mind,energy:s.energy,rep:s.rep,repStart,repDelta,stats:{...s.stats},discovered:s.discovered.length,outcome,slain:s.slain.length,escaped:s.escaped.length,endured,grownFails:grownF,plainFails:plainF,mindAvg,buffTotal,handSize,tier,praises,warns,grew,lowMind:mindAvg<=3,traumas:{...s.traumas},mindMax:s.mindMax}}

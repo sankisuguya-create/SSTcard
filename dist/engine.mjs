@@ -2046,7 +2046,7 @@ seat:{
   if(id==='newFriend'){f.madeNew=true;relation(s,'新しい隣の子と話したら、楽しかった。');text='「ねえ、それ何？」\n新しい隣の子と、話せた。';meaning='話すと、新しい友達になる。'}
   if(id==='okSeat'){f.seatOk=true;note(s,'この席のいいところを見つけた。');text='「窓側だし、前も見やすい」\nこの席の、いいところを見つけた。';meaning='見方を変えると、気持ちが変わる。'}
   if(id==='oldCall'){f.toldO=true;relation(s,'気持ちを伝えたら、さびしさが軽くなった。');text='「離れて、さびしいよ」\n「私も。でも、すぐ近くだよ」';meaning='伝えると、さびしさが軽くなる。'}
-  if(id==='seatPlan'){f.plannedS=true;note(s,'帰りと休みの約束を立てたら、見通しが持てた。');text='「帰りは一緒に、休み時間も���おう」\n作戦が、できた。';meaning='約束があれば、離れても大丈夫。'}
+  if(id==='seatPlan'){f.plannedS=true;note(s,'帰りと休みの約束を立てたら、見通しが持てた。');text='「帰りは一緒に、休み時間も遊ぼう」\n作戦が、できた。';meaning='約束があれば、離れても大丈夫。'}
   if(id==='smileSeat'){if(f.seatOk||f.madeNew||f.meetPlanned){f.enjoyed=true;note(s,'新しい席を、楽しめるようになった。');text='「この席も、いいかも」\n新しい席を、楽しめた。';meaning='楽しめれば、新しい毎日になる。'}else{s.mind-=1;text='楽しもうとしたが、まだなじめていなかった。';meaning='まず話す・探す・約束してから、楽しむと良い。';grant(s,'newFriend')}}
   if(id==='keepBond'){if(f.meetPlanned||f.toldO||f.plannedS){f.bondKept=true;note(s,'離れても、仲良しのままでいられた。');text='「明日も、休み時間ね」\n離れても、仲良しのまま。';meaning='離れても続く、友達関係。'}else{s.mind-=1;text='仲良しでいようとしたが、つながり方が分からなかった。';meaning='まず伝える・約束してから、つながると良い。';grant(s,'meetBreak')}}
   return {text,meaning};

@@ -128,6 +128,15 @@ export const cards={
  askLend:{title:'「明日持ってきます」と約束',kind:'support',label:'約束する',cost:1,bond:1,atk:1,attr:'soc',up:'soc',desc:'今日できない分の約束を立てる。',hint:'約束があると、信頼が戻る',icon:'people'},
  shareBook:{title:'友達に見せてもらう',kind:'support',label:'見せてもらう',cost:1,bond:1,atk:1,attr:'soc',up:'soc',desc:'今日の分は、友達と分け合う。',hint:'助けてもらってもいい',icon:'people'},
  checklist:{title:'持ち物チェックリストを作る',kind:'think',label:'リストを作る',cost:1,atk:2,attr:'study',up:'study',desc:'明日から忘れないための仕組み。',hint:'仕組みは、意志より強い',icon:'puzzle'},
+ cheerUp:{title:'「元気出せ！」と明るく言う',kind:'talk',label:'励ます',cost:1,strain:1,bond:1,atk:1,attr:'soc',desc:'明るい声で、元気づける。',hint:'気持ちが先にあると、届きやすい',icon:'spark'},
+ watchFar:{title:'遠くから見守る',kind:'think',label:'見守る',cost:0,atk:0,up:'soc',desc:'近づかず、そっと見ておく。',hint:'見守るのも、一つの方法',icon:'eye'},
+ playNear:{title:'近くで自分の遊びをする',kind:'support',label:'近くで遊ぶ',cost:0,atk:0,desc:'声はかけず、近くにいるだけ。',hint:'近くにいるだけで、安心することもある',icon:'sun'},
+ justAsk:{title:'「だいじょうぶ？」と聞く',kind:'talk',label:'聞いてみる',cost:1,bond:1,atk:1,attr:'soc',up:'soc',desc:'気にかけて、一言だけ聞く。',hint:'一言聞くだけで、気持ちは届く',icon:'hand'},
+ stayNear:{title:'そばに座っている',kind:'support',label:'そばにいる',cost:1,bond:1,atk:1,attr:'soc',up:'soc',desc:'ことばではなく、そばにいる。',hint:'そばにいるだけでも、助けになる',icon:'people'},
+ ownMood:{title:'自分の気持ちも保つ',kind:'think',label:'自分も保つ',cost:1,atk:0,up:'soc',desc:'相手を気にしつつ、自分も守る。',hint:'自分を保ってこそ、人を助けられる',icon:'heart'},
+ listenDeep:{title:'落ち込みの理由を聞く',kind:'support',label:'話を聞く',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'話せるなら、聞いてあげる。',hint:'聞くことは、いちばんの助け',icon:'ear'},
+ tellAdult:{title:'先生にケイのことを伝える',kind:'support',label:'先生に伝える',cost:1,bond:1,atk:1,attr:'soc',up:'soc',desc:'友達の様子を、大人に伝える。',hint:'大人に伝えるのも、助けの一つ',icon:'flag'},
+ quietWith:{title:'何も聞かずに一緒にいる',kind:'talk',label:'一緒にいる',cost:1,atk:2,attr:'soc',up:'soc',desc:'理由を聞かず、ただ一緒にいる。',hint:'ことばより、そばにいるだけでも',icon:'sun'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -779,6 +788,51 @@ forgot:{
  },
  progress(s){const f=s.flags;return s.goal===0?(f.clearedF?3:f.honest||f.proactive?2:s.reason?1:0):s.goal===1?(f.habitPlan||f.checklisted?3:f.promised?2:s.reason?1:0):(f.clearedF||f.shared?3:f.proactive?2:0)},
  situation(s){const f=s.flags;return f.clearedF?'忘れ物を正直に対処し、次の作戦も見つかった。':f.honest||f.proactive?'正直に言えた。信頼が戻っている。':f.shared?'助けてもらって、今日を切り抜けた。':'忘れたままだと、ずっと気になる。正直に言うのが一番楽。'}
+},
+friend:{
+ title:'落ち込んでいる友達',nav:'友達を助ける',num:'14',attrs:['soc'],
+ goals:['ケイを気にかけたい','無理に踏み込みすぎたくない','自分も保ちたい'],
+ chapters:['休み時間の校庭','昼休み','放課後'],locations:['校庭・休み時間','教室・昼休み','下校途中'],
+ base:['cheerUp','watchFar','playNear','anger','ignore'],start:{mind:4,energy:4},
+ monsters:[{name:'沈黙の雲',hp:4,power:0,turns:4,look:'ケイの上に、言葉のない雲がかかっている。'},{name:'踏み込めない距離',hp:5,power:1,turns:5,look:'近づきたいのに、何と言うか分からない。'},{name:'一人ぼっちの壁',hp:6,power:1,turns:5,look:'「ほっといて」の壁が、ケイを囲んでいる。'}],
+ talk:[['keiG','ケイに話しかける','「だいじょうぶ？」と聞いてみる。'],['teacherG','先生に伝える','ケイの様子を大人に伝える。']],
+ think:[['worry','心配だけど、何と言うか分からない','声をかけたいが、ことばが見つからない。'],['leaveIt','一人にしておくべきか迷う','話したくないときもあるよな、と思う。'],['afraid','自分まで嫌な気分になりそう','近づくと、自分も沈みそう。']],
+ reasonKeys:['worry','leaveIt','afraid'],
+ stageGrants:[['quietWith'],[]],
+ onExplore(s,key){
+  const out={text:'',card:null};
+  if(key==='keiG'){s.flags.askedG=true;relation(s,'ケイが少し顔を上げた。');out.text='ケイ「…うん、だいじょうぶ」\n（本当は、だいじょうぶじゃなさそう）';out.card='listenDeep'}
+  if(key==='teacherG'){s.flags.toldT=true;note(s,'先生がケイのことを気にかけ始めた。');out.text='先生「教えてくれてありがとう。様子を見るね」';out.card='tellAdult'}
+  if(key==='worry'){s.reason='worry';note(s,'声をかけたいが、ことばが見つからない。');out.text='「心配だけど、何と言えばいいか…」';out.card='justAsk'}
+  if(key==='leaveIt'){s.reason='leaveIt';note(s,'一人にしておくべきか、迷っている。');out.text='「話したくないときもあるよな」';out.card='stayNear'}
+  if(key==='afraid'){s.reason='afraid';note(s,'自分まで沈みそうで、怖い。');out.text='「近づくと、自分まで暗くなりそう」';out.card='ownMood'}
+  return out;
+ },
+ onPlay(s,id){
+  const f=s.flags;let text='',meaning='';
+  if(id==='cheerUp'){if(f.askedG||f.sat){f.clearedG=true;relation(s,'明るい声が、ケイに届いた。');text='ケイ「…ありがと。ちょっと元気出た」';meaning='気持ちを受け取ってから励ますと、届く。'}else{s.mind-=1;text='「元気出せ！」と言ったが、ケイはうつむいたままだった。';meaning='理由を知らない励ましは、空回りすることがある。';grant(s,'justAsk')}}
+  if(id==='watchFar'){f.watchedG=true;s.mind+=1;text='遠くから見守った。\nケイは、一人でいるようだ。';meaning='見守ることも、気にかけの一つ。'}
+  if(id==='playNear'){f.nearby=true;relation(s,'近くにいるだけで、ケイの顔が少し柔らいだ。');text='近くで遊んでいたら、ケイがちらっとこっちを見た。';meaning='近くにいるだけで、安心することもある。'}
+  if(id==='justAsk'){f.askedG=true;relation(s,'「だいじょうぶ？」と聞くと、ケイが少し顔を上げた。');text='ケイ「……少し疲れてるだけ」\n気にかけは、届いた。';meaning='一言聞くだけで、気にかけは届く。'}
+  if(id==='stayNear'){f.sat=true;f.clearedG=true;relation(s,'そばに座った。ケイは、少しこっちに寄った。');text='ことばはいらなかった。\nそばにいるだけで、壁が薄くなった。';meaning='そばにいるだけでも、助けになる。'}
+  if(id==='ownMood'){f.balancedG=true;s.mind+=1;text='「心配するのと、一緒に沈むのは違う」\n自分の気持ちを保ってから、考えられた。';meaning='自分を保ってこそ、人を助けられる。'}
+  if(id==='listenDeep'){if(f.askedG){f.heardStory=true;f.clearedG=true;relation(s,'ケイが、家で落ち込むことがあったと話してくれた。');text='ケイ「実は、うちの犬が病気で…」\n話してくれて、雲が少し晴れた。';meaning='話を聞くことは、いちばんの助け。'}else{s.mind-=1;text='「どうしたの？」と深く聞いたが、ケイは黙った。';meaning='深く聞くには、まず軽く聞くほうが良いかも。';grant(s,'justAsk')}}
+  if(id==='tellAdult'){f.toldT=true;f.clearedG=true;relation(s,'先生がケイの様子を見に来てくれた。');text='先生「ケイくん、少し話そうか」\n大人が、入ってくれた。';meaning='大人に伝えるのも、立派な助け。'}
+  if(id==='quietWith'){if(f.sat||f.askedG){f.quietT=true;f.clearedG=true;relation(s,'何も聞かずに一緒にいたら、ケイが少し笑った。');text='ケイ「…いてくれてありがと」';meaning='ことばがなくても、そばにいるだけで助けになる。'}else{s.mind-=1;text='そばにいたが、ケイは気まずそうだった。';meaning='先に一言かけると、一緒にいやすい。';grant(s,'justAsk')}}
+  return {text,meaning};
+ },
+ watch(s){
+  if(s.stage===0)return 'ケイは、一人でうつむいている。';
+  if(s.stage===1)return 'ケイは、窓の外をぼんやり見ている。';
+  return 'ケイは、少し顔色が戻っている。';
+ },
+ scene(s){const f=s.flags;
+  if(s.stage===0)return {narrative:'休み時間。いつも元気なケイが、一人でうつむいている。',speaker:'ケイ',quote:'……',look:'ケイは、何も言わずに下を向いている。',self:'いつものケイじゃない。どうしたんだろう',hint:'ケイの様子が、いつもと違う。'};
+  if(s.stage===1)return {narrative:'昼休み。ケイは、まだ一人でいる。',speaker:'ケイ',quote:f.clearedG?'…ありがと':f.askedG?'少し疲れてるだけ':f.sat?'……':f.nearby?'…うん':'……',look:f.clearedG?'ケイは、少し顔を上げている。':'ケイは、まだうつむいている。',self:s.reason==='worry'?'何と言えばいいか分からない。':s.reason==='leaveIt'?'一人にしておくべきかな。':s.reason==='afraid'?'自分まで沈みそう。':'ケイに、どう接する？',hint:'聞く・そばにいる・大人に伝える、方法はある。'};
+  return {narrative:'放課後。ケイが、少しだけこちらを見た。',speaker:'ケイ',quote:f.clearedG?'今日は…ありがとう':f.heardStory?'聞いてくれて、少し楽になった':f.sat?'隣にいてくれてありがと':'……おつかれ',look:'ケイは、少しだけ柔らかい顔だ。',self:f.clearedG?'ケイの上の雲が、少し晴れた。':'まだ少し、心配が残っている。',hint:'助け方は、いろいろある。'};
+ },
+ progress(s){const f=s.flags;return s.goal===0?(f.clearedG?3:f.askedG||f.sat?2:s.reason?1:0):s.goal===1?(f.heardStory||f.quietT?3:f.sat||f.nearby?2:s.reason?1:0):(f.clearedG&&f.balancedG?3:f.balancedG?2:f.clearedG?2:s.reason?1:0)},
+ situation(s){const f=s.flags;return f.clearedG?'ケイの気持ちに寄り添えた。助け方はいろいろある。':f.askedG||f.sat?'気にかけが、少し届いている。':f.balancedG?'自分を保ちつつ、考えられている。':'ケイは一人でいる。気にかけ方は、練習できる。'}
 }
 };
 

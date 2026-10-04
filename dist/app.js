@@ -143,7 +143,7 @@ function resources(s){
  return `<div class="resources" aria-label="のこりの力">
   ${pip('bolt','行動力',s.energy,5,'energy','作戦カードを出すための力。休むと少し戻る')}
   ${pip('heart','精神力',s.mind,s.mindMax,'mind','つかれると減る。1以下で「気持ちがいっぱい」、0で大失敗に。休むと戻る')}
-  ${pip('people','評判',s.rep,5,'rep','まわりからの見られ方。話したり相談したりすると上がる。0だとモンスターの反撃が強くなる')}
+  ${pip('people','評判',s.rep,5,'rep','まわりからの見られ方。話したり相談したりすると上がる。0だとモンスターの威圧が強くなる')}
  </div>`;
 }
 

@@ -468,6 +468,16 @@ export const cards={
  letSlide:{title:'今回は見送る',kind:'think',label:'今回は見送る',cost:1,atk:2,attr:'soc',up:'soc',desc:'「今回はいいか」と、見送る。',hint:'許せることも、強さ',icon:'sun'},
  askEnd:{title:'「一番後ろはどこ？」と聞く',kind:'talk',label:'後ろを聞く',cost:1,atk:2,attr:'soc',up:'soc',desc:'相手に、「一番後ろはどこ？」と聞く。',hint:'聞くと、気づいてもらえる',icon:'search'},
  standUp2:{title:'みんなで「順番だよ」と言う',kind:'support',label:'みんなで言う',cost:2,atk:3,attr:'soc',up:'soc',desc:'まわりの人と一緒に、「順番だよ」と言う。',hint:'みんなで言うと、届く',icon:'people'},
+ snapTake:{title:'「知らないよ」と突き放す',kind:'talk',label:'突き放す',cost:0,strain:1,atk:1,attr:'soc',desc:'押し付けられた仕事を、投げ返す。',hint:'突き放すと、関係がこわれる',icon:'bolt'},
+ silentDo:{title:'黙って全部やる',kind:'think',label:'黙ってやる',cost:0,strain:1,atk:1,attr:'soc',desc:'不満を、呑み込んで全部やる。',hint:'我慢すると、心が重い',icon:'eye'},
+ sayNo2:{title:'「それはあなたの仕事だよ」と言う',kind:'talk',label:'断る',cost:1,atk:2,attr:'soc',up:'soc',desc:'静かに、「あなたの仕事だよ」と言う。',hint:'断るのは、わがままじゃない',icon:'hand'},
+ askRole:{title:'「なんで私がやるの？」と聞く',kind:'talk',label:'理由を聞く',cost:1,atk:2,attr:'soc',up:'soc',desc:'押し付ける理由を、聞いてみる。',hint:'理由が分かると、対処できる',icon:'search'},
+ takeHalf:{title:'「半分だけやる」と交渉する',kind:'talk',label:'半分と交渉',cost:1,atk:2,attr:'soc',up:'soc',desc:'「半分ならやる」と、交渉する。',hint:'交渉は、両方にいい',icon:'people'},
+ tellT4:{title:'係の決め方を先生に相談',kind:'talk',label:'先生に相談',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'仕事の分け方を、先生に相談する。',hint:'相談は、逃げじゃない',icon:'heart'},
+ splitFair:{title:'「みんなで分けよう」と提案する',kind:'think',label:'分ける提案',cost:1,atk:2,attr:'soc',up:'soc',desc:'一人でなく、みんなで分ける提案。',hint:'分けると、公平になる',icon:'list'},
+ tradeIt:{title:'「じゃあ交代で」と提案する',kind:'think',label:'交代の提案',cost:1,atk:2,attr:'soc',up:'soc',desc:'「今日はあなた、明日は私」と提案。',hint:'交代なら、ずるくない',icon:'flag'},
+ ownJob:{title:'自分の分だけしっかりやる',kind:'think',label:'自分の分をやる',cost:1,atk:2,attr:'study',up:'study',desc:'自分の分を、しっかりやる。',hint:'自分の分は、自分の責任',icon:'check'},
+ noPush:{title:'「押し付けない」約束にする',kind:'support',label:'約束にする',cost:2,atk:3,attr:'soc',up:'soc',desc:'「押し付けない」を、みんなの約束にする。',hint:'約束で、次を防ぐ',icon:'spark'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -2767,6 +2777,48 @@ lineCut:{title:'列に割り込まれた',nav:'割り込まれた',num:49,attrs:
  },
  progress(s){const f=s.flags;return f.letS||f.explained||f.askedE||f.stood?3:f.saidT||f.tapped||f.toldW2||f.coolV?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.letS||f.explained||f.stood?'列を、守れる関係ができた。':f.saidT||f.coolV?'自分の順番を、伝えられた。':'まだ、モヤモヤ。言う・聞く・相談、方法はある。'}
+},
+dumped:{title:'仕事を押し付けられた',nav:'押し付けられた',num:50,attrs:['soc'],goals:['自分の仕事と相手の仕事を分けたい','断る勇気を持ちたい','公平な分け方にしたい'],chapters:['「やっといて」と言われた','自分の仕事と相手の仕事','明日の係'],locations:['教室・放課後','休み時間','翌日'],base:['snapTake','silentDo','sayNo2','anger','ignore'],
+ start:{mind:4,energy:3},
+ monsters:[{name:'押し付ける手',hp:5,power:1,turns:4,look:'「やっといて」と、雑巾が渡された。'},{name:'逃げたその子',hp:5,power:1,turns:4,look:'その子は、もう遊んでいる。'},{name:'明日の係',hp:6,power:2,turns:4,look:'明日も、同じことがあるか。'}],
+ talk:[['talkDuty','「あなたの仕事だよ」と言う','静かに、断る。'],['askTeacher5','係の決め方を相談する','仕事の分け方、相談する。'],['askOthers','他の係の人に聞く','「みんなはどうしてる？」と聞く。']],
+ think:[['resent','なんで私だけ…と思う','押し付けられて、不満だった。'],['dutyThink','自分の分はどこまでか','どこまでが、自分の仕事か。'],['fairThink','公平じゃないと思う','一人に押し付けるのは、公平じゃない。']],
+ reasonKeys:['resent','dutyThink','fairThink'],
+ stageGrants:[['askRole','takeHalf','tellT4'],['splitFair','tradeIt','ownJob','noPush']],
+ subs:[
+  {title:'その子が「ごめん、半分やる」と言った',text:'その子が、戻ってきて半分やってくれた。',stat:'soc',min:0,good:{text:'「ありがとう、助かる」と言えた。',rep:1,mind:1},ok:{text:'仲直りできた。',mind:1}},
+  {title:'他の係の人が手伝ってくれた',text:'「一緒にやろう」と、手伝ってくれた。',stat:'soc',min:0,good:{text:'一緒にできて、楽しかった。',rep:1},ok:{text:'助かった。',mind:1}}
+ ],
+ onExplore(s,key){const out={text:'',card:null};
+  if(key==='talkDuty'){s.flags.talkedD=true;relation(s,'「あなたの仕事だよ」と言ったら、相手が戻ってきた。');out.text='「それ、あなたの仕事だよ」\n「…ごめん」';out.card='sayNo2'}
+  if(key==='askTeacher5'){s.flags.askedT5=true;relation(s,'相談したら、「みんなで分けなさい」と言ってもらえた。');out.text='「係、一人に押し付けられて」\n「みんなで分けなさい」';out.card='tellT4'}
+  if(key==='askOthers'){s.flags.askedO=true;relation(s,'他の係に聞いたら、「交代でやってる」と分かった。');out.text='「みんな、どうしてる？」\n「うちは、交代でやってるよ」';out.card='tradeIt'}
+  if(key==='resent'){s.reason='resent';out.text='なんで私だけ…と思った。\n「不満」は、伝えてもいい気持ち。';out.card='sayNo2'}
+  if(key==='dutyThink'){s.reason='dutyThink';out.text='どこまでが自分の仕事か、考えた。\n「自分の分」を見極めよう。';out.card='ownJob'}
+  if(key==='fairThink'){s.reason='fairThink';out.text='一人に押し付けるのは、公平じゃない。\n「分ける」「交代」で公平にできる。';out.card='splitFair'}
+  return out;
+ },
+ onPlay(s,id){const f=s.flags;
+  if(id==='sayNo2'){f.saidNo2=true;return{text:'「あなたの仕事だよ」と、言えた。',meaning:'断るのは、わがままじゃない。'}}
+  if(id==='askRole'){f.askedR=true;return{text:'「なんで私がやるの？」と聞いた。',meaning:'理由が分かると、対処できる。'}}
+  if(id==='takeHalf'){f.tookH=true;return{text:'「半分だけやる」と、交渉した。',meaning:'交渉は、両方にいい。'}}
+  if(id==='tellT4'){f.toldT4=true;return{text:'係の決め方を、相談した。',meaning:'相談は、逃げじゃない。'}}
+  if(id==='splitFair'){f.splitF=true;return{text:'「みんなで分けよう」と、提案した。',meaning:'分けると、公平になる。'}}
+  if(id==='tradeIt'){f.traded=true;return{text:'「じゃあ交代で」と、提案した。',meaning:'交代なら、ずるくない。'}}
+  if(id==='ownJob'){f.ownJ=true;return{text:'自分の分だけ、しっかりやった。',meaning:'自分の分は、自分の責任。'}}
+  if(id==='noPush'){f.noP=true;return{text:'「押し付けない」を、みんなの約束にした。',meaning:'約束で、次を防ぐ。'}}
+  if(id==='snapTake'){f.snapped=true;s.rep-=1;relation(s,'突き放したら、その子と気まずくなった。');return{text:'「知らないよ」と突き放した。',meaning:'突き放すと、関係がこわれる。'}}
+  if(id==='silentDo'){f.didAll=true;return{text:'黙って、全部やった。',meaning:'我慢すると、心が重い。'}}
+  return{text:'',meaning:''};
+ },
+ watch(s){return s.stage===0?'仕事は、押し付けるものじゃない。':s.stage===1?'断るのは、わがままじゃない。':'明日も、係がある。'},
+ scene(s){const f=s.flags;
+  if(s.stage===0)return{narrative:'放課後。「やっといて」と、雑巾を渡された。その子は、もう遊んでいる。',speaker:'その子',quote:'よろしく〜',look:'その子が、走って行った。',self:'なんで私だけ…',hint:'押し付けられて、何がつらい？'};
+  if(s.stage===1)return{narrative:'自分の仕事と、その子の仕事。どこまでやればいい？',speaker:'係の友達',quote:'それ、その子の仕事じゃない？',look:'一人で、雑巾がけをしている。',self:s.reason==='dutyThink'?'どこまでが自分の分…':s.reason==='fairThink'?'公平じゃない…':'なんで私だけ…',hint:'断る・交渉・相談、方法はある。'};
+  return{narrative:'翌日。また、係の時間が来る。',speaker:'係の友達',quote:f.splitF||f.traded?'「分けようか」':'「今日はどうする？」',look:'明日も、係がある。',self:f.ownJ||f.noP||f.splitF?'公平に、できそう。':'まだ、一人で抱えそう。',hint:'分ける・交代・自分の分・約束、選ぼう。'};
+ },
+ progress(s){const f=s.flags;return f.ownJ||f.noP||f.splitF||f.traded?3:f.saidNo2||f.askedR||f.tookH||f.toldT4?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.splitF||f.traded||f.noP?'公平な分け方が、できた。':f.saidNo2||f.tookH?'断る・交渉が、できた。':'まだ、一人で抱えている。断る・分ける・相談、方法はある。'}
 }
 };
 

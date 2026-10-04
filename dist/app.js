@@ -1,4 +1,4 @@
-import {cards,stories,initial,explore,available,canPlay,canExplore,play,advance,safety,free,scene,summary,setGoal} from './engine.mjs';
+import {cards,minusCards,stories,initial,explore,available,canPlay,canExplore,canMinus,play,advance,safety,free,minus,scene,summary,setGoal} from './engine.mjs';
 const app=document.querySelector('#app'),dialog=document.querySelector('#dialog');
 let state=initial(),history=[],previous=null,focusReturn=null;
 const sessions={};
@@ -97,29 +97,52 @@ function quickActions(s,busy){
  return items.map(([a,ic,t,sub,ok])=>`<button class="quick" data-action="${a}" ${busy||!ok?'disabled':''}>${icon(ic)}<span><strong>${t}</strong><span>${sub}</span></span></button>`).join('');
 }
 
+function resources(s){
+ return `<div class="resources" aria-label="のこりの力">
+  ${pip('bolt','行動力',s.energy,5,'作戦カードを出すための力。休むと少し戻る')}
+  ${pip('heart','こころの余裕',6-s.stress,6,'ストレスが増えると減る。なくなる前に休もう')}
+  ${pip('people','いいなと思う人',s.liked,5,'あなたのことを「いいな」と思ってくれている人。話したり相談したりすると増える')}
+ </div>`;
+}
+
 function handZone(s){
+ if(canMinus(s)){
+  const mids=Object.keys(minusCards),rest=mids.length-s.minused.filter(x=>x.startsWith(s.stage+':')).length;
+  return `<section class="hand-zone" aria-label="手札">
+   <div class="hand-heading">
+    <h2>${icon('cards')} 手札 <span class="badge minus-badge">マイナスカード</span></h2>
+    ${resources(s)}
+   </div>
+   <div class="notice minus-notice">気持ちがいっぱいで、ふだんの作戦は出せない。赤いマイナスカードか、「いつでも選べる」作戦で、まず気持ちを整えよう。</div>
+   ${rest?`<div class="hand fan">${mids.map((id,i)=>minusCardView(id,i,mids.length)).join('')}</div>`
+     :`<p class="empty-note">この場面のマイナスカードはもう使った。「少し休む」「離れる」など、いつでも選べる作戦で落ち着こう。</p>`}
+  </section>`;
+ }
  const ids=available(s),n=ids.length;
  return `<section class="hand-zone" aria-label="手札">
   <div class="hand-heading">
    <h2>${icon('cards')} 手札 <span class="badge">${n}枚</span></h2>
-   <div class="resources" aria-label="のこりの力">
-    ${pip('bolt','行動力',s.energy,5,'作戦カードを出すための力。休むと少し戻る')}
-    ${pip('heart','こころの余裕',6-s.stress,6,'ストレスが増えると減る。なくなる前に休もう')}
-    ${pip('people','いいなと思う人',s.liked,5,'あなたのことを「いいな」と思ってくれている人。話したり相談したりすると増える')}
-   </div>
+   ${resources(s)}
   </div>
-  ${s.stress>=6?'<div class="notice">こころがいっぱい。重い作戦（行動力2）は使えない。まず休もう。</div>':s.stress>=5?'<div class="notice">気持ちがいっぱいで、「話す・相談する」「自分に問う」は使えない。休む・離れると落ち着く。</div>':''}
   ${n?`<div class="hand fan">${ids.map((id,i)=>cardView(id,i,n)).join('')}</div>`
     :`<p class="empty-note">使える手札がない。「話す・相談する」「自分に問う」で増やせる。いつでも選べる作戦もある。</p>`}
  </section>`;
 }
 
-function cardView(id,i,n){
- const c=cards[id],allowed=canPlay(state,id);
+function fanStyle(i,n){
  const rot=(i-(n-1)/2)*3.4,dy=Math.abs(i-(n-1)/2)*5;
  const w=176,step=n>1?Math.min(106,(860-w)/(n-1)):0;
- const ml=i?`margin-left:${Math.round(step-w)}px;`:'';
- return `<button class="game-card ${c.kind}" data-action="card" data-id="${id}" ${!allowed?'disabled':''} style="${ml}--rot:${rot.toFixed(1)}deg;--dy:${dy.toFixed(0)}px" aria-label="${c.title}、行動力${c.cost}${!allowed?'、今は行動力や休憩が必要':''}"><div class="card-top"><span>${c.label}</span><span>行動力 ${c.cost}</span></div>${state.discovered.includes(id)?'<span class="new-tag">発見した作戦</span>':''}<div class="card-inner"><span class="card-icon">${icon(c.icon)}</span><div class="card-title">${c.title}</div><div class="card-desc">${c.desc}</div><div class="card-bottom">${allowed?c.hint:'休んで行動力を整えると使える'}</div></div></button>`;
+ return `${i?`margin-left:${Math.round(step-w)}px;`:''}--rot:${rot.toFixed(1)}deg;--dy:${dy.toFixed(0)}px`;
+}
+
+function minusCardView(id,i,n){
+ const m=minusCards[id],used=state.minused.includes(state.stage+':'+id);
+ return `<button class="game-card minus" data-action="minus" data-id="${id}" ${used?'disabled':''} style="${fanStyle(i,n)}" aria-label="${m.title}、マイナスカード、ストレス${m.recover}回復${used?'、この場面ではもう使った':''}"><div class="card-top"><span>マイナス</span><span>ストレス回復 ${m.recover}</span></div><div class="card-inner"><span class="card-icon">${icon(m.icon)}</span><div class="card-title">${m.title}</div><div class="card-desc">${m.desc}</div><div class="card-bottom">${used?'この場面ではもう使った':m.liked?'まわりへの印象が残る':'気持ちが楽になる'}</div></div></button>`;
+}
+
+function cardView(id,i,n){
+ const c=cards[id],allowed=canPlay(state,id);
+ return `<button class="game-card ${c.kind}" data-action="card" data-id="${id}" ${!allowed?'disabled':''} style="${fanStyle(i,n)}" aria-label="${c.title}、行動力${c.cost}${c.strain?`、ストレス${c.strain}`:''}${!allowed?'、今は行動力や休憩が必要':''}"><div class="card-top"><span>${c.label}</span><span class="costs"><span>行動力 ${c.cost}</span>${c.strain?`<span class="stress-cost">ストレス ${c.strain}</span>`:''}</span></div>${state.discovered.includes(id)?'<span class="new-tag">発見した作戦</span>':''}<div class="card-inner"><span class="card-icon">${icon(c.icon)}</span><div class="card-title">${c.title}</div><div class="card-desc">${c.desc}</div><div class="card-bottom">${allowed?c.hint:'休んで行動力を整えると使える'}</div></div></button>`;
 }
 
 function feedbackView(){
@@ -131,6 +154,12 @@ function resultView(){
  const s=state,r=summary(s);
  return `<div class="result-header"><div class="eyebrow">YOUR STORY ／ 今回のふりかえり</div><h1>選んだ作戦が、経験になった。</h1><p class="muted">うまくいったことも、まだ気になることも。次の作戦の手がかりにしよう。</p></div>
  <div class="result-grid">
+  <section class="result-box wide praise-box"><h3>${icon('spark')}今回のふりかえりで、あなたが積み上げたもの</h3>
+   <div class="praise-grid">
+    <div class="praise-item"><div class="praise-num">${icon('people')} ${r.liked}<span>人</span></div><div class="praise-label">あなたをいいなと思う人</div><p class="smalltext">${r.liked>=4?'たくさんの人と、心がつながった。':r.liked>=3?'話したり相談したりするたびに、あなたの味方が増えた。':'あなたをいいなと思う人は、いつでも近くにいる。'}</p></div>
+    <div class="praise-item"><div class="praise-num">${icon('cards')} ${r.discovered}<span>個</span></div><div class="praise-label">見つけた作戦</div><p class="smalltext">${r.discovered>=4?'考え方がぐっと広がった。いろいろな作戦を試せる。':r.discovered>=2?'新しい考え方が増えた。':'知っている作戦を、大切に使った。'}</p></div>
+   </div>
+  </section>
   <section class="result-box"><h3>${icon('flag')}状況はどうなった？</h3><p>${r.situation}</p><div class="changes"><span class="change">${r.goal}：${r.progress===3?'進められた':r.progress?'少し進んだ':'これから考えられる'}</span></div></section>
   <section class="result-box"><h3>${icon('heart')}自分の状態</h3><p>ストレス ${r.stress} / 6　・　余力 ${r.energy} / 5　・　いいなと思う人 ${r.liked} 人</p><p class="smalltext muted">気持ちが残っていても、伝えられたことや見つけたことは残ります。</p></section>
   <section class="result-box"><h3>${icon('people')}関係に残ったこと</h3><p>${r.relation}</p></section>
@@ -154,7 +183,7 @@ function showNotebook(){
 
 function dispatch(action,id){
  if(action==='close'){close();return}
- if(action==='guide'){modal('あそびかた',`<div class="dialog-options"><p><strong>1. 場面と、今の手札を見る</strong><br>何を大切にしたいか、目的を選べます。</p><p><strong>2. 話す・考える・カードを使う</strong><br>会話や自問自答で手札が増えます。カードの数字は使う行動力です。気持ちがいっぱいの時は、じっくり考える作戦は使えません。話したり相談したりすると、「いいなと思う人」が増えます。</p><p><strong>3. 結果を見て、選び直す</strong><br>同じカードでも、状況によって結果が変わります。きき返す・何もしない・休む・離れる・助けを求めることは、いつでも選べます。</p></div><div class="notice">登場人物や数値は架空です。合計点や順位はありません。このモックはページを閉じると記録が消えます。</div><button class="primary" data-action="close">おはなしに戻る</button>`);return}
+ if(action==='guide'){modal('あそびかた',`<div class="dialog-options"><p><strong>1. 場面と、今の手札を見る</strong><br>何を大切にしたいか、目的を選べます。</p><p><strong>2. 話す・考える・カードを使う</strong><br>会話や自問自答で手札が増えます。カードの数字は使う行動力と、かかるストレスです。気持ちがいっぱい（こころの余裕が1以下）の時は、じっくり考える作戦は使えず、手札が赤いマイナスカードに変わります。気持ちを出して落ち着くか、休む・離れるで回復できます。話したり相談したりすると、「いいなと思う人」が増えます。</p><p><strong>3. 結果を見て、選び直す</strong><br>同じカードでも、状況によって結果が変わります。きき返す・何もしない・休む・離れる・助けを求めることは、いつでも選べます。</p></div><div class="notice">登場人物や数値は架空です。合計点や順位はありません。このモックはページを閉じると記録が消えます。</div><button class="primary" data-action="close">おはなしに戻る</button>`);return}
  if(action==='story'){if(!stories[id]||id===state.story)return;sessions[state.story]={state:structuredClone(state),history:structuredClone(history),previous};const saved=sessions[id];state=saved?saved.state:initial(id);history=saved?saved.history:[];previous=saved?saved.previous:null;render();window.scrollTo(0,0);return}
  if(action==='goal'){modal('今回、大切にしたいこと',`<p class="dialog-copy">途中で目的を変えても大丈夫。</p><div class="dialog-options">${stories[state.story].goals.map((g,n)=>`<button data-action="setGoal" data-id="${n}" ${state.goal===n?'aria-current="true"':''}>${state.goal===n?'✓ ':''}${g}</button>`).join('')}</div>`);return}
  if(action==='setGoal'){snapshot();setGoal(state,Number(id));close();render();return}
@@ -162,7 +191,8 @@ function dispatch(action,id){
  if(action==='talk'||action==='think'){showExplore(action);return}
  if(action==='explore'){snapshot();const out=explore(state,id);if(!out){history.pop();return}render();modal('新しい作戦を見つけた',`<p class="dialog-copy">${out.text}</p>${out.card?`<div class="acquired"><span class="eyebrow">NEW CARD ／ 手札に追加</span><strong>${cards[out.card].title}</strong><p>${cards[out.card].desc}</p>${id==='teacher'?'<p class="smalltext">「休憩の合図を決める」も加わりました。</p>':''}</div>`:''}<div class="dialog-footer"><button class="primary" data-action="close">手札を見る</button></div>`);announce('新しい作戦を手札に追加しました');return}
  if(action==='observe'||action==='pass'){snapshot();const out=free(state,action);if(!out){history.pop();return}render();modal(out.title,`<p class="dialog-copy">${out.text}</p><div class="notice">${icon('spark')} ${out.meaning}</div>${action==='observe'?'<p class="smalltext muted">「今の手がかり」に加わりました。</p>':''}<div class="dialog-footer"><button class="primary" data-action="close">次の作戦を考える</button></div>`);announce(out.text);return}
- if(action==='card'){if(!canPlay(state,id))return;const c=cards[id];modal('この作戦を試してみる？',`<div class="acquired"><span class="eyebrow">${c.label} ／ 行動力 ${c.cost}</span><strong>${c.title}</strong><p>${c.desc}</p></div><p class="dialog-copy">${c.hint}。どうなるか、試して確かめよう。</p><div class="dialog-footer row"><button data-action="close">手札に戻る</button><button class="primary" data-action="play" data-id="${id}">このカードを使う</button></div>`);return}
+ if(action==='minus'){snapshot();const out=minus(state,id);if(!out){history.pop();return}render();modal(out.title,`<p class="dialog-copy">${out.text}</p><div class="changes"><span class="change">ストレス ${state.stress} / 6 になった</span>${minusCards[id].liked?`<span class="change liked-down">いいなと思う人 ${minusCards[id].liked}</span>`:''}</div><div class="notice">${icon('spark')} ${out.meaning}</div>${minusCards[id].liked?'<p class="smalltext muted">気持ちは楽になったけれど、まわりへの印象が少し残った。</p>':''}<div class="dialog-footer"><button class="primary" data-action="close">次の作戦を考える</button></div>`);announce(out.text);return}
+ if(action==='card'){if(!canPlay(state,id))return;const c=cards[id];modal('この作戦を試してみる？',`<div class="acquired"><span class="eyebrow">${c.label} ／ 行動力 ${c.cost}${c.strain?` ・ ストレス ${c.strain}`:''}</span><strong>${c.title}</strong><p>${c.desc}</p></div><p class="dialog-copy">${c.hint}。どうなるか、試して確かめよう。</p><div class="dialog-footer row"><button data-action="close">手札に戻る</button><button class="primary" data-action="play" data-id="${id}">このカードを使う</button></div>`);return}
  if(action==='play'){if(!canPlay(state,id))return;snapshot();play(state,id);close();render();document.querySelector('#feedback')?.focus();announce(state.feedback.text);return}
  if(action==='next'){advance(state);render();window.scrollTo(0,0);return}
  if(action==='undo'){if(!history.length)return;if(state.finished){const r=summary(state);previous={story:state.story,titles:state.log.map(x=>x.title),situation:r.situation}}state=history.pop();render();return}

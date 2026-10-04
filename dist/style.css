@@ -1,6 +1,7 @@
 :root{
  --ink:#1a1a1a;--sub:#616870;--blue:#0f5ea8;--pale:#d7e8f8;--yellow:#fbe3b4;
  --line:#d2dae2;--paper:#fff;--bg:#f3f6f9;--orange:#c86a00;
+ --red:#b3352a;--red-pale:#f9e6e3;
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.7 "Hiragino Sans","Yu Gothic UI","BIZ UDPGothic","Noto Sans JP",sans-serif}
@@ -115,7 +116,9 @@ main{padding:28px 36px 30px;min-width:0}
 .game-card{position:relative;display:flex;flex-direction:column;text-align:left;padding:0;border-radius:14px;background:white;border:1px solid #c4cfda;overflow:hidden;min-height:224px;width:176px;flex:0 0 176px;box-shadow:0 4px 0 #dce3e9;transition:transform .17s,box-shadow .17s,border-color .17s}
 .hand.fan .game-card{transform-origin:50% 130%;transform:translateY(var(--dy,0)) rotate(var(--rot,0deg))}
 .hand.fan .game-card:hover,.hand.fan .game-card:focus-visible{transform:translateY(-16px) rotate(0deg);z-index:6;box-shadow:0 10px 18px #122b4b26;border-color:var(--blue)}
-.card-top{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:var(--pale);font-size:12px;font-weight:bold;border-bottom:1px solid #c4cfda}
+.card-top{display:flex;align-items:center;justify-content:space-between;gap:6px;padding:10px 12px;background:var(--pale);font-size:12px;font-weight:bold;border-bottom:1px solid #c4cfda}
+.costs{display:flex;flex-direction:column;align-items:flex-end;gap:1px;font-weight:normal;font-size:11px;line-height:1.4}
+.stress-cost{color:var(--red);font-weight:700}
 .game-card.think .card-top{background:var(--yellow)}
 .game-card.support .card-top{background:#eef1f4}
 .card-inner{padding:13px;display:flex;flex-direction:column;flex:1}
@@ -125,6 +128,14 @@ main{padding:28px 36px 30px;min-width:0}
 .card-bottom{margin-top:auto;padding-top:10px;font-size:12px;color:var(--blue);display:flex;align-items:center;gap:6px}
 .new-tag{position:absolute;top:40px;right:8px;font-size:11px;background:var(--yellow);border-radius:4px;padding:1px 6px;z-index:2}
 
+.game-card.minus{border-color:#e2b3ac;background:#fff}
+.game-card.minus .card-top{background:var(--red-pale);color:var(--red);border-bottom-color:#e2b3ac}
+.game-card.minus .card-icon{color:var(--red)}
+.game-card.minus .card-bottom{color:var(--red)}
+.game-card.minus:hover:not(:disabled){border-color:var(--red)}
+.minus-badge{background:var(--red-pale);color:var(--red);font-weight:700}
+.minus-notice{background:var(--red-pale)}
+
 .feedback{padding:25px;background:#fff;border:2px solid var(--blue);border-radius:17px;margin-top:20px}
 .feedback .eyebrow{margin-bottom:7px}
 .feedback h2{margin-bottom:12px}
@@ -132,6 +143,7 @@ main{padding:28px 36px 30px;min-width:0}
 .changes{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}
 .change{background:var(--bg);padding:5px 10px;border-radius:6px;font-size:14px}
 .change.liked-up{background:var(--pale);color:var(--blue);font-weight:600}
+.change.liked-down{background:var(--red-pale);color:var(--red);font-weight:600}
 .feedback-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:18px}
 .notice{background:var(--yellow);padding:12px 16px;border-radius:10px;margin:15px 0;font-size:14px}
 
@@ -142,6 +154,13 @@ main{padding:28px 36px 30px;min-width:0}
 .result-box h3{display:flex;gap:10px;align-items:center;color:var(--blue);margin-bottom:12px}
 .result-box p{font-size:16px;line-height:1.9}
 .result-box.wide{grid-column:1/-1}
+.praise-box{background:linear-gradient(180deg,#fff,var(--pale) 160%);border-width:2px;border-color:var(--blue)}
+.praise-grid{display:flex;gap:28px;flex-wrap:wrap;margin-top:6px}
+.praise-item{flex:1;min-width:210px}
+.praise-num{display:flex;align-items:center;gap:9px;font-size:34px;font-weight:800;color:var(--blue)}
+.praise-num svg{width:32px;height:32px}
+.praise-num span{font-size:15px;font-weight:700;color:var(--sub)}
+.praise-label{font-size:13px;font-weight:700;color:var(--sub);margin:3px 0 8px}
 .timeline{display:flex;flex-wrap:wrap;gap:10px}
 .timeline span{font-size:14px;background:var(--pale);padding:8px 12px;border-radius:7px}
 .result-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}

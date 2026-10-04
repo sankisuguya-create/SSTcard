@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
-import {initial,explore,play,advance,safety,available,canPlay,canExplore,free,setGoal,summary} from './dist/engine.mjs';
+import {initial,explore,play,advance,safety,available,canPlay,canExplore,canMinus,free,minus,setGoal,summary} from './dist/engine.mjs';
 let a=initial('fight');explore(a,'haru');assert(available(a).includes('relocate'));assert.equal(explore(a,'haru'),null);play(a,'boundary');assert(a.flags.boundary);advance(a);safety(a,'rest');explore(a,'respect');play(a,'promise');advance(a);assert(a.flags.promise);safety(a,'rest');play(a,'relocate');advance(a);assert(a.finished);assert(a.flags.fixed);assert(summary(a).relation.includes('約束'));
-let b=initial('sports');explore(b,'movement');const c=initial('sports');explore(c,'noise');play(b,'practice');play(c,'practice');assert(b.stress<c.stress);assert(b.flags.practiced);advance(c);explore(c,'teacher');safety(c,'rest');play(c,'place');advance(c);play(c,'adjust');advance(c);assert(c.finished);assert(c.flags.adjusted);
+let b=initial('sports');explore(b,'movement');const c=initial('sports');explore(c,'noise');play(b,'practice');play(c,'practice');assert(b.stress<c.stress);assert(b.flags.practiced);advance(c);safety(c,'rest');explore(c,'teacher');play(c,'place');advance(c);play(c,'adjust');advance(c);assert(c.finished);assert(c.flags.adjusted);
 for(const story of ['fight','sports']){const s=initial(story);s.energy=0;s.stress=6;assert(safety(s,'help'));assert(s.finished);const t=initial(story);assert(safety(t,'rest'));const e=t.energy;assert(!safety(t,'rest'));assert.equal(t.energy,e);assert(!play(t,'not-a-card'));assert(!setGoal(t,9));}
 
 // いつでも選べる作戦（カード不要・場面ごとに1回）と、気持ちがいっぱい時の相談不可
@@ -32,4 +32,24 @@ for(const story of ['fight','sports']){
  const s2=initial('fight');assert(safety(s2,'help'));assert.equal(s2.liked,2);
  const s3=initial('fight');s3.liked=5;explore(s3,'mina');assert.equal(s3.liked,5);play(s3,'boundary');assert.equal(s3.liked,5);
 }
+
+// ストレスコストとマイナスカード（ストレス5以上で手札がマイナス化）
+for(const story of ['fight','sports']){
+ const s=initial(story);assert(!canMinus(s));
+ const strainId=story==='fight'?'boundary':'practice';
+ const before=s.stress;s.energy=5;assert(play(s,strainId));assert(s.stress>before);s.feedback=null;
+ // ストレス5以上: ふだんのカードは出せず、マイナスカードだけ出せる
+ s.stress=5;assert(!canPlay(s,available(s)[0]));assert(canMinus(s));
+ const st=s.stress,lk=s.liked;
+ assert(minus(s,'vent'));assert.equal(s.stress,st-2);assert.equal(s.liked,Math.max(0,lk-1));
+ assert.equal(minus(s,'vent'),null); // 場面ごと1回
+ s.stress=5;assert(minus(s,'cry'));assert.equal(s.stress,3);assert(!canMinus(s)); // 回復したら手札が戻る
+ s.stress=5;assert(minus(s,'skip'));assert.equal(s.stress,4);
+ s.stress=5;const l2=s.liked;assert(minus(s,'lash'));assert.equal(s.stress,2);assert.equal(s.liked,Math.max(0,l2-1));
+ s.stress=5;assert(minus(s,'fail'));assert.equal(s.stress,2);
+ s.minused=[];s.stress=5;assert.equal(minus(s,'bogus'),null);assert(!minus(s,'sleep'));// 存在しないカード
+ // 場面が変われば同じマイナスカードも再び使える
+ s.feedback=null;s.stress=0;s.energy=5;const id0=available(s)[0];assert(play(s,id0));assert(advance(s));s.stress=5;assert(minus(s,'vent'));
+}
+assert.equal(minus(initial('fight'),'vent'),null); // ストレス5未満では出せない
 let explored=0;function walk(s,depth){assert(s.stress>=0&&s.stress<=6);assert(s.energy>=0&&s.energy<=5);assert(s.progress>=0&&s.progress<=3);assert(s.liked>=0&&s.liked<=5);if(depth===0||s.finished)return;const ids=available(s).filter(id=>canPlay(s,id));for(const id of ids){const t=structuredClone(s);assert(play(t,id));assert(t.feedback.text.length>0,id);advance(t);explored++;walk(t,depth-1)}}for(const story of ['fight','sports']){for(const goal of [0,1,2]){const s=initial(story);setGoal(s,goal);if(story==='fight'){for(const k of ['haru','mina','why','respect','feeling'])explore(s,k)}else{explore(s,'noise');explore(s,'teacher');explore(s,'friend')}s.energy=5;walk(s,3)}}console.log('PASS: branches, context-sensitive outcomes, safety, resource bounds; explored',explored,'moves');

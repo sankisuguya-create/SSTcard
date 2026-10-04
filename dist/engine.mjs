@@ -291,6 +291,16 @@ export const cards={
  together:{title:'友達と一緒に練習する',kind:'talk',label:'一緒に練習',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'友達と、一緒に練習する。',hint:'一人より、一緒が楽しい',icon:'people'},
  bigTry:{title:'思いっきり跳ぶ',kind:'support',label:'思いっきり',cost:2,atk:3,attr:'ath',up:'ath',desc:'練習の成果で、思いっきり跳ぶ。',hint:'準備があれば、思いっきりいける',icon:'bolt'},
  clearJump:{title:'跳び越せた！',kind:'support',label:'跳び越えた',cost:2,atk:3,attr:'ath',up:'ath',desc:'跳び箱を、跳び越えた。',hint:'跳べた経験は、自信になる',icon:'flag'},
+ withdraw:{title:'黙って引き下がる',kind:'think',label:'引き下がる',cost:0,strain:1,atk:0,desc:'反対されて、黙って引き下がる。',hint:'楽になるが、提案は通らない',icon:'clock'},
+ insist:{title:'そのまま言い張る',kind:'think',label:'言い張る',cost:0,strain:1,atk:1,attr:'soc',desc:'理由を聞かず、同じ提案を言い張る。',hint:'言い張るだけでは、通らない',icon:'bolt'},
+ listenMore:{title:'反対の理由を聞く',kind:'talk',label:'理由を聞く',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'反対した子に、理由を聞く。',hint:'反対の理由が、直しのヒント',icon:'ear'},
+ hearAll:{title:'みんなの意見を聞く',kind:'talk',label:'意見を聞く',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'賛成・反対、みんなの意見を聞く。',hint:'聞くほど、案が固まる',icon:'people'},
+ soften:{title:'やわらかい言い方で言う',kind:'think',label:'言い方を変える',cost:1,atk:2,attr:'soc',up:'soc',desc:'「こうしたい」ではなく「こう思う」と言う。',hint:'言い方で、伝わり方が変わる',icon:'message'},
+ askReason:{title:'反対した子に聞く',kind:'talk',label:'反対に聞く',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'反対した子に、直接聞く。',hint:'理由を聞けば、次が見える',icon:'search'},
+ nextPlan:{title:'別案を考える',kind:'think',label:'別案',cost:1,atk:2,attr:'study',up:'study',desc:'みんなの意見をいれて、別案を考える。',hint:'別案は、両方のいいとこ取り',icon:'puzzle'},
+ allyUp:{title:'仲間と練る',kind:'talk',label:'仲間と練る',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'賛成してくれた子と、案を練る。',hint:'仲間と練ると、強くなる',icon:'hand'},
+ rePropose:{title:'直した案を提案する',kind:'support',label:'再提案',cost:2,atk:3,attr:'soc',up:'soc',desc:'みんなの意見をいれた案を、提案する。',hint:'聞いた分だけ、通りやすい',icon:'flag'},
+ acceptNo:{title:'多数決を受け入れる',kind:'support',label:'受け入れる',cost:1,atk:2,attr:'soc',up:'soc',desc:'通らなくても、次につなげる。',hint:'受け入れるのも、作戦',icon:'check'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -1759,6 +1769,55 @@ vault:{
  },
  progress(s){const f=s.flags;return f.cleared||f.bigJumped?3:f.practiced||f.tipped?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.cleared?'跳び越えられた。練習の成果が出た。':f.practiced||f.tipped?'練習のしかたが見つかった。コツ・低く・手つき・真似・一緒に。':'跳べないまま。練習のしかたは見つけられる。'}
+},
+
+// STORY 32 ── 学級会で提案が通らない ──
+meeting:{
+ title:'学級会で提案が通らない',nav:'提案が通らない',num:'32',attrs:['soc','study'],
+ goals:['提案を通したい','反対されたときの自分を知りたい','聞いて練る力をつけたい'],
+ chapters:['学級会','休み時間','次の学級会'],locations:['教室','教室・休み','教室'],
+ base:['withdraw','insist','anger','ignore','boast'],start:{mind:5,energy:4},
+ monsters:[{name:'ハンタイの影',hp:4,power:1,turns:4,look:'反対の手が、いっぱい上がった。'},{name:'フカイの影',hp:4,power:1,turns:4,look:'通らなかった理由が、ふかく考えさせられる。'},{name:'ゴネルの影',hp:6,power:2,turns:5,look:'もう一度言うのが、少しこわい。'}],
+ talk:[['askOppose','反対した子に聞く','なぜ反対したか、聞く。'],['teacherMeet','先生に相談','提案の通し方を、先生に聞く。'],['allyTalk','賛成した子と話す','賛成してくれた子と、案を練る。']],
+ think:[['whyNo','なぜ反対された？','反対された理由を、考える。'],['notMine','独りよがりだった？','自分だけの提案だったかも。'],['badWords','言い方が強すぎた？','「こうすべき」と、言いすぎたかも。']],
+ reasonKeys:['whyNo','notMine','badWords'],
+ stageGrants:[['askReason'],['rePropose']],
+ onExplore(s,key){
+  const out={text:'',card:null};
+  if(key==='askOppose'){s.flags.askedO=true;relation(s,'反対した子に聞いたら、「みんなが困るから」と言われた。');out.text='「それだと、掃除の時間がなくなるよ」\n反対の理由が、分かった。';out.card='askReason'}
+  if(key==='teacherMeet'){s.flags.toldM=true;note(s,'先生に「みんなの意見を聞いてから」と言われた。');out.text='先生「まず、みんなの意見を聞こう」\n通し方の、ヒントをもらった。';out.card='hearAll'}
+  if(key==='allyTalk'){s.flags.allyed=true;relation(s,'賛成した子と話したら、案が固まった。');out.text='「私も、そう思う」\n仲間と、案を練った。';out.card='allyUp'}
+  if(key==='whyNo'){s.reason='whyNo';note(s,'反対の理由を聞けば、案の直し方が分かる。');out.text='「なぜ、反対された？」\n理由を聞けば、直し方が分かる。';out.card='listenMore'}
+  if(key==='notMine'){s.reason='notMine';note(s,'みんなの意見を聞いてから、案を練ればいい。');out.text='「独りよがりだったかも」\nみんなの意見を、聞こう。';out.card='hearAll'}
+  if(key==='badWords'){s.reason='badWords';note(s,'言い方を変えれば、伝わり方が変わる。');out.text='「言い方が、強すぎたかも」\nやわらかい言い方で、言おう。';out.card='soften'}
+  return out;
+ },
+ onPlay(s,id){
+  const f=s.flags;let text='',meaning='';
+  if(id==='withdraw'){f.withdrew=true;s.mind-=1;relation(s,'黙って引き下がったら、楽になった。でも、提案は通らなかった。');text='黙って、引き下がった。\n楽になった。でも、提案は通らない。';meaning='引き下がると楽だが、提案は消える。';grant(s,'listenMore')}
+  if(id==='insist'){f.insisted=true;s.mind-=1;s.rep-=1;relation(s,'言い張ったら、余計に反対された。');text='そのまま、言い張った。\n余計に、反対された。';meaning='言い張るだけでは、通らない。';grant(s,'listenMore')}
+  if(id==='listenMore'){f.heard=true;note(s,'反対の理由を聞いたら、案の直し方が見えた。');text='「掃除の時間が、なくなるから」\n直し方が、見えた。';meaning='反対の理由が、直しのヒント。'}
+  if(id==='hearAll'){f.heardAll=true;f.heard=true;relation(s,'みんなの意見を聞いたら、いい案が固まった。');text='いろいろな意見を、聞いた。\n「こうすれば、いいかも」';meaning='聞くほど、案が固まる。'}
+  if(id==='soften'){f.softened=true;note(s,'やわらかい言い方にしたら、聞いてもらえた。');text='「こう思うんだけど、どうかな」\n聞いてもらえた。';meaning='言い方で、伝わり方が変わる。'}
+  if(id==='askReason'){f.askedO=true;f.heard=true;relation(s,'反対した子に聞いたら、理由が分かった。');text='「だって、時間が足りないよ」\n理由が、分かった。';meaning='理由を聞けば、次が見える。'}
+  if(id==='nextPlan'){f.planned=true;note(s,'みんなの意見をいれた別案ができた。');text='「掃除の時間を残して、こうしよう」\n別案が、できた。';meaning='別案は、両方のいいとこ取り。'}
+  if(id==='allyUp'){f.allyed=true;f.heard=true;relation(s,'仲間と練ったら、案が強くなった。');text='「ここを、こう直そう」\n仲間と、案を練った。';meaning='仲間と練ると、強くなる。'}
+  if(id==='rePropose'){if(f.heard||f.planned||f.softened||f.allyed){f.reProposed=true;note(s,'直した案を提案したら、賛成が増えた。');text='「みんなの意見をいれて、こうしました」\n賛成の手が、増えた。';meaning='聞いた分だけ、通りやすい。'}else{s.mind-=1;text='直した案を出そうとしたが、まだ聞けていなかった。';meaning='まず聞いて練ってから、提案すると良い。';grant(s,'listenMore')}}
+  if(id==='acceptNo'){if(f.heard||f.softened){f.accepted=true;note(s,'通らなくても、次につなげると決めた。');text='「今回は通らなかったけど、次がある」\n受け入れて、前を向いた。';meaning='受け入れるのも、作戦。'}else{s.mind-=1;text='受け入れようとしたが、納得できなかった。';meaning='まず理由を聞いてから、受け入れると良い。';grant(s,'listenMore')}}
+  return {text,meaning};
+ },
+ watch(s){
+  if(s.stage===0)return '反対の手が、いっぱい上がった。';
+  if(s.stage===1)return '通らなかった理由を、考える時間。';
+  return '次の学級会。もう一度、言えるかな。';
+ },
+ scene(s){const f=s.flags;
+  if(s.stage===0)return {narrative:'学級会。自分の提案に、反対が集まった。',speaker:'学級委員',quote:'反対の人が多いです。他にありますか',look:'反対の手が、いっぱい上がっている。',self:'え、通らないの…？',hint:'提案が通らないとき、何がつらい？'};
+  if(s.stage===1)return {narrative:'休み時間。通らなかった理由を、考える。',speaker:'友達',quote:f.heard?'理由、聞けた？':'なんで反対されたんだろ',look:'黒板に、自分の提案の字が残っている。',self:s.reason==='whyNo'?'なぜ反対されたのかな。':s.reason==='notMine'?'独りよがりだったかも。':s.reason==='badWords'?'言い方が強すぎたかも。':'次は、どうしよう。',hint:'聞く・別案・言い方・仲間、方法はある。'};
+  return {narrative:'次の学級会。もう一度、提案できる。',speaker:'学級委員',quote:f.reProposed?'いい案ですね':'他に意見はありますか',look:'みんなが、こちらを見ている。',self:f.heard?'聞いた分だけ、固まった。':'まだ、固まらない。',hint:'聞いて練った案で、提案しよう。'};
+ },
+ progress(s){const f=s.flags;return f.reProposed||f.accepted?3:f.heard||f.planned||f.softened?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.reProposed?'聞いて練った案で、提案できた。':f.heard||f.planned?'反対の理由が分かった。聞く・別案・言い方がある。':'提案が通らないまま。次の一手は見つけられる。'}
 }
 };
 

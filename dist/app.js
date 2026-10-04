@@ -252,7 +252,7 @@ function resultView(){
   :r.outcome==='partial'?{h:'いくつかのモンスターを退いた。',sub:'全部は届かなかったけれど、試した経験は残っている。'}
   :r.outcome==='exit'?{h:'安全な場所へ移って、ふりかえった。',sub:'助けを求めることも、大事な作戦の一つ。'}
   :{h:'モンスターはまだ残っている。',sub:'時間切れだったけれど、見つけた作戦は次に使える。'};
- const tierClass=r.outcome==='fail'?'fail':r.mindAvg>=4&&r.buffTotal>=3&&r.rep>=3?'great':'good';
+ const tierClass=r.outcome==='fail'?'fail':!r.warns.length&&r.praises.length>=3?'great':r.warns.length>r.praises.length?'warn':'good';
  const axes=[
   ['精神力の平均',r.mindAvg.toFixed(1)+' / 6',Math.min(1,r.mindAvg/6),r.lowMind?'いつもしんどかった…':''],
   ['手札の数',r.handSize+' 枚',Math.min(1,r.handSize/12),''],
@@ -264,12 +264,11 @@ function resultView(){
  <div class="result-grid">
   <section class="result-box wide praise-box"><h3>${icon('spark')}今回のふりかえりで、あなたが積み上げたもの</h3>
    <div class="tier-banner ${tierClass}">${icon('flag')} 総合: ${r.tier}</div>
-   ${r.lowMind?`<div class="notice fail-notice">いつもしんどかった… 気持ちがいっぱいになる前に、休む・出す・相談する作戦を早めに使おう。</div>`:''}
-   <div class="axis-list">${axes.map(([l,v,ratio,note])=>`<div class="axis"><span class="axis-label">${l}</span><span class="axis-bar"><i style="width:${Math.round(ratio*100)}%"></i></span><strong>${v}</strong>${note?`<span class="axis-note">${note}</span>`:''}</div>`).join('')}</div>
-   <div class="praise-grid">
-    <div class="praise-item"><div class="praise-num">${icon('people')} ${r.rep}<span>/ 5</span></div><div class="praise-label">評判</div><p class="smalltext">${r.rep>=4?'たくさんの人と、心がつながった。':r.rep>=3?'話したり相談したりするたびに、あなたの味方が増えた。':r.rep<=0?'評判が下がると、つらい出来事が増える。向社会的な行動で戻そう。':'まわりの目は、行動で変えられる。'}</p></div>
-    <div class="praise-item"><div class="praise-num">${icon('cards')} ${r.discovered}<span>個</span></div><div class="praise-label">見つけた作戦</div><p class="smalltext">${r.discovered>=4?'考え方がぐっと広がった。いろいろな作戦を試せる。':r.discovered>=2?'新しい考え方が増えた。':'知っている作戦を、大切に使った。'}</p></div>
+   <div class="resilience">
+    ${r.praises.length?`<div class="res-col good"><div class="res-label">できたこと・育ったもの</div>${r.praises.map(p=>`<div class="res-item">${icon('check')} ${p}</div>`).join('')}</div>`:''}
+    ${r.warns.length?`<div class="res-col warn"><div class="res-label">あと一歩・気をつけたいこと</div>${r.warns.map(w=>`<div class="res-item">${icon('pause')} ${w}</div>`).join('')}</div>`:''}
    </div>
+   <div class="axis-list">${axes.map(([l,v,ratio,note])=>`<div class="axis"><span class="axis-label">${l}</span><span class="axis-bar"><i style="width:${Math.round(ratio*100)}%"></i></span><strong>${v}</strong>${note?`<span class="axis-note">${note}</span>`:''}</div>`).join('')}</div>
   </section>
   <section class="result-box"><h3>${icon('flag')}状況はどうなった？</h3><p>${r.situation}</p><div class="changes"><span class="change">${r.goal}：${r.progress===3?'進められた':r.progress?'少し進んだ':'これから考えられる'}</span></div></section>
   <section class="result-box"><h3>${icon('heart')}自分の状態</h3><p>精神力 ${r.mind} / ${r.mindMax}　・　行動力 ${r.energy} / 5　・　評判 ${r.rep} / 5</p><p>かしこさ ${r.stats.study>=0?'+':''}${r.stats.study}　・　運動能力 ${r.stats.ath>=0?'+':''}${r.stats.ath}　・　社交性 ${r.stats.soc>=0?'+':''}${r.stats.soc}</p>${Object.keys(r.traumas||{}).length?`<p class="trauma-note">ついてしまった苦手意識: ${Object.keys(r.traumas).map(k=>statMeta[k].attr).join('・')}（関連する手札の気持ち消費が+1。次の物語にも持ち越される）</p>`:''}<p class="smalltext muted">次の物語を選ぶと、評判・苦手意識・精神力の上限を引き継ぐ。気持ちが残っていても、伝えられたことや見つけたことは残ります。</p></section>

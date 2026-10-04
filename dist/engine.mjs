@@ -2468,7 +2468,7 @@ function addLoss(s){
 }
 export function initial(story='fight',carry=null){
  const d=stories[story];
- const s={story,stage:0,mind:d.start.mind,energy:d.start.energy,rep:carry?carry.rep:1,mindMax:carry?carry.mindMax:6,stats:{study:0,ath:0,soc:0},monsterHp:d.monsters[0].hp,turns:0,slain:[],escaped:[],dead:false,mindLog:[],bonus:null,bolster:0,losses:{},traumas:carry?{...carry.traumas}:{},clarity:0,subPending:pickSubs(d.subs??3),subNow:null,eventIdx:0,map:false,progress:0,goal:0,hand:[...d.base],discovered:[],used:[],flags:{},clues:[],relations:[],growth:[],log:[],explored:[],rested:[],observed:[],passed:[],minused:[],transcript:[],feedback:null,finished:false,reason:null,reflection:null};
+ const s={story,stage:0,mind:d.start.mind,energy:d.start.energy,rep:carry?carry.rep:1,repStart:carry?carry.rep:1,mindMax:carry?carry.mindMax:6,mindMaxStart:carry?carry.mindMax:6,stats:{study:0,ath:0,soc:0},monsterHp:d.monsters[0].hp,turns:0,slain:[],escaped:[],dead:false,mindLog:[],bonus:null,bolster:0,losses:{},traumas:carry?{...carry.traumas}:{},clarity:0,subPending:pickSubs(d.subs??3),subNow:null,eventIdx:0,map:false,progress:0,goal:0,hand:[...d.base],discovered:[],used:[],flags:{},clues:[],relations:[],growth:[],log:[],explored:[],rested:[],observed:[],passed:[],minused:[],transcript:[],feedback:null,finished:false,reason:null,reflection:null};
  // イベント列: メイン(大)の間にサブ(小)を均等配分 → マップの⚪︎になる
  s.eventNodes=[];let qi=0;
  for(let i=0;i<d.monsters.length;i++){s.eventNodes.push({type:'main',idx:i});
@@ -2617,6 +2617,21 @@ export function summary(s){const f=s.flags;let situation;if(s.dead)situation='�
  const mindAvg=s.mindLog.length?s.mindLog.reduce((a,b)=>a+b,0)/s.mindLog.length:s.mind;
  const buffTotal=s.stats.study+s.stats.ath+s.stats.soc;
  const handSize=s.hand.length;
- const score=Math.round(mindAvg)+handSize+s.rep+buffTotal+s.slain.length*3+(s.dead?-4:0);
- const tier=score>=20?'よく乗りこなした！':score>=14?'だいぶ乗りこなせた':score>=8?'まずまず乗りこなせた':'しんどい回だった';
- return {situation,relation:s.relations.length?s.relations.join(' '):'今回は、相手との新しい約束や気持ちの共有はまだない。あとから話すこともできる。',growth:s.growth,goal:def(s).goals[s.goal],progress:s.progress,mind:s.mind,energy:s.energy,rep:s.rep,stats:{...s.stats},discovered:s.discovered.length,outcome,slain:s.slain.length,escaped:s.escaped.length,mindAvg,buffTotal,handSize,tier,lowMind:mindAvg<=3,traumas:{...s.traumas},mindMax:s.mindMax}}
+ // レジリエンス評価: 立ち向かう・耐える・失敗しても成長する戦略を高く、苦手意識・評判低下・成長不足・高ストレスを低く
+ const repStart=s.repStart??1,repDelta=s.rep-repStart,traumaKeys=Object.keys(s.traumas||{});
+ const grew=buffTotal>0||s.discovered.length>=2||repDelta>0||s.mindMax>(s.mindMaxStart??6);
+ const praises=[],warns=[];
+ if(s.slain.length)praises.push(`立ち向かって、${s.slain.length}つの課題をやっつけた`);
+ if(s.escaped.length)praises.push(`時間のかかる課題を、${s.escaped.length}つ耐えてやり過ごした`);
+ if(s.escaped.length&&grew)praises.push('失敗しても、力や評判が育った');
+ if(repDelta>0)praises.push(`評判が ${repStart} → ${s.rep} に上がった`);
+ if(s.discovered.length>=2)praises.push(`新しい作戦を ${s.discovered.length} 個見つけて、考え方が広がった`);
+ if(s.mindMax>(s.mindMaxStart??6))praises.push('強い課題を退けて、心の器が広がった');
+ if(traumaKeys.length)warns.push(`苦手意識がついてしまった（${traumaKeys.map(k=>statMeta[k].attr).join('・')}）`);
+ if(repDelta<0)warns.push(`評判が ${repStart} → ${s.rep} に下がった${repDelta<=-2?'（大きく下がった）':''}`);
+ if(buffTotal<=0&&s.discovered.length<2)warns.push('力の成長が少なかった');
+ if(mindAvg<=3)warns.push('気持ちがいっぱいになる場面が多かった（いつもしんどかった）');
+ const score=s.slain.length*3+s.escaped.length+Math.max(0,repDelta)+buffTotal+Math.min(2,s.discovered.length)+(mindAvg>=4?1:0)
+  -traumaKeys.length*2+Math.min(0,repDelta)-(buffTotal<=0&&s.discovered.length<2?1:0)-(mindAvg<=3?1:0)-(s.dead?4:0);
+ const tier=score>=10?'すばらしい作戦だった！':score>=6?'よくがんばった':score>=2?'もう少し作戦を広げよう':'次は立て直しから';
+ return {situation,relation:s.relations.length?s.relations.join(' '):'今回は、相手との新しい約束や気持ちの共有はまだない。あとから話すこともできる。',growth:s.growth,goal:def(s).goals[s.goal],progress:s.progress,mind:s.mind,energy:s.energy,rep:s.rep,repStart,repDelta,stats:{...s.stats},discovered:s.discovered.length,outcome,slain:s.slain.length,escaped:s.escaped.length,mindAvg,buffTotal,handSize,tier,praises,warns,grew,lowMind:mindAvg<=3,traumas:{...s.traumas},mindMax:s.mindMax}}

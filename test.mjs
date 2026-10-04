@@ -482,3 +482,29 @@ console.log('clarity checks OK');
  const s2=initial('craft');s2.stage=2;assert(!monster(s2).weak&&monster(s2).power===2);
 }
 console.log('resolve-weaken checks OK');
+
+// レジリエンス評価（高評価: 立ち向かい成功/耐え抜き/失敗→成長, 低評価: 苦手意識/評判低下/成長不足/高ストレス）
+{
+ const s=initial('fight');s.slain=[0,1,2];s.escaped=[];s.rep=4;s.discovered=['a','b','c'];s.stats.study=2;s.mindLog=[5,5,6];
+ const r=summary(s);
+ assert(r.praises.some(p=>p.includes('立ち向かって')),'slain praise');
+ assert(r.praises.some(p=>p.includes('評判')),'rep up praise');
+ assert(!r.warns.length,'no warns');
+ assert.equal(r.tier,'すばらしい作戦だった！');
+}
+{
+ const s=initial('fight');s.slain=[];s.escaped=[0,1];s.rep=3;s.stats.soc=1;s.discovered=['a'];s.mindLog=[4,4,4];
+ const r=summary(s);
+ assert(r.praises.some(p=>p.includes('耐えてやり過ごした')),'endure praise');
+ assert(r.praises.some(p=>p.includes('失敗しても')),'fail-and-grow praise');
+ assert.equal(r.tier,'よくがんばった');
+}
+{
+ const s=initial('fight');s.slain=[];s.escaped=[];s.finished=true;s.rep=0;s.discovered=[];s.traumas={soc:true};s.mindLog=[2,2,1];s.stats={study:-1,ath:0,soc:0};
+ const r=summary(s);
+ assert(r.warns.some(w=>w.includes('苦手意識')),'trauma warn');
+ assert(r.warns.some(w=>w.includes('評判')),'rep down warn');
+ assert(r.warns.some(w=>w.includes('成長')),'no growth warn');
+ assert(r.warns.some(w=>w.includes('しんどかった')),'stress warn');
+ assert.equal(r.tier,'次は立て直しから');
+}

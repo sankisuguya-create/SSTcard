@@ -436,3 +436,18 @@ rt{font-size:.55em}
  .param-col .res-strip,.param-col .stats-strip{flex-direction:row;flex-wrap:wrap;align-items:center}
  .buff-col{order:2}.res-col{order:3}
 }
+
+/* レジリエンス評価（ふりかえり） */
+.resilience{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
+.resilience .res-col{border-radius:12px;padding:12px 14px}
+.res-col.good{background:#edf7ec;border:1px solid #bfe0bd}
+.res-col.warn{background:#fdf4e7;border:1px solid #f0d9ae}
+.res-col .res-label{font-size:12px;font-weight:800;color:var(--sub);margin-bottom:8px}
+.res-col.good .res-label{color:#3d7a40}
+.res-col.warn .res-label{color:#9a6518}
+.res-item{display:flex;align-items:flex-start;gap:8px;font-size:14px;font-weight:600;padding:4px 0}
+.res-item svg{width:16px;height:16px;flex:none;margin-top:2px;stroke-width:2.4;fill:none}
+.res-col.good .res-item svg{stroke:#3d7a40}
+.res-col.warn .res-item svg{stroke:#9a6518}
+.tier-banner.warn{background:#fdf4e7;color:#9a6518}
+@media (max-width:620px){.resilience{grid-template-columns:1fr}}

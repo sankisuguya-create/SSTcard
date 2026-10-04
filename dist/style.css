@@ -384,3 +384,6 @@ rt{font-size:.55em}
 .arena.faded .arena-img{opacity:.26;filter:saturate(.6)}
 .arena.size-huge.faded .arena-img{opacity:.3}
 .badge.seen{background:#e8f0da;color:#4a6a2a;border:1px solid #9ab87a}
+
+/* モンスターの行動（反撃・威圧・様子見・奪取）をフィードバック内で明示 */
+.monster-act{margin:8px 0 0;padding:8px 12px;background:#f4eee4;border-left:3px solid #b08a5a;border-radius:6px;font-size:13px;font-weight:600;color:#6a5233}

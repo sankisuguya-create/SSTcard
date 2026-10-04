@@ -205,10 +205,11 @@ function feedbackView(){
   changeChip('評判',f.before.rep,f.after.rep),
   ...['study','ath','soc'].map(k=>changeChip(statMeta[k].label,f.before.stats[k],f.after.stats[k])),
   f.dmg>0?`<span class="change hit">${icon('skull')} ${f.monster}に ${f.dmg} ダメージ</span>`:'',
-  f.mdmg>0?`<span class="change down">${f.counter?'反撃+まわりの目':'反撃'} 精神力 -${f.mdmg}</span>`:''
+  f.mdmg>0?`<span class="change down">モンスター 精神力 -${f.mdmg}</span>`:'',
+  f.stolen?`<span class="change down">「${cards[f.stolen].title}」を使いにくくされた</span>`:''
  ].filter(Boolean).join('');
  const extra=f.killed?`<div class="notice clear-notice">${icon('skull')} 「${f.monster}」を退いた！ 次の場面へ進める。</div>`:f.escaped?`<div class="notice">手がつきた。モンスターはいったん立ち去った… 次の場面でまた現れる。</div>`:'';
- return `<section class="feedback" tabindex="-1" id="feedback"><div class="eyebrow">YOUR CHOICE ／ 試してみた</div><h2>「${f.title}」を使った</h2><p>${f.text}</p><div class="changes">${chips}</div>${s.dead?`<div class="notice fail-notice">${icon('skull')} 精神力が0になった。気持ちがあふれて、その場から逃げ出してしまった…</div>`:''}${extra}<div class="notice">${icon('spark')} ${f.meaning}</div><div class="feedback-actions"><button data-action="undo" ${s.dead?'disabled':''}>別の作戦を試す</button>${!s.dead&&!f.killed&&!f.escaped&&s.turns<monster(s).turns?`<button data-action="continue">もう一枚、作戦を試す（のこり ${monster(s).turns-s.turns}手）</button>`:''}<button class="primary" data-action="next">${s.dead?'ふりかえりへ':f.killed||f.escaped?'次の場面へ':state.stage===2?'今回をふりかえる':'次の場面へ'}</button></div></section>`;
+ return `<section class="feedback" tabindex="-1" id="feedback"><div class="eyebrow">YOUR CHOICE ／ 試してみた</div><h2>「${f.title}」を使った</h2><p>${f.text}</p>${f.counter?`<p class="monster-act">${f.counter}</p>`:''}<div class="changes">${chips}</div>${s.dead?`<div class="notice fail-notice">${icon('skull')} 精神力が0になった。気持ちがあふれて、その場から逃げ出してしまった…</div>`:''}${extra}<div class="notice">${icon('spark')} ${f.meaning}</div><div class="feedback-actions"><button data-action="undo" ${s.dead?'disabled':''}>別の作戦を試す</button>${!s.dead&&!f.killed&&!f.escaped&&s.turns<monster(s).turns?`<button data-action="continue">もう一枚、作戦を試す（のこり ${monster(s).turns-s.turns}手）</button>`:''}<button class="primary" data-action="next">${s.dead?'ふりかえりへ':f.killed||f.escaped?'次の場面へ':state.stage===2?'今回をふりかえる':'次の場面へ'}</button></div></section>`;
 }
 
 function resultView(){

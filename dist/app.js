@@ -1,4 +1,4 @@
-import {cards,minusCards,stories,statMeta,initial,monster,monsterSize,cardAtk,explore,available,canPlay,canExplore,canMinus,play,advance,continueTurn,safety,free,minus,scene,summary,setGoal} from './engine.mjs';
+import {cards,minusCards,stories,statMeta,initial,monster,monsterSize,monsterFaded,monsterPower,cardAtk,explore,available,canPlay,canExplore,canMinus,play,advance,continueTurn,safety,free,minus,scene,summary,setGoal} from './engine.mjs';
 const app=document.querySelector('#app'),dialog=document.querySelector('#dialog');
 let state=initial(),history=[],previous=null,focusReturn=null;
 const sessions={};
@@ -77,12 +77,13 @@ function render(){
 // 中央上部: パズドラ風。大きなモンスターイラスト＋ダイアログ（タップで履歴）
 function arena(s){
  const m=monster(s),left=m.turns-s.turns,img=`img/mon-${s.story}-${s.stage}.webp`;
- const size=monsterSize(m);
- return `<div class="arena ${s.monsterHp<=0?'beaten':''} size-${size}" aria-label="立ちはだかるもの ${m.name}、体力 ${Math.max(0,s.monsterHp)} / ${m.hp}">
+ const size=monsterSize(m),faded=monsterFaded(s),ep=monsterPower(s,m)+(s.bolster||0)+(s.rep<=0?1:0),bg=stories[s.story].bg||'class';
+ return `<div class="arena ${s.monsterHp<=0?'beaten':''} size-${size} ${faded?'faded':''}" aria-label="立ちはだかるもの ${m.name}、体力 ${Math.max(0,s.monsterHp)} / ${m.hp}">
+  <img class="arena-bg" src="img/bg-${bg}.webp" alt="" aria-hidden="true" onerror="this.style.display='none'">
   <img class="arena-img" src="${img}" alt="${m.name}のイラスト" width="640" height="427" onerror="this.style.display='none'">
   <div class="arena-top">
    <div class="arena-name">${m.name}<span class="arena-look">${m.look}</span></div>
-   <div class="arena-meta"><span class="badge">のこり ${left} 手</span>${m.power?`<span class="badge monster-power">反撃 精神力-${m.power+(s.bolster||0)}${s.rep<=0?'+1':''}${s.bolster?' (前の課題が影響)':''}</span>`:''}</div>
+   <div class="arena-meta"><span class="badge">のこり ${left} 手</span>${faded?'<span class="badge seen">正体が見えて弱くなった</span>':''}${m.power?`<span class="badge monster-power">反撃 精神力-${ep}${s.bolster?' (前の課題が影響)':''}</span>`:''}</div>
   </div>
   <div class="arena-bottom"><div class="hp-bar" role="meter" aria-label="モンスターの体力 ${Math.max(0,s.monsterHp)} / ${m.hp}"><span class="delta-slot"></span>${Array.from({length:m.hp},(_,i)=>`<i class="${i<s.monsterHp?'on':''}"></i>`).join('')}</div></div>
  </div>`;

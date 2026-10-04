@@ -435,7 +435,7 @@ const def=s=>stories[s.story];
 //       progress(s)->0..3 situation(s)->text
 export const stories={
 fight:{
- title:'ふたりで作ったはずなのに',nav:'クラスの子とのケンカ',num:'01',attrs:['soc'],
+ bg:'class', title:'ふたりで作ったはずなのに',nav:'クラスの子とのケンカ',num:'01',attrs:['soc'],
  goals:['大切なことを伝えたい','一緒に作品を直したい','まず言い争いを止めたい'],
  chapters:['図工の時間','どう伝えよう？','翌日の班活動'],locations:['教室・図工の時間','教室・片づけの前','教室・次の日'],
  base:['boundary','ask','distance','anger','boast'],start:{mind:3,energy:3},
@@ -481,7 +481,7 @@ fight:{
  situation(s){const f=s.flags;return f.fixed?'飾りを残し、ふたも閉まる形に直せた。':f.later?'話す時間を決めて、いったん保留にした。':'気持ちや事情を確かめた。作品を直す方法は、まだ相談できる。'}
 },
 sports:{
- title:'あと一週間、どうしよう',nav:'苦手な運動会',num:'02',attrs:['ath','soc'],
+ bg:'field', title:'あと一週間、どうしよう',nav:'苦手な運動会',num:'02',attrs:['ath','soc'],
  goals:['不安の理由を知りたい','自分に合う参加をしたい','困ったときに備えたい'],
  chapters:['運動会まで7日','練習の日','運動会当日'],locations:['教室・帰りの会','校庭・練習の日','校庭・運動会当日'],
  base:['practice','schedule','sora','anger','ignore'],start:{mind:4,energy:4},
@@ -534,7 +534,7 @@ sports:{
  situation(s){const f=s.flags;return f.restPlan?'合図を使って休憩した。その後の参加は、休んでから相談する。':f.adjusted?'先生と、自分に合う参加のしかたを相談した。':f.participated?'自分で決めた範囲で参加した。順位とは別に、試した経験が残った。':'準備の作戦を試した。当日の過ごし方は、これからも選べる。'}
 },
 test:{
- title:'あと少しで、算数テスト',nav:'苦手な教科のテスト',num:'03',attrs:['study'],
+ bg:'paper', title:'あと少しで、算数テスト',nav:'苦手な教科のテスト',num:'03',attrs:['study'],
  goals:['不安の理由を知りたい','自分に合う準備をしたい','落ち着いて取り組みたい'],
  chapters:['テスト一週間前','勉強の日','テスト当日'],locations:['教室・帰りの会','教室・放課後','教室・テスト当日'],
  base:['range','breathe','easyFirst','ignore','boast'],start:{mind:5,energy:4},
@@ -581,7 +581,7 @@ test:{
  situation(s){const f=s.flags;return f.tested?'自分の作戦でテストに取り組んだ。結果はこれからだが、準備の経験は残った。':f.buddy||f.plan||f.reviewed?'自分に合う準備をして、当日を迎えられた。':'不安を確かめた。準備の方法は、まだこれから考えられる。'}
 },
 join:{
- title:'はいってもいい？',nav:'友達の遊びに入りたい',num:'04',attrs:['soc'],
+ bg:'yard', title:'はいってもいい？',nav:'友達の遊びに入りたい',num:'04',attrs:['soc'],
  goals:['仲間に入って遊びたい','自分に合う過ごし方を見つけたい','こわさと向き合いたい'],
  chapters:['休み時間','輪の近くまで','次の休み時間'],locations:['校庭・休み時間','校庭・遊びの輪のそば','校庭・昼休み'],
  base:['peekJoin','watchPlay','soloPlay','anger','ignore'],start:{mind:4,energy:4},
@@ -632,7 +632,7 @@ join:{
  situation(s){const f=s.flags;return f.joined?'輪の中に入って、みんなと遊べた。':f.invited?'自分から誘って、新しい輪をつくった。':f.soloOK||f.ownGame?'一人で遊ぶ時間を、自分で選んだ。入りたくなったら、いつでも聞ける。':'入り方のヒントを見つけた。次の休み時間もまた来る。'}
 },
 blame:{
- title:'おれがやったんじゃない',nav:'していないことを疑われた',num:'05',attrs:['soc','study'],
+ bg:'class', title:'おれがやったんじゃない',nav:'していないことを疑われた',num:'05',attrs:['soc','study'],
  goals:['疑いを晴らしたい','自分なりの伝え方を見つけたい','関係をこれからも続けたい'],
  chapters:['昼休み','休み時間','帰りの会の前'],locations:['教室・昼休み','廊下・休み時間','教室・帰りの会の前'],
  base:['deny','askBack','stay','anger','ignore'],start:{mind:4,energy:4},
@@ -680,7 +680,7 @@ blame:{
  situation(s){const f=s.flags;return f.cleared?'誤解がほどけて、ケンとも話せるようになった。':f.witnessed||f.mediatedB?'証言や大人の助けがそろった。あとは伝えるだけ。':f.knowWhy?'疑う理由が分かった。説明のしかたを考えられる。':'疑いはまだ残っている。事実や証言を集める方法がある。'}
 },
 hurt:{
- title:'トゲのことば',nav:'友達に嫌なことを言われた',num:'06',attrs:['soc'],
+ bg:'yard', title:'トゲのことば',nav:'友達に嫌なことを言われた',num:'06',attrs:['soc'],
  goals:['「やめて」と伝えたい','自分の気持ちを守りたい','明日も関係を続けたい'],
  chapters:['休み時間','放課後','次の日の朝'],locations:['教室・休み時間','廊下・放課後','教室・朝'],
  base:['sayStop','laughOff','walkAway','anger','boast'],start:{mind:4,energy:4},
@@ -728,7 +728,7 @@ hurt:{
  situation(s){const f=s.flags;return f.mended?'「嫌だった」が伝わって、関係が戻った。':f.saidStop?'「やめて」と伝えられた。あとは関係の形を決めるだけ。':f.left||f.cared?'自分の気持ちを守れた。伝えるのは、また今度でもいい。':'トゲはまだ残っている。守る・流す・伝える、やり方がある。'}
 },
 alone:{
- title:'今日は一人でいたい',nav:'一人でいたいのに誘われた',num:'07',attrs:['soc'],
+ bg:'yard', title:'今日は一人でいたい',nav:'一人でいたいのに誘われた',num:'07',attrs:['soc'],
  goals:['気持ちよく断りたい','一人の時間も大切にしたい','関係を壊さず断りたい'],
  chapters:['休み時間','帰り道','次の日'],locations:['教室・休み時間','帰り道','教室・朝'],
  base:['politeNo','joinIn','vagueNo','runOff','anger','ignore'],start:{mind:4,energy:4},
@@ -779,7 +779,7 @@ alone:{
  situation(s){const f=s.flags;return f.declined&&f.promised?'気持ちよく断りつつ、次の約束も作れた。':f.declined?'「今日は一人がいい」を伝えられた。関係は続いている。':f.aloneWays?'一人の時間を、自分で選んだ。':'誘いはまだ残っている。断り方のことばは、練習できる。'}
 },
 lose:{
- title:'負けた！ どうする',nav:'ゲームに負けた',num:'08',attrs:['soc','ath'],
+ bg:'yard', title:'負けた！ どうする',nav:'ゲームに負けた',num:'08',attrs:['soc','ath'],
  goals:['悔しさを乗りこなしたい','相手を認めたい','次につなげたい'],
  chapters:['休み時間のドッジボール','放課後','次の日'],locations:['校庭・ドッジボール','教室・放課後','校庭・朝'],
  base:['rematch','quitGame','sourFace','anger','boast'],start:{mind:4,energy:4},
@@ -827,7 +827,7 @@ lose:{
  situation(s){const f=s.flags;return f.clearedL?'悔しさを乗りこなし、次の約束ができた。':f.learned||f.reframed?'負けを、次の作戦に変えられた。':f.cooled||f.soured?'悔しさは、少し扱いやすくなった。':'悔しさは残っている。冷ます・変える・伝える方法がある。'}
 },
 change:{
- title:'急に、予定が変わった',nav:'予定が変わった',num:'09',attrs:['soc','study'],
+ bg:'class', title:'急に、予定が変わった',nav:'予定が変わった',num:'09',attrs:['soc','study'],
  goals:['気持ちを立て直したい','事情を納得したい','次の計画を作りたい'],
  chapters:['3時間目の発表','放課後','翌朝'],locations:['教室・3時間目','教室・放課後','教室・朝'],
  base:['complain','sulk','acceptQuick','anger','ignore'],start:{mind:4,energy:4},
@@ -872,7 +872,7 @@ change:{
  situation(s){const f=s.flags;return f.clearedC?'予定の変更を乗りこなし、次の楽しみができた。':f.knowsWhy?'事情が分かって、気持ちが整理できた。':f.acknowledged||f.sulked?'がっかりの気持ちを、認められた。':'予定は変わった。がっかりの扱い方を、練習できる。'}
 },
 picked:{
- title:'手を挙げても、当てられない',nav:'当てられない',num:'10',attrs:['study','soc'],
+ bg:'class', title:'手を挙げても、当てられない',nav:'当てられない',num:'10',attrs:['study','soc'],
  goals:['諦めずに挙げ続けたい','当たらなくても役に立ちたい','次につなげたい'],
  chapters:['国語の音読発表','放課後','次の日の授業'],locations:['教室・国語','教室・放課後','教室・朝'],
  base:['keepHand','stopHand','bigSigh','anger','ignore'],start:{mind:4,energy:4},
@@ -917,7 +917,7 @@ picked:{
  situation(s){const f=s.flags;return f.clearedP?'当たらなくても、自分の参加の仕方が見つかった。':f.knowsRule?'選ばれ方が分かって、少し納得できた。':f.listened?'聞くことでも、学べると分かった。':'当たるかは決められない。でも、次のためにできることがある。'}
 },
 item:{
- title:'物を勝手に使われた',nav:'貸し借り',num:'11',attrs:['soc','study'],
+ bg:'class', title:'物を勝手に使われた',nav:'貸し借り',num:'11',attrs:['soc','study'],
  goals:['自分のものを守りたい','ケンと仲良くしたい','ルールを作りたい'],
  chapters:['図工の時間','休み時間','放課後'],locations:['教室・図工','教室・休み時間','教室・放課後'],
  base:['takeBack','keepQuiet','watchUse','anger','ignore'],start:{mind:4,energy:4},
@@ -962,7 +962,7 @@ item:{
  situation(s){const f=s.flags;return f.clearedI?'貸し借りのルールができて、安心して使える。':f.said||f.talked?'自分の気持ちを伝えられた。':'嫌な気持ちは残っている。伝える方法を練習できる。'}
 },
 scold:{
- title:'納得いかない注意',nav:'注意された',num:'12',attrs:['soc','study'],
+ bg:'class', title:'納得いかない注意',nav:'注意された',num:'12',attrs:['soc','study'],
  goals:['自分の言い分を伝えたい','先生と分かり合いたい','気持ちを整理したい'],
  chapters:['廊下で注意された','休み時間','放課後'],locations:['廊下','教室・休み時間','教室・放課後'],
  base:['backTalk','saySorry','goQuiet','anger','ignore'],start:{mind:4,energy:4},
@@ -1007,7 +1007,7 @@ scold:{
  situation(s){const f=s.flags;return f.clearedS?'先生と分かり合えた。言い分は届け方で変わる。':f.heard||f.explained?'相手の見え方が分かって、気持ちが整理できた。':f.vented?'気持ちを吐き出せて、少し楽になった。':'納得いかなさは残っている。伝える方法を練習できる。'}
 },
 forgot:{
- title:'宿題を忘れた朝',nav:'忘れ物',num:'13',attrs:['study','soc'],
+ bg:'class', title:'宿題を忘れた朝',nav:'忘れ物',num:'13',attrs:['study','soc'],
  goals:['正直に対処したい','次から忘れないようにしたい','信頼を保ちたい'],
  chapters:['朝の提出時間','休み時間','帰りの会'],locations:['教室・朝','教室・休み時間','教室・帰りの会'],
  base:['hideForgot','excuse','panicF','anger','ignore'],start:{mind:4,energy:4},
@@ -1052,7 +1052,7 @@ forgot:{
  situation(s){const f=s.flags;return f.clearedF?'忘れ物を正直に対処し、次の作戦も見つかった。':f.honest||f.proactive?'正直に言えた。信頼が戻っている。':f.shared?'助けてもらって、今日を切り抜けた。':'忘れたままだと、ずっと気になる。正直に言うのが一番楽。'}
 },
 friend:{
- title:'落ち込んでいる友達',nav:'友達を助ける',num:'14',attrs:['soc'],
+ bg:'class', title:'落ち込んでいる友達',nav:'友達を助ける',num:'14',attrs:['soc'],
  goals:['ケイを気にかけたい','無理に踏み込みすぎたくない','自分も保ちたい'],
  chapters:['休み時間の校庭','昼休み','放課後'],locations:['校庭・休み時間','教室・昼休み','下校途中'],
  base:['cheerUp','watchFar','playNear','anger','ignore'],start:{mind:4,energy:4},
@@ -1097,7 +1097,7 @@ friend:{
  situation(s){const f=s.flags;return f.clearedG?'ケイの気持ちに寄り添えた。助け方はいろいろある。':f.askedG||f.sat?'気にかけが、少し届いている。':f.balancedG?'自分を保ちつつ、考えられている。':'ケイは一人でいる。気にかけ方は、練習できる。'}
 },
 confused:{
- title:'授業で分からない',nav:'分からない',num:'15',attrs:['study','soc'],
+ bg:'paper', title:'授業で分からない',nav:'分からない',num:'15',attrs:['study','soc'],
  goals:['分からないを解決したい','質問する勇気を持ちたい','自分のやり方を見つけたい'],
  chapters:['算数の時間','休み時間','放課後'],locations:['教室・算数','教室・休み時間','教室・放課後'],
  base:['stare','copyDown','guess','anger','ignore'],start:{mind:4,energy:4},
@@ -1142,7 +1142,7 @@ confused:{
  situation(s){const f=s.flags;return f.clearedQ?'分からないを解決できた。質問の形はいろいろある。':f.located||f.shown?'壁の場所が見つかって、聞きやすくなった。':'分からないまま残っている。聞き方は練習できる。'}
 },
 noise:{
- title:'まわりがうるさい',nav:'音がつらい',num:'16',attrs:['soc','study'],
+ bg:'class', title:'まわりがうるさい',nav:'音がつらい',num:'16',attrs:['soc','study'],
  goals:['音に負けず集中したい','自分を守る方法を見つけたい','上手に伝えたい'],
  chapters:['帰りの会','休み時間','放課後'],locations:['教室・帰りの会','教室・休み時間','教室・放課後'],
  base:['plugEars','shout','distractTry','anger','ignore'],start:{mind:4,energy:4},
@@ -1187,7 +1187,7 @@ noise:{
  situation(s){const f=s.flags;return f.clearedN?'音への対処法が見つかった。守る・移る・伝えるがある。':f.plugged||f.breathed?'少し楽になった。根本の対処もできる。':'音がつらいまま残っている。対処法は練習できる。'}
 },
 role:{
- title:'選ばれなかった役割',nav:'役割と順番',num:'17',attrs:['ath','soc'],
+ bg:'field', title:'選ばれなかった役割',nav:'役割と順番',num:'17',attrs:['ath','soc'],
  goals:['悔しさを整理したい','自分の役割を見つけたい','次につなげたい'],
  chapters:['発表の時間','練習の日','運動会前日'],locations:['教室・発表','校庭・練習','教室・前日'],
  base:['sulkR','dragFeet','skipCheer','anger','ignore'],start:{mind:4,energy:4},
@@ -1232,7 +1232,7 @@ role:{
  situation(s){const f=s.flags;return f.clearedR?'役割を受け止められた。認める・聞く・考えるがある。':f.felt||f.roleValued?'気持ちを整理できた。':'納得いかないまま残っている。向き合い方は練習できる。'}
 },
 cheat:{
- title:'ズルを見てしまった',nav:'ズルを見た',num:'18',attrs:['soc','study'],
+ bg:'yard', title:'ズルを見てしまった',nav:'ズルを見た',num:'18',attrs:['soc','study'],
  goals:['公平さを保ちたい','友達を傷つけたくない','自分の気持ちを整理したい'],
  chapters:['ゲームの時間','休み時間','放課後'],locations:['教室・ゲーム','教室・休み時間','教室・放課後'],
  base:['pretendNot','glare','spread','anger','ignore'],start:{mind:4,energy:4},
@@ -1277,7 +1277,7 @@ cheat:{
  situation(s){const f=s.flags;return f.clearedX?'公平さを保てた。伝え方・言い方・ルールがある。':f.askedX||f.saidHim?'伝える方法が見つかった。':'見たことが残っている。伝え方は練習できる。'}
 },
 newClass:{
- title:'クラス替えで知らない子ばかり',nav:'クラス替え',num:'19',attrs:['soc'],
+ bg:'class', title:'クラス替えで知らない子ばかり',nav:'クラス替え',num:'19',attrs:['soc'],
  goals:['新しいクラスになじみたい','自分から話せるようになりたい','安心できる場所を見つけたい'],
  chapters:['初日の朝','休み時間','一週間後'],locations:['新しい教室','教室・休み時間','教室・一週間後'],
  base:['corner','wait','fakeSmile','anger','ignore'],start:{mind:4,energy:4},
@@ -1322,7 +1322,7 @@ newClass:{
  situation(s){const f=s.flags;return f.clearedNC?'新しいクラスになじんできた。あいさつ・一言・共通点がある。':f.saidHi||f.spoke?'少し話せるようになった。':'知らないまま残っている。一歩の出し方は練習できる。'}
 },
 present:{
- title:'みんなの前で読む番',nav:'前で読む',num:'20',attrs:['soc','study'],
+ bg:'class', title:'みんなの前で読む番',nav:'前で読む',num:'20',attrs:['soc','study'],
  goals:['最後まで読み切りたい','怖さと上手に向き合いたい','次も読めるようになりたい'],
  chapters:['音読の前','自分の番','翌日'],locations:['教室・国語','教室・自分の番','教室・翌日'],
  base:['mumble','smallVoice','skipTurn','anger','ignore'],start:{mind:4,energy:4},
@@ -1367,7 +1367,7 @@ present:{
  situation(s){const f=s.flags;return f.clearedV?'読み切れた。準備・一人に向ける・ゆっくりがある。':f.practiced||f.slowed?'読む方法が見つかった。':'怖さが残っている。読み方は練習できる。'}
 },
 spill:{
- title:'牛乳をこぼして皆に見られた',nav:'ミスの恥ずかしさ',num:'21',attrs:['soc','ath'],
+ bg:'lunch', title:'牛乳をこぼして皆に見られた',nav:'ミスの恥ずかしさ',num:'21',attrs:['soc','ath'],
  goals:['ミスを片づけたい','恥ずかしさと向き合いたい','みんなの前で立て直したい'],
  chapters:['給食の時間','片づけ','午後の授業'],locations:['教室・給食','床・片づけ','教室・午後'],
  base:['freeze','hideMistake','wipeHalf','anger','ignore'],start:{mind:4,energy:4},
@@ -1412,7 +1412,7 @@ spill:{
  situation(s){const f=s.flags;return f.clearedM?'ミスを片づけられた。謝る・拭く・頼む・笑うがある。':f.wipedGood||f.mopped?'片づけ方が分かった。':'ミスが残っている。対処法は練習できる。'}
 },
 pair:{
- title:'2人組で余った',nav:'ペアで余る',num:'22',attrs:['soc'],
+ bg:'class', title:'2人組で余った',nav:'ペアで余る',num:'22',attrs:['soc'],
  goals:['実験に参加したい','余っても落ち着いていたい','次につなげたい'],
  chapters:['理科の時間前','ペア作り','実験中'],locations:['教室・理科','教室・ペア作り','教室・実験'],
  base:['standStill','followCrowd','pretendBusy','anger','ignore'],start:{mind:4,energy:4},
@@ -1457,7 +1457,7 @@ pair:{
  situation(s){const f=s.flags;return f.clearedP?'組めた。誘う・入る・一人・先生に言うがある。':f.askedP||f.pairedUp?'組み方が見つかった。':'まだ余っている。入り方は練習できる。'}
 },
 promise:{
- title:'約束を忘れられていた',nav:'約束破り',num:'23',attrs:['soc'],
+ bg:'yard', title:'約束を忘れられていた',nav:'約束破り',num:'23',attrs:['soc'],
  goals:['気持ちを伝えたい','関係を切らずに済ませたい','次につなげたい'],
  chapters:['約束の日','翌日会う','その後'],locations:['公園・待ち合わせ','学校・翌日','公園・その後'],
  base:['waitLong','accuse','actNormal','anger','ignore'],start:{mind:4,energy:4},
@@ -1502,7 +1502,7 @@ promise:{
  situation(s){const f=s.flags;return f.clearedPr?'約束の件を、整理できた。聞く・伝える・一人・新約束がある。':f.toldFeel||f.heard?'気持ちを届けられた。':'まだ、モヤモヤが残っている。伝え方は練習できる。'}
 },
 duty:{
- title:'係当番をサボられた',nav:'当番サボられ',num:'24',attrs:['soc','ath'],
+ bg:'class', title:'係当番をサボられた',nav:'当番サボられ',num:'24',attrs:['soc','ath'],
  goals:['当番の仕事を終わらせたい','一人で抱え込まない','次から公平にしたい'],
  chapters:['放課後・当番','仕事中','翌日'],locations:['教室・放課後','教室・仕事','教室・翌日'],
  base:['doAll','slackOff','complainD','anger','ignore'],start:{mind:4,energy:4},
@@ -1547,7 +1547,7 @@ duty:{
  situation(s){const f=s.flags;return f.clearedD?'当番を回せた。声かけ・分担・相談・自分の分だけがある。':f.didOwn||f.split?'回し方が見つかった。':'一人で抱えている。回し方は練習できる。'}
 },
 rumor:{
- title:'自分のうわさが流れている',nav:'うわさ',num:'25',attrs:['soc'],
+ bg:'class', title:'自分のうわさが流れている',nav:'うわさ',num:'25',attrs:['soc'],
  goals:['うわさを止めたい','落ち着いていたい','関係を守りたい'],
  chapters:['休み時間','うわさの広がり','翌日'],locations:['教室・休み時間','廊下・うわさ','教室・翌日'],
  base:['denyR','snapBack','pretendR','anger','ignore'],start:{mind:4,energy:4},
@@ -1592,7 +1592,7 @@ rumor:{
  situation(s){const f=s.flags;return f.clearedRu?'うわさを乗り越えた。聞く・流す・静かに言う・先生がある。':f.found||f.stoppedT?'対処法が見つかった。':'うわさが残っている。対処法は練習できる。'}
 },
 lunch:{
- title:'苦手なものが給食に出た',nav:'苦手な給食',num:'26',attrs:['soc'],
+ bg:'lunch', title:'苦手なものが給食に出た',nav:'苦手な給食',num:'26',attrs:['soc'],
  goals:['少しでも食べたい','無理せず向き合いたい','食べるのが楽しみになる日にしたい'],
  chapters:['給食の時間','食べる時間','午後'],locations:['教室・給食','机・食事','教室・午後'],
  base:['forceAll','hideFood','swapFood','anger','ignore'],start:{mind:5,energy:4},
@@ -1637,7 +1637,7 @@ lunch:{
  situation(s){const f=s.flags;return f.clearedL?'向き合えた。一口・少なめ・混ぜる・相談がある。':f.bit||f.mixed?'工夫が見つかった。':'まだ残っている。向き合い方は練習できる。'}
 },
 lie:{
- title:'友達に嘘をついてしまった',nav:'嘘をついた',num:'27',attrs:['soc'],
+ bg:'class', title:'友達に嘘をついてしまった',nav:'嘘をついた',num:'27',attrs:['soc'],
  goals:['正直に言いたい','関係を戻したい','もう嘘をつかない自分になりたい'],
  chapters:['放課後','翌日','翌日・放課後'],locations:['教室・放課後','教室・朝','教室・放課後'],
  base:['biggerLie','blameOther','shutMouth','anger','ignore'],start:{mind:5,energy:4},
@@ -1681,7 +1681,7 @@ lie:{
  situation(s){const f=s.flags;return f.clearedLie?'正直になれた。認める・書く・言い直す・約束がある。':f.admitted||f.wrote?'認め方が見つかった。':'嘘が残っている。正直さは練習できる。'}
 },
 relay:{
- title:'リレー選手に選ばれた',nav:'リレー選手',num:'28',attrs:['ath','soc'],
+ bg:'field', title:'リレー選手に選ばれた',nav:'リレー選手',num:'28',attrs:['ath','soc'],
  goals:['本番を走り切りたい','チームに貢献したい','走るのが楽しみになりたい'],
  chapters:['放課後の発表','練習日','運動会当日'],locations:['教室・発表','グラウンド・練習','グラウンド・本番'],
  base:['pushHard','dreadRun','skipPractice','anger','ignore'],start:{mind:4,energy:4},
@@ -1726,7 +1726,7 @@ relay:{
  situation(s){const f=s.flags;return f.clearedRe?'準備ができた。短く・話す・深呼吸・コツがある。':f.shorted||f.breathed?'練習方法が見つかった。':'不安が残っている。準備は練習できる。'}
 },
 sickDay:{
- title:'休んで授業に遅れた',nav:'授業の遅れ',num:'29',attrs:['study','soc'],
+ bg:'paper', title:'休んで授業に遅れた',nav:'授業の遅れ',num:'29',attrs:['study','soc'],
  goals:['授業に追いつきたい','分からないところを減らしたい','休んでも大丈夫な自分になりたい'],
  chapters:['登校日','休み時間','放課後'],locations:['教室・朝','教室・休み','教室・放課後'],
  base:['panicLate','hideLate','copyOnly','anger','ignore'],start:{mind:5,energy:4},
@@ -1773,7 +1773,7 @@ sickDay:{
 
 // STORY 30 ── 図工の作品が壊れた ──
 craft:{
- title:'図工の作品が壊れた',nav:'図工の作品',num:'30',attrs:['study'],
+ bg:'class', title:'図工の作品が壊れた',nav:'図工の作品',num:'30',attrs:['study'],
  goals:['作品を完成させたい','うまくいかないときの自分を知りたい','失敗しても、やり直せる自分になりたい'],
  chapters:['図工の時間','放課後','次の図工'],locations:['図工室','家・帰り道','図工室'],
  base:['coverUp','throwAway','anger','ignore','boast'],start:{mind:5,energy:4},
@@ -1823,7 +1823,7 @@ craft:{
 
 // STORY 31 ── 跳び箱が跳べない ──
 vault:{
- title:'跳び箱が跳べない',nav:'跳び箱',num:'31',attrs:['ath'],
+ bg:'gym', title:'跳び箱が跳べない',nav:'跳び箱',num:'31',attrs:['ath'],
  goals:['跳び箱を跳びたい','跳べないときの自分を知りたい','練習のしかたを見つけたい'],
  chapters:['体育の時間','休み時間','次の体育'],locations:['体育館','体育館・休み','体育館'],
  base:['skipTurn','crash','anger','ignore','boast'],start:{mind:5,energy:4},
@@ -1871,7 +1871,7 @@ vault:{
 
 // STORY 32 ── 学級会で提案が通らない ──
 meeting:{
- title:'学級会で提案が通らない',nav:'提案が通らない',num:'32',attrs:['soc','study'],
+ bg:'class', title:'学級会で提案が通らない',nav:'提案が通らない',num:'32',attrs:['soc','study'],
  goals:['提案を通したい','反対されたときの自分を知りたい','聞いて練る力をつけたい'],
  chapters:['学級会','休み時間','次の学級会'],locations:['教室','教室・休み','教室'],
  base:['withdraw','insist','anger','ignore','boast'],start:{mind:5,energy:4},
@@ -1920,7 +1920,7 @@ meeting:{
 
 // STORY 33 ── 縦割り班で言うことを聞かない ──
 leader:{
- title:'縦割り班で言うことを聞かない',nav:'縦割り班',num:'33',attrs:['soc'],
+ bg:'class', title:'縦割り班で言うことを聞かない',nav:'縦割り班',num:'33',attrs:['soc'],
  goals:['班をまとめたい','年下の子との関わり方を知りたい','自分らしいリーダーになりたい'],
  chapters:['なわとび会・前日','休み時間','なわとび会・当日'],locations:['運動場','運動場・休み','運動場'],
  base:['scoldKid','ignoreKid','anger','ignore','boast'],start:{mind:5,energy:4},
@@ -1969,7 +1969,7 @@ leader:{
 
 // STORY 34 ── 朝、起きられなくて遅刻しそう ──
 late:{
- title:'朝、起きられなくて遅刻しそう',nav:'朝の遅刻',num:'34',attrs:['study','soc'],
+ bg:'hall', title:'朝、起きられなくて遅刻しそう',nav:'朝の遅刻',num:'34',attrs:['study','soc'],
  goals:['遅れずに登校したい','遅れたときの自分を知りたい','朝の習慣を変えたい'],
  chapters:['朝・寝坊','登校中','教室'],locations:['家','登校中','教室'],
  base:['rush','makeExcuse','anger','ignore','boast'],start:{mind:5,energy:4},
@@ -2018,7 +2018,7 @@ late:{
 
 // STORY 35 ── 図書室の本をなくした ──
 lostBook:{
- title:'図書室の本をなくした',nav:'本をなくした',num:'35',attrs:['soc','study'],
+ bg:'lib', title:'図書室の本をなくした',nav:'本をなくした',num:'35',attrs:['soc','study'],
  goals:['本を見つけたい','なくしたときの自分を知りたい','責任のとり方を知りたい'],
  chapters:['図書の時間','家','翌日'],locations:['図書室','家','図書室'],
  base:['hideBook','fakeReturn','anger','ignore','boast'],start:{mind:5,energy:4},
@@ -2068,7 +2068,7 @@ lostBook:{
 
 // STORY 36 ── 席替えで仲良しと離れる ──
 seat:{
- title:'席替えで仲良しと離れる',nav:'席替え',num:'36',attrs:['soc'],
+ bg:'class', title:'席替えで仲良しと離れる',nav:'席替え',num:'36',attrs:['soc'],
  goals:['新しい席になじみたい','離れても仲良しでいたい','さびしい気持ちの自分を知りたい'],
  chapters:['席替え','休み時間','数日後'],locations:['教室','教室・休み','教室'],
  base:['sulkSeat','ignoreNew','anger','ignore','boast'],start:{mind:5,energy:4},
@@ -2116,7 +2116,7 @@ seat:{
 
 // STORY 37 ── 参観日、見られると手が挙がらない ──
 visit:{
- title:'参観日、見られると手が挙がらない',nav:'参観日',num:'37',attrs:['soc','study'],
+ bg:'class', title:'参観日、見られると手が挙がらない',nav:'参観日',num:'37',attrs:['soc','study'],
  goals:['手を挙げたい','いつもどおりでいたい','緊張する自分を知りたい'],
  chapters:['参観日の朝','授業中','放課後'],locations:['教室','教室','家'],
  base:['overTry','hideBack','anger','ignore','boast'],start:{mind:5,energy:4},
@@ -2164,7 +2164,7 @@ visit:{
 
 // STORY 38 ── けんかしてしまった友達と仲直りしたい ──
 makeUp:{
- title:'けんかしてしまった友達と仲直りしたい',nav:'仲直りしたい',num:'38',attrs:['soc'],
+ bg:'yard', title:'けんかしてしまった友達と仲直りしたい',nav:'仲直りしたい',num:'38',attrs:['soc'],
  goals:['仲直りしたい','自分から動けるようになりたい','けんかした自分を知りたい'],
  chapters:['けんかの翌朝','休み時間','放課後'],locations:['教室','教室','校庭'],
  base:['waitSorry','stubbornFace','anger','ignore','boast'],start:{mind:4,energy:4},
@@ -2213,7 +2213,7 @@ makeUp:{
 
 // STORY 39 ── 友達に秘密をバラされた ──
 secret:{
- title:'友達に秘密をバラされた',nav:'秘密をバラされた',num:'39',attrs:['soc','study'],
+ bg:'class', title:'友達に秘密をバラされた',nav:'秘密をバラされた',num:'39',attrs:['soc','study'],
  goals:['気持ちを整理したい','相手とどう向き合うか決めたい','次の守り方を考えたい'],
  chapters:['秘密が広まった','友達と向き合う','これから'],locations:['教室','教室','帰り道'],
  base:['confront','spreadBack','anger','ignore','boast'],start:{mind:4,energy:4},
@@ -2262,7 +2262,7 @@ secret:{
 
 // STORY 40 ── いじめを見てしまった ──
 byWatch:{
- title:'いじめを見てしまった',nav:'いじめを見た',num:'40',attrs:['soc','study'],
+ bg:'yard', title:'いじめを見てしまった',nav:'いじめを見た',num:'40',attrs:['soc','study'],
  goals:['気持ちを整理したい','自分にできることを見つけたい','次も関わっていきたい'],
  chapters:['目撃した','自分の行動を決める','これから'],locations:['校庭の隅','教室','下駄箱'],
  base:['lookCalm','joinLaugh','anger','ignore','boast'],start:{mind:4,energy:4},
@@ -2311,7 +2311,7 @@ byWatch:{
 
 // STORY 41 ── テストの点数を比べられた ──
 score:{
- title:'テストの点数を比べられた',nav:'点数を比べられた',num:'41',attrs:['study','soc'],
+ bg:'paper', title:'テストの点数を比べられた',nav:'点数を比べられた',num:'41',attrs:['study','soc'],
  goals:['点数をどう受け止めるか決めたい','相手とどう関わるか決めたい','次の目標を立てたい'],
  chapters:['点数が返ってきた','受け止める','次の目標'],locations:['教室','教室','帰り道'],
  base:['hideScore','bragBack','anger','ignore','boast'],start:{mind:4,energy:4},
@@ -2360,7 +2360,7 @@ score:{
 
 // STORY 42 ── みんなの話についていけない ──
 trend:{
- title:'みんなの話についていけない',nav:'話についていけない',num:'42',attrs:['soc','study'],
+ bg:'yard', title:'みんなの話についていけない',nav:'話についていけない',num:'42',attrs:['soc','study'],
  goals:['ついていけない気持ちを整理したい','入り方を見つけたい','自分らしい関わり方を決めたい'],
  chapters:['みんなが盛り上がっている','入り方を探す','自分らしく'],locations:['教室','休み時間','帰り道'],
  base:['pretendKnow','buyFit','anger','ignore','boast'],start:{mind:4,energy:4},
@@ -2448,12 +2448,14 @@ function resolveSub(s,ev){
 }
 // モンスターの毎ターン行動: attack=反撃 / stress=威圧で精神力-1 / steal=手札を1枚使いにくくする / wait=様子見
 const MONSTER_ACT={
- attack(s,m){const d=m.power+(s.bolster||0)+(s.rep<=0?1:0);if(d>0)s.mind=s.mind>0?Math.max(1,s.mind-d):s.mind-d;return{mdmg:d,counter:s.rep<=0?'まわりの目が冷たい。孤立が不安を増やし、余計に傷ついた。':s.bolster?'未解決の課題が重なり、反撃が強くなった。':'モンスターが反撃してきた。'}},
+ attack(s,m){const d=Math.max(0,m.power-Math.min(2,s.clarity||0))+(s.bolster||0)+(s.rep<=0?1:0);if(d>0)s.mind=s.mind>0?Math.max(1,s.mind-d):s.mind-d;return{mdmg:d,counter:monsterFaded(s)&&m.power>0&&d<=0?'正体が見えて、怖さが薄らいだ。':s.rep<=0?'まわりの目が冷たい。孤立が不安を増やし、余計に傷ついた。':s.bolster?'未解決の課題が重なり、反撃が強くなった。':'モンスターが反撃してきた。'}},
  stress(s){s.mind=s.mind>0?Math.max(1,s.mind-1):s.mind-1;return{mdmg:1,counter:'モンスターの威圧が、気持ちにのしかかった。'}},
  steal(s){const pool=available(s).filter(id=>!cards[id].dark);if(!pool.length)return{counter:'モンスターは狙いを定めている。'};const rid=pool[Math.floor(Math.random()*pool.length)];s.used.push(rid);return{counter:'モンスターが「'+cards[rid].title+'」を使いにくくした。',stolen:rid}},
  wait(){return{counter:'モンスターは様子をうかがっている。'}}
 };
-function monsterAct(s,m){const acts=m.acts||((m.power>=2||m.hp>=6)?['attack','stress','attack','steal','attack']:(m.hp>=4?['attack','attack','wait','stress']:['attack','wait','attack']));return MONSTER_ACT[acts[(s.turns-1)%acts.length]](s,m)}
+export function monsterFaded(s){return (s.clarity||0)>=2}
+export function monsterPower(s,m){return Math.max(0,m.power-Math.min(2,s.clarity||0))}
+function monsterAct(s,m){const acts=m.acts||((m.power>=2||m.hp>=6)?['attack','stress','attack','steal','attack']:(m.hp>=4?['attack','attack','wait','stress']:['attack','wait','attack']));let a=acts[(s.turns-1)%acts.length];if(monsterFaded(s)&&a!=='attack')a='wait';return MONSTER_ACT[a](s,m)}
 export function monsterSize(m){return (m.power>=2||m.hp>=6)?'huge':(m.hp<=3&&m.power<=1)?'small':'normal'}
 // 苦手意識: 同じ属性の課題に負け続けると、その属性の手札の消費気持ちが+1される（ストーリー間で持ち越す）
 function addLoss(s){
@@ -2463,7 +2465,7 @@ function addLoss(s){
 }
 export function initial(story='fight',carry=null){
  const d=stories[story];
- const s={story,stage:0,mind:d.start.mind,energy:d.start.energy,rep:carry?carry.rep:1,mindMax:carry?carry.mindMax:6,stats:{study:0,ath:0,soc:0},monsterHp:d.monsters[0].hp,turns:0,slain:[],escaped:[],dead:false,mindLog:[],bonus:null,bolster:0,losses:{},traumas:carry?{...carry.traumas}:{},subQueue:pickSubs(d.subs??3),progress:0,goal:0,hand:[...d.base],discovered:[],used:[],flags:{},clues:[],relations:[],growth:[],log:[],explored:[],rested:[],observed:[],passed:[],minused:[],transcript:[],feedback:null,finished:false,reason:null,reflection:null};
+ const s={story,stage:0,mind:d.start.mind,energy:d.start.energy,rep:carry?carry.rep:1,mindMax:carry?carry.mindMax:6,stats:{study:0,ath:0,soc:0},monsterHp:d.monsters[0].hp,turns:0,slain:[],escaped:[],dead:false,mindLog:[],bonus:null,bolster:0,losses:{},traumas:carry?{...carry.traumas}:{},clarity:0,subQueue:pickSubs(d.subs??3),progress:0,goal:0,hand:[...d.base],discovered:[],used:[],flags:{},clues:[],relations:[],growth:[],log:[],explored:[],rested:[],observed:[],passed:[],minused:[],transcript:[],feedback:null,finished:false,reason:null,reflection:null};
  sayScene(s);return s;
 }
 export function monster(s){return def(s).monsters[s.stage]}
@@ -2520,7 +2522,7 @@ export function advance(s){
  const m0=monster(s);
  if(!failed&&(m0.power>=2||m0.hp>=6)&&s.mindMax<8){s.mindMax++;s.mind=Math.min(s.mindMax,s.mind+1);growth(s,'強い課題を退けて、心の器が広がった（精神力上限+1）。');}
  if(s.stage===def(s).monsters.length-1){s.finished=true;return true}
- s.stage++;s.turns=0;s.monsterHp=monster(s).hp;s.energy=Math.min(5,s.energy+1);
+ s.stage++;s.turns=0;s.clarity=0;s.monsterHp=monster(s).hp;s.energy=Math.min(5,s.energy+1);
  // 逃した課題は次のモンスターを強くする（分岐: 失敗が持ち越される）
  s.bolster=failed?1:0;
  // サブイベント: 場面の合間に共通プールから。パラメータが高いほど良い結果
@@ -2545,7 +2547,7 @@ export function explore(s,key){
  const d=def(s),allKeys=[...d.talk.map(o=>o[0]),...d.think.map(o=>o[0])];
  if(!allKeys.includes(key))return null;
  if(d.reasonKeys.includes(key)&&s.reason)return null;
- s.explored.push(key);
+ s.explored.push(key);s.clarity=Math.min(3,(s.clarity||0)+1);
  if(d.talk.some(o=>o[0]===key))s.rep=Math.min(5,s.rep+1); // 話す・相談する行動は評判が上がる
  const out=d.onExplore(s,key);
  if(out.card)grant(s,out.card);
@@ -2570,7 +2572,7 @@ export function minus(s,id){
 }
 export function free(s,type){
  if(s.finished||s.feedback)return false;
- if(type==='observe'){if(s.observed.includes(s.stage))return false;s.observed.push(s.stage);const w=def(s).watch(s);note(s,w);s.rep=Math.min(5,s.rep+1);growth(s,'相手の様子や、その場の手がかりを確かめた。');say(s,'free',w);trackMind(s);return {title:'様子を確かめた',text:w,meaning:'じっくり見るだけでも、分かることが増える。'}}
+ if(type==='observe'){if(s.observed.includes(s.stage))return false;s.observed.push(s.stage);s.clarity=Math.min(3,(s.clarity||0)+1);const w=def(s).watch(s);note(s,w);s.rep=Math.min(5,s.rep+1);growth(s,'相手の様子や、その場の手がかりを確かめた。');say(s,'free',w);trackMind(s);return {title:'様子を確かめた',text:w,meaning:'じっくり見るだけでも、分かることが増える。'}}
  if(type==='pass'){if(s.passed.includes(s.stage))return false;s.passed.push(s.stage);s.energy=Math.min(5,s.energy+1);const t='すぐには動かず、その場をやり過ごした。\n何も変わらなかったが、少し余力が戻った。';s.log.push({stage:s.stage,title:'何もしない',text:t,meaning:'何もしないことも、選べる作戦の一つ。'});growth(s,'何もしないで、様子を見る時間をつくった。');say(s,'free',t);trackMind(s);return {title:'何もしない',text:t,meaning:'何もしないことも、選べる作戦の一つ。'}}
  return false;
 }

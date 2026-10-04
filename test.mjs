@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {initial,explore,play,advance,continueTurn,safety,available,canPlay,canExplore,canMinus,free,minus,setGoal,summary,monster,cardAtk,stories} from './dist/engine.mjs';
+import {initial,explore,play,advance,continueTurn,safety,available,canPlay,canExplore,canMinus,free,minus,setGoal,summary,monster,cardAtk,stories,monsterFaded,monsterPower} from './dist/engine.mjs';
 // 乱数は決定的に（ランダムイベントはUI装飾。発動有無を別途検証）
 const origRandom=Math.random;Math.random=()=>0.99; // おまけイベントは原則offで探索
 
@@ -40,7 +40,7 @@ let it2=initial('item');explore(it2,'kenB');assert(available(it2).includes('lend
 let it3=initial('item');explore(it3,'hard');assert(available(it3).includes('clearNo'));it3.energy=5;const i3m=it3.mind;play(it3,'clearNo');assert(it3.mind<i3m);assert(available(it3).includes('sayMine')); // 素地なしの断りは通らない
 // scold: いきなり反論は言い争い。聞く→説明で誤解がほどける
 let scc=initial('scold');assert.equal(scc.mind,4);explore(scc,'notMe');assert(available(scc).includes('explain'));assert.equal(explore(scc,'tooHard'),null);scc.energy=5;const sm=scc.mind;play(scc,'backTalk');assert(scc.mind<sm);assert(!scc.flags.clearedS);scc.feedback=null;scc.mind=5;play(scc,'explain');assert(scc.flags.clearedS);
-let scc2=initial('scold');explore(scc2,'friendS');scc2.energy=5;play(scc2,'vent');assert(scc2.flags.vented);assert.equal(scc2.mind,4); // +1からカウンター-1
+let scc2=initial('scold');explore(scc2,'friendS');scc2.energy=5;play(scc2,'vent');assert(scc2.flags.vented);assert.equal(scc2.mind,5); // 探索で鮮明度+1→反撃0。heal+1のみ
 let scc3=initial('scold');explore(scc3,'scared');assert(available(scc3).includes('smallSay'));scc3.energy=5;play(scc3,'smallSay');assert(scc3.flags.clearedS); // 小さく言っても届く
 // forgot: 言い訳だけでは信頼が残らない。正直・先に言う・習慣化で対処
 let fg=initial('forgot');assert.equal(fg.mind,4);explore(fg,'lateForgot');assert(available(fg).includes('tellTruth'));assert.equal(explore(fg,'fear'),null);fg.energy=5;const fm=fg.mind;play(fg,'excuse');assert(fg.mind<fm);assert(available(fg).includes('tellTruth'));fg.feedback=null;fg.mind=5;play(fg,'tellTruth');assert(fg.flags.clearedF);
@@ -410,3 +410,21 @@ console.log('new-spec checks OK: sub-events, trauma, monster acts, mindMax, carr
  assert(bad.length===0,'implausible cards: '+bad.join(','));
  console.log('plausibility lint OK:',Object.keys(cards).length,'cards');
 }
+
+// ── 鮮明度: 調べるほど課題の正体が見えて弱くなる ──
+{
+ const s=initial('blame'); // 疑いの目 hp4 power1
+ assert.equal(s.clarity||0,0);assert(!monsterFaded(s));
+ explore(s,'eye');assert.equal(s.clarity,1);assert(!monsterFaded(s));
+ explore(s,'teacherB');assert.equal(s.clarity,2);assert(monsterFaded(s));
+ assert.equal(monsterPower(s,monster(s)),0,'power reduced by clarity');
+ // 反撃0＋威圧/奪取も様子見に弱体化
+ s.feedback=null;s.energy=5;s.mind=6;assert(play(s,'stay')||play(s,available(s)[0]));
+ assert.equal(s.feedback.mdmg,0,'no counter damage when faded');
+ // 場面が変わると鮮明度はリセット
+ s.feedback={};s.monsterHp=0;advance(s);assert.equal(s.clarity,0);assert(!monsterFaded(s));
+}
+{ // きき返す(observe)でも鮮明度が上がる
+ const s=initial('fight');free(s,'observe');assert.equal(s.clarity,1);
+}
+console.log('clarity checks OK');

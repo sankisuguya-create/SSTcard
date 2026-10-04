@@ -433,6 +433,12 @@ Math.random=()=>0.99;
 { // サブイベント抽選: subPendingが満たされる（既定3件,重複なし）
  const s=initial('fight');assert(s.subPending.length===3);assert(new Set(s.subPending.map(e=>e.id)).size===3);
 }
+{ // ストーリー固有のサブイベント（配列定義）がsubPendingに載る
+ for(const [name,n] of [['stumble',2],['sides',2],['deadlock',2]]){
+  const s=initial(name);assert.equal(s.subPending.length,n,`${name} subs not loaded`);
+  assert(s.eventNodes.filter(e=>e.type==='sub').length===n,`${name} sub nodes missing on map`);
+ }
+}
 Math.random=origRandom;
 console.log('new-spec checks OK: sub-events, trauma, monster acts, mindMax, carry');
 

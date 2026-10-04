@@ -399,6 +399,16 @@ export const cards={
  tryJoin:{title:'教えてもらって一緒にやる',kind:'support',label:'一緒にやる',cost:2,atk:3,attr:'soc',up:'soc',desc:'教えてもらって、一緒にやってみる。',hint:'一緒にやると、輪に入れる',icon:'hand'},
  ownWay:{title:'自分のペースで楽しむ',kind:'support',label:'自分のペース',cost:2,atk:3,attr:'study',up:'study',desc:'無理せず、自分のペースで楽しむ。',hint:'自分のペースも、正解',icon:'sun'},
  joinThem:{title:'自分から話題を出す',kind:'support',label:'話題を出す',cost:2,atk:3,attr:'soc',up:'soc',desc:'次は、自分から話題を出す。',hint:'出せるようになると、対等',icon:'flag'},
+ runOut:{title:'途中で逃げ出す',kind:'talk',label:'逃げ出す',cost:0,strain:1,atk:1,attr:'soc',desc:'恥ずかしくて、逃げ出す。',hint:'逃げると、あとが重い',icon:'door'},
+ freezeUp:{title:'固まってしまう',kind:'think',label:'固まる',cost:0,strain:1,atk:1,attr:'soc',desc:'頭が真っ白で、動けない。',hint:'固まると、時間だけたつ',icon:'skull'},
+ keepGoing:{title:'止まらずに最後までやる',kind:'support',label:'最後までやる',cost:1,atk:2,attr:'ath',up:'ath',desc:'間違えても、最後までやりきる。',hint:'やりきると、見方が変わる',icon:'flag'},
+ laughWith:{title:'自分も一緒に笑う',kind:'talk',label:'一緒に笑う',cost:1,atk:2,attr:'soc',up:'soc',desc:'「やっちゃった」と、自分も笑う。',hint:'笑えると、恥ずかしさが軽くなる',icon:'sun'},
+ retryNow:{title:'「もう一度やります」と言う',kind:'talk',label:'やり直す',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'やり直す勇気を、口に出す。',hint:'言えたら、もう一回できる',icon:'check'},
+ practiceNext:{title:'家で練習する',kind:'think',label:'家で練習',cost:1,atk:2,attr:'study',up:'study',desc:'間違えたところを、家で練習する。',hint:'練習は、次の自信になる',icon:'pen'},
+ selfPraise:{title:'「最後までできた」と自分をほめる',kind:'think',label:'自分をほめる',cost:1,atk:2,attr:'soc',up:'soc',desc:'やりきった自分を、ほめる。',hint:'ほめられると、またやれる',icon:'heart'},
+ quietDay:{title:'今日は静かに過ごす',kind:'support',label:'静かに過ごす',cost:1,atk:2,attr:'study',up:'study',desc:'無理せず、今日は静かに過ごす。',hint:'休むのも、立て直し',icon:'sun'},
+ faceAgain:{title:'次はもっと準備する',kind:'support',label:'もっと準備',cost:2,atk:3,attr:'study',up:'study',desc:'次は、もっと準備して臨む。',hint:'準備は、不安を削る',icon:'list'},
+ bounceBack:{title:'切り替えて次に進む',kind:'support',label:'切り替える',cost:2,atk:3,attr:'soc',up:'soc',desc:'失敗は失敗。切り替えて、次に進む。',hint:'切り替えは、強さ',icon:'bolt'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -2405,6 +2415,48 @@ trend:{
  },
  progress(s){const f=s.flags;return f.joinedT||f.ownPace||f.led?3:f.askedT||f.liked||f.listened||f.honest||f.bridged?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.joinedT||f.ownPace?'自分らしい入り方を、見つけた。':f.askedT||f.honest?'聞けた・言えた。次の関わり方を選べる。':'外れたまま。聞く・正直に言う、方法はある。'}
+},
+stumble:{title:'みんなの前で間違えた',nav:'発表で間違えた',num:43,attrs:['soc'],goals:['恥ずかしさを乗りこなしたい','やり直したい','失敗しても立て直したい'],chapters:['かんでしまった','恥ずかしさが残る','明日の自分'],locations:['教室・発表','昼休み','帰り道'],base:['runOut','freezeUp','keepGoing','anger','ignore'],
+ start:{mind:4,energy:3},
+ monsters:[{name:'まわりの笑い声',hp:5,power:1,turns:4,look:'口をあけて、笑っている。'},{name:'恥ずかしさの残り火',hp:5,power:1,turns:4,look:'頬が、まだ熱い。'},{name:'明日の不安',hp:6,power:2,turns:4,look:'明日が、頭に残る。'}],
+ talk:[['ashamedTell','「恥ずかしかった」と話す','恥ずかしさを、正直に話す。'],['laughAlong','自分も一緒に笑う','「やっちゃった」と笑う。'],['askAfter','次はどうするか聞く','友達に、聞いてみる。']],
+ think:[['messedUp','かんでしまった','言いたいことが、出てこなかった。'],['laughedAt','笑われた気がする','みんなが、笑っていた。'],['wantRetry','やり直したい','次は、うまくやりたい。']],
+ reasonKeys:['messedUp','laughedAt','wantRetry'],
+ stageGrants:[['laughWith','retryNow','practiceNext'],['selfPraise','quietDay','faceAgain','bounceBack']],
+ subs:[
+  {title:'友達が「大丈夫？」と聞いてくれた',text:'「さっき、大丈夫だった？」',stat:'soc',min:0,good:{text:'「ちょっと恥ずかしかった」と言えた。',mind:1,rep:1},ok:{text:'なんとか、答えられた。',mind:1}},
+  {title:'先生が「よく最後までできた」と言った',text:'先生が、声をかけてくれた。',stat:'study',min:0,good:{text:'「次はもっと練習します」と言えた。',rep:1,stat:'study'},ok:{text:'ほめられて、少し楽になった。',mind:1}}
+ ],
+ onExplore(s,key){const out={text:'',card:null};
+  if(key==='ashamedTell'){s.flags.toldS=true;relation(s,'恥ずかしさを話したら、友達が分かってくれた。');out.text='「実は、恥ずかしかった」\n「分かるよ。私もある」';out.card='retryNow'}
+  if(key==='laughAlong'){s.flags.laughedS=true;relation(s,'自分も笑ったら、空気が軽くなった。');out.text='「やっちゃった！」\nみんなも、一緒に笑った。';out.card='laughWith'}
+  if(key==='askAfter'){s.flags.askedS=true;relation(s,'「次はどうする？」聞いたら、作戦が見えた。');out.text='「次、どうしたらいい？」\n「ゆっくり読むといいよ」';out.card='faceAgain'}
+  if(key==='messedUp'){s.reason='messedUp';out.text='言いたいことが、出てこなかった。\n「何を直せばいいか」が見えた。';out.card='practiceNext'}
+  if(key==='laughedAt'){s.reason='laughedAt';out.text='笑われたのが、一番つらかった。\n「恥ずかしさ」に名前をつけた。';out.card='selfPraise'}
+  if(key==='wantRetry'){s.reason='wantRetry';out.text='やり直したい気持ちが、ある。\n「もう一回」が目標になった。';out.card='retryNow'}
+  return out;
+ },
+ onPlay(s,id){const f=s.flags;
+  if(id==='keepGoing'){f.keptOn=true;return{text:'止まらずに、最後までやりきった。',meaning:'やりきると、「できた」が残る。'}}
+  if(id==='laughWith'){f.laughedW=true;return{text:'「やっちゃった」と自分も笑った。空気が、軽くなった。',meaning:'笑えると、恥ずかしさが味方になる。'}}
+  if(id==='retryNow'){f.retried=true;return{text:'「もう一度やります」と言えた。',meaning:'やり直す勇気は、失敗のあとに効く。'}}
+  if(id==='practiceNext'){f.practiced=true;return{text:'家で、間違えたところを練習した。',meaning:'練習は、次の自信になる。'}}
+  if(id==='selfPraise'){f.praisedSelf=true;return{text:'「最後までできた」と自分をほめた。',meaning:'ほめられると、また挑戦できる。'}}
+  if(id==='quietDay'){f.quiet=true;return{text:'今日は、静かに過ごした。',meaning:'休んで立て直すのも、作戦。'}}
+  if(id==='faceAgain'){f.faced=true;return{text:'「次はもっと準備しよう」と決めた。',meaning:'準備で、不安を削る。'}}
+  if(id==='bounceBack'){f.bounced=true;return{text:'「失敗は失敗。次行こう」と切り替えた。',meaning:'切り替えは、立て直しの力。'}}
+  if(id==='runOut'){f.ran=true;return{text:'恥ずかしくて、逃げ出した。',meaning:'逃げると、あとで余計つらい。'}}
+  if(id==='freezeUp'){f.froze=true;return{text:'固まって、動けなかった。',meaning:'固まると、時間だけたつ。'}}
+  return{text:'',meaning:''};
+ },
+ watch(s){return s.stage===0?'みんなの笑い方は、悪意というより驚きに近い。':s.stage===1?'誰も、もう気にしていないようだ。':'明日、またチャンスはある。'},
+ scene(s){const f=s.flags;
+  if(s.stage===0)return{narrative:'音読の発表。大事なところで、かんでしまった。教室に、笑い声が広がる。',speaker:'まわりの子',quote:'あはは、かんだー',look:'みんなが、笑っている。',self:'顔が、熱い…',hint:'つらいとき、何がつらい？'};
+  if(s.stage===1)return{narrative:'昼休み。さっきのことが、頭に残っている。',speaker:'友達',quote:'さっきの、気にしてる？',look:'友達が、心配そうに見ている。',self:s.reason==='laughedAt'?'笑われたのが、つらい…':s.reason==='wantRetry'?'やり直したい…':'まだ、恥ずかしい…',hint:'笑う・やり直す・練習する、選ぼう。'};
+  return{narrative:'帰り道。明日から、どうするか。',speaker:'友達',quote:f.retried?'明日も、がんばろう':'じゃあね',look:'夕焼けが、広がっている。',self:f.practiced||f.faced||f.bounced?'失敗しても、立て直せる。':'まだ、恥ずかしさが残る。',hint:'ほめる・静かに・準備・切り替え、選ぼう。'};
+ },
+ progress(s){const f=s.flags;return f.bounced||f.faced||f.praisedSelf?3:f.laughedW||f.retried||f.practiced||f.toldS||f.askedS?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.bounced||f.faced?'失敗から立て直せた。':f.laughedW||f.retried||f.practiced?'やり直しの一歩を、踏み出した。':'失敗が、残っている。笑う・やり直す・練習、方法はある。'}
 }
 };
 

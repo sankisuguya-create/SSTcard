@@ -129,12 +129,12 @@ main{padding:28px 36px 30px;min-width:0}
 .new-tag{position:absolute;top:40px;right:8px;font-size:11px;background:var(--yellow);border-radius:4px;padding:1px 6px;z-index:2}
 
 .game-card.minus{border-color:#e2b3ac;background:#fff}
-.game-card.minus .card-top{background:var(--red-pale);color:var(--red);border-bottom-color:#e2b3ac}
+.game-card.minus .card-top{background:var(--red);color:#fff;border-bottom-color:#e2b3ac}
 .game-card.minus .card-icon{color:var(--red)}
 .game-card.minus .card-bottom{color:var(--red)}
 .game-card.minus:hover:not(:disabled){border-color:var(--red)}
 .minus-badge{background:var(--red-pale);color:var(--red);font-weight:700}
-.minus-notice{background:var(--red-pale)}
+.minus-notice{background:var(--red-pale);border-left:4px solid var(--red)}
 
 .feedback{padding:25px;background:#fff;border:2px solid var(--blue);border-radius:17px;margin-top:20px}
 .feedback .eyebrow{margin-bottom:7px}

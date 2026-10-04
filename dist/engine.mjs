@@ -65,6 +65,15 @@ export const cards={
  allyWords:{title:'ケイと一緒に伝える',kind:'support',label:'協力する',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'一人で言えなければ、仲間と伝える。',hint:'一人じゃなくてもいい',icon:'people'},
  mediate:{title:'先生を交えて話す',kind:'support',label:'助けを求める',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'公平な大人を交えて、話をする。',hint:'一人で抱え込まなくてもいい',icon:'people'},
  replyKind:{title:'嫌な言葉に、ていねいに返す',kind:'talk',label:'ていねいに返す',cost:2,strain:1,bond:1,atk:3,attr:'soc',up:'soc',desc:'「それは嫌だった」と、静かに返す。',hint:'冷静な返しは、伝わる',icon:'flag'},
+ joinIn:{title:'気が進まないけど付き合う',kind:'support',label:'付き合う',cost:1,atk:0,desc:'自分の気持ちに合わない誘いに乗る。',hint:'つらい付き合いは疲れる',icon:'people'},
+ vagueNo:{title:'「うーん」と濁す',kind:'support',label:'濁す',cost:0,atk:0,desc:'答えをぼやかして、その場を流す。',hint:'はっきりしないと、また誘われる',icon:'eye'},
+ runOff:{title:'トイレに逃げる',kind:'support',label:'離れる',cost:0,atk:0,desc:'いったん逃げて、気持ちを整える。',hint:'逃げてもいい、あとで考える',icon:'door'},
+ politeNo:{title:'「今日は一人でいたい」と断る',kind:'talk',label:'断る',cost:1,strain:1,bond:1,atk:1,attr:'soc',up:'soc',desc:'気持ちを正直に、ていねいに伝える。',hint:'断ることも、誠実な関係',icon:'message'},
+ bothWays:{title:'「明日なら」と別の案を出す',kind:'talk',label:'代案を出す',cost:1,strain:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'断るだけでなく、別の日や形を提案。',hint:'断りつつ、関係も残せる',icon:'puzzle'},
+ aloneTime:{title:'一人の時間を大切にする',kind:'think',label:'自分を知る',cost:0,atk:0,up:'soc',desc:'一人でいたい気持ちを、悪いことと思わない。',hint:'自分の気持ちも大事',icon:'heart'},
+ scriptNo:{title:'断ることばを練習',kind:'think',label:'練習する',cost:1,atk:0,up:'soc',desc:'「今日は一人がいい」「明日なら」などを練習。',hint:'ことばを持っていると断りやすい',icon:'flag'},
+ tagDecline:{title:'リクと「明日ね」と言う',kind:'support',label:'協力する',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'一人で断りにくければ、仲間と。',hint:'一人じゃなくてもいい',icon:'people'},
+ planB:{title:'「今度一緒に」と約束する',kind:'support',label:'約束する',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'別の日の約束を作って、今日は断る。',hint:'断りつつ、つながりを残す',icon:'clock'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -392,6 +401,57 @@ hurt:{
  },
  progress(s){const f=s.flags;return s.goal===0?(f.saidStop||f.mended?3:f.cared||f.brushed?1:0):s.goal===1?(f.cared||f.laughed||f.left||f.distanced?3:s.reason?1:0):(f.mended&&s.rep>=3?3:f.mended?2:f.ally||f.mediatedH?1:0)},
  situation(s){const f=s.flags;return f.mended?'「嫌だった」が伝わって、関係が戻った。':f.saidStop?'「やめて」と伝えられた。あとは関係の形を決めるだけ。':f.left||f.cared?'自分の気持ちを守れた。伝えるのは、また今度でもいい。':'トゲはまだ残っている。守る・流す・伝える、やり方がある。'}
+},
+alone:{
+ title:'今日は一人でいたい',nav:'一人でいたいのに誘われた',num:'07',attrs:['soc'],
+ goals:['気持ちよく断りたい','一人の時間も大切にしたい','関係を壊さず断りたい'],
+ chapters:['休み時間','帰り道','次の日'],locations:['教室・休み時間','帰り道','教室・朝'],
+ base:['politeNo','joinIn','vagueNo','runOff','anger','ignore'],start:{mind:4,energy:4},
+ monsters:[{name:'誘いの波',hp:4,power:0,turns:4,look:'優しい誘いが、波のように押し寄せる。'},{name:'断りにくさの壁',hp:5,power:1,turns:5,look:'「嫌がらせたくない」が、壁になって立ちはだかる。'},{name:'気まずさ大王',hp:6,power:1,turns:5,look:'断ったあとの気まずさが、大きくのしかかる。'}],
+ talk:[['friendD','リクに相談する','一緒に断ってもらう方法。'],['teacherD','先生に相談する','断ることばの型を聞く。']],
+ think:[['noWords','断ることばが分からない','「いや」と言うのが難しい。'],['guilt','断ると相手が悲しむ気がする','誘ってくれたのに、断るのは悪い？'],['wantAlone','本当は一人の時間がほしい','今日は、ひとりでゆっくりしたい。']],
+ reasonKeys:['noWords','guilt','wantAlone'],
+ stageGrants:[['planB'],[]],
+ onExplore(s,key){
+  const out={text:'',card:null};
+  if(key==='friendD'){s.flags.allyD=true;relation(s,'リクが、一緒に伝えてくれることになった。');out.text='リク「一人でいたい日もあるよね。一緒に『明日ね』って言おう」';out.card='tagDecline'}
+  if(key==='teacherD'){s.flags.scripted=true;note(s,'断ることばは「今日は一人がいい」「今度なら」など。');out.text='先生「『今日は一人がいいな』って正直に言っていいよ。『今度なら』をつけると、やさしさが伝わる」';out.card='scriptNo'}
+  if(key==='noWords'){s.reason='noWords';note(s,'断ることばを持っていないと、流されやすい。');out.text='「いやと言うのが難しい」';out.card='scriptNo'}
+  if(key==='guilt'){s.reason='guilt';note(s,'断ると相手が悲しむ気がして、言いにくい。');out.text='「誘ってくれたのに、断るのは悪いかも」';out.card='bothWays'}
+  if(key==='wantAlone'){s.reason='wantAlone';note(s,'一人でいたい気持ちも、大事な気持ち。');out.text='「今日は、一人でゆっくりしたいんだ」';out.card='aloneTime'}
+  return out;
+ },
+ onPlay(s,id){
+  const f=s.flags;let text='',meaning='';
+  if(id==='joinIn'){
+   if(s.reason==='wantAlone'){s.mind-=1;text='付き合ったが、一人の時間がほしかった気持ちが残った。';meaning='自分の気持ちに合わない付き合いは、疲れることがある。'}
+   else{f.joined2=true;text='少し疲れたが、一緒に遊んだ。\n楽しかった部分もあった。';meaning='付き合うこともできる。でも、いつも付き合う必要はない。'}
+  }
+  if(id==='vagueNo'){s.mind-=1;text='「うーん」と濁したら、ルイは「じゃあね」と去った。\nでも、断ったのか断ってないのか、もやもやが残った。';meaning='はっきりしないと、気持ちが残る。'}
+  if(id==='runOff'){f.dodged=true;s.mind+=1;text='いったん離れて、ひと息ついた。\nあとで、気持ちを伝える余裕ができた。';meaning='離れてもいい。そのあと伝える手がかりを作ろう。'}
+  if(id==='politeNo'){
+   if(f.scripted||f.aloneWays){f.declined=true;relation(s,'「今日は一人がいい」と、ていねいに断った。');text='ルイ「分かった！ 明日やろうね」\n正直に言っても、関係は続いた。';meaning='断ることも、誠実な関係の作り方。'}
+   else{s.mind-=1;text='「あの……」言い方が分からず、口ごもってしまった。';meaning='断ることばを持っていないと、伝えにくい。練習が助けになる。';grant(s,'scriptNo')}
+  }
+  if(id==='bothWays'){f.declined=true;f.bothWays=true;relation(s,'「明日なら」と断りつつ、関係を残した。');text='ルイ「明日ね！ 楽しみ」\n断ったのに、笑顔が残った。';meaning='断るだけでなく、次の案を出すと関係が続く。'}
+  if(id==='aloneTime'){f.aloneWays=true;s.mind+=1;text='一人で本を読んだ。\n一人の時間も、悪くない。';meaning='一人でいたい気持ちも、大切な気持ち。'}
+  if(id==='scriptNo'){f.scripted=true;s.mind+=1;text='「今日は一人がいい」「今度なら」\n練習したことばが、口を出やすくする。';meaning='断ることばを持っていると、伝えやすい。'}
+  if(id==='tagDecline'){f.declined=true;relation(s,'リクと一緒に「明日ね」と伝えた。');text='リク「俺ら、明日一緒にやろうぜって言いたいんだ」\n二人で言うと、伝わった。';meaning='一人で断りにくければ、誰かと一緒でもいい。'}
+  if(id==='planB'){f.declined=true;f.promised=true;relation(s,'「今度一緒に」と約束を作り、今日は断った。');text='ルイ「じゃあ木曜ね！ それまでに考えておく」';meaning='別の日の約束は、断りつつ関係を残せる。'}
+  return {text,meaning};
+ },
+ watch(s){
+  if(s.stage===0)return 'ルイは、こちらの返事を楽しみに待っている。';
+  if(s.stage===1)return 'ルイは、少し期待と不安の混じった顔をしている。';
+  return 'ルイは、昨日よりも自然に話しかけてくる。';
+ },
+ scene(s){const f=s.flags;
+  if(s.stage===0)return {narrative:'休み時間。一人でゆっくりしたかったのに、ルイが駆け寄ってきた。',speaker:'ルイ',quote:'ねえ、一緒に遊ぼうよ！',look:'ルイは、目を輝かせて誘ってくる。',self:'今日は一人でいたかったのに……',hint:'断りにくい理由は、まだ分からない。'};
+  if(s.stage===1)return {narrative:'帰り道。誘いのことばと、自分の気持ちがぐちゃぐちゃになっている。',speaker:f.allyD?'リク':'ルイ',quote:f.allyD?'一人の日もあるよね。一緒に言おうか？':f.declined?'明日ね！ 楽しみにしてる':f.dodged?'さっきはごめん、急いでたんだ':'……で、どうする？',look:f.allyD?'リクが、そばにいてくれる。':'ルイは、返事を待っている。',self:s.reason==='noWords'?'断ることばが、出てこない。':s.reason==='guilt'?'断ると、悲しませるかも。':s.reason==='wantAlone'?'一人の時間も、大切にしたい。':'正直に伝えるか、流すか。',hint:'断り方にも、やさしい形がある。'};
+  return {narrative:'次の日の朝。ルイが、また教室に来た。',speaker:'ルイ',quote:f.declined?'おはよ！ 木曜の約束、忘れないよ':f.promised?'木曜ね！ それまでに考えておく':f.dodged?'昨日は急いでてごめん':'おはよ。今日はどうする？',look:'ルイは、昨日よりも気軽そうに話しかけてくる。',self:f.declined?'断っても、関係は続いた。':'断り方、まだ練習中。',hint:'断ることも、関係を続ける方法。'};
+ },
+ progress(s){const f=s.flags;return s.goal===0?(f.declined?3:f.scripted||f.allyD?1:0):s.goal===1?(f.aloneWays||f.declined||f.dodged?3:s.reason?1:0):(f.declined&&s.rep>=3?3:f.bothWays||f.promised?2:f.declined?1:0)},
+ situation(s){const f=s.flags;return f.declined&&f.promised?'気持ちよく断りつつ、次の約束も作れた。':f.declined?'「今日は一人がいい」を伝えられた。関係は続いている。':f.aloneWays?'一人の時間を、自分で選んだ。':'誘いはまだ残っている。断り方のことばは、練習できる。'}
 }
 };
 

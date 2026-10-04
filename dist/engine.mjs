@@ -548,6 +548,16 @@ export const cards={
  poolStep:{title:'一歩ずつ深いところへ',kind:'think',label:'一歩ずつ',cost:1,atk:2,attr:'ath',up:'ath',desc:'一歩ずつ、深いところへ進む。',hint:'一歩ずつは、現実的',icon:'up'},
  breatheUnder:{title:'水中で息を吐いてみる',kind:'think',label:'息を吐く',cost:1,atk:2,attr:'ath',up:'ath',desc:'水中で、ブクブク息を吐く。',hint:'吐けると、沈まない',icon:'ear'},
  goSlow:{title:'怖いなら、怖いまま少し',kind:'think',label:'怖いまま少し',cost:1,atk:2,attr:'ath',up:'ath',desc:'怖い気持ちのまま、少しだけやる。',hint:'怖いまま進むのも、勇気',icon:'heart'},
+ quitRope:{title:'大縄をやめたい',kind:'think',label:'やめたい',cost:0,strain:1,atk:1,attr:'ath',desc:'みんなの前で失敗して、やめたい。',hint:'やめると、怖いまま',icon:'door'},
+ jumpLate:{title:'後ろの方に並び直す',kind:'think',label:'後ろに並ぶ',cost:0,strain:1,atk:1,attr:'ath',desc:'目立たない、後ろに並び直す。',hint:'逃げると、跳べないまま',icon:'eye'},
+ watchRope:{title:'ロープをよく見る',kind:'think',label:'よく見る',cost:1,atk:2,attr:'ath',up:'ath',desc:'ロープの回り方を、よく見る。',hint:'見ると、タイミングが分かる',icon:'eye'},
+ edgeJump:{title:'端の方から入る',kind:'think',label:'端から入る',cost:1,atk:2,attr:'ath',up:'ath',desc:'真ん中じゃなく、端から入る。',hint:'端は、入りやすい',icon:'check'},
+ smallRope:{title:'少人数で練習する',kind:'talk',label:'少人数で',cost:1,atk:2,attr:'soc',up:'soc',desc:'休憩時間に、少人数で練習する。',hint:'少人数は、失敗しにくい',icon:'people'},
+ askRetry:{title:'「もう一回やりたい」と言う',kind:'talk',label:'もう一回',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'失敗しても、「もう一回」と言う。',hint:'リトライは、成長',icon:'message'},
+ countBeat:{title:'「イチニ、イチニ」と拍子を数える',kind:'think',label:'拍子を数える',cost:1,atk:2,attr:'ath',up:'ath',desc:'拍子を数えて、入るタイミングを見る。',hint:'数えると、入りやすい',icon:'clock'},
+ jumpWith:{title:'できる人の後に続いて跳ぶ',kind:'talk',label:'続いて跳ぶ',cost:1,bond:1,atk:2,attr:'ath',up:'ath',desc:'できる人の直後に、続いて跳ぶ。',hint:'ついていくと、跳びやすい',icon:'runner'},
+ ropeStep:{title:'一歩ずつ慣れていく',kind:'think',label:'一歩ずつ',cost:1,atk:2,attr:'ath',up:'ath',desc:'失敗しても、一歩ずつ慣れる。',hint:'慣れは、時間がかかる',icon:'up'},
+ shyFace:{title:'笑われたけど、それでも跳ぶ',kind:'think',label:'それでも跳ぶ',cost:1,atk:2,attr:'ath',up:'ath',desc:'失敗して笑われても、もう一回。',hint:'笑われても跳ぶのが、勇気',icon:'heart'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -3183,6 +3193,48 @@ poolFear:{title:'プールが怖い',nav:'プールが怖い',num:57,attrs:['ath
  },
  progress(s){const f=s.flags;return f.floated||f.breathed||f.wentSlow||f.stepped?3:f.splashed||f.held||f.kicked||f.told?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.floated||f.breathed?'浮けると分かった。':f.splashed||f.held?'少しずつ、慣れてきた。':'まだ、怖いまま。顔に水・ふち・正直、方法はある。'}
+},
+ropeTrip:{title:'大縄でひっかかった',nav:'大縄でひっかかった',num:58,attrs:['ath','soc'],goals:['失敗しても跳び続けたい','タイミングを覚えたい','みんなと跳びたい'],chapters:['みんなの前でひっかかった','練習して立て直す','もう一回跳ぶ'],locations:['校庭','校庭','校庭'],base:['quitRope','jumpLate','watchRope','anger','ignore'],
+ start:{mind:4,energy:3},
+ monsters:[{name:'跳べない不安',hp:5,power:1,turns:4,look:'また引っかかったら、恥ずかしい。'},{name:'みんなの目',hp:5,power:1,turns:4,look:'みんなが、見ている。'},{name:'本番の大縄',hp:6,power:2,turns:4,look:'もう一回、跳ぶ番が来た。'}],
+ talk:[['smallRope2','少人数で練習する','休憩時間に、練習する。'],['askRetry2','「もう一回やりたい」と言う','リトライを、求める。'],['jumpWith2','できる人の後に続く','ついていくと、跳びやすい。']],
+ think:[['tripped','引っかかって転んだ','ロープに、引っかかった。'],['shame5','みんなに見られて恥ずかしい','失敗を、見られちゃった。'],['wantJump','ちゃんと跳びたい','本当は、跳べるようになりたい。']],
+ reasonKeys:['tripped','shame5','wantJump'],
+ stageGrants:[['watchRope','edgeJump','askRetry'],['countBeat','jumpWith','ropeStep','shyFace']],
+ subs:[
+  {title:'「もう一回」と声をかけてもらった',text:'失敗しても、励ましてもらえた。',stat:'soc',min:0,good:{text:'「もう一回」って言えた。',rep:1,mind:1},ok:{text:'うれしかった。',mind:1}},
+  {title:'できる人が「俺の後に入れ」と言った',text:'ついていけば、跳びやすい。',stat:'ath',min:0,good:{text:'一緒に跳べた。',mind:1},ok:{text:'参考になった。',mind:1}}
+ ],
+ onExplore(s,key){const out={text:'',card:null};
+  if(key==='smallRope2'){s.flags.askedS=true;out.text='「休み時間に練習しない？」\n「いいよ、少人数なら」';out.card='smallRope'}
+  if(key==='askRetry2'){s.flags.askedR=true;relation(s,'「もう一回」と言ったら、「いいぞ」と言ってもらえた。');out.text='「もう一回やりたいです」\n「いいぞ、入れ」';out.card='askRetry'}
+  if(key==='jumpWith2'){s.flags.jumpedW=true;relation(s,'できる人の後に入ったら、跳べた。');out.text='「あなたの後に入っていい？」\n「いいよ、ついてきて」';out.card='jumpWith'}
+  if(key==='tripped'){s.reason='tripped';out.text='ロープに、引っかかって転んだ。\n「よく見る」「端から」で、タイミングを覚えよう。';out.card='watchRope'}
+  if(key==='shame5'){s.reason='shame5';out.text='みんなに見られて、恥ずかしい。\n「少人数」なら、失敗しても目立たない。';out.card='smallRope'}
+  if(key==='wantJump'){s.reason='wantJump';out.text='本当は、ちゃんと跳びたい。\n「拍子を数える」「続いて跳ぶ」で。';out.card='countBeat'}
+  return out;
+ },
+ onPlay(s,id){const f=s.flags;
+  if(id==='watchRope'){f.watched=true;return{text:'ロープを、よく見た。',meaning:'見ると、タイミングが分かる。'}}
+  if(id==='edgeJump'){f.edged=true;return{text:'端の方から、入った。',meaning:'端は、入りやすい。'}}
+  if(id==='smallRope'){f.smalled=true;return{text:'少人数で、練習した。',meaning:'少人数は、失敗しにくい。'}}
+  if(id==='askRetry'){f.asked=true;return{text:'「もう一回」と、言った。',meaning:'リトライは、成長。'}}
+  if(id==='countBeat'){f.counted=true;return{text:'「イチニ」と、拍子を数えた。',meaning:'数えると、入りやすい。'}}
+  if(id==='jumpWith'){f.jumped=true;return{text:'できる人の後に、続いて跳んだ。',meaning:'ついていくと、跳びやすい。'}}
+  if(id==='ropeStep'){f.stepped2=true;return{text:'一歩ずつ、慣れていった。',meaning:'慣れは、時間がかかる。'}}
+  if(id==='shyFace'){f.faced=true;return{text:'笑われても、もう一回跳んだ。',meaning:'笑われても跳ぶのが、勇気。'}}
+  if(id==='quitRope'){f.quitted=true;return{text:'大縄を、やめたいと思った。',meaning:'やめると、怖いまま。'}}
+  if(id==='jumpLate'){f.lated=true;return{text:'後ろに、並び直した。',meaning:'逃げると、跳べないまま。'}}
+  return{text:'',meaning:''};
+ },
+ watch(s){return s.stage===0?'失敗は、誰にでもある。':s.stage===1?'練習は、味方。':'みんなも、最初はできなかった。'},
+ scene(s){const f=s.flags;
+  if(s.stage===0)return{narrative:'大縄跳び。ロープに引っかかって、転んでしまった。',speaker:'友達',quote:'あはは、引っかかった！',look:'ロープが、ぐるぐる回っている。',self:'恥ずかしい…',hint:'大縄でひっかかって、何がつらい？'};
+  if(s.stage===1)return{narrative:'跳び直すか、練習するか。',speaker:'担任の先生',quote:'もう一回、やってみる？',look:'ロープが、待っている。',self:s.reason==='shame5'?'見られて恥ずかしい…':s.reason==='wantJump'?'跳びたい…':'転んだ…',hint:'見る・端・もう一回・少人数、方法はある。'};
+  return{narrative:'本番の大縄。もう一度、跳ぶ番が来た。',speaker:'ロープを回す人',quote:f.jumped||f.faced?'「いけー！」':'「入れるかな」',look:'ロープが、回っている。',self:f.jumped||f.stepped2||f.faced?'跳べそう。':'まだ、跳べないかも。',hint:'拍子・ついて・一歩・笑われても、選ぼう。'};
+ },
+ progress(s){const f=s.flags;return f.jumped||f.stepped2||f.faced?3:f.watched||f.edged||f.asked||f.smalled?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.jumped||f.faced?'もう一度、跳べた。':f.watched||f.edged?'練習で、慣れてきた。':'まだ、跳べないかも。見る・端・少人数、方法はある。'}
 }
 };
 

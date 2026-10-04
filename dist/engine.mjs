@@ -301,6 +301,16 @@ export const cards={
  allyUp:{title:'仲間と練る',kind:'talk',label:'仲間と練る',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'賛成してくれた子と、案を練る。',hint:'仲間と練ると、強くなる',icon:'hand'},
  rePropose:{title:'直した案を提案する',kind:'support',label:'再提案',cost:2,atk:3,attr:'soc',up:'soc',desc:'みんなの意見をいれた案を、提案する。',hint:'聞いた分だけ、通りやすい',icon:'flag'},
  acceptNo:{title:'多数決を受け入れる',kind:'support',label:'受け入れる',cost:1,atk:2,attr:'soc',up:'soc',desc:'通らなくても、次につなげる。',hint:'受け入れるのも、作戦',icon:'check'},
+ scoldKid:{title:'きつく叱る',kind:'think',label:'叱る',cost:0,strain:1,atk:1,attr:'soc',desc:'言うことを聞かない子を、きつく叱る。',hint:'叱るだけでは、ついてこない',icon:'bolt'},
+ ignoreKid:{title:'一人で全部やる',kind:'think',label:'一人でやる',cost:0,strain:1,atk:0,desc:'頼らず、一人で全部やる。',hint:'一人では、班にならない',icon:'clock'},
+ askWhyKid:{title:'言うことを聞かない理由を聞く',kind:'talk',label:'理由を聞く',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'なぜ聞かないか、本人に聞く。',hint:'理由が分かれば、やり方が変わる',icon:'ear'},
+ watchKid:{title:'年下の子をよく見る',kind:'think',label:'よく見る',cost:1,atk:2,attr:'study',up:'study',desc:'何が好き・何が苦手か、見る。',hint:'見るほど、伝え方が分かる',icon:'eye'},
+ doTogether:{title:'一緒にやる',kind:'talk',label:'一緒にやる',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'「手伝うよ」と、一緒にやる。',hint:'一緒なら、やる気が出る',icon:'hand'},
+ letKid:{title:'好きなところを任せる',kind:'talk',label:'任せる',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'得意なところを、任せる。',hint:'任せると、やってくれる',icon:'spark'},
+ kidCalm:{title:'小さくお願いする',kind:'talk',label:'小さく頼む',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'「ちょっとだけ、手伝って」と頼む。',hint:'小さい頼みなら、応じやすい',icon:'message'},
+ cheerKid:{title:'ほめる・ありがとうを言う',kind:'talk',label:'ほめる',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'やってくれたら、ほめる。',hint:'ほめると、またやる',icon:'heart'},
+ tryLead:{title:'もう一度、班をまとめる',kind:'support',label:'まとめる',cost:2,atk:3,attr:'soc',up:'soc',desc:'見つけたやり方で、班をまとめる。',hint:'伝え方が変われば、班が動く',icon:'flag'},
+ leadWay:{title:'班がひとつにまとまった',kind:'support',label:'まとまった',cost:2,atk:3,attr:'soc',up:'soc',desc:'みんなで、やりきった。',hint:'まとまった経験は、自信になる',icon:'check'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -1818,6 +1828,55 @@ meeting:{
  },
  progress(s){const f=s.flags;return f.reProposed||f.accepted?3:f.heard||f.planned||f.softened?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.reProposed?'聞いて練った案で、提案できた。':f.heard||f.planned?'反対の理由が分かった。聞く・別案・言い方がある。':'提案が通らないまま。次の一手は見つけられる。'}
+},
+
+// STORY 33 ── 縦割り班で言うことを聞かない ──
+leader:{
+ title:'縦割り班で言うことを聞かない',nav:'縦割り班',num:'33',attrs:['soc'],
+ goals:['班をまとめたい','年下の子との関わり方を知りたい','自分らしいリーダーになりたい'],
+ chapters:['なわとび会・前日','休み時間','なわとび会・当日'],locations:['運動場','運動場・休み','運動場'],
+ base:['scoldKid','ignoreKid','anger','ignore','boast'],start:{mind:5,energy:4},
+ monsters:[{name:'バラバラの影',hp:4,power:1,turns:4,look:'班の子が、バラバラに遊んでいる。'},{name:'メガメの影',hp:4,power:1,turns:4,look:'言っても聞かない目が、こちらを見ている。'},{name:'ハンサイの影',hp:6,power:2,turns:5,look:'「もう班長やめたい」と、思ってしまう。'}],
+ talk:[['kidWhy','本人に理由を聞く','なぜやらないか、本人に聞く。'],['teacherLead','先生に相談','まとめ方を、先生に聞く。'],['senpaiAsk','去年の班長に聞く','上の子の、まとめ方を聞く。']],
+ think:[['tooYoung','年下だから？','年下だから、言うことを聞かない？'],['orderBad','言い方が悪い？','命令っぽく、言いすぎたかも。'],['notFun','楽しくない？','会の練習が、楽しくないのかも。']],
+ reasonKeys:['tooYoung','orderBad','notFun'],
+ stageGrants:[['kidCalm'],['tryLead']],
+ onExplore(s,key){
+  const out={text:'',card:null};
+  if(key==='kidWhy'){s.flags.askedK2=true;relation(s,'本人に聞いたら、「跳べないからやりたくない」と言われた。');out.text='「だって、跳べないし…」\n理由が、分かった。';out.card='askWhyKid'}
+  if(key==='teacherLead'){s.flags.toldL=true;note(s,'先生に「まず本人の話を聞いて」と言われた。');out.text='先生「まず、その子の話を聞こう」\nまとめ方の、ヒントをもらった。';out.card='askWhyKid'}
+  if(key==='senpaiAsk'){s.flags.askedP=true;note(s,'去年の班長に「任せると意外とやるよ」と聞いた。');out.text='「得意なことを任せると、意外とやるよ」\nまとめ方の、コツを聞いた。';out.card='letKid'}
+  if(key==='tooYoung'){s.reason='tooYoung';note(s,'年下だからではなく、伝え方の問題かもしれない。');out.text='「年下だから、聞かない？」\n伝え方を、変えてみよう。';out.card='watchKid'}
+  if(key==='orderBad'){s.reason='orderBad';note(s,'命令ではなく、小さく頼むと伝わる。');out.text='「命令っぽく、言いすぎたかも」\n小さく、頼んでみよう。';out.card='kidCalm'}
+  if(key==='notFun'){s.reason='notFun';note(s,'楽しくないなら、一緒にやると変わる。');out.text='「練習が、楽しくないのかも」\n一緒にやれば、変わる。';out.card='doTogether'}
+  return out;
+ },
+ onPlay(s,id){
+  const f=s.flags;let text='',meaning='';
+  if(id==='scoldKid'){f.scolded=true;s.rep-=1;s.mind-=1;relation(s,'きつく叱ったら、余計に離れていった。');text='きつく、叱った。\nその子は、余計に離れていった。';meaning='叱るだけでは、ついてこない。';grant(s,'askWhyKid')}
+  if(id==='ignoreKid'){f.soloed=true;s.mind-=1;relation(s,'一人で全部やったら、疲れて班にならなかった。');text='一人で、全部やった。\n疲れた。班にも、ならない。';meaning='一人では、班にならない。';grant(s,'askWhyKid')}
+  if(id==='askWhyKid'){f.heardK=true;note(s,'「跳べないから」と理由が分かった。');text='「だって、跳べないんだもん」\n理由が、分かった。';meaning='理由が分かれば、やり方が変わる。'}
+  if(id==='watchKid'){f.watched=true;note(s,'よく見たら、その子は跳び方が苦手だった。');text='よく見ると、その子は跳び方が苦手。\n「だから、やりたくないんだ」';meaning='見るほど、伝え方が分かる。'}
+  if(id==='doTogether'){f.togetherDone=true;f.heardK=true;relation(s,'一緒にやったら、その子もやる気を出した。');text='「一緒にやろう」\nその子も、やり始めた。';meaning='一緒なら、やる気が出る。'}
+  if(id==='letKid'){f.delegated=true;relation(s,'好きなところを任せたら、やってくれた。');text='「ここ、お願いできる？」\n任せたら、やってくれた。';meaning='任せると、やってくれる。'}
+  if(id==='kidCalm'){f.askedCalm=true;relation(s,'小さく頼んだら、応じてくれた。');text='「ちょっとだけ、手伝って」\n小さい頼みに、応じてくれた。';meaning='小さい頼みなら、応じやすい。'}
+  if(id==='cheerKid'){f.cheered=true;f.heardK=true;relation(s,'ほめたら、またやってくれた。');text='「すごい！ ありがとう」\nその子も、笑顔になった。';meaning='ほめると、またやる。'}
+  if(id==='tryLead'){if(f.heardK||f.togetherDone||f.delegated||f.askedCalm||f.cheered){f.led=true;note(s,'見つけたやり方で、班が動き始めた。');text='「みんなで、やろう」\n班が、動き始めた。';meaning='伝え方が変われば、班が動く。'}else{s.mind-=1;text='まとめようとしたが、やり方が分からなかった。';meaning='まず理由を聞いてから、まとめると良い。';grant(s,'askWhyKid')}}
+  if(id==='leadWay'){if(f.led||f.heardK||f.delegated){f.united=true;note(s,'班がひとつにまとまった。');text='「みんなで、やりきった！」\n班が、まとまった。';meaning='まとまった経験は、自信になる。'}else{s.mind-=1;text='まとまらなかった。まだ、やり方が見つかっていない。';meaning='まず聞いて試してから、まとめると良い。';grant(s,'askWhyKid')}}
+  return {text,meaning};
+ },
+ watch(s){
+  if(s.stage===0)return '班の子が、バラバラに遊んでいる。';
+  if(s.stage===1)return '言っても聞かない目が、こちらを見ている。';
+  return 'なわとび会・当日。班をまとめられるか。';
+ },
+ scene(s){const f=s.flags;
+  if(s.stage===0)return {narrative:'なわとび会の練習。班の1年生が、言うことを聞かない。',speaker:'1年生',quote:'やだよ！ あっちで遊ぶ',look:'班の子が、バラバラに遊んでいる。',self:'班長なのに、聞いてくれない…',hint:'言うことを聞かないとき、何がつらい？'};
+  if(s.stage===1)return {narrative:'休み時間。その子のことを、考える。',speaker:'友達',quote:f.heardK?'その子、跳べないんだって':'一人でやっちゃえば？',look:'運動場に、班の子たちがいる。',self:s.reason==='tooYoung'?'年下だから、聞かない？':s.reason==='orderBad'?'言い方が悪かったかも。':s.reason==='notFun'?'楽しくないのかも。':'どう伝えよう…',hint:'聞く・見る・一緒・任せる・小さく・ほめる、方法はある。'};
+  return {narrative:'なわとび会・当日。班をまとめる番が来た。',speaker:'1年生',quote:f.united?'がんばるね！':'…',look:'班の子たちが、待っている。',self:f.heardK?'その子の気持ちが、分かった。':'まだ、まとまらない。',hint:'見つけたやり方で、まとめよう。'};
+ },
+ progress(s){const f=s.flags;return f.united||f.led?3:f.heardK||f.togetherDone||f.delegated?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.united?'班がまとまった。伝え方が変わった。':f.heardK||f.delegated?'やり方が見つかった。聞く・一緒・任せる・ほめる。':'班がまとまらないまま。伝え方は練習できる。'}
 }
 };
 

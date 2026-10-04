@@ -369,6 +369,16 @@ export const cards={
  forgiveF:{title:'許して仲直りする',kind:'support',label:'許す',cost:2,atk:3,attr:'soc',up:'soc',desc:'謝ってもらって、仲直りする。',hint:'許せる関係は、強い',icon:'hand'},
  chooseFriend:{title:'話す相手を選ぶ',kind:'support',label:'相手を選ぶ',cost:2,atk:3,attr:'study',up:'study',desc:'秘密は、信頼できる人だけに話す。',hint:'選ぶことも、守り方',icon:'check'},
  trustStep:{title:'少しずつ信頼を戻す',kind:'support',label:'信頼を戻す',cost:2,atk:3,attr:'soc',up:'soc',desc:'小さい約束から、信頼を戻す。',hint:'信頼は、積み重ね',icon:'spark'},
+ lookCalm:{title:'平静を装ってやり過ごす',kind:'think',label:'平静を装う',cost:0,strain:1,atk:1,attr:'study',desc:'何もしなかったふりをして、やり過ごす。',hint:'気持ちは、心の中に残る',icon:'eye'},
+ joinLaugh:{title:'一緒に笑ってしまった',kind:'talk',label:'一緒に笑う',cost:0,strain:1,atk:1,attr:'soc',desc:'場に合わせて、笑ってしまう。',hint:'加担すると、評判が下がる',icon:'bolt'},
+ checkOn:{title:'あとで「大丈夫？」と声をかける',kind:'talk',label:'声をかける',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'いじめられていた子に、声をかける。',hint:'声をかけるだけで、相手は楽になる',icon:'heart'},
+ tellTeacher2:{title:'先生にこっそり伝える',kind:'talk',label:'先生に伝える',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'見たことを、先生にだけ伝える。',hint:'先生に伝えるのは、告げ口じゃない',icon:'people'},
+ gatherFriends:{title:'信頼できる友達と相談する',kind:'talk',label:'友達と相談',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'「どう思う？」と、友達に相談する。',hint:'一人で抱えなくていい',icon:'people'},
+ standNear:{title:'その子のそばにいる',kind:'think',label:'そばにいる',cost:1,atk:2,attr:'soc',desc:'いじめられている子の、近くにいる。',hint:'そばにいるだけでも、力になる',icon:'heart'},
+ keepWatch:{title:'様子を見て記録しておく',kind:'think',label:'記録する',cost:1,atk:2,attr:'study',up:'study',desc:'いつ・どこで・何を、メモしておく。',hint:'記録は、あとで役立つ',icon:'list'},
+ standTogether:{title:'「みんなでやめよう」と言う',kind:'support',label:'みんなで止める',cost:2,atk:3,attr:'soc',up:'soc',desc:'友達と一緒に、「やめよう」と言う。',hint:'仲間がいると、言える',icon:'flag'},
+ inviteThem:{title:'「一緒に行こう」と誘う',kind:'support',label:'誘う',cost:2,atk:3,attr:'soc',up:'soc',desc:'その子を、自分たちの輪に誘う。',hint:'誘うと、孤立がほどける',icon:'hand'},
+ talkSecret:{title:'毎日、少しずつ関わる',kind:'support',label:'関わり続ける',cost:2,atk:3,attr:'soc',up:'soc',desc:'その子と毎日、少しずつ話す。',hint:'続けると、信頼が育つ',icon:'spark'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -2228,6 +2238,55 @@ secret:{
  },
  progress(s){const f=s.flags;return f.forgave||f.trustBack||f.chooses?3:f.askedC||f.toldF2||f.checked||f.distanced||f.plannedS2?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.forgave||f.trustBack?'許して、信頼を戻し始めた。':f.checked||f.askedC?'事情が分かった。次の守り方を決められる。':'裏切られたまま。聞く・伝える・確かめる、方法はある。'}
+},
+
+// STORY 40 ── いじめを見てしまった ──
+byWatch:{
+ title:'いじめを見てしまった',nav:'いじめを見た',num:'40',attrs:['soc','study'],
+ goals:['気持ちを整理したい','自分にできることを見つけたい','次も関わっていきたい'],
+ chapters:['目撃した','自分の行動を決める','これから'],locations:['校庭の隅','教室','下駄箱'],
+ base:['lookCalm','joinLaugh','anger','ignore','boast'],start:{mind:4,energy:4},
+ monsters:[{name:'ミタノ影',hp:4,power:1,turns:4,look:'目撃した光景が、頭に残っている。'},{name:'マヨイの影',hp:4,power:1,turns:4,look:'何をすればいいか、分からない。'},{name:'ヒョウカンの影',hp:6,power:2,turns:5,look:'傍観してしまう自分が、気になっている。'}],
+ talk:[['quietTalk','あとで「大丈夫？」と聞く','いじめられていた子に、声をかける。'],['friendAsk','信頼できる友達に相談','「どう思う？」と聞いてみる。'],['teacherBy','先生にこっそり伝える','見たことを、先生にだけ言う。']],
+ think:[['scared','自分もいじめられそうで怖い','止めたら、次は自分がやられそう。'],['dontKnow','どうすればいいか分からない','見たけど、対処法が分からない。'],['feelBad','見て見ぬふりが心に残る','見て見ぬふりをしたことが、気になっている。']],
+ reasonKeys:['scared','dontKnow','feelBad'],
+ stageGrants:[['checkOn','standNear','keepWatch'],['standTogether','inviteThem','talkSecret']],
+ onExplore(s,key){
+  const out={text:'',card:null};
+  if(key==='quietTalk'){s.flags.checkQ=true;relation(s,'「ありがとう」と、言ってもらえた。');out.text='「大丈夫？」\n「…ありがとう」';out.card='checkOn'}
+  if(key==='friendAsk'){s.flags.askedF=true;relation(s,'友達も「気になってた」と言った。');out.text='「あれ、どう思う？」\n「実は、気になってた」';out.card='gatherFriends'}
+  if(key==='teacherBy'){s.flags.toldBy=true;note(s,'先生は「よく言ってくれた。一緒に見守ろう」と言った。');out.text='先生「よく言ってくれた。一緒に見守ろう」\n先生と、考えた。';out.card='tellTeacher2'}
+  if(key==='scared'){s.reason='scared';note(s,'怖いときは、一人で止めなくていい。');out.text='「自分もやられそうで、怖い」\n一人で止めなくても、いい。';out.card='gatherFriends'}
+  if(key==='dontKnow'){s.reason='dontKnow';note(s,'分からなければ、まず声をかける・伝える。');out.text='「何をすればいいか、分からない」\nまず、声をかけよう。';out.card='checkOn'}
+  if(key==='feelBad'){s.reason='feelBad';note(s,'心に残るなら、次の行動を決める。');out.text='「見て見ぬふりが、心に残る」\n次の行動を、決めよう。';out.card='keepWatch'}
+  return out;
+ },
+ onPlay(s,id){
+  const f=s.flags;let text='',meaning='';
+  if(id==='lookCalm'){f.lookC=true;s.mind-=1;note(s,'やり過ごしたが、心に残った。');text='何もしなかったふりをした。\nでも、心には残った。';meaning='やり過ごすと、気持ちが残る。';grant(s,'checkOn')}
+  if(id==='joinLaugh'){f.joined=true;s.rep-=1;s.mind-=1;relation(s,'一緒に笑った。あとで、心が重くなった。');text='場に合わせて、笑った。\nあとで、心が重くなった。';meaning='加担は、評判を下げる。';grant(s,'checkOn')}
+  if(id==='checkOn'){f.checkQ=true;relation(s,'声をかけたら、相手は少し楽になった。');text='「大丈夫？」\n「うん…ありがとう」\n相手が、少し楽になった。';meaning='声をかけるだけで、相手は楽になる。'}
+  if(id==='tellTeacher2'){f.toldBy=true;note(s,'先生が一緒に見守ってくれることになった。');text='先生「よく言ってくれたね。一緒に見守ろう」\n先生が、味方になった。';meaning='先生に伝えるのは、告げ口じゃない。'}
+  if(id==='gatherFriends'){f.askedF=true;relation(s,'友達も同じ気持ちだった。');text='「実は、気になってた」\n同じ気持ちの友達が、いた。';meaning='一人で抱えなくていい。'}
+  if(id==='standNear'){f.stayed=true;note(s,'そばにいるだけで、相手は安心できた。');text='その子の、そばにいた。\n相手が、少し安心した。';meaning='そばにいるだけでも、力になる。'}
+  if(id==='keepWatch'){f.watched=true;note(s,'記録を付けた。いつ、どこで、何があったか。');text='いつ・どこで・何を、メモした。\n記録が、残った。';meaning='記録は、あとで役立つ。'}
+  if(id==='standTogether'){if(f.askedF||f.toldBy){f.stood=true;relation(s,'みんなで「やめよう」と言えた。');text='「みんなで、やめよう」\n仲間と一緒に、言えた。';meaning='仲間がいると、言える。'}else{s.mind-=1;text='一人で言おうとしたが、怖くて声が出なかった。';meaning='まず友達・先生と相談してから、言うと良い。';grant(s,'gatherFriends')}}
+  if(id==='inviteThem'){if(f.checkQ||f.stayed){f.invitedT=true;relation(s,'その子を誘ったら、孤立がほどけた。');text='「一緒に行こう」\nその子が、輪の中に入れた。';meaning='誘うと、孤立がほどける。'}else{s.mind-=1;text='誘おうとしたが、まだ距離があった。';meaning='まず声をかける・そばにいると良い。';grant(s,'checkOn')}}
+  if(id==='talkSecret'){if(f.checkQ||f.stayed||f.invitedT){f.keptOn=true;note(s,'毎日、少しずつ関わり続けている。');text='「今日はどうだった？」\n毎日、少しずつ話せている。';meaning='続けると、信頼が育つ。'}else{s.mind-=1;text='関わろうとしたが、まだ縁がなかった。';meaning='まず声をかけてから、関わると良い。';grant(s,'checkOn')}}
+  return {text,meaning};
+ },
+ watch(s){
+  if(s.stage===0)return '目撃した光景が、頭に残っている。';
+  if(s.stage===1)return '何をすればいいか、分からない。';
+  return '傍観してしまう自分が、気になっている。';
+ },
+ scene(s){const f=s.flags;
+  if(s.stage===0)return {narrative:'校庭の隅で、クラスの子が囲まれて悪口を言われている。目撃した。',speaker:'まわりの子',quote:'（笑い声）',look:'囲まれている子が、うつむいている。',self:'どうしよう…',hint:'見たとき、何がつらい？'};
+  if(s.stage===1)return {narrative:'休み時間。何をするか、決める。',speaker:'いじめられていた子',quote:'（一人でいる）',look:'その子が、一人でいる。',self:s.reason==='scared'?'怖い…':s.reason==='dontKnow'?'分からない…':s.reason==='feelBad'?'心に残る…':'どうしよう…',hint:'声をかける・相談・伝える・記録、方法はある。'};
+  return {narrative:'下駄箱。明日から、どう関わるか。',speaker:'いじめられていた子',quote:f.checkQ?'ありがとう':'…',look:'校舎の向こうに、夕日。',self:f.checkQ||f.toldBy?'一歩、動けた。':'まだ、何もできていない。',hint:'みんなで止める・誘う・関わり続ける、選ぼう。'};
+ },
+ progress(s){const f=s.flags;return f.stood||f.invitedT||f.keptOn?3:f.checkQ||f.toldBy||f.askedF||f.stayed||f.watched?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.stood||f.keptOn?'行動できて、関わり続けている。':f.checkQ||f.toldBy?'一歩動けた。次の関わり方を選べる。':'見て見ぬふりのまま。声をかける・伝える、方法はある。'}
 }
 };
 

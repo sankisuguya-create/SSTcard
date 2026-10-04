@@ -271,6 +271,17 @@ export const cards={
  noteKey:{title:'友達に要点を聞く',kind:'talk',label:'要点を聞く',cost:1,bond:1,atk:1,attr:'soc',up:'soc',desc:'ノートの、大事なところを聞く。',hint:'要点だけなら、聞きやすい',icon:'puzzle'},
  catchPlan:{title:'追いつく計画を立てる',kind:'think',label:'追いつく計画',cost:1,atk:2,attr:'study',up:'study',desc:'いつ・何をやるか、計画を立てる。',hint:'計画があれば、迷わない',icon:'list'},
  caughtUp:{title:'追いつけた！',kind:'support',label:'追いついた',cost:1,atk:2,attr:'study',up:'study',desc:'遅れを、取り戻した。',hint:'追いついた経験は、自信になる',icon:'check'},
+ coverUp:{title:'ごまかして出す',kind:'think',label:'ごまかす',cost:0,strain:1,atk:1,attr:'study',desc:'直さないまま、出す。',hint:'ごまかすと、あとがつらい',icon:'eye'},
+ throwAway:{title:'捨ててしまう',kind:'think',label:'捨てる',cost:0,strain:1,atk:0,desc:'壊れた作品を、捨てる。',hint:'楽になるが、作品はなくなる',icon:'door'},
+ mendBit:{title:'直せるところだけ直す',kind:'think',label:'少し直す',cost:1,atk:2,attr:'study',up:'study',desc:'壊れたところだけ、直す。',hint:'小さな直しから、形になる',icon:'pen'},
+ partRedo:{title:'一部分だけ作り直す',kind:'think',label:'部分直し',cost:1,atk:2,attr:'study',up:'study',desc:'だめな部分だけ、新しく作る。',hint:'全部やり直さなくていい',icon:'puzzle'},
+ likePart:{title:'好きなところを見直す',kind:'think',label:'見直す',cost:1,atk:2,attr:'study',up:'study',desc:'作品の好きなところを、もう一度見る。',hint:'好きなところが、直すヒントになる',icon:'heart'},
+ consultArt:{title:'先生と直し方を考える',kind:'talk',label:'直し方を聞く',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'先生に、どう直すか聞く。',hint:'一人で抱えなくていい',icon:'people'},
+ showArt:{title:'友達に作品を見せる',kind:'talk',label:'見せる',cost:1,bond:1,atk:1,attr:'soc',up:'soc',desc:'壊れたまま、友達に見せる。',hint:'見てもらうと、気持ちが軽くなる',icon:'message'},
+ copyGood:{title:'うまい人の真似をする',kind:'think',label:'真似する',cost:1,atk:2,attr:'study',up:'study',desc:'上手な子の作り方を、真似する。',hint:'真似は、上手になる近道',icon:'search'},
+ fixIdea:{title:'新しい形に直す',kind:'support',label:'新しい形',cost:2,atk:3,attr:'study',up:'study',desc:'壊れた形をいかして、新しい作品にする。',hint:'失敗も、材料になる',icon:'spark'},
+ forceSubmit:{title:'そのまま出す',kind:'think',label:'そのまま出す',cost:0,strain:1,atk:1,attr:'study',desc:'直さないまま、提出する。',hint:'出すことは大事。でも…',icon:'flag'},
+ finishWork:{title:'ちゃんと仕上げて出す',kind:'support',label:'仕上げる',cost:2,atk:3,attr:'study',up:'study',desc:'直した作品を、自信を持って出す。',hint:'やり直した分だけ、自信になる',icon:'check'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -1641,6 +1652,56 @@ sickDay:{
  },
  progress(s){const f=s.flags;return s.goal===0?(f.caught?3:f.clearedS?2:s.reason?1:0):s.goal===1?(f.askedT||f.planned?3:f.clearedS?2:s.reason?1:0):(f.caught?3:f.clearedS?2:s.reason?1:0)},
  situation(s){const f=s.flags;return f.clearedS?'追いつき方が見つかった。聞く・要点・少しずつ・計画がある。':f.askedM||f.notek?'聞き方が見つかった。':'遅れが残っている。追いつき方は練習できる。'}
+},
+
+// STORY 30 ── 図工の作品が壊れた ──
+craft:{
+ title:'図工の作品が壊れた',nav:'図工の作品',num:'30',attrs:['study'],
+ goals:['作品を完成させたい','うまくいかないときの自分を知りたい','失敗しても、やり直せる自分になりたい'],
+ chapters:['図工の時間','放課後','次の図工'],locations:['図工室','家・帰り道','図工室'],
+ base:['coverUp','throwAway','anger','ignore','boast'],start:{mind:5,energy:4},
+ monsters:[{name:'グシャグシャの影',hp:4,power:1,turns:4,look:'のりがはみ出して、形が崩れている。'},{name:'モヤモヤの影',hp:4,power:1,turns:4,look:'直せる気がしない。考えが、まとまらない。'},{name:'コワバリの影',hp:6,power:2,turns:5,look:'出すのがこわい。手が、固まっている。'}],
+ talk:[['teacherArt','先生に相談','どう直すか、先生に聞く。'],['friendArt','友達に見てもらう','壊れた作品を、友達に見せる。'],['skillKid','図工が得意な子に聞く','上手な子の、作り方を聞く。']],
+ think:[['perfect','完璧じゃなきゃ嫌','直しても、元どおりにならない。'],['noTime','直す時間がない','次の図工まで、時間がない。'],['gaveUp','もう作りたくない','壊れて、作る気がなくなった。']],
+ reasonKeys:['perfect','noTime','gaveUp'],
+ stageGrants:[['mendBit'],['finishWork']],
+ onExplore(s,key){
+  const out={text:'',card:null};
+  if(key==='teacherArt'){s.flags.consulted=true;relation(s,'先生に相談したら、直し方のヒントをもらえた。');out.text='先生「壊れたところをいかす形も、あるよ」\n直し方のヒントを、もらえた。';out.card='consultArt'}
+  if(key==='friendArt'){s.flags.shown=true;relation(s,'友達に見せたら、「ここ、いいね」と言ってくれた。');out.text='友達「ここ、すごくいいね！」\n見てもらうと、少し気持ちが軽くなった。';out.card='showArt'}
+  if(key==='skillKid'){s.flags.askedK=true;note(s,'上手な子の作り方を聞いたら、真似できそうなところが分かった。');out.text='上手な子「ここは、こうやるといいよ」\n真似できそうなところが、分かった。';out.card='copyGood'}
+  if(key==='perfect'){s.reason='perfect';note(s,'元どおりじゃなくてもいい、と気づいた。');out.text='「完璧じゃなきゃ嫌」\nでも、元どおりじゃなくてもいい。';out.card='mendBit'}
+  if(key==='noTime'){s.reason='noTime';note(s,'全部やり直す時間はないが、一部分なら直せる。');out.text='「直す時間がない」\n一部分だけなら、直せる。';out.card='partRedo'}
+  if(key==='gaveUp'){s.reason='gaveUp';note(s,'好きなところは、残っている。');out.text='「もう作りたくない」\nでも、好きなところは残っている。';out.card='likePart'}
+  return out;
+ },
+ onPlay(s,id){
+  const f=s.flags;let text='',meaning='';
+  if(id==='coverUp'){f.covered=true;s.rep-=1;relation(s,'ごまかして出したら、先生に「もう少し直そう」と言われた。');text='ごまかして、出した。\n先生「ここ、もう少し直そうか」';meaning='ごまかすと、あとがつらい。';grant(s,'mendBit')}
+  if(id==='throwAway'){f.threw=true;s.mind-=1;relation(s,'捨てたら、少し楽になった。でも、作品はなくなった。');text='壊れた作品を、捨てた。\n少し楽になった。でも、作品はない。';meaning='捨てると楽になるが、作品はなくなる。';grant(s,'partRedo')}
+  if(id==='mendBit'){f.fixed=true;note(s,'壊れたところだけ直したら、形になってきた。');text='壊れたところだけ、直した。\n少しずつ、形になってきた。';meaning='小さな直しから、形になる。'}
+  if(id==='partRedo'){f.fixed=true;note(s,'一部分だけ作り直したら、間に合いそうになった。');text='一部分だけ、作り直した。\n「これなら、間に合う」';meaning='全部やり直さなくていい。'}
+  if(id==='likePart'){f.fixed=true;note(s,'好きなところを見直したら、直し方が見えてきた。');text='好きなところを、見直した。\n「ここは、いい感じ」';meaning='好きなところが、直すヒントになる。'}
+  if(id==='consultArt'){f.consulted=true;f.fixed=true;relation(s,'先生と直し方を考えたら、見通しが立った。');text='「こう直すと、いいかも」\n先生と一緒に、考えた。';meaning='一人で抱えなくていい。'}
+  if(id==='showArt'){f.shown=true;relation(s,'友達に見せたら、「いいね」と言ってくれた。');text='「ここ、いいね！」\n友達に見せたら、ほめてくれた。';meaning='見てもらうと、気持ちが軽くなる。'}
+  if(id==='copyGood'){f.copiedG=true;f.fixed=true;note(s,'上手な子の真似をしたら、直せた。');text='上手な子の、真似をした。\n「これで、直せた」';meaning='真似は、上手になる近道。'}
+  if(id==='fixIdea'){if(f.fixed||f.consulted||f.copiedG){f.reformed=true;note(s,'壊れた形をいかして、新しい作品に直せた。');text='壊れた形をいかして、新しい作品に。\n「前より、いいかも！」';meaning='失敗も、材料になる。'}else{s.mind-=1;text='新しい形にしようとしたが、直し方が分からなかった。';meaning='まず直せるところから、直すと良い。';grant(s,'mendBit')}}
+  if(id==='forceSubmit'){if(f.fixed||f.consulted){f.submitted=true;text='そのまま出した。\n先生「がんばったね」';meaning='出せた。直せた分だけ、すっきりする。'}else{s.mind-=1;text='そのまま出そうとしたが、手が止まった。';meaning='まず直し方を見つけてから、出すと良い。';grant(s,'mendBit')}}
+  if(id==='finishWork'){if(f.fixed||f.consulted||f.shown){f.done=true;note(s,'直した作品を、自信を持って出せた。');text='直した作品を、出した。\n「できた！」';meaning='やり直した分だけ、自信になる。'}else{s.mind-=1;text='仕上げようとしたが、まだ直せていなかった。';meaning='まず直し方を見つけてから、仕上げると良い。';grant(s,'consultArt')}}
+  return {text,meaning};
+ },
+ watch(s){
+  if(s.stage===0)return '作品が、壊れてしまった。';
+  if(s.stage===1)return '持ち帰っても、考えがまとまらない。';
+  return '次の図工の時間。出すのが、こわい。';
+ },
+ scene(s){const f=s.flags;
+  if(s.stage===0)return {narrative:'図工の時間。のり付けに失敗して、作品が壊れた。',speaker:'友達',quote:'あー、ぐしゃっとしちゃった',look:'紙コップ人形が、つぶれている。',self:'せっかく作ったのに…',hint:'うまくいかないとき、何がつらい？'};
+  if(s.stage===1)return {narrative:'放課後。壊れた作品を、家に持ち帰った。',speaker:'家族',quote:'それ、どうしたの？',look:'机の上に、壊れた作品がある。',self:s.reason==='perfect'?'元どおりにしたいのに。':s.reason==='noTime'?'直す時間がない。':s.reason==='gaveUp'?'もう、作りたくない。':'どうしよう…',hint:'直し方は、いろいろある。'};
+  return {narrative:'次の図工の時間。みんなが、作品を出している。',speaker:'先生',quote:f.done?'よく直せたね':'どうする？',look:'みんなの作品が、並んでいる。',self:f.fixed?'少しずつ、直せた。':'まだ、直せていない。',hint:'直せた形で、出そう。'};
+ },
+ progress(s){const f=s.flags;return f.done||f.reformed?3:f.fixed||f.consulted?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.done?'直して出せた。失敗も材料になった。':f.fixed||f.consulted?'直し方が見つかった。直せるところ・一部分・相談・真似がある。':'作品が壊れたまま。直し方は見つけられる。'}
 }
 };
 

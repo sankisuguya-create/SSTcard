@@ -538,6 +538,16 @@ export const cards={
  learnTune:{title:'ピアノの音に耳を澄ませる',kind:'think',label:'音を聞く',cost:1,atk:2,attr:'study',up:'study',desc:'ピアノの音を、よく聞く。',hint:'聞くと、合わせられる',icon:'ear'},
  singTogether:{title:'隣の人と一緒に歌う',kind:'talk',label:'一緒に歌う',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'隣の人の声に合わせて歌う。',hint:'一緒なら、怖くない',icon:'people'},
  ownPart:{title:'自分のパートに自信を持つ',kind:'think',label:'自分のパート',cost:1,atk:2,attr:'study',up:'study',desc:'自分のパートを、堂々と歌う。',hint:'自信は、声を大きくする',icon:'spark'},
+ skipPool:{title:'プールを休みたい',kind:'think',label:'休みたい',cost:0,strain:1,atk:1,attr:'ath',desc:'怖いから、プールを休みたい。',hint:'休むと、いつまでも怖い',icon:'door'},
+ wetFirst:{title:'まずはプールサイドで座る',kind:'think',label:'まず座る',cost:0,atk:1,attr:'ath',desc:'入らなくても、近くに座る。',hint:'近づくのも、一歩',icon:'check'},
+ splashFace:{title:'顔に水をかけてみる',kind:'think',label:'顔に水',cost:1,atk:2,attr:'ath',up:'ath',desc:'顔に、少しずつ水をかける。',hint:'慣れるのも、練習',icon:'sun'},
+ holdEdge:{title:'プールのふちを握って入る',kind:'think',label:'ふちを握る',cost:1,atk:2,attr:'ath',up:'ath',desc:'ふちを握って、ゆっくり入る。',hint:'掴まると、安心',icon:'hand'},
+ kickPractice:{title:'けのびを練習する',kind:'think',label:'けのび',cost:1,atk:2,attr:'ath',up:'ath',desc:'壁を蹴って、伸びる練習。',hint:'けのびは、泳ぎの基本',icon:'runner'},
+ tellCoach:{title:'「怖い」と先生に言う',kind:'talk',label:'怖いと言う',cost:1,bond:1,atk:2,attr:'ath',up:'ath',desc:'「水が怖い」と、先生に言う。',hint:'正直は、助けを呼ぶ',icon:'message'},
+ tryFloat:{title:'浮く練習をする',kind:'think',label:'浮く練習',cost:1,atk:2,attr:'ath',up:'ath',desc:'浅いところで、浮いてみる。',hint:'浮くと、沈まないと分かる',icon:'check'},
+ poolStep:{title:'一歩ずつ深いところへ',kind:'think',label:'一歩ずつ',cost:1,atk:2,attr:'ath',up:'ath',desc:'一歩ずつ、深いところへ進む。',hint:'一歩ずつは、現実的',icon:'up'},
+ breatheUnder:{title:'水中で息を吐いてみる',kind:'think',label:'息を吐く',cost:1,atk:2,attr:'ath',up:'ath',desc:'水中で、ブクブク息を吐く。',hint:'吐けると、沈まない',icon:'ear'},
+ goSlow:{title:'怖いなら、怖いまま少し',kind:'think',label:'怖いまま少し',cost:1,atk:2,attr:'ath',up:'ath',desc:'怖い気持ちのまま、少しだけやる。',hint:'怖いまま進むのも、勇気',icon:'heart'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -3131,6 +3141,48 @@ choirMiss:{title:'合唱でミスした',nav:'合唱でミスした',num:56,attr
  },
  progress(s){const f=s.flags;return f.sangT||f.ownedP||f.learnedT?3:f.askedP3||f.practiced2||f.askedMT||f.sangL?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.sangT||f.ownedP?'立て直して、歌えそう。':f.askedP3||f.practiced2?'練習で、立て直せた。':'まだ、不安なまま。部分練習・教わる・一緒に歌う、方法はある。'}
+},
+poolFear:{title:'プールが怖い',nav:'プールが怖い',num:57,attrs:['ath'],goals:['少しずつ水に慣れたい','怖いことを伝えたい','自分のペースで挑戦したい'],chapters:['プールの授業が始まる','水に慣れる','少しずつ進む'],locations:['プールサイド','浅いところ','プール'],base:['skipPool','wetFirst','splashFace','anger','ignore'],
+ start:{mind:4,energy:3},
+ monsters:[{name:'水への怖さ',hp:5,power:1,turns:4,look:'水が、ちょっと怖い。'},{name:'沈みそうな不安',hp:5,power:1,turns:4,look:'沈んでしまうんじゃないか。'},{name:'深いところ',hp:6,power:2,turns:4,look:'深いところは、もっと怖い。'}],
+ talk:[['tellCoach2','「怖い」と先生に言う','正直に、気持ちを言う。'],['askFriend7','できる友達に聞く','「どうやって慣れた？」と聞く。'],['joinBuddy','友達と一緒に入る','一人より、二人が安心。']],
+ think:[['coldWater','水が冷たくて怖い','水が冷たくて、入りたくない。'],['sinkFear','沈みそうで怖い','沈んでしまうんじゃないか。'],['wantSwim','泳げるようになりたい','本当は、泳げるようになりたい。']],
+ reasonKeys:['coldWater','sinkFear','wantSwim'],
+ stageGrants:[['holdEdge','kickPractice','tellCoach'],['tryFloat','poolStep','breatheUnder','goSlow']],
+ subs:[
+  {title:'先生が「浅いところでいいよ」と言ってくれた',text:'深いところじゃなくても、いいと言われた。',stat:'ath',min:0,good:{text:'浅いところで、浮けた。',mind:1},ok:{text:'安心した。',mind:1}},
+  {title:'友達が「僕も最初は怖かった」と言った',text:'みんな、最初は怖かった。',stat:'ath',min:0,good:{text:'「普通なんだ」と思えた。',rep:1,mind:1},ok:{text:'ほっとした。',mind:1}}
+ ],
+ onExplore(s,key){const out={text:'',card:null};
+  if(key==='tellCoach2'){s.flags.toldC2=true;relation(s,'「怖い」と言ったら、「無理しなくていいよ」と言ってもらえた。');out.text='「水が、怖いです」\n「分かった。浅いところから、ゆっくりいこう」';out.card='tellCoach'}
+  if(key==='askFriend7'){s.flags.askedF7=true;out.text='「どうやって慣れた？」\n「ふちを握って、ゆっくり入ったよ」';out.card='holdEdge'}
+  if(key==='joinBuddy'){s.flags.joined=true;relation(s,'友達と一緒に入ったら、安心した。');out.text='「一緒に入ろ」\n「うん！」';out.card='tryFloat'}
+  if(key==='coldWater'){s.reason='coldWater';out.text='水が冷たくて、怖い。\n「顔に水」「ふちを握る」で、少しずつ慣れよう。';out.card='splashFace'}
+  if(key==='sinkFear'){s.reason='sinkFear';out.text='沈んでしまうんじゃないか。\n「浮く練習」で、沈まないと分かる。';out.card='tryFloat'}
+  if(key==='wantSwim'){s.reason='wantSwim';out.text='本当は、泳げるようになりたい。\n「けのび」が、泳ぎの始まり。';out.card='kickPractice'}
+  return out;
+ },
+ onPlay(s,id){const f=s.flags;
+  if(id==='wetFirst'){f.wetted=true;return{text:'プールサイドに、座ってみた。',meaning:'近づくのも、一歩。'}}
+  if(id==='splashFace'){f.splashed=true;return{text:'顔に、水をかけてみた。',meaning:'慣れるのも、練習。'}}
+  if(id==='holdEdge'){f.held=true;return{text:'ふちを握って、ゆっくり入った。',meaning:'掴まると、安心。'}}
+  if(id==='kickPractice'){f.kicked=true;return{text:'けのびを、練習した。',meaning:'けのびは、泳ぎの基本。'}}
+  if(id==='tellCoach'){f.told=true;return{text:'「怖い」と、先生に言った。',meaning:'正直は、助けを呼ぶ。'}}
+  if(id==='tryFloat'){f.floated=true;return{text:'浮いて、みた。',meaning:'浮くと、沈まないと分かる。'}}
+  if(id==='poolStep'){f.stepped=true;return{text:'一歩ずつ、深いところへ。',meaning:'一歩ずつは、現実的。'}}
+  if(id==='breatheUnder'){f.breathed=true;return{text:'水中で、息を吐いてみた。',meaning:'吐けると、沈まない。'}}
+  if(id==='goSlow'){f.wentSlow=true;return{text:'怖いまま、少しだけやった。',meaning:'怖いまま進むのも、勇気。'}}
+  if(id==='skipPool'){f.skipped=true;return{text:'プールを、休みたいと思った。',meaning:'休むと、いつまでも怖い。'}}
+  return{text:'',meaning:''};
+ },
+ watch(s){return s.stage===0?'怖いのは、みんなある。':s.stage===1?'一歩ずつが、現実的。':'怖いまま進むのも、勇気。'},
+ scene(s){const f=s.flags;
+  if(s.stage===0)return{narrative:'プールの授業。みんなが入っていく中、足が止まる。',speaker:'体育の先生',quote:'水着着替えた人から、入ってー',look:'青い水が、広がっている。',self:'怖い…',hint:'プールで、何が怖い？'};
+  if(s.stage===1)return{narrative:'浅いところで、水に慣れる時間。',speaker:'体育の先生',quote:'無理しなくていいからね',look:'浅いところは、胸くらいの深さ。',self:s.reason==='sinkFear'?'沈みそう…':s.reason==='wantSwim'?'泳ぎたい…':'冷たい…',hint:'顔に水・ふち・けのび・正直、方法はある。'};
+  return{narrative:'少しずつ、進んでみる。',speaker:'体育の先生',quote:f.floated||f.stepped?'「いいね、その調子！」':'「今日はどこまでいける？」',look:'深いところが、まだある。',self:f.floated||f.breathed||f.wentSlow?'少しずつ、いける。':'まだ、怖いまま。',hint:'浮く・一歩・息・怖いまま、選ぼう。'};
+ },
+ progress(s){const f=s.flags;return f.floated||f.breathed||f.wentSlow||f.stepped?3:f.splashed||f.held||f.kicked||f.told?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.floated||f.breathed?'浮けると分かった。':f.splashed||f.held?'少しずつ、慣れてきた。':'まだ、怖いまま。顔に水・ふち・正直、方法はある。'}
 }
 };
 

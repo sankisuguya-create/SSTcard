@@ -341,6 +341,15 @@ export const cards={
  seatPlan:{title:'離れても仲良しでいる作戦',kind:'think',label:'離れても作戦',cost:1,atk:2,attr:'study',up:'study',desc:'帰り・休み・遊びの約束を立てる。',hint:'約束があれば、離れても大丈夫',icon:'list'},
  smileSeat:{title:'新しい席を楽しむ',kind:'support',label:'楽しむ',cost:2,atk:3,attr:'soc',up:'soc',desc:'新しい席での、毎日を楽しむ。',hint:'楽しめれば、新しい毎日になる',icon:'sun'},
  keepBond:{title:'仲良しのままでいる',kind:'support',label:'仲良しのまま',cost:2,atk:3,attr:'soc',up:'soc',desc:'離れても、仲良しは続く。',hint:'離れても続く、友達関係',icon:'check'},
+ overTry:{title:'いつもと違う自分を見せる',kind:'think',label:'頑張りすぎる',cost:0,strain:1,atk:1,attr:'soc',desc:'親の前で、頑張りすぎる。',hint:'頑張りすぎると、しんどい',icon:'bolt'},
+ hideBack:{title:'後ろに隠れる',kind:'think',label:'隠れる',cost:0,strain:1,atk:0,desc:'見られないように、うつむく。',hint:'隠れても、緊張は消えない',icon:'eye'},
+ beMyself:{title:'いつもの自分でいる',kind:'think',label:'いつもの自分',cost:1,atk:2,attr:'study',up:'study',desc:'親が来ても、いつもどおりでいる。',hint:'いつもどおりが、いちばん楽',icon:'sun'},
+ practiceHand:{title:'前の日に手を挙げる練習',kind:'think',label:'練習する',cost:1,atk:2,attr:'study',up:'study',desc:'参観日前に、発表の練習をする。',hint:'練習すれば、本番もできる',icon:'list'},
+ tellParent:{title:'「見られると緊張する」と言う',kind:'talk',label:'緊張と伝える',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'親に、緊張していると正直に言う。',hint:'言うと、楽になる',icon:'heart'},
+ askOnce:{title:'一度だけ手を挙げる',kind:'think',label:'一度だけ挙げる',cost:1,atk:2,attr:'study',up:'study',desc:'分かる問題で、一度だけ挙げる。',hint:'一度なら、できそう',icon:'hand'},
+ safeAnswer:{title:'分かる問題を選ぶ',kind:'think',label:'分かる問題',cost:1,atk:2,attr:'study',up:'study',desc:'自信のある問題だけ、挙げる。',hint:'分かる問題なら、間違えない',icon:'search'},
+ handRaised:{title:'手を挙げられた',kind:'support',label:'挙げられた',cost:2,atk:3,attr:'study',up:'study',desc:'親の前でも、手を挙げられた。',hint:'挙げた経験は、自信になる',icon:'flag'},
+ honestDay:{title:'いつもどおりできた',kind:'support',label:'いつもどおり',cost:2,atk:3,attr:'soc',up:'soc',desc:'見られても、いつもどおりできた。',hint:'いつもの自分で、乗り越えた',icon:'check'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -2054,6 +2063,54 @@ seat:{
  },
  progress(s){const f=s.flags;return f.enjoyed||f.bondKept?3:f.meetPlanned||f.seatOk||f.madeNew||f.toldO?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.enjoyed||f.bondKept?'新しい席を楽しめ、仲良しも続いた。':f.meetPlanned||f.seatOk?'やり方が見つかった。伝える・約束・新しく話す・いいとこ探し。':'さびしいまま。つながり方は、見つけられる。'}
+},
+
+// STORY 37 ── 参観日、見られると手が挙がらない ──
+visit:{
+ title:'参観日、見られると手が挙がらない',nav:'参観日',num:'37',attrs:['soc','study'],
+ goals:['手を挙げたい','いつもどおりでいたい','緊張する自分を知りたい'],
+ chapters:['参観日の朝','授業中','放課後'],locations:['教室','教室','家'],
+ base:['overTry','hideBack','anger','ignore','boast'],start:{mind:5,energy:4},
+ monsters:[{name:'ミラレルの影',hp:4,power:1,turns:4,look:'親が、後ろから見ている。'},{name:'ハズカシイの影',hp:4,power:1,turns:4,look:'見られると、手が挙げられない。'},{name:'キタインの影',hp:6,power:2,turns:5,look:'親の期待に、応えたい気持ち。'}],
+ talk:[['talkParent','親に緊張と言う','「緊張する」と、親に言う。'],['talkTeacher2','先生に相談','参観日の緊張を、先生に言う。'],['askFriend','友達と励まし合う','友達と「頑張ろう」と言い合う。']],
+ think:[['shyWatch','見られて恥ずかしい','見られるのが、恥ずかしい。'],['missFear','間違えたら恥ずかしい','間違えるのが、こわい。'],['wantShow','頑張って見せたい','いいところを、見せたい。']],
+ reasonKeys:['shyWatch','missFear','wantShow'],
+ stageGrants:[['askOnce'],['handRaised']],
+ onExplore(s,key){
+  const out={text:'',card:null};
+  if(key==='talkParent'){s.flags.toldP=true;relation(s,'「緊張する」と言ったら、「いつもどおりでいいよ」と言われた。');out.text='「いつもどおりで、いいよ」\n親が、分かってくれた。';out.card='tellParent'}
+  if(key==='talkTeacher2'){s.flags.toldT3=true;note(s,'先生に「分かる問題で挙げてみて」と言われた。');out.text='先生「分かる問題で、挙げてみて」\n先生と、考えた。';out.card='safeAnswer'}
+  if(key==='askFriend'){s.flags.cheered=true;relation(s,'友達と「頑張ろう」と言い合った。');out.text='「お互い、頑張ろうね」\n励まし合えた。';out.card='askOnce'}
+  if(key==='shyWatch'){s.reason='shyWatch';note(s,'恥ずかしい気持ちは、言うと軽くなる。');out.text='「見られて、恥ずかしい」\n言うと、軽くなる。';out.card='tellParent'}
+  if(key==='missFear'){s.reason='missFear';note(s,'間違えたくないなら、分かる問題を選ぶ。');out.text='「間違えたら、恥ずかしい」\n分かる問題を、選ぼう。';out.card='safeAnswer'}
+  if(key==='wantShow'){s.reason='wantShow';note(s,'見せたいなら、練習して準備する。');out.text='「頑張って、見せたい」\n練習して、準備しよう。';out.card='practiceHand'}
+  return out;
+ },
+ onPlay(s,id){
+  const f=s.flags;let text='',meaning='';
+  if(id==='overTry'){f.overTried=true;s.mind-=1;relation(s,'頑張りすぎたら、緊張が増えた。');text='いつもと違う自分を、見せようとした。\n緊張が、増えた。';meaning='頑張りすぎると、しんどい。';grant(s,'beMyself')}
+  if(id==='hideBack'){f.hidB=true;s.mind-=1;relation(s,'隠れたら、何もできなかった。');text='うつむいて、隠れた。\n何も、できなかった。';meaning='隠れても、緊張は消えない。';grant(s,'askOnce')}
+  if(id==='beMyself'){f.myself=true;note(s,'いつもの自分でいたら、楽だった。');text='いつもどおり、授業を受けた。\n「なんだ、いつもと同じだ」';meaning='いつもどおりが、いちばん楽。'}
+  if(id==='practiceHand'){f.practiced=true;note(s,'前の日に練習したら、見通しが持てた。');text='家で、発表の練習をした。\n「明日は、挙げられそう」';meaning='練習すれば、本番もできる。'}
+  if(id==='tellParent'){f.toldP=true;relation(s,'緊張を言ったら、親が分かってくれた。');text='「見られると、緊張するんだ」\n「そっか。いつもどおりでいいよ」';meaning='言うと、楽になる。'}
+  if(id==='askOnce'){f.askedOnce=true;note(s,'一度だけ手を挙げたら、できた。');text='一度だけ、手を挙げた。\n「挙げられた」';meaning='一度なら、できそう。'}
+  if(id==='safeAnswer'){f.chosen=true;note(s,'分かる問題で挙げたら、答えられた。');text='分かる問題で、手を挙げた。\n「答えられた！」';meaning='分かる問題なら、間違えない。'}
+  if(id==='handRaised'){if(f.practiced||f.askedOnce||f.chosen){f.raised=true;note(s,'親の前で、手を挙げられた。');text='「挙げられた！」\n親が、少し笑っていた。';meaning='挙げた経験は、自信になる。'}else{s.mind-=1;text='挙げようとしたが、自信がなかった。';meaning='まず練習・一度だけ・分かる問題を選んでから、挙げると良い。';grant(s,'safeAnswer')}}
+  if(id==='honestDay'){if(f.myself||f.toldP){f.honest=true;note(s,'いつもどおり、乗り越えられた。');text='「いつもの自分で、できた」\n親が「頑張ってたね」と言った。';meaning='いつもの自分で、乗り越えた。'}else{s.mind-=1;text='いつもどおりでいようとしたが、緊張が先に来た。';meaning='まず伝える・いつもの自分を意識してから、やると良い。';grant(s,'beMyself')}}
+  return {text,meaning};
+ },
+ watch(s){
+  if(s.stage===0)return '親が、後ろから見ている。';
+  if(s.stage===1)return '見られると、手が挙げられない。';
+  return '放課後。親が、ねぎらってくれる。';
+ },
+ scene(s){const f=s.flags;
+  if(s.stage===0)return {narrative:'参観日の朝。親が、教室の後ろに座っている。',speaker:'親',quote:'頑張ってね',look:'後ろに、親が座っている。',self:'見られてる…',hint:'見られる日のつらさは、どこ？'};
+  if(s.stage===1)return {narrative:'授業中。先生が質問を出した。手を挙げたいのに、挙げられない。',speaker:'先生',quote:'はい、この問題、誰か分かる？',look:'みんなが、手を挙げている。',self:s.reason==='shyWatch'?'見られて、恥ずかしい。':s.reason==='missFear'?'間違えたら、恥ずかしい。':s.reason==='wantShow'?'頑張って、見せたい。':'手が、重い…',hint:'練習・いつもの自分・一度だけ・分かる問題、方法はある。'};
+  return {narrative:'放課後。親と帰り道を歩く。',speaker:'親',quote:f.raised||f.honest?'今日、頑張ってたね':'どうだった？',look:'親が、隣を歩いている。',self:f.raised?'手を挙げられて、うれしい。':f.honest?'いつもどおりで、よかった。':'まだ、モヤモヤする。',hint:'今日の自分を、振り返ろう。'};
+ },
+ progress(s){const f=s.flags;return f.raised||f.honest?3:f.practiced||f.askedOnce||f.chosen||f.myself||f.toldP?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.raised?'手を挙げられた。練習・選ぶ・一度だけ、が効いた。':f.honest||f.myself?'いつもどおりできた。見られても、自分でいられた。':'緊張したまま。いつもの自分で、乗り越えられる。'}
 }
 };
 

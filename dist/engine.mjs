@@ -321,6 +321,17 @@ export const cards={
  habitAsk:{title:'習慣を先生に相談する',kind:'talk',label:'習慣相談',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'遅刻ぐせを、先生に相談する。',hint:'習慣のことも、相談できる',icon:'people'},
  arriveCalm:{title:'落ち着いて登校する',kind:'support',label:'落ち着いて',cost:2,atk:3,attr:'study',up:'study',desc:'準備した朝で、落ち着いて登校する。',hint:'準備の分だけ、落ち着ける',icon:'flag'},
  newHabit:{title:'遅刻しない習慣を作る',kind:'support',label:'習慣を作る',cost:2,atk:3,attr:'study',up:'study',desc:'早寝・準備・工夫で、習慣を作る。',hint:'習慣は、明日の味方',icon:'check'},
+ hideBook:{title:'なくしたと言わない',kind:'think',label:'言わない',cost:0,strain:1,atk:0,desc:'なくしたことを、言わない。',hint:'黙っていると、気になる',icon:'eye'},
+ fakeReturn:{title:'返したことにする',kind:'think',label:'返したふり',cost:0,strain:1,atk:1,attr:'soc',desc:'返したことにして、ごまかす。',hint:'ごまかすと、あとがつらい',icon:'door'},
+ tellLost:{title:'なくしたと正直に言う',kind:'talk',label:'正直に言う',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'「なくしました」と、正直に言う。',hint:'正直に言うと、済ませ方が決まる',icon:'check'},
+ searchBack:{title:'なくした場所を探す',kind:'think',label:'探す',cost:1,atk:2,attr:'study',up:'study',desc:'どこでなくしたか、思い出して探す。',hint:'思い出すと、見つかる',icon:'search'},
+ replaceBook:{title:'お小遣いで弁償する',kind:'think',label:'弁償する',cost:1,atk:2,attr:'study',up:'study',desc:'同じ本を、買って返す。',hint:'責任は、お金でもとれる',icon:'list'},
+ askLibrarian:{title:'図書の先生に相談する',kind:'talk',label:'図書先生に相談',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'図書の先生に、なくしたと言う。',hint:'相談すると、やり方が決まる',icon:'people'},
+ checkBag:{title:'もう一度カバンを見る',kind:'think',label:'カバンを見る',cost:1,atk:2,attr:'study',up:'study',desc:'カバンの奥を、もう一度見る。',hint:'意外と、あるもの',icon:'search'},
+ askFriends:{title:'貸したか聞く',kind:'talk',label:'貸したか聞く',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'「貸してない？」と、友達に聞く。',hint:'聞けば、見つかるかも',icon:'message'},
+ retraceSteps:{title:'通った道を探す',kind:'think',label:'道を探す',cost:1,atk:2,attr:'study',up:'study',desc:'今日通ったところを、探す。',hint:'戻って探すと、見つかる',icon:'runner'},
+ foundIt:{title:'見つかった！',kind:'support',label:'見つかった',cost:2,atk:3,attr:'study',up:'study',desc:'探したら、見つかった。',hint:'見つけた経験は、自信になる',icon:'flag'},
+ ownUp:{title:'ちゃんと詫びて済ませる',kind:'support',label:'詫びる',cost:2,atk:3,attr:'soc',up:'soc',desc:'「ごめんなさい」と、きちんと言う。',hint:'詫びた分だけ、前に進める',icon:'check'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -1936,6 +1947,56 @@ late:{
  },
  progress(s){const f=s.flags;return f.arrived||f.habit?3:f.told||f.prepared||f.calmed?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.arrived||f.habit?'落ち着いて登校できた。習慣も変わった。':f.told||f.prepared?'やり方が見つかった。正直・連絡・前日準備・工夫。':'遅刻しそうなまま。朝の習慣は変えられる。'}
+},
+
+// STORY 35 ── 図書室の本をなくした ──
+lostBook:{
+ title:'図書室の本をなくした',nav:'本をなくした',num:'35',attrs:['soc','study'],
+ goals:['本を見つけたい','なくしたときの自分を知りたい','責任のとり方を知りたい'],
+ chapters:['図書の時間','家','翌日'],locations:['図書室','家','図書室'],
+ base:['hideBook','fakeReturn','anger','ignore','boast'],start:{mind:5,energy:4},
+ monsters:[{name:'ナイの影',hp:4,power:1,turns:4,look:'カバンの中に、本がない。'},{name:'ドコの影',hp:4,power:1,turns:4,look:'どこでなくしたか、分からない。'},{name:'ハラの影',hp:6,power:2,turns:5,look:'正直に言うのが、少しこわい。'}],
+ talk:[['askLend','貸したか聞く','友達に、貸したか聞く。'],['askLib','図書の先生に相談','図書の先生に、なくしたと言う。'],['teacherBook','担任に相談','担任に、どうするか聞く。']],
+ think:[['borrowed','誰かに貸したかも','貸したかもしれない。'],['dropped','どこかに落としたかも','落としたかもしれない。'],['forgotPlace','置き場所を忘れた','どこに置いたか、忘れた。']],
+ reasonKeys:['borrowed','dropped','forgotPlace'],
+ stageGrants:[['checkBag'],['ownUp']],
+ onExplore(s,key){
+  const out={text:'',card:null};
+  if(key==='askLend'){s.flags.askedF2=true;relation(s,'友達に聞いたら、「借りてないよ」と言われた。');out.text='「借りてないよ」\n貸してはいない、と分かった。';out.card='askFriends'}
+  if(key==='askLib'){s.flags.askedL=true;note(s,'図書の先生に「正直に言ってね」と言われた。');out.text='図書の先生「なくしたら、正直に言ってね」\nやり方の、ヒントをもらった。';out.card='tellLost'}
+  if(key==='teacherBook'){s.flags.toldT=true;note(s,'担任に「まず探して、なければ正直に」と言われた。');out.text='「まず探して。なければ、正直に言おう」\n担任と、考えた。';out.card='searchBack'}
+  if(key==='borrowed'){s.reason='borrowed';note(s,'貸したなら、聞けば分かる。');out.text='「誰かに、貸したかも」\n友達に、聞こう。';out.card='askFriends'}
+  if(key==='dropped'){s.reason='dropped';note(s,'落としたなら、通った道を探せる。');out.text='「どこかに、落としたかも」\n通った道を、探そう。';out.card='retraceSteps'}
+  if(key==='forgotPlace'){s.reason='forgotPlace';note(s,'忘れたなら、もう一度カバンを見よう。');out.text='「置き場所を、忘れた」\nもう一度、カバンを見よう。';out.card='checkBag'}
+  return out;
+ },
+ onPlay(s,id){
+  const f=s.flags;let text='',meaning='';
+  if(id==='hideBook'){f.hid=true;s.mind-=1;relation(s,'言わなかったら、ずっと気になった。');text='なくしたと、言わなかった。\nずっと、気になった。';meaning='黙っていると、気持ちが重い。';grant(s,'tellLost')}
+  if(id==='fakeReturn'){f.faked=true;s.rep-=1;relation(s,'返したふりをしたら、あとでばれそうで怖くなった。');text='返したふりをした。\nばれそうで、怖くなった。';meaning='ごまかすと、あとがつらい。';grant(s,'tellLost')}
+  if(id==='tellLost'){f.told=true;relation(s,'正直に言ったら、「探してみよう」と言われた。');text='「なくしました」と、正直に言った。\n「探してみよう」';meaning='正直に言うと、済ませ方が決まる。'}
+  if(id==='searchBack'){f.searched=true;note(s,'思い出して探したら、体育館の脇で見つかった。');text='通った道を、探した。\n「あった！」';meaning='思い出すと、見つかる。'}
+  if(id==='replaceBook'){f.replaced=true;note(s,'お小遣いで弁償したら、責任がとれた。');text='同じ本を、買って返した。\n「ちゃんと、返せた」';meaning='責任は、お金でもとれる。'}
+  if(id==='askLibrarian'){f.askedL=true;f.told=true;note(s,'図書の先生に相談したら、済ませ方が分かった。');text='「なくしたら、正直に言ってね」\n図書の先生に、相談した。';meaning='相談すると、やり方が決まる。'}
+  if(id==='checkBag'){f.searched=true;note(s,'カバンの奥を見たら、入っていた。');text='カバンの、奥を見た。\n「あった！」';meaning='意外と、あるもの。'}
+  if(id==='askFriends'){f.askedF=true;note(s,'友達に聞いたら、貸してないと分かった。');text='「貸してない？」\n「借りてないよ」';meaning='聞けば、状況が分かる。'}
+  if(id==='retraceSteps'){f.searched=true;note(s,'通った道を戻ったら、見つかった。');text='通った道を、戻った。\n「あった！」';meaning='戻って探すと、見つかる。'}
+  if(id==='foundIt'){if(f.searched||f.askedF){f.found=true;note(s,'本が見つかった。');text='「見つかった！」\nちゃんと、返せた。';meaning='見つけた経験は、自信になる。'}else{s.mind-=1;text='探そうとしたが、どこを探せばいいか分からなかった。';meaning='まず聞く・思い出す・カバンを見てから、探すと良い。';grant(s,'checkBag')}}
+  if(id==='ownUp'){if(f.told||f.askedL){f.owned=true;note(s,'ちゃんと詫びて、済ませられた。');text='「ごめんなさい」と、きちんと言った。\n「ちゃんと言えたね」';meaning='詫びた分だけ、前に進める。'}else{s.mind-=1;text='詫びようとしたが、まだ正直に言えていなかった。';meaning='まず正直に言ってから、済ませると良い。';grant(s,'tellLost')}}
+  return {text,meaning};
+ },
+ watch(s){
+  if(s.stage===0)return 'カバンの中に、本がない。';
+  if(s.stage===1)return 'どこでなくしたか、分からない。';
+  return '翌日。正直に言うのが、少しこわい。';
+ },
+ scene(s){const f=s.flags;
+  if(s.stage===0)return {narrative:'図書の時間。返すはずの本が、カバンにない。',speaker:'友達',quote:'どうしたの？',look:'カバンの中に、本がない。',self:'え、ない…',hint:'本をなくしたとき、何がつらい？'};
+  if(s.stage===1)return {narrative:'家。どこでなくしたか、考える。',speaker:'家族',quote:'思い出してみたら？',look:'机の上に、ない。',self:s.reason==='borrowed'?'貸したかもしれない。':s.reason==='dropped'?'落としたかもしれない。':s.reason==='forgotPlace'?'置き場所を、忘れた。':'どこだろう…',hint:'探す・聞く・正直・弁償、方法はある。'};
+  return {narrative:'翌日。図書の先生に、言う番が来た。',speaker:'図書の先生',quote:f.found?'見つかってよかったね':'どうしたの？',look:'図書室が、静かだ。',self:f.told?'正直に言えて、すっきりした。':'まだ、言えていない。',hint:'正直に言うか、探して返そう。'};
+ },
+ progress(s){const f=s.flags;return f.found||f.owned||f.replaced?3:f.told||f.searched?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.found?'本が見つかった。探して、返せた。':f.told||f.askedL?'正直に言えた。済ませ方が決まった。':'本がないまま。正直・探す・弁償、方法はある。'}
 }
 };
 

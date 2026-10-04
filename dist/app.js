@@ -1,4 +1,4 @@
-import {cards,minusCards,stories,statMeta,initial,monster,cardAtk,explore,available,canPlay,canExplore,canMinus,play,advance,safety,free,minus,scene,summary,setGoal} from './engine.mjs';
+import {cards,minusCards,stories,statMeta,initial,monster,cardAtk,explore,available,canPlay,canExplore,canMinus,play,advance,continueTurn,safety,free,minus,scene,summary,setGoal} from './engine.mjs';
 const app=document.querySelector('#app'),dialog=document.querySelector('#dialog');
 let state=initial(),history=[],previous=null,focusReturn=null;
 const sessions={};
@@ -204,7 +204,7 @@ function feedbackView(){
   f.mdmg>0?`<span class="change down">${f.counter?'反撃+まわりの目':'反撃'} 精神力 -${f.mdmg}</span>`:''
  ].filter(Boolean).join('');
  const extra=f.killed?`<div class="notice clear-notice">${icon('skull')} 「${f.monster}」を退いた！ 次の場面へ進める。</div>`:f.escaped?`<div class="notice">手がつきた。モンスターはいったん立ち去った… 次の場面でまた現れる。</div>`:'';
- return `<section class="feedback" tabindex="-1" id="feedback"><div class="eyebrow">YOUR CHOICE ／ 試してみた</div><h2>「${f.title}」を使った</h2><p>${f.text}</p><div class="changes">${chips}</div>${s.dead?`<div class="notice fail-notice">${icon('skull')} 精神力が0になった。気持ちがあふれて、その場から逃げ出してしまった…</div>`:''}${extra}<div class="notice">${icon('spark')} ${f.meaning}</div><div class="feedback-actions"><button data-action="undo" ${s.dead?'disabled':''}>別の作戦を試す</button><button class="primary" data-action="next">${s.dead?'ふりかえりへ':f.killed||f.escaped?'次の場面へ':state.stage===2?'今回をふりかえる':'次の場面へ'}</button></div></section>`;
+ return `<section class="feedback" tabindex="-1" id="feedback"><div class="eyebrow">YOUR CHOICE ／ 試してみた</div><h2>「${f.title}」を使った</h2><p>${f.text}</p><div class="changes">${chips}</div>${s.dead?`<div class="notice fail-notice">${icon('skull')} 精神力が0になった。気持ちがあふれて、その場から逃げ出してしまった…</div>`:''}${extra}<div class="notice">${icon('spark')} ${f.meaning}</div><div class="feedback-actions"><button data-action="undo" ${s.dead?'disabled':''}>別の作戦を試す</button>${!s.dead&&!f.killed&&!f.escaped&&s.turns<monster(s).turns?`<button data-action="continue">もう一枚、作戦を試す（のこり ${monster(s).turns-s.turns}手）</button>`:''}<button class="primary" data-action="next">${s.dead?'ふりかえりへ':f.killed||f.escaped?'次の場面へ':state.stage===2?'今回をふりかえる':'次の場面へ'}</button></div></section>`;
 }
 
 function resultView(){
@@ -284,6 +284,7 @@ function dispatch(action,id){
  if(action==='minus'){snapshot();const out=minus(state,id);if(!out){history.pop();return}afterMutate();modal(out.title,`<p class="dialog-copy">${out.text}</p><div class="changes"><span class="change up">精神力 +${out.recover}</span>${out.rep?`<span class="change down">評判 ${out.rep}</span>`:''}${out.dn?`<span class="change down">${statMeta[out.dn].label} -1</span>`:''}</div><div class="notice">${icon('spark')} ${out.meaning}</div>${out.rep||out.dn?'<p class="smalltext muted">気持ちは楽になったけれど、まわりや自分への影響が少し残った。</p>':''}<div class="dialog-footer"><button class="primary" data-action="close">次の作戦を考える</button></div>`);announce(out.text);return}
  if(action==='card'){if(!canPlay(state,id))return;const c=cards[id],atk=cardAtk(state,id);modal('この作戦を試してみる？',`<div class="acquired"><span class="eyebrow">${c.label} ／ 行動力 ${c.cost}${c.strain?` ・ 精神力 ${c.strain}`:''}${c.dark?` ・ 精神力 +${c.heal} ・ 評判 -1`:''}${atk>0?` ・ 攻撃 ${atk}`:''}</span><strong>${c.title}</strong><p>${c.desc}</p></div><p class="dialog-copy">${c.hint}。どうなるか、試して確かめよう。</p><div class="dialog-footer row"><button data-action="close">手札に戻る</button><button class="primary" data-action="play" data-id="${id}">このカードを使う</button></div>`);return}
  if(action==='play'){if(!canPlay(state,id))return;snapshot();play(state,id);close();afterMutate();document.querySelector('#feedback')?.focus();announce(state.feedback.text);return}
+ if(action==='continue'){continueTurn(state);afterMutate();return}
  if(action==='next'){advance(state);afterMutate();window.scrollTo(0,0);return}
  if(action==='undo'){if(!history.length)return;if(state.finished){const r=summary(state);previous={story:state.story,titles:state.log.map(x=>x.title),situation:r.situation}}state=history.pop();lastVals.cur=null;render();return}
  if(action==='rest'){snapshot();if(!safety(state,'rest')){history.pop();return}afterMutate();modal('少し、ひと休み',`<p class="dialog-copy">静かな場所で休んだ。気になることは残っていても、次を考える余力ができた。</p><div class="changes"><span class="change">精神力 ${state.mind} / 6</span><span class="change">行動力 ${state.energy} / 5</span></div><p class="smalltext muted">この場面での回復は1回。離れる・助けを求めることは、このあとも選べます。</p><div class="dialog-footer"><button class="primary" data-action="close">次の作戦を考える</button></div>`);return}

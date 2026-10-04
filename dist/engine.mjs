@@ -1702,6 +1702,8 @@ export function play(s,id){
  trackMind(s);
  return true;
 }
+// 同じ場面で続けてもう1枚出す。フィードバックを閉じるだけで場面・ターンは継続する
+export function continueTurn(s){if(!s.feedback)return false;s.feedback=null;return true}
 export function setGoal(s,n){if(!Number.isInteger(n)||n<0||n>2)return false;s.goal=n;s.progress=def(s).progress(s);return true}
 export function advance(s){
  if(!s.feedback)return false;s.feedback=null;

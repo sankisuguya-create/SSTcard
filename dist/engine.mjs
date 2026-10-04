@@ -282,6 +282,15 @@ export const cards={
  fixIdea:{title:'新しい形に直す',kind:'support',label:'新しい形',cost:2,atk:3,attr:'study',up:'study',desc:'壊れた形をいかして、新しい作品にする。',hint:'失敗も、材料になる',icon:'spark'},
  forceSubmit:{title:'そのまま出す',kind:'think',label:'そのまま出す',cost:0,strain:1,atk:1,attr:'study',desc:'直さないまま、提出する。',hint:'出すことは大事。でも…',icon:'flag'},
  finishWork:{title:'ちゃんと仕上げて出す',kind:'support',label:'仕上げる',cost:2,atk:3,attr:'study',up:'study',desc:'直した作品を、自信を持って出す。',hint:'やり直した分だけ、自信になる',icon:'check'},
+ skipTurn:{title:'順番をやり過ごす',kind:'think',label:'やり過ごす',cost:0,strain:1,atk:0,desc:'自分の番を、やり過ごす。',hint:'やり過ごすと、跳べないまま',icon:'clock'},
+ crash:{title:'勢いだけで跳ぶ',kind:'think',label:'勢いだけ',cost:0,strain:1,atk:1,attr:'ath',desc:'考えず、勢いだけで跳ぶ。',hint:'勢いだけでは、跳べない',icon:'bolt'},
+ askCoach:{title:'先生にコツを聞く',kind:'talk',label:'コツを聞く',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'跳び方のコツを、先生に聞く。',hint:'コツが分かれば、跳べる',icon:'people'},
+ copyMove:{title:'踏み切りを真似する',kind:'think',label:'踏み切り',cost:1,atk:2,attr:'ath',up:'ath',desc:'跳べる子の、踏み切りを真似る。',hint:'踏み切りが決まれば、跳べる',icon:'eye'},
+ splitJump:{title:'低い跳び箱から練習する',kind:'think',label:'低く練習',cost:1,atk:2,attr:'ath',up:'ath',desc:'まず低い段から、練習する。',hint:'低いところから、自信がつく',icon:'runner'},
+ handsFirst:{title:'手のつき方を練習する',kind:'think',label:'手つき練習',cost:1,atk:2,attr:'ath',up:'ath',desc:'手のつき方だけ、練習する。',hint:'手がつければ、怖くない',icon:'hand'},
+ together:{title:'友達と一緒に練習する',kind:'talk',label:'一緒に練習',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'友達と、一緒に練習する。',hint:'一人より、一緒が楽しい',icon:'people'},
+ bigTry:{title:'思いっきり跳ぶ',kind:'support',label:'思いっきり',cost:2,atk:3,attr:'ath',up:'ath',desc:'練習の成果で、思いっきり跳ぶ。',hint:'準備があれば、思いっきりいける',icon:'bolt'},
+ clearJump:{title:'跳び越せた！',kind:'support',label:'跳び越えた',cost:2,atk:3,attr:'ath',up:'ath',desc:'跳び箱を、跳び越えた。',hint:'跳べた経験は、自信になる',icon:'flag'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -1702,6 +1711,54 @@ craft:{
  },
  progress(s){const f=s.flags;return f.done||f.reformed?3:f.fixed||f.consulted?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.done?'直して出せた。失敗も材料になった。':f.fixed||f.consulted?'直し方が見つかった。直せるところ・一部分・相談・真似がある。':'作品が壊れたまま。直し方は見つけられる。'}
+},
+
+// STORY 31 ── 跳び箱が跳べない ──
+vault:{
+ title:'跳び箱が跳べない',nav:'跳び箱',num:'31',attrs:['ath'],
+ goals:['跳び箱を跳びたい','跳べないときの自分を知りたい','練習のしかたを見つけたい'],
+ chapters:['体育の時間','休み時間','次の体育'],locations:['体育館','体育館・休み','体育館'],
+ base:['skipTurn','crash','anger','ignore','boast'],start:{mind:5,energy:4},
+ monsters:[{name:'カベの影',hp:4,power:1,turns:4,look:'跳び箱が、大きなカベに見える。'},{name:'チカラヌケの影',hp:4,power:1,turns:4,look:'みんなは跳べるのに、自分だけ。力が抜ける。'},{name:'コワイの影',hp:6,power:2,turns:5,look:'助走の先の跳び箱が、こわい。'}],
+ talk:[['coachAsk','先生にコツを聞く','跳び方のコツを、先生に聞く。'],['mateWatch','跳べる子に聞く','跳べる子の、やり方を聞く。'],['mateTogether','友達と練習する','休み時間、一緒に練習する。']],
+ think:[['fearFall','着地がこわい','跳んだあと、こけるのがこわい。'],['tooHigh','高すぎる','跳び箱が、高すぎる。'],['slowRun','助走が遅い','走るのが遅くて、勢いがない。']],
+ reasonKeys:['fearFall','tooHigh','slowRun'],
+ stageGrants:[['splitJump'],['clearJump']],
+ onExplore(s,key){
+  const out={text:'',card:null};
+  if(key==='coachAsk'){s.flags.tipped=true;note(s,'先生にコツを聞いたら、「手をついて、足を開く」と分かった。');out.text='先生「手をついて、足を開くだけでいいよ」\nコツが、分かった。';out.card='askCoach'}
+  if(key==='mateWatch'){s.flags.tipped=true;note(s,'跳べる子の踏み切りを見たら、真似できそう。');out.text='「跳ぶ前に、ぐっと踏み切るんだ」\n踏み切りを、真似できそう。';out.card='copyMove'}
+  if(key==='mateTogether'){s.flags.hasMate=true;relation(s,'友達と練習することにした。');out.text='「一緒にやろう！」\n友達と、練習することにした。';out.card='together'}
+  if(key==='fearFall'){s.reason='fearFall';note(s,'着地がこわいなら、手のつき方から練習できる。');out.text='「着地が、こわい」\n手のつき方から、練習できる。';out.card='handsFirst'}
+  if(key==='tooHigh'){s.reason='tooHigh';note(s,'高いなら、低い段から練習できる。');out.text='「高すぎる」\n低い段からなら、始められる。';out.card='splitJump'}
+  if(key==='slowRun'){s.reason='slowRun';note(s,'助走が遅いなら、踏み切りから練習できる。');out.text='「助走が、遅い」\n踏み切りから、練習できる。';out.card='copyMove'}
+  return out;
+ },
+ onPlay(s,id){
+  const f=s.flags;let text='',meaning='';
+  if(id==='skipTurn'){f.skipped=true;s.mind-=1;relation(s,'順番をやり過ごしたら、少し楽になった。でも、跳べないまま。');text='自分の番を、やり過ごした。\n少し楽になった。でも、跳べないまま。';meaning='やり過ごすと、跳べないまま。';grant(s,'askCoach')}
+  if(id==='crash'){f.crashed=true;s.mind-=1;relation(s,'勢いだけで跳んだら、ひっかかった。');text='勢いだけで、跳んだ。\n足がひっかかって、ころんだ。';meaning='勢いだけでは、跳べない。';grant(s,'splitJump')}
+  if(id==='askCoach'){f.tipped=true;note(s,'コツを聞いたら、何を練習すればいいか分かった。');text='「手をついて、足を開く」\n何を練習するか、分かった。';meaning='コツが分かれば、練習できる。'}
+  if(id==='copyMove'){f.tipped=true;f.practiced=true;note(s,'踏み切りを真似したら、勢いがついた。');text='跳べる子の、踏み切りを真似した。\n「勢いが、ついた」';meaning='真似ると、コツがつかめる。'}
+  if(id==='splitJump'){f.practiced=true;note(s,'低い段から練習したら、跳べそうになった。');text='低い段から、練習した。\n「これなら、跳べる」';meaning='低いところから、自信がつく。'}
+  if(id==='handsFirst'){f.practiced=true;note(s,'手のつき方を練習したら、着地がこわくなくなった。');text='手のつき方だけ、練習した。\n「手がつけば、こわくない」';meaning='部分練習で、こわさが減る。'}
+  if(id==='together'){f.practiced=true;f.hasMate=true;relation(s,'友達と練習したら、楽しく続けられた。');text='友達と、一緒に練習した。\n「もう一回、やろう」';meaning='一人より、一緒が続く。'}
+  if(id==='bigTry'){if(f.tipped||f.practiced){f.bigJumped=true;note(s,'思いっきり跳んだら、あと少しまでいけた。');text='思いっきり、跳んだ。\n「あと、少し！」';meaning='準備があれば、思いっきりいける。'}else{s.mind-=1;text='思いっきり跳んだが、やり方が分からずひっかかった。';meaning='まずコツや練習をしてから、跳ぶと良い。';grant(s,'splitJump')}}
+  if(id==='clearJump'){if(f.tipped||f.practiced){f.cleared=true;note(s,'跳び箱を、跳び越えられた。');text='跳び箱を、跳び越えた！\n「できた！」';meaning='跳べた経験は、自信になる。'}else{s.mind-=1;text='跳び越えようとしたが、準備が足りなかった。';meaning='まず練習してから、跳び越えると良い。';grant(s,'askCoach')}}
+  return {text,meaning};
+ },
+ watch(s){
+  if(s.stage===0)return '跳び箱が、大きなカベに見える。';
+  if(s.stage===1)return 'みんなは跳べるのに、自分だけ。';
+  return '次の体育。跳び箱が、待っている。';
+ },
+ scene(s){const f=s.flags;
+  if(s.stage===0)return {narrative:'体育の時間。跳び箱の練習が、始まった。',speaker:'先生',quote:'順番に、跳んでみよう',look:'跳び箱が、大きく見える。',self:'跳べるかな…',hint:'跳べないとき、何がつらい？'};
+  if(s.stage===1)return {narrative:'休み時間。みんなは、跳べている。',speaker:'友達',quote:f.practiced?'いい感じだね！':'一緒に練習する？',look:'跳び箱が、待っている。',self:s.reason==='fearFall'?'着地が、こわい。':s.reason==='tooHigh'?'高すぎる。':s.reason==='slowRun'?'助走が遅い。':'どう練習しよう…',hint:'コツを聞く・低く練習・手つき・真似・一緒に、方法はある。'};
+  return {narrative:'次の体育。跳び箱が、並んでいる。',speaker:'先生',quote:f.cleared?'跳べたね！':'もう一度、跳んでみる？',look:'跳び箱が、待っている。',self:f.practiced?'練習したから、いける。':'まだ、こわい。',hint:'練習の成果で、跳び越えよう。'};
+ },
+ progress(s){const f=s.flags;return f.cleared||f.bigJumped?3:f.practiced||f.tipped?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.cleared?'跳び越えられた。練習の成果が出た。':f.practiced||f.tipped?'練習のしかたが見つかった。コツ・低く・手つき・真似・一緒に。':'跳べないまま。練習のしかたは見つけられる。'}
 }
 };
 

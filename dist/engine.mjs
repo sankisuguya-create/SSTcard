@@ -419,6 +419,15 @@ export const cards={
  stayFriend:{title:'「どっちも友達」と伝える',kind:'talk',label:'どっちも友達',cost:2,atk:3,attr:'soc',up:'soc',desc:'両方に、「友達だ」と伝える。',hint:'友達宣言は、勇気がいる',icon:'flag'},
  inviteBoth:{title:'二人を一緒に誘う',kind:'support',label:'一緒に誘う',cost:2,atk:3,attr:'soc',up:'soc',desc:'二人を、同じ遊びに誘う。',hint:'同じ場は、仲直りの入口',icon:'spark'},
  threeTalk:{title:'三人で話す場をつくる',kind:'support',label:'三人で話す',cost:2,atk:3,attr:'study',up:'study',desc:'三人で、話す場をつくる。',hint:'場があると、言いやすい',icon:'list'},
+ pushMine:{title:'自分の案を押し通す',kind:'talk',label:'押し通す',cost:0,strain:1,atk:1,attr:'soc',desc:'自分の案を、強く押し通す。',hint:'押すだけでは、まとまらない',icon:'bolt'},
+ keepQuiet2:{title:'黙って任せる',kind:'think',label:'任せる',cost:0,strain:1,atk:1,attr:'soc',desc:'口を出さず、誰かに任せる。',hint:'任せると、いつまでも決まらない',icon:'eye'},
+ listIdeas:{title:'案を書き出す',kind:'think',label:'書き出す',cost:1,atk:2,attr:'study',up:'study',desc:'みんなの案を、書き出してみる。',hint:'書くと、違いが見える',icon:'list'},
+ voteRule:{title:'「多数決にする？」と聞く',kind:'talk',label:'多数決を聞く',cost:1,atk:2,attr:'soc',up:'soc',desc:'決め方として、多数決を聞く。',hint:'決め方を決めると、進む',icon:'hand'},
+ takeTurns:{title:'順番にやる提案をする',kind:'talk',label:'順番にする',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'「順番にやらない？」と提案する。',hint:'順番なら、みんな納得できる',icon:'clock'},
+ mixIdeas:{title:'いいとこ取りを考える',kind:'think',label:'いいとこ取り',cost:1,atk:2,attr:'study',up:'study',desc:'それぞれの案の、いいところを組み合わせる。',hint:'組み合わせると、みんなの案になる',icon:'spark'},
+ bothTry:{title:'両方やってみる提案をする',kind:'support',label:'両方やる',cost:2,atk:3,attr:'soc',up:'soc',desc:'「両方やってみよう」と提案する。',hint:'両方やると、みんな試せる',icon:'people'},
+ writePlan:{title:'手順を書いて示す',kind:'support',label:'手順を書く',cost:2,atk:3,attr:'study',up:'study',desc:'決めたことを、手順にして示す。',hint:'見えると、やりやすい',icon:'pen'},
+ decideFair:{title:'公平な決め方を提案する',kind:'support',label:'公平に決める',cost:2,atk:3,attr:'study',up:'study',desc:'じゃんけん・くじ・多数決、公平な決め方を提案。',hint:'公平だと、不満が残らない',icon:'check'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -2509,6 +2518,47 @@ sides:{title:'どっちの味方か迫られた',nav:'板ばさみ',num:44,attrs
  },
  progress(s){const f=s.flags;return f.bridged2||f.stayed||f.invited||f.talked3?3:f.heardBoth||f.saidN||f.tookSpace||f.askedT2?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.bridged2||f.stayed||f.talked3?'関係を、つなげた。':f.heardBoth||f.saidN||f.tookSpace?'中立の立ち方を、見つけた。':'まだ、板ばさみ。聞く・正直・距離、方法はある。'}
+},
+deadlock:{title:'話し合いが決まらない',nav:'決まらない',num:45,attrs:['soc','study'],goals:['みんな納得の決め方を見つけたい','自分の意見も伝えたい','時間内に決めたい'],chapters:['平行線の言い合い','決まらない迷子','タイムリミット'],locations:['係の話し合い','昼休み','放課後'],base:['pushMine','keepQuiet2','listIdeas','anger','ignore'],
+ start:{mind:4,energy:3},
+ monsters:[{name:'平行線の言い合い',hp:5,power:1,turns:4,look:'「俺の案！」「私の！」と、声がぶつかる。'},{name:'決まらない迷子',hp:5,power:1,turns:4,look:'ぐるぐる、同じところを回る。'},{name:'タイムリミット',hp:6,power:2,turns:4,look:'チャイムが、近づいている。'}],
+ talk:[['hearAll','みんなの案を全部聞く','全部の案を、まず聞く。'],['suggestRule','「決め方」を提案する','何で決めるか、決め方を提案。'],['askVote','「多数決にする？」と聞く','多数決を、聞いてみる。']],
+ think:[['hurryUp','早く決めないと焦る','時間がない。急がないと。'],['myWay','自分の案がいい','自分の案が、いちばんだと思う。'],['sickOfTalk','言い合いが嫌','もう、決めるのが面倒。']],
+ reasonKeys:['hurryUp','myWay','sickOfTalk'],
+ stageGrants:[['voteRule','takeTurns','mixIdeas'],['bothTry','writePlan','decideFair']],
+ subs:[
+  {title:'一人が「じゃ、俺が決める」と言った',text:'「もう、俺が決めるよ」と言い出した。',stat:'soc',min:0,good:{text:'「みんなで決め方を決めよう」と言えた。',rep:1,stat:'soc'},ok:{text:'任せた。少し、モヤモヤ。',mind:1}},
+  {title:'反対の人と目が合った',text:'反対の人と、目が合った。',stat:'soc',min:0,good:{text:'「お互いの案、聞こう」と言えた。',mind:1,rep:1},ok:{text:'目をそらした。',mind:1}}
+ ],
+ onExplore(s,key){const out={text:'',card:null};
+  if(key==='hearAll'){s.flags.heardAll=true;relation(s,'案を全部聞いた。意外と、共通点があった。');out.text='「全部、聞かせて」\n案が並ぶと、近い案が見えた。';out.card='mixIdeas'}
+  if(key==='suggestRule'){s.flags.suggestedR=true;relation(s,'「まず決め方を決めよう」と言ったら、場が落ち着いた。');out.text='「先に、決め方を決めない？」\n「あ、それがいい」';out.card='voteRule'}
+  if(key==='askVote'){s.flags.askedV=true;relation(s,'多数決の提案に、賛否が出た。');out.text='「多数決にする？」\n「順番でもいいんじゃない？」';out.card='takeTurns'}
+  if(key==='hurryUp'){s.reason='hurryUp';out.text='時間がないから、焦っていた。\n急ぐほど、決まらない。';out.card='listIdeas'}
+  if(key==='myWay'){s.reason='myWay';out.text='自分の案が、いちばんだと思っていた。\n他の案も、聞いてみよう。';out.card='voteRule'}
+  if(key==='sickOfTalk'){s.reason='sickOfTalk';out.text='言い合いに、疲れていた。\n「決め方」から変えられる。';out.card='takeTurns'}
+  return out;
+ },
+ onPlay(s,id){const f=s.flags;
+  if(id==='listIdeas'){f.listed=true;return{text:'案を書き出した。違いが、見えてきた。',meaning:'書くと、比べられる。'}}
+  if(id==='voteRule'){f.voted=true;return{text:'「多数決にする？」と聞いた。',meaning:'決め方を決めると、進む。'}}
+  if(id==='takeTurns'){f.turned=true;return{text:'「順番にやろう」と提案した。',meaning:'順番なら、みんな納得。'}}
+  if(id==='mixIdeas'){f.mixed=true;return{text:'いいとこ取りの案を、考えた。',meaning:'組み合わせると、みんなの案になる。'}}
+  if(id==='bothTry'){f.tried=true;return{text:'「両方やってみよう」と提案した。',meaning:'両方試すと、分かる。'}}
+  if(id==='writePlan'){f.planned2=true;return{text:'決めたことを、手順にして示した。',meaning:'見えると、やりやすい。'}}
+  if(id==='decideFair'){f.faired=true;return{text:'公平な決め方を、提案した。',meaning:'公平だと、不満が残らない。'}}
+  if(id==='pushMine'){f.pushed=true;s.rep-=1;relation(s,'押し通したら、反発された。');return{text:'自分の案を、強く押し通した。反発された。',meaning:'押すだけでは、まとまらない。'}}
+  if(id==='keepQuiet2'){f.quieted=true;return{text:'黙って、誰かに任せた。',meaning:'任せると、いつまでも決まらない。'}}
+  return{text:'',meaning:''};
+ },
+ watch(s){return s.stage===0?'案は違うが、目的は近い。':s.stage===1?'「決め方」さえ決まれば、進みそう。':'時間内に、一つに絞れる。'},
+ scene(s){const f=s.flags;
+  if(s.stage===0)return{narrative:'係の話し合い。「こうしよう」「いや、こっちだ」意見が平行線で、全然決まらない。',speaker:'みんな',quote:'俺の案がいい！',look:'声が、ぶつかっている。',self:'決まらない…',hint:'決まらないとき、何がじゃま？'};
+  if(s.stage===1)return{narrative:'昼休み。話し合いは、まだ迷子のまま。',speaker:'みんな',quote:'えー、どうするの？',look:'うんざりした顔が、並ぶ。',self:s.reason==='myWay'?'自分の案がいいのに…':s.reason==='sickOfTalk'?'もう面倒…':'焦る…',hint:'決め方を決める・いいとこ取り・順番、方法はある。'};
+  return{narrative:'放課後。今日中に、決めないと。',speaker:'みんな',quote:f.voted||f.faired?'それで決めよう':'まだ決まらない…',look:'チャイムが、近づいている。',self:f.mixed||f.tried||f.planned2?'決め方が、見えた。':'まだ、平行線かも。',hint:'両方やる・手順・公平に決める、選ぼう。'};
+ },
+ progress(s){const f=s.flags;return f.mixed||f.tried||f.planned2||f.faired?3:f.heardAll||f.suggestedR||f.voted||f.turned||f.listed?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.mixed||f.faired||f.planned2?'決め方が、まとまった。':f.voted||f.turned||f.listed?'進め方を、見つけた。':'まだ、平行線。決め方を決める、方法はある。'}
 }
 };
 

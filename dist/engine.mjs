@@ -350,6 +350,16 @@ export const cards={
  safeAnswer:{title:'分かる問題を選ぶ',kind:'think',label:'分かる問題',cost:1,atk:2,attr:'study',up:'study',desc:'自信のある問題だけ、挙げる。',hint:'分かる問題なら、間違えない',icon:'search'},
  handRaised:{title:'手を挙げられた',kind:'support',label:'挙げられた',cost:2,atk:3,attr:'study',up:'study',desc:'親の前でも、手を挙げられた。',hint:'挙げた経験は、自信になる',icon:'flag'},
  honestDay:{title:'いつもどおりできた',kind:'support',label:'いつもどおり',cost:2,atk:3,attr:'soc',up:'soc',desc:'見られても、いつもどおりできた。',hint:'いつもの自分で、乗り越えた',icon:'check'},
+ waitSorry:{title:'相手が謝るのを待つ',kind:'think',label:'待つ',cost:0,strain:1,atk:0,desc:'向こうが謝るまで、何もしない。',hint:'待つだけだと、長引くかも',icon:'clock'},
+ stubbornFace:{title:'仲直りしたいのに強がる',kind:'think',label:'強がる',cost:0,strain:1,atk:1,attr:'soc',desc:'仲直りしたいけど、強がってしまう。',hint:'強がると、距離ができてしまう',icon:'bolt'},
+ realSorry:{title:'本当の気持ちで謝る',kind:'talk',label:'ちゃんと謝る',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'「ごめんね」と、心から謝る。',hint:'心から謝ると、届く',icon:'heart'},
+ noteSorry:{title:'メモで気持ちを伝える',kind:'think',label:'メモで伝える',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'口で言えなければ、書いて渡す。',hint:'書くのも、伝え方の一つ',icon:'book'},
+ calmFirst:{title:'まず自分を落ち着ける',kind:'think',label:'まず落ち着く',cost:1,atk:2,attr:'study',up:'study',desc:'深呼吸して、気持ちを整える。',hint:'落ち着いてから、話せる',icon:'sun'},
+ askMutual:{title:'共通の友達に相談する',kind:'talk',label:'友達に相談',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'仲直りの仕方を、友達に聞く。',hint:'友達が、橋渡ししてくれる',icon:'people'},
+ invitePlay:{title:'遊びに誘ってみる',kind:'talk',label:'遊びに誘う',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'「一緒に遊ぼう」と、誘ってみる。',hint:'誘うと、距離が近づく',icon:'hand'},
+ approachSlow:{title:'少しずつ近づく',kind:'think',label:'少しずつ',cost:1,atk:2,attr:'study',up:'study',desc:'あいさつ・目を合わせる、小さく始める。',hint:'小さいことから、始められる',icon:'spark'},
+ makeUpDone:{title:'仲直りできた',kind:'support',label:'仲直り',cost:2,atk:3,attr:'soc',up:'soc',desc:'ちゃんと、仲直りできた。',hint:'仲直りの経験は、強くなる',icon:'flag'},
+ reBond:{title:'前より仲良くなった',kind:'support',label:'もっと仲良く',cost:2,atk:3,attr:'soc',up:'soc',desc:'けんかを越えて、仲が深まった。',hint:'仲直りできる関係は、強い',icon:'check'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -2111,6 +2121,55 @@ visit:{
  },
  progress(s){const f=s.flags;return f.raised||f.honest?3:f.practiced||f.askedOnce||f.chosen||f.myself||f.toldP?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.raised?'手を挙げられた。練習・選ぶ・一度だけ、が効いた。':f.honest||f.myself?'いつもどおりできた。見られても、自分でいられた。':'緊張したまま。いつもの自分で、乗り越えられる。'}
+},
+
+// STORY 38 ── けんかしてしまった友達と仲直りしたい ──
+makeUp:{
+ title:'けんかしてしまった友達と仲直りしたい',nav:'仲直りしたい',num:'38',attrs:['soc'],
+ goals:['仲直りしたい','自分から動けるようになりたい','けんかした自分を知りたい'],
+ chapters:['けんかの翌朝','休み時間','放課後'],locations:['教室','教室','校庭'],
+ base:['waitSorry','stubbornFace','anger','ignore','boast'],start:{mind:4,energy:4},
+ monsters:[{name:'ギクシャクの影',hp:4,power:1,turns:4,look:'目が合っても、そらしてしまう。'},{name:'キマズイの影',hp:4,power:1,turns:4,look:'話しかけたいのに、きまずい。'},{name:'ナオリタクテの影',hp:6,power:2,turns:5,look:'仲直りしたい気持ちが、大きくなっている。'}],
+ talk:[['mutualAsk','共通の友達に相談','仲直りの仕方を、友達に聞く。'],['teacherMake','先生に相談','仲直りを、先生に言う。'],['inviteTry','遊びに誘ってみる','「一緒に遊ぼう」と、誘う。']],
+ think:[['myFault','自分も悪かった','自分も、悪いところがあった。'],['pride','意地を張っている','意地を張って、動けない。'],['scared','断られるのがこわい','謝っても、断られそうでこわい。']],
+ reasonKeys:['myFault','pride','scared'],
+ stageGrants:[['approachSlow'],['makeUpDone']],
+ onExplore(s,key){
+  const out={text:'',card:null};
+  if(key==='mutualAsk'){s.flags.askedM=true;relation(s,'「一緒に遊ぼうって誘えば？」と言われた。');out.text='「誘ってみたら？」\n友達が、橋渡ししてくれた。';out.card='invitePlay'}
+  if(key==='teacherMake'){s.flags.toldT4=true;note(s,'先生に「まずあいさつからでも」と言われた。');out.text='先生「まず、あいさつからでも」\n先生と、考えた。';out.card='approachSlow'}
+  if(key==='inviteTry'){s.flags.invited=true;relation(s,'「一緒に遊ぼう」と誘ったら、うなずいてくれた。');out.text='「うん、いいよ」\n誘ったら、うなずいてくれた。';out.card='invitePlay'}
+  if(key==='myFault'){s.reason='myFault';note(s,'自分も悪いなら、ちゃんと謝れる。');out.text='「自分も、悪かった」\nちゃんと、謝ろう。';out.card='realSorry'}
+  if(key==='pride'){s.reason='pride';note(s,'意地は、落ち着けば下ろせる。');out.text='「意地を、張ってた」\nまず、落ち着こう。';out.card='calmFirst'}
+  if(key==='scared'){s.reason='scared';note(s,'こわいなら、小さく始めればいい。');out.text='「断られるのが、こわい」\n小さく、始めよう。';out.card='approachSlow'}
+  return out;
+ },
+ onPlay(s,id){
+  const f=s.flags;let text='',meaning='';
+  if(id==='waitSorry'){f.waited=true;s.mind-=1;relation(s,'待っていたら、日が暮れてしまった。');text='待ってばかり、いた。\n日が、暮れてしまった。';meaning='待つだけだと、長引いてしまう。';grant(s,'approachSlow')}
+  if(id==='stubbornFace'){f.stubborn=true;s.mind-=1;relation(s,'強がったら、余計に距離ができた。');text='「別に、いいし」\n強がって、距離ができた。';meaning='強がると、距離ができる。';grant(s,'calmFirst')}
+  if(id==='realSorry'){f.sorry=true;relation(s,'「ごめんね」と謝ったら、「私もごめん」と返ってきた。');text='「ごめんね」\n「…私も、ごめん」';meaning='心から謝ると、届く。'}
+  if(id==='noteSorry'){f.sorry=true;f.noted=true;relation(s,'メモを渡したら、あとで「仲直りしよう」と言われた。');text='メモを、渡した。\n「仲直り、しようね」';meaning='書くのも、伝え方の一つ。'}
+  if(id==='calmFirst'){f.calmed2=true;note(s,'深呼吸したら、気持ちが整った。');text='深呼吸して、気持ちを整えた。\n「よし、行こう」';meaning='落ち着いてから、話せる。'}
+  if(id==='askMutual'){f.askedM=true;relation(s,'友達に相談したら、「私も手伝う」と言われた。');text='「私も、手伝うよ」\n友達が、味方になった。';meaning='友達が、橋渡ししてくれる。'}
+  if(id==='invitePlay'){f.invited=true;relation(s,'誘ったら、「うん」とうなずいてくれた。');text='「一緒に、遊ぼう」\n「うん」';meaning='誘うと、距離が近づく。'}
+  if(id==='approachSlow'){f.approached=true;note(s,'あいさつから始めたら、少し話せた。');text='「おはよう」\n「…おはよう」';meaning='小さいことから、始められる。'}
+  if(id==='makeUpDone'){if(f.sorry||f.invited||f.approached){f.madeUp=true;note(s,'ちゃんと、仲直りできた。');text='「これからも、よろしく」\n仲直り、できた。';meaning='仲直りの経験は、強くなる。'}else{s.mind-=1;text='仲直りしようとしたが、まだ動けていなかった。';meaning='まずず落ち着く・謝る・誘う・少しずつ近づいてから、仲直りすると良い。';grant(s,'approachSlow')}}
+  if(id==='reBond'){if(f.madeUp||(f.sorry&&f.invited)){f.rebonded=true;note(s,'けんかを越えて、仲が深まった。');text='「次は、けんかしないようにしようね」\n前より、仲良くなった。';meaning='仲直りできる関係は、強い。'}else{s.mind-=1;text='もっと仲良くなろうとしたが、まだ仲直りできていなかった。';meaning='まず仲直りしてから、深めると良い。';grant(s,'realSorry')}}
+  return {text,meaning};
+ },
+ watch(s){
+  if(s.stage===0)return '目が合っても、そらしてしまう。';
+  if(s.stage===1)return '話しかけたいのに、きまずい。';
+  return '放課後。仲直りしたい気持ちが、大きくなっている。';
+ },
+ scene(s){const f=s.flags;
+  if(s.stage===0)return {narrative:'けんかの翌朝。友達と目が合ったが、そらしてしまった。',speaker:'友達',quote:'…',look:'友達が、少し離れて座っている。',self:'きまずい…',hint:'けんかのあと、何がつらい？'};
+  if(s.stage===1)return {narrative:'休み時間。話しかけたいのに、足が動かない。',speaker:'友達',quote:f.approached?'…おはよう':'（そっぽを向いている）',look:'友達が、一人でいる。',self:s.reason==='myFault'?'自分も、悪かった。':s.reason==='pride'?'意地を、張ってる。':s.reason==='scared'?'断られるのが、こわい。':'どうしたら…',hint:'謝る・誘う・相談・少しずつ、方法はある。'};
+  return {narrative:'放課後。友達が、校庭で一人でいる。',speaker:'友達',quote:f.madeUp?'これからも、よろしく':'…',look:'友達が、こちらを見ている。',self:f.sorry?'謝れて、すっきりした。':'まだ、言えていない。',hint:'仲直りを、やりきろう。'};
+ },
+ progress(s){const f=s.flags;return f.madeUp||f.rebonded?3:f.sorry||f.invited||f.approached?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.rebonded?'仲直りを越えて、仲が深まった。':f.madeUp?'ちゃんと仲直りできた。':f.sorry||f.invited?'動き出せた。謝る・誘う・少しずつ。':'けんかのまま。仲直りの仕方は、ある。'}
 }
 };
 

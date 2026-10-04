@@ -155,6 +155,15 @@ export const cards={
  sayLoud:{title:'「うるさくて困る」と伝える',kind:'talk',label:'困ると伝える',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'先生に、困っていることを伝える。',hint:'困りごとは、伝えていい',icon:'hand'},
  pleaseQ:{title:'「少し静かにして」とお願い',kind:'talk',label:'静かにとお願い',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'うるさい友達に、やんわりお願いする。',hint:'お願いのしかたで、受け取り方が変わる',icon:'people'},
  breatheQuiet:{title:'静かな所で深呼吸',kind:'think',label:'深呼吸',cost:1,atk:0,up:'study',desc:'少し離れて、呼吸を整える。',hint:'一度離れて、整えると楽になる',icon:'sun'},
+ sulkR:{title:'ふてくされる',kind:'think',label:'ふてくされる',cost:0,strain:1,atk:0,desc:'不満を抱えて、うつむく。',hint:'抱え込むだけでは、何も変わらない',icon:'skull'},
+ dragFeet:{title:'だらだら練習する',kind:'think',label:'だらだら',cost:0,atk:1,desc:'やる気なく、流れに任せる。',hint:'流れだけでは、気持ちは晴れない',icon:'clock'},
+ skipCheer:{title:'応援をサボる',kind:'talk',label:'サボる',cost:0,atk:0,desc:'応援係を、やる気なくやる。',hint:'サボると、まわりの目が気になる',icon:'eye'},
+ cryOK:{title:'「悔しい」と認める',kind:'think',label:'悔しさを認める',cost:1,atk:1,attr:'soc',up:'soc',desc:'悔しさを、きちんと感じる。',hint:'悔しいと認めてこそ、先に進める',icon:'heart'},
+ askHow2:{title:'「どうやって決まるの？」と聞く',kind:'talk',label:'決まり方を聞く',cost:1,bond:1,atk:1,attr:'soc',up:'soc',desc:'選手や順番の、決まり方を聞く。',hint:'決まり方が分かると、納得しやすい',icon:'hand'},
+ cheerRole:{title:'応援係の役割を考える',kind:'think',label:'役割を考える',cost:1,atk:2,attr:'soc',up:'soc',desc:'応援係にも、意味がある。',hint:'役割の意味が見えると、やる気が出る',icon:'flag'},
+ nextChance:{title:'「次はどうすれば？」と聞く',kind:'talk',label:'次の方法を聞く',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'次に選ばれるための、方法を聞く。',hint:'次の目標が見えれば、今も変わる',icon:'bolt'},
+ trainSee:{title:'選手の走りを見て学ぶ',kind:'think',label:'見て学ぶ',cost:1,atk:2,attr:'ath',up:'ath',desc:'選ばれた人の動きを、見て学ぶ。',hint:'見て学ぶと、次につながる',icon:'eye'},
+ cheerHard:{title:'思い切り応援する',kind:'support',label:'思い切り応援',cost:1,bond:1,atk:2,attr:'ath',up:'ath',desc:'選手の背中を、大きな声で押す。',hint:'応援も、勝つための力になる',icon:'spark'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -941,6 +950,51 @@ noise:{
  },
  progress(s){const f=s.flags;return s.goal===0?(f.clearedN?3:f.covered||f.moved||f.focused?2:s.reason?1:0):s.goal===1?(f.clearedN?3:f.plugged||f.breathed?2:s.reason?1:0):(f.said||f.askedN?3:f.clearedN?2:s.reason?1:0)},
  situation(s){const f=s.flags;return f.clearedN?'音への対処法が見つかった。守る・移る・伝えるがある。':f.plugged||f.breathed?'少し楽になった。根本の対処もできる。':'音がつらいまま残っている。対処法は練習できる。'}
+},
+role:{
+ title:'選ばれなかった役割',nav:'役割と順番',num:'17',attrs:['ath','soc'],
+ goals:['悔しさを整理したい','自分の役割を見つけたい','次につなげたい'],
+ chapters:['発表の時間','練習の日','運動会前日'],locations:['教室・発表','校庭・練習','教室・前日'],
+ base:['sulkR','dragFeet','skipCheer','anger','ignore'],start:{mind:4,energy:4},
+ monsters:[{name:'欠けたメダル',hp:4,power:1,turns:4,look:'選ばれなかった気持ちが、欠けた形に固まっている。'},{name:'不公平の秤',hp:5,power:1,turns:5,look:'「ずるい」「不公平」の声が、秤の上で揺れている。'},{name:'応援係の重み',hp:6,power:1,turns:5,look:'「応援係なんて」の重さが、肩にのしかかる。'}],
+ talk:[['teacherR','先生に聞く','選び方や、次の方法を聞く。'],['pickedOne','選ばれた友達に聞く','選手の走りを、見せてもらう。']],
+ think:[['sad','悔しい・悲しい','選ばれなくて、悔しい気持ちが残る。'],['unfairR','選び方が不公平だ','じゃんけんも投票も、納得いかない。'],['otherRole2','応援係なんて嫌だ','走れないなら、意味がない気がする。']],
+ reasonKeys:['sad','unfairR','otherRole2'],
+ stageGrants:[['cheerHard'],[]],
+ onExplore(s,key){
+  const out={text:'',card:null};
+  if(key==='teacherR'){s.flags.askedR=true;note(s,'先生が、決まり方を教えてくれた。');out.text='先生「タイムと、走る練習で決めたよ。次もチャンスあるよ」';out.card='nextChance'}
+  if(key==='pickedOne'){s.flags.learnedR=true;note(s,'選ばれた子が、走りを見せてくれた。');out.text='友達「ここをこう走るんだよ」\n見せてもらうと、勉強になった。';out.card='trainSee'}
+  if(key==='sad'){s.reason='sad';note(s,'選ばれなくて、悔しい気持ちが残っている。');out.text='「本当は、走りたかった」';out.card='cryOK'}
+  if(key==='unfairR'){s.reason='unfairR';note(s,'選び方が、不公平に思える。');out.text='「なんであの子なの？ずるい」';out.card='askHow2'}
+  if(key==='otherRole2'){s.reason='otherRole2';note(s,'応援係に、意味がない気がする。');out.text='「応援なんて、誰でもいいじゃん」';out.card='cheerRole'}
+  return out;
+ },
+ onPlay(s,id){
+  const f=s.flags;let text='',meaning='';
+  if(id==='sulkR'){f.sulked=true;text='ふてくされた。\n気持ちは、少しだけこもった。';meaning='抱え込むだけでは、気持ちは晴れない。'}
+  if(id==='dragFeet'){f.dragged=true;text='だらだらと、練習した。\n何も、変わらなかった。';meaning='流れるだけでは、気持ちは晴れない。'}
+  if(id==='skipCheer'){f.skipped=true;s.rep-=1;relation(s,'応援をサボったら、まわりの目が冷たくなった。');text='応援をサボった。\n友達「応援係、ちゃんとやってよ」';meaning='役割をサボると、評判が下がる。';grant(s,'cheerRole')}
+  if(id==='cryOK'){f.felt=true;f.clearedR=true;s.mind+=1;note(s,'「悔しい」と認めたら、気持ちが少し軽くなった。');text='「悔しいな…」と、認めた。\n認めたら、少し楽になった。';meaning='悔しさを認めてこそ、先に進める。'}
+  if(id==='askHow2'){f.askedR=true;f.clearedR=true;note(s,'決まり方が分かって、納得できた。');text='「タイムと練習で決めたんだ」\n分かると、すっきりした。';meaning='決まり方が分かると、納得しやすい。'}
+  if(id==='cheerRole'){f.roleValued=true;f.clearedR=true;note(s,'応援係にも、意味があると分かった。');text='「応援がないと、走れないかも」\n応援係にも、役割がある。';meaning='役割の意味が見えると、やる気が出る。'}
+  if(id==='nextChance'){f.nextKnow=true;f.clearedR=true;note(s,'次に選ばれる方法が、分かった。');text='先生「次は、練習を見せてね」\n次の目標が、見えた。';meaning='次の目標が見えると、今も変わる。'}
+  if(id==='trainSee'){f.learnedR=true;f.clearedR=true;note(s,'選手の走りを見て、コツが分かった。');text='友達の走りを見て、\n「ここが速いんだ」と分かった。';meaning='見て学ぶと、次につながる。'}
+  if(id==='cheerHard'){if(f.roleValued||f.felt||f.nextKnow){f.cheered=true;f.clearedR=true;relation(s,'思い切り応援したら、選手がこっちを見て笑った。');text='選手「応援、ありがとう！」\n声が、届いた。';meaning='応援も、勝つための力になる。'}else{s.mind-=1;text='応援したが、心がこもっていなかった。\n選手にも、伝わらなかった。';meaning='役割の意味が見えてからの応援は、届きやすい。';grant(s,'cheerRole')}}
+  return {text,meaning};
+ },
+ watch(s){
+  if(s.stage===0)return '選手の名前が、読み上げられている。';
+  if(s.stage===1)return '選手たちは、校庭で練習している。';
+  return '明日は、運動会。';
+ },
+ scene(s){const f=s.flags;
+  if(s.stage===0)return {narrative:'リレーの選手発表。自分の名前は、呼ばれなかった。',speaker:'先生',quote:'応援係は、カンとケイです',look:'選ばれた子たちが、喜んでいる。',self:'走りたかったのに… 応援係か',hint:'選ばれなかった気持ちの、どこが一番つらい？'};
+  if(s.stage===1)return {narrative:'練習の日。選手たちが、走っている。',speaker:'友達',quote:f.cheered?'応援、ありがとう！':f.roleValued?'応援係も大事だよ':f.felt?'悔しいよね':'……',look:f.clearedR?'まわりは、こちらを受け入れている。':'選手たちは、自分の練習に集中している。',self:s.reason==='sad'?'悔しさが残る。':s.reason==='unfairR'?'不公平だと思う。':s.reason==='otherRole2'?'応援係に意味があるの？':'役割と、どう向き合う？',hint:'認める・聞く・考える、方法はある。'};
+  return {narrative:'運動会前日。選手の背中に、名前が書かれている。',speaker:'友達',quote:f.cheered?'応援、楽しみにしてる！':f.clearedR?'明日、一緒に頑張ろう':'明日だね',look:'選手たちは、明日を待っている。',self:f.clearedR?'役割が見つかった。':'まだ少し、もやもやする。',hint:'役割には、それぞれ意味がある。'};
+ },
+ progress(s){const f=s.flags;return s.goal===0?(f.clearedR?3:f.felt?2:s.reason?1:0):s.goal===1?(f.cheered||f.roleValued?3:f.clearedR?2:s.reason?1:0):(f.nextKnow||f.learnedR?3:f.clearedR?2:s.reason?1:0)},
+ situation(s){const f=s.flags;return f.clearedR?'役割を受け止められた。認める・聞く・考えるがある。':f.felt||f.roleValued?'気持ちを整理できた。':'納得いかないまま残っている。向き合い方は練習できる。'}
 }
 };
 

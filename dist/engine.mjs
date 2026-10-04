@@ -253,6 +253,15 @@ export const cards={
  fixTruth:{title:'本当のことを言い直す',kind:'talk',label:'言い直す',cost:1,bond:1,atk:1,attr:'soc',up:'soc',desc:'嘘をやめて、本当のことを言い直す。',hint:'言い直せば、まだ間に合う',icon:'message'},
  writeSorry:{title:'手紙やメモで謝る',kind:'think',label:'手紙で謝る',cost:1,bond:1,atk:1,attr:'soc',up:'soc',desc:'口で言えなければ、書いて伝える。',hint:'書くのも、謝り方の一つ',icon:'book'},
  promiseTrue:{title:'「もう嘘はつかない」と約束',kind:'support',label:'嘘をやめる約束',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'これからは正直に言うと、約束する。',hint:'約束して、守ると信頼が戻る',icon:'heart'},
+ pushHard:{title:'無理に全力で走り込む',kind:'think',label:'無理に練習',cost:0,atk:1,attr:'ath',desc:'不安のまま、無理に走り込む。',hint:'無理すると、怪我につながる',icon:'bolt'},
+ dreadRun:{title:'走るのが怖いと思い込む',kind:'think',label:'怖いと思い込む',cost:0,strain:1,atk:0,desc:'失敗を想像して、怖くなる。',hint:'怖いと思い込むと、体が動かない',icon:'eye'},
+ skipPractice:{title:'練習をサボる',kind:'think',label:'練習サボり',cost:0,strain:1,atk:0,desc:'怖いから、練習を休む。',hint:'サボると、ますます不安になる',icon:'eye'},
+ askPace:{title:'ペース配分を聞く',kind:'talk',label:'ペースを聞く',cost:1,bond:1,atk:1,attr:'soc',up:'soc',desc:'走る速さの配分を、上手い子に聞く。',hint:'配分が分かると、走りやすい',icon:'message'},
+ shortRun:{title:'短い距離から練習する',kind:'think',label:'短く練習',cost:1,atk:2,attr:'ath',up:'ath',desc:'いきなり長くなく、短い距離から。',hint:'短い距離なら、始められる',icon:'runner'},
+ teamTalk:{title:'チームに不安を話す',kind:'talk',label:'不安を話す',cost:1,bond:1,atk:1,attr:'soc',up:'soc',desc:'「実は不安」と、チームに言う。',hint:'話すと、みんなが応援してくれる',icon:'hand'},
+ breathRun:{title:'深呼吸で落ち着く',kind:'think',label:'深呼吸',cost:1,atk:1,attr:'study',up:'study',desc:'走る前に、深呼吸をする。',hint:'深呼吸すると、落ち着ける',icon:'sun'},
+ batonPass:{title:'バトン練習を重ねる',kind:'think',label:'バトン練習',cost:1,atk:2,attr:'ath',up:'ath',desc:'バトンの受け渡しを、練習する。',hint:'バトンが決まれば、流れが変わる',icon:'bolt'},
+ relayRun:{title:'本番を走り切る',kind:'support',label:'走り切る',cost:1,atk:2,attr:'ath',up:'ath',desc:'練習の成果で、本番を走り切る。',hint:'走り切った経験は、自信になる',icon:'flag'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -1533,6 +1542,51 @@ lie:{
  },
  progress(s){const f=s.flags;return s.goal===0?(f.clearedLie?3:f.admitted||f.wrote?2:s.reason?1:0):s.goal===1?(f.truthed||f.wrote?3:f.admitted?2:s.reason?1:0):(f.promisedT?3:f.clearedLie?2:s.reason?1:0)},
  situation(s){const f=s.flags;return f.clearedLie?'正直になれた。認める・書く・言い直す・約束がある。':f.admitted||f.wrote?'認め方が見つかった。':'嘘が残っている。正直さは練習できる。'}
+},
+relay:{
+ title:'リレー選手に選ばれた',nav:'リレー選手',num:'28',attrs:['ath','soc'],
+ goals:['本番を走り切りたい','チームに貢献したい','走るのが楽しみになりたい'],
+ chapters:['放課後の発表','練習日','運動会当日'],locations:['教室・発表','グラウンド・練習','グラウンド・本番'],
+ base:['pushHard','dreadRun','skipPractice','anger','ignore'],start:{mind:4,energy:4},
+ monsters:[{name:'プレッシャーの影',hp:3,power:0,turns:4,look:'選ばれた重みが、のしかかる。'},{name:'みんなの期待',hp:4,power:1,turns:5,look:'チームの期待が、目に見える。'},{name:'失敗への不安',hp:5,power:1,turns:5,look:'転んだら・遅かったら、どうしよう。'}],
+ talk:[['captain','キャプテンに聞く','リレーのコツを、キャプテンに聞く。'],['teacherRe','先生に相談','不安なことを、先生に言う。']],
+ think:[['fearFall','転んだらどうしよう','本番で転ぶことを、想像する。'],['slowSelf','足が遅い','自分の走りに、自信がない。'],['teamPress','みんなに迷惑','チームに迷惑をかけそう。']],
+ reasonKeys:['fearFall','slowSelf','teamPress'],
+ stageGrants:[['batonPass'],[]],
+ onExplore(s,key){
+  const out={text:'',card:null};
+  if(key==='captain'){s.flags.askedC=true;relation(s,'キャプテンにバトンのコツを聞いた。');out.text='キャプテン「バトンは腕を伸ばして」\nコツを教えてもらった。';out.card='batonPass'}
+  if(key==='teacherRe'){s.flags.toldRe=true;note(s,'先生に不安を言ったら、練習計画を一緒に立ててもらえた。');out.text='先生「不安なのは普通だよ」\n練習計画を、一緒に考えてもらえた。';out.card='shortRun'}
+  if(key==='fearFall'){s.reason='fearFall';note(s,'転んだら、どうしよう。');out.text='「本番で転んだら、どうしよう」';out.card='breathRun'}
+  if(key==='slowSelf'){s.reason='slowSelf';note(s,'足が遅いのが、不安。');out.text='「自分は足が遅いから」\nでも、選ばれた理由がある。';out.card='shortRun'}
+  if(key==='teamPress'){s.reason='teamPress';note(s,'みんなに迷惑をかけそう。');out.text='「チームに、迷惑をかけそう」';out.card='teamTalk'}
+  return out;
+ },
+ onPlay(s,id){
+  const f=s.flags;let text='',meaning='';
+  if(id==='pushHard'){f.pushed=true;s.mind-=1;relation(s,'無理に走り込んで、足が痛くなった。');text='無理に走り込んだ。\n足が、痛くなった。';meaning='無理すると、怪我につながる。';grant(s,'shortRun')}
+  if(id==='dreadRun'){f.dreaded=true;s.mind-=1;text='「転んだらどうしよう」\n走る前から、怖くなった。';meaning='怖いと思い込むと、体が動かない。';grant(s,'breathRun')}
+  if(id==='skipPractice'){f.skipped=true;s.rep-=1;relation(s,'練習をサボったら、チームのみんなが困った。');text='練習を休んだ。\nチームのみんなが、困った様子。';meaning='サボると、ますます不安になる。';grant(s,'shortRun')}
+  if(id==='askPace'){f.askedP=true;f.clearedRe=true;note(s,'ペース配分を聞いたら、走り方が見えた。');text='「最初はゆっくりでいいよ」\nペースが分かれば、走りやすい。';meaning='配分が分かると、走りやすい。'}
+  if(id==='shortRun'){f.shorted=true;f.clearedRe=true;note(s,'短い距離から練習したら、走れる気がした。');text='短い距離から、始めた。\n「これなら、走れる」';meaning='短い距離なら、始められる。'}
+  if(id==='teamTalk'){f.talked=true;f.clearedRe=true;relation(s,'不安を話したら、チームが応援してくれた。');text='「実は、不安なんだ」\n「大丈夫、みんなで走るよ」';meaning='話すと、みんなが応援してくれる。'}
+  if(id==='breathRun'){f.breathed=true;f.clearedRe=true;note(s,'深呼吸したら、少し落ち着いた。');text='深呼吸をした。\n少し、落ち着いた。';meaning='深呼吸すると、落ち着ける。'}
+  if(id==='batonPass'){if(f.shorted||f.askedP||f.talked){f.batonOk=true;f.clearedRe=true;note(s,'バトン練習がうまくいった。流れが見えた。');text='バトンの受け渡しが、うまくいった。\n「これなら、本番もいける」';meaning='バトンが決まれば、流れが変わる。'}else{s.mind-=1;text='バトン練習をしようとしたが、まだ走りの練習をしていないので難しかった。';meaning='まず走りの練習をしてから、バトンを練習すると良い。';grant(s,'shortRun')}}
+  if(id==='relayRun'){if(f.batonOk||f.clearedRe){f.ranIt=true;note(s,'本番を走り切れた。自信がついた。');text='本番を、走り切った。\n「やった！走り切れた」';meaning='走り切った経験は、自信になる。'}else{s.mind-=1;text='走り切ろうとしたが、準備が足りなかった。';meaning='まず練習と準備をしてから、本番に臨むと良い。';grant(s,'shortRun')}}
+  return {text,meaning};
+ },
+ watch(s){
+  if(s.stage===0)return 'リレー選手に、選ばれた。';
+  if(s.stage===1)return '練習の日が、続いている。';
+  return '運動会が、始まる。';
+ },
+ scene(s){const f=s.flags;
+  if(s.stage===0)return {narrative:'放課後。リレーの選手発表があった。',speaker:'先生',quote:'リレーの選手は、この人たちです',look:'自分の名前が、読まれた。',self:'え、自分が…？ 走れるかな',hint:'選ばれたときの、不安はどこ？'};
+  if(s.stage===1)return {narrative:'練習日。みんなが、走っている。',speaker:'キャプテン',quote:f.clearedRe?'いい調子だね':'まずは、走ってみよう',look:'グラウンドに、並んでいる。',self:s.reason==='fearFall'?'転んだらどうしよう。':s.reason==='slowSelf'?'足が遅いのが不安。':s.reason==='teamPress'?'迷惑をかけそう。':'準備を進めよう。',hint:'短く・話す・深呼吸・コツを聞く、方法はある。'};
+  return {narrative:'運動会当日。リレーが、始まる。',speaker:'先生',quote:f.clearedRe?'落ち着いて、いこう':'まもなく、リレーです',look:'スタート地点に、立っている。',self:f.clearedRe?'練習した分、走れそう。':'まだ、少し不安。',hint:'練習の分だけ、自信になる。'};
+ },
+ progress(s){const f=s.flags;return s.goal===0?(f.ranIt?3:f.clearedRe?2:s.reason?1:0):s.goal===1?(f.talked||f.batonOk?3:f.clearedRe?2:s.reason?1:0):(f.ranIt?3:f.clearedRe?2:s.reason?1:0)},
+ situation(s){const f=s.flags;return f.clearedRe?'準備ができた。短く・話す・深呼吸・コツがある。':f.shorted||f.breathed?'練習方法が見つかった。':'不安が残っている。準備は練習できる。'}
 }
 };
 

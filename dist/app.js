@@ -53,7 +53,7 @@ function render(){
 }
 
 function playView(){
- const s=state,st=stories[s.story],sc=scene(s),busy=!!s.feedback,calm=canExplore(s);
+ const s=state,st=stories[s.story],sc=scene(s),busy=!!s.feedback,calm=canExplore(s),full=s.stress>=5;
  return `
  <div class="title-row"><div><div class="chapter-label">STORY ${st.num} ／ ${st.chapters[s.stage]}</div><h1>${st.title}</h1></div><div class="steps" aria-label="場面 ${s.stage+1} / 3">${[0,1,2].map(n=>`${n?'<span class="step-line"></span>':''}<span class="step ${n===s.stage?'current':n<s.stage?'done':''}">${n<s.stage?'✓':n+1}</span>`).join('')}</div></div>
  <div class="play-grid">
@@ -78,7 +78,7 @@ function playView(){
     <span class="rail-icon">${icon('message')}</span>
     <span class="rail-text"><strong>話す・相談する</strong><span>相手やまわりの人に、話を聞く</span></span>
    </button>
-   <p class="rail-note ${calm?'':'warn'}">${calm?'※ 気持ちがいっぱいの時は使えない':'いまは気持ちがいっぱいで、じっくり考えられない。「少し休む」「離れる」で落ち着こう。'}</p>
+   <p class="rail-note ${full?'warn':''}">${full?'いまは気持ちがいっぱいで、じっくり考えられない。「少し休む」「離れる」で落ち着こう。':'※ 気持ちがいっぱいの時は使えない'}</p>
    <div class="rail-label">いつでも選べる</div>
    <div class="quick-actions">${quickActions(s,busy)}</div>
   </aside>

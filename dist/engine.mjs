@@ -389,6 +389,16 @@ export const cards={
  keepScore:{title:'点数は内緒にすると決める',kind:'think',label:'内緒にする',cost:1,atk:2,attr:'study',up:'study',desc:'次からは、言わないと決める。',hint:'決めるのも、一つの答え',icon:'list'},
  studyPlan:{title:'次の勉強計画を立てる',kind:'support',label:'計画を立てる',cost:2,atk:3,attr:'study',up:'study',desc:'次のテストに向けて、計画を立てる。',hint:'計画があると、前を向ける',icon:'list'},
  honestReply:{title:'点数を気にしないと伝える',kind:'support',label:'伝える',cost:2,atk:3,attr:'soc',up:'soc',desc:'「点数より、一緒に遊びたい」と言う。',hint:'伝えると、関係が変わる',icon:'hand'},
+ pretendKnow:{title:'知ってるふりをする',kind:'talk',label:'知ったかぶり',cost:0,strain:1,atk:1,attr:'soc',desc:'知らないのに、知ってるふりをする。',hint:'ふりをすると、あとでつらい',icon:'eye'},
+ buyFit:{title:'無理して合わせる',kind:'think',label:'無理に合わせる',cost:0,strain:1,atk:1,attr:'soc',desc:'興味がないのに、合わせる。',hint:'無理は、続かない',icon:'bolt'},
+ askTopic:{title:'「それって何？」と聞く',kind:'talk',label:'素直に聞く',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'知らないことを、素直に聞く。',hint:'聞くと、教えてもらえる',icon:'ear'},
+ likeOwn:{title:'自分の好きなことを話す',kind:'talk',label:'好きを話す',cost:1,atk:2,attr:'soc',up:'soc',desc:'自分の好きなことを、話してみる。',hint:'好きを話すと、仲間が見つかる',icon:'spark'},
+ listenFirst:{title:'まず聞いてみる',kind:'think',label:'まず聞く',cost:1,atk:2,attr:'study',up:'study',desc:'みんなの話を、まず聞く。',hint:'聞くと、入り口が見える',icon:'ear'},
+ bridgeT:{title:'知ってる話題につなげる',kind:'talk',label:'つなげる',cost:1,atk:2,attr:'soc',up:'soc',desc:'「それって、あれに似てる？」とつなげる。',hint:'つなげると、会話になる',icon:'spark'},
+ honestNo:{title:'「知らない」と正直に言う',kind:'talk',label:'正直に言う',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'知らないことを、正直に言う。',hint:'正直は、楽で強い',icon:'heart'},
+ tryJoin:{title:'教えてもらって一緒にやる',kind:'support',label:'一緒にやる',cost:2,atk:3,attr:'soc',up:'soc',desc:'教えてもらって、一緒にやってみる。',hint:'一緒にやると、輪に入れる',icon:'hand'},
+ ownWay:{title:'自分のペースで楽しむ',kind:'support',label:'自分のペース',cost:2,atk:3,attr:'study',up:'study',desc:'無理せず、自分のペースで楽しむ。',hint:'自分のペースも、正解',icon:'sun'},
+ joinThem:{title:'自分から話題を出す',kind:'support',label:'話題を出す',cost:2,atk:3,attr:'soc',up:'soc',desc:'次は、自分から話題を出す。',hint:'出せるようになると、対等',icon:'flag'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -2346,6 +2356,55 @@ score:{
  },
  progress(s){const f=s.flags;return f.plannedSt||f.repliedH?3:f.saidH||f.askedM||f.selfG||f.ignoredR||f.praised||f.keptS?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.plannedSt?'計画を立てて、前を向けた。':f.saidH||f.selfG?'受け止められた。次の目標を立てられる。':'比べられたまま。正直・自分比べ、方法はある。'}
+},
+
+// STORY 42 ── みんなの話についていけない ──
+trend:{
+ title:'みんなの話についていけない',nav:'話についていけない',num:'42',attrs:['soc','study'],
+ goals:['ついていけない気持ちを整理したい','入り方を見つけたい','自分らしい関わり方を決めたい'],
+ chapters:['みんなが盛り上がっている','入り方を探す','自分らしく'],locations:['教室','休み時間','帰り道'],
+ base:['pretendKnow','buyFit','anger','ignore','boast'],start:{mind:4,energy:4},
+ monsters:[{name:'ノリノリの影',hp:4,power:1,turns:4,look:'みんなが、知らない話で盛り上がっている。'},{name:'ハズレの影',hp:4,power:1,turns:4,look:'話題から外れて、一人でいる気がする。'},{name:'アセリの影',hp:6,power:2,turns:5,look:'焦って合わせると、自分を見失う。'}],
+ talk:[['topicAsk','「それって何？」と聞く','知らないことを、素直に聞く。'],['ownLike','自分の好きなことを話す','自分の好きなことを、話してみる。'],['honestSay2','「知らない」と正直に言う','知らないことを、正直に言う。']],
+ think:[['leftOut','仲間外れのようで不安','みんなの話に入れなくて、不安。'],['fakeIt','合わせなきゃと焦る','知らないのは、恥ずかしい気がする。'],['noInterest','そもそも興味がない','流行には、興味がない。']],
+ reasonKeys:['leftOut','fakeIt','noInterest'],
+ stageGrants:[['askTopic','listenFirst','honestNo'],['tryJoin','ownWay','joinThem']],
+ onExplore(s,key){
+  const out={text:'',card:null};
+  if(key==='topicAsk'){s.flags.askedT=true;relation(s,'聞いたら、友達が教えてくれた。');out.text='「それって、何？」\n「教えてあげるよ」';out.card='askTopic'}
+  if(key==='ownLike'){s.flags.liked=true;relation(s,'自分の好きな話をしたら、興味を持ってくれた。');out.text='「自分は、これが好き」\n「それ、おもしろそう」';out.card='likeOwn'}
+  if(key==='honestSay2'){s.flags.honest=true;relation(s,'正直に言ったら、相手も「実は自分も知らなかった」と言った。');out.text='「知らないや」\n「実は、自分も知らなかった」';out.card='honestNo'}
+  if(key==='leftOut'){s.reason='leftOut';note(s,'不安なら、まず聞く・正直に言う。');out.text='「仲間外れみたいで、不安」\nまず、聞いてみよう。';out.card='askTopic'}
+  if(key==='fakeIt'){s.reason='fakeIt';note(s,'焦りは、正直に言うと消える。');out.text='「合わせなきゃ…」\n正直に言えば、いい。';out.card='honestNo'}
+  if(key==='noInterest'){s.reason='noInterest';note(s,'興味がなくても、聞くだけはできる。');out.text='「流行には、興味がない」\n聞くだけでも、いい。';out.card='listenFirst'}
+  return out;
+ },
+ onPlay(s,id){
+  const f=s.flags;let text='',meaning='';
+  if(id==='pretendKnow'){f.faked=true;s.mind-=1;note(s,'知ったかぶりをしたが、あとで気まずくなった。');text='「ああ、知ってる知ってる」\nでも、詳しく聞かれて困った。';meaning='ふりをすると、あとでつらい。';grant(s,'honestNo')}
+  if(id==='buyFit'){f.boughtF=true;s.mind-=1;note(s,'無理して合わせたが、楽しくなかった。');text='無理して、合わせた。\nでも、楽しくなかった。';meaning='無理は、続かない。';grant(s,'listenFirst')}
+  if(id==='askTopic'){f.askedT=true;relation(s,'聞いたら、教えてもらえた。');text='「それって、何？」\n「こういうのだよ」\n教えて、もらえた。';meaning='聞くと、教えてもらえる。'}
+  if(id==='likeOwn'){f.liked=true;relation(s,'自分の好きを話したら、仲間が見つかった。');text='「自分は、これが好きなんだ」\n同じ好きな子が、いた。';meaning='好きを話すと、仲間が見つかる。'}
+  if(id==='listenFirst'){f.listened=true;note(s,'まず聞いたら、話の筋が分かってきた。');text='まず、聞いてみた。\n話の筋が、分かってきた。';meaning='聞くと、入り口が見える。'}
+  if(id==='bridgeT'){f.bridged=true;relation(s,'つなげたら、会話が続いた。');text='「それって、あれに似てる？」\n会話が、続いた。';meaning='つなげると、会話になる。'}
+  if(id==='honestNo'){f.honest=true;relation(s,'正直に言ったら、楽になった。');text='「知らないや」\n正直に言えて、楽になった。';meaning='正直は、楽で強い。'}
+  if(id==='tryJoin'){if(f.askedT||f.honest){f.joinedT=true;relation(s,'教えてもらって、一緒にやれた。');text='「教えて」\n「いいよ、一緒にやろう」\n輪に、入れた。';meaning='一緒にやると、輪に入れる。'}else{s.mind-=1;text='入ろうとしたが、話が分からなかった。';meaning='まず聞く・正直に言ってから、入ると良い。';grant(s,'askTopic')}}
+  if(id==='ownWay'){if(f.liked||f.listened){f.ownPace=true;note(s,'自分のペースで、楽しんでいる。');text='「無理せず、自分のペースで」\n自分なりに、楽しめた。';meaning='自分のペースも、正解。'}else{s.mind-=1;text='自分のペースにしようとしたが、まだ焦っていた。';meaning='まず聞く・話してから、ペースを決めると良い。';grant(s,'listenFirst')}}
+  if(id==='joinThem'){if(f.liked||f.bridged){f.led=true;relation(s,'自分から話題を出せた。');text='「ねえ、これ知ってる？」\n自分から、話題を出せた。';meaning='出せるようになると、対等。'}else{s.mind-=1;text='話題を出そうとしたが、まだ自信がなかった。';meaning='まず話す・つなげてから、出すと良い。';grant(s,'bridgeT')}}
+  return {text,meaning};
+ },
+ watch(s){
+  if(s.stage===0)return 'みんなが、知らない話で盛り上がっている。';
+  if(s.stage===1)return '話題から外れて、一人でいる気がする。';
+  return '焦って合わせると、自分を見失う。';
+ },
+ scene(s){const f=s.flags;
+  if(s.stage===0)return {narrative:'休み時間、みんなが流行りの話で盛り上がっている。自分だけ、話が分からない。',speaker:'まわりの子',quote:'昨日のあれ、見た？',look:'みんなが、笑っている。',self:'何の話…',hint:'ついていけないとき、何がつらい？'};
+  if(s.stage===1)return {narrative:'話題の輪が、近くにある。どう関わるか。',speaker:'まわりの子',quote:'お前も知ってるよね？',look:'みんなが、こちらを見た。',self:s.reason==='leftOut'?'不安…':s.reason==='fakeIt'?'焦る…':s.reason==='noInterest'?'興味ないし…':'どうしよう…',hint:'聞く・正直・まず聞く、方法はある。'};
+  return {narrative:'帰り道。明日から、どう関わるか。',speaker:'友達',quote:f.askedT?'また教えるよ':'じゃあね',look:'夕焼けが、広がっている。',self:f.joinedT||f.ownPace?'自分なりに、楽しめそう。':'まだ、焦っている。',hint:'一緒にやる・自分のペース・話題を出す、選ぼう。'};
+ },
+ progress(s){const f=s.flags;return f.joinedT||f.ownPace||f.led?3:f.askedT||f.liked||f.listened||f.honest||f.bridged?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.joinedT||f.ownPace?'自分らしい入り方を、見つけた。':f.askedT||f.honest?'聞けた・言えた。次の関わり方を選べる。':'外れたまま。聞く・正直に言う、方法はある。'}
 }
 };
 

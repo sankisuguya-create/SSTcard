@@ -448,6 +448,16 @@ export const cards={
  checkDesk:{title:'自分の持ち場を確かめる',kind:'think',label:'持ち場を確かめる',cost:1,atk:2,attr:'study',up:'study',desc:'自分の置き場所を、もう一度確かめる。',hint:'確認すると、勘違いも分かる',icon:'check'},
  letItGo2:{title:'笑いごとで済ませる',kind:'support',label:'笑いごとにする',cost:2,atk:3,attr:'soc',up:'soc',desc:'「びっくりしたー」と、笑いごとにする。',hint:'笑えると、角が立たない',icon:'sun'},
  makeRule2:{title:'「隠すのなし」ルールにする',kind:'support',label:'ルールを決める',cost:2,atk:3,attr:'soc',up:'soc',desc:'みんなで、「隠しごとなし」にする。',hint:'ルールで、次を防ぐ',icon:'flag'},
+ hidePaper:{title:'プリントを隠す',kind:'think',label:'隠す',cost:0,strain:1,atk:1,attr:'soc',desc:'点数のプリントを、隠す。',hint:'隠すと、心が重い',icon:'eye'},
+ fakeSign:{title:'「まだ配ってない」とごまかす',kind:'talk',label:'ごまかす',cost:0,strain:1,atk:1,attr:'soc',desc:'家で、ごまかす。',hint:'ごまかすと、あとがこわい',icon:'bolt'},
+ tellHome:{title:'家に正直に見せる',kind:'talk',label:'正直に見せる',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'悪い点でも、正直に見せる。',hint:'正直は、一番楽',icon:'heart'},
+ showWeak:{title:'「ここができなかった」と見せる',kind:'talk',label:'できない所を見せる',cost:1,atk:2,attr:'study',up:'study',desc:'できなかった所を、見せる。',hint:'見せると、教えてもらえる',icon:'search'},
+ askHelp4:{title:'「教えて」と頼む',kind:'talk',label:'教えてと頼む',cost:1,atk:2,attr:'study',up:'study',desc:'分からない所を、家の人に頼む。',hint:'頼むと、分かるようになる',icon:'hand'},
+ planRedo:{title:'次の勉強計画を立てる',kind:'think',label:'計画を立てる',cost:1,atk:2,attr:'study',up:'study',desc:'次は、どうするか計画を立てる。',hint:'計画で、不安が小さくなる',icon:'list'},
+ ownPace2:{title:'自分なりの目標を決める',kind:'think',label:'自分の目標',cost:1,atk:2,attr:'study',up:'study',desc:'人と比べず、自分の目標にする。',hint:'自分のペースが、続く',icon:'sun'},
+ compareSelf:{title:'前の自分と比べる',kind:'think',label:'前と比べる',cost:1,atk:2,attr:'study',up:'study',desc:'人の点より、前の自分と比べる。',hint:'前よりできたら、成長',icon:'up'},
+ makePromise2:{title:'「次はがんばる」と約束する',kind:'support',label:'約束する',cost:2,atk:3,attr:'soc',up:'soc',desc:'「次はがんばる」と、家で約束する。',hint:'約束は、支えになる',icon:'flag'},
+ restEasy:{title:'今日は、気にしない',kind:'support',label:'気にしない',cost:2,atk:3,attr:'ath',up:'ath',desc:'今日は切り替えて、気にしない。',hint:'切り替えも、立て直し',icon:'check'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -2663,6 +2673,48 @@ hidden:{title:'筆箱を隠された',nav:'隠された',num:47,attrs:['soc'],go
  },
  progress(s){const f=s.flags;return f.letGo||f.ruled||f.askedC3?3:f.cooled2||f.askedA3||f.told3||f.looked||f.checked?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.ruled||f.letGo?'次を、防ぐ準備ができた。':f.cooled2||f.askedA3?'冷静に、対処できている。':'まだ、モヤモヤ。冷静・聞く・相談、方法はある。'}
+},
+sign:{title:'テストの点を見せたくない',nav:'点を見せたくない',num:48,attrs:['study','soc'],goals:['正直に伝えたい','次につなげたい','自分のペースを守りたい'],chapters:['返ってきたテスト','家に帰って','明日から'],locations:['教室','家','翌日'],base:['hidePaper','fakeSign','tellHome','anger','ignore'],
+ start:{mind:4,energy:3},
+ monsters:[{name:'見せられない点数',hp:5,power:1,turns:4,look:'赤い数字が、目に入る。'},{name:'家での不安',hp:5,power:1,turns:4,look:'ランドセルが、重い。'},{name:'次のテストへの気持ち',hp:6,power:2,turns:4,look:'次は、どうするか。'}],
+ talk:[['talkHome','家の人に相談する','点数のこと、相談する。'],['talkTeacher4','先生に聞く','どう直せばいいか、聞く。'],['showFriend','友達と見せ合う','お互いのを、見せ合う。']],
+ think:[['shame3','点が悪くて恥ずかしい','点数が、低かった。'],['scaredHome','家で言われそう','家で、何か言われそう。'],['dontKnow2','どう直せばいいか','何をすれば、直せるか。']],
+ reasonKeys:['shame3','scaredHome','dontKnow2'],
+ stageGrants:[['showWeak','askHelp4','planRedo'],['ownPace2','compareSelf','makePromise2','restEasy']],
+ subs:[
+  {title:'家の人が「がんばったね」と言った',text:'「がんばったね」と、声をかけてもらった。',stat:'soc',min:0,good:{text:'「実は、あまりできなくて」と言えた。',rep:1,mind:1},ok:{text:'安心した。',mind:1}},
+  {title:'テストを返してもらった',text:'先生が、「直せばいいよ」と言ってくれた。',stat:'study',min:0,good:{text:'「どこを直せばいいか」聞けた。',stat:'study'},ok:{text:'直す気になった。',mind:1}}
+ ],
+ onExplore(s,key){const out={text:'',card:null};
+  if(key==='talkHome'){s.flags.talkedH=true;relation(s,'相談したら、一緒に考えてくれた。');out.text='「テスト、悪かった」\n「どこができなかった？」';out.card='tellHome'}
+  if(key==='talkTeacher4'){s.flags.talkedT=true;relation(s,'聞いたら、直し方を教えてもらった。');out.text='「どう直せばいいですか」\n「ここを、もう一回やろう」';out.card='showWeak'}
+  if(key==='showFriend'){s.flags.showedF=true;relation(s,'見せ合ったら、みんな似たようなものだった。');out.text='「俺も悪かったよ」\n「え、そうなの？」';out.card='compareSelf'}
+  if(key==='shame3'){s.reason='shame3';out.text='点数が、恥ずかしかった。\n「見せる」のは勇気がいる。';out.card='tellHome'}
+  if(key==='scaredHome'){s.reason='scaredHome';out.text='家で言われそうで、こわかった。\n先に「相談」すると、変わる。';out.card='showWeak'}
+  if(key==='dontKnow2'){s.reason='dontKnow2';out.text='何を直せばいいか、分からなかった。\n「直す方法」を考えよう。';out.card='planRedo'}
+  return out;
+ },
+ onPlay(s,id){const f=s.flags;
+  if(id==='tellHome'){f.toldH=true;return{text:'正直に、見せた。',meaning:'正直は、一番楽。'}}
+  if(id==='showWeak'){f.showedW=true;return{text:'「ここができなかった」と見せた。',meaning:'見せると、教えてもらえる。'}}
+  if(id==='askHelp4'){f.askedH4=true;return{text:'「教えて」と頼んだ。',meaning:'頼むと、分かるようになる。'}}
+  if(id==='planRedo'){f.planned3=true;return{text:'次の勉強計画を、立てた。',meaning:'計画で、不安が小さくなる。'}}
+  if(id==='ownPace2'){f.ownPaced=true;return{text:'自分なりの目標を、決めた。',meaning:'自分のペースが、続く。'}}
+  if(id==='compareSelf'){f.compared=true;return{text:'前の自分と、比べた。',meaning:'前よりできたら、成長。'}}
+  if(id==='makePromise2'){f.promised2=true;return{text:'「次はがんばる」と約束した。',meaning:'約束は、支えになる。'}}
+  if(id==='restEasy'){f.rested2=true;return{text:'今日は、気にしないことにした。',meaning:'切り替えも、立て直し。'}}
+  if(id==='hidePaper'){f.hid=true;return{text:'プリントを、隠した。',meaning:'隠すと、心が重い。'}}
+  if(id==='fakeSign'){f.faked2=true;s.rep-=1;relation(s,'ごまかしたら、あとでばれた。');return{text:'「まだ配ってない」とごまかした。',meaning:'ごまかすと、あとがこわい。'}}
+  return{text:'',meaning:''};
+ },
+ watch(s){return s.stage===0?'点数は一時。直し方は、まだある。':s.stage===1?'正直だと、助けてもらえる。':'次のテストで、取り戻せる。'},
+ scene(s){const f=s.flags;
+  if(s.stage===0)return{narrative:'返ってきたテスト。思ったより、点が低かった。',speaker:'先生',quote:'直してきてね',look:'赤い数字が、目に入る。',self:'見せられない…',hint:'点が悪いとき、何がつらい？'};
+  if(s.stage===1)return{narrative:'家。ランドセルが、重い。',speaker:'家の人',quote:'テスト、返ってきた？',look:'家の人が、聞いてくる。',self:s.reason==='scaredHome'?'怒られるかも…':s.reason==='shame3'?'恥ずかしい…':'どう言おう…',hint:'正直・見せる・聞く、方法はある。'};
+  return{narrative:'翌日。次のテストまで、あと少し。',speaker:'家の人',quote:f.toldH||f.promised2?'「次、がんばろうね」':'「まあいいけど」',look:'明日も、勉強がある。',self:f.ownPaced||f.compared||f.planned3?'次の作戦が、立った。':'まだ、気が重い。',hint:'目標・比べる・約束・気にしない、選ぼう。'};
+ },
+ progress(s){const f=s.flags;return f.ownPaced||f.compared||f.planned3||f.promised2?3:f.toldH||f.showedW||f.askedH4||f.talkedH||f.talkedT?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.ownPaced||f.planned3||f.promised2?'次の作戦が、立った。':f.toldH||f.showedW?'正直に、できた。':'まだ、隠したまま。正直・見せる・計画、方法はある。'}
 }
 };
 

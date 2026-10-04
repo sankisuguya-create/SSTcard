@@ -478,6 +478,16 @@ export const cards={
  tradeIt:{title:'「じゃあ交代で」と提案する',kind:'think',label:'交代の提案',cost:1,atk:2,attr:'soc',up:'soc',desc:'「今日はあなた、明日は私」と提案。',hint:'交代なら、ずるくない',icon:'flag'},
  ownJob:{title:'自分の分だけしっかりやる',kind:'think',label:'自分の分をやる',cost:1,atk:2,attr:'study',up:'study',desc:'自分の分を、しっかりやる。',hint:'自分の分は、自分の責任',icon:'check'},
  noPush:{title:'「押し付けない」約束にする',kind:'support',label:'約束にする',cost:2,atk:3,attr:'soc',up:'soc',desc:'「押し付けない」を、みんなの約束にする。',hint:'約束で、次を防ぐ',icon:'spark'},
+ joinGossip:{title:'一緒に悪口を言う',kind:'talk',label:'乗る',cost:0,strain:1,atk:1,attr:'soc',desc:'場に合わせて、悪口に乗る。',hint:'乗ると、あとで心が痛い',icon:'bolt'},
+ stayMute:{title:'黙って聞き流す',kind:'think',label:'聞き流す',cost:0,strain:1,atk:1,attr:'soc',desc:'何も言わず、聞き流す。',hint:'黙ると、仲間だと思われる',icon:'eye'},
+ changeTopic:{title:'話題を変える',kind:'talk',label:'話題を変える',cost:1,atk:2,attr:'soc',up:'soc',desc:'「そういえばさ」と、話題を変える。',hint:'話題を変えると、悪口が止まる',icon:'message'},
+ walkAway2:{title:'その場を離れる',kind:'think',label:'離れる',cost:1,atk:2,attr:'soc',up:'soc',desc:'「ちょっとトイレ」と、離れる。',hint:'離れるのも、答え',icon:'door'},
+ defendF:{title:'「でも、いいところもあるよ」と言う',kind:'talk',label:'かばう',cost:1,atk:2,attr:'soc',up:'soc',desc:'その子の、いいところを言う。',hint:'かばうのは、勇気',icon:'heart'},
+ neutralSt:{title:'「そうかなあ」と中立でいる',kind:'talk',label:'中立でいる',cost:1,atk:2,attr:'soc',up:'soc',desc:'賛成も反対もせず、中立でいる。',hint:'中立でいると、巻き込まれない',icon:'sun'},
+ tellF4:{title:'本人に直接伝える',kind:'talk',label:'本人に伝える',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'悪口を言われた子に、正直に伝える。',hint:'正直は、関係を守る',icon:'hand'},
+ askBoth2:{title:'両方の話を聞く',kind:'think',label:'両方を聞く',cost:1,atk:2,attr:'study',up:'study',desc:'悪口の側と本人の側、両方聞く。',hint:'両方聞くと、本当が分かる',icon:'ear'},
+ kindWord:{title:'悪口のない会話をする',kind:'support',label:'悪口のない会話',cost:2,atk:3,attr:'soc',up:'soc',desc:'悪口のない会話を、心がける。',hint:'悪口のない場は、みんなが楽',icon:'spark'},
+ keepOut:{title:'「私は入らない」と距離を置く',kind:'support',label:'距離を置く',cost:2,atk:3,attr:'soc',up:'soc',desc:'「私はそういうの入らない」と、距離を置く。',hint:'距離を置くと、巻き込まれない',icon:'flag'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -2819,6 +2829,48 @@ dumped:{title:'仕事を押し付けられた',nav:'押し付けられた',num:5
  },
  progress(s){const f=s.flags;return f.ownJ||f.noP||f.splitF||f.traded?3:f.saidNo2||f.askedR||f.tookH||f.toldT4?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.splitF||f.traded||f.noP?'公平な分け方が、できた。':f.saidNo2||f.tookH?'断る・交渉が、できた。':'まだ、一人で抱えている。断る・分ける・相談、方法はある。'}
+},
+gossip:{title:'友達の悪口を聞いた',nav:'悪口を聞いた',num:51,attrs:['soc'],goals:['悪口に乗らないでいたい','関係をこわさず立ち回りたい','悪口のない場にしたい'],chapters:['悪口の話が始まった','どう立ち回るか','明日からの関係'],locations:['休み時間','帰り道','翌日'],base:['joinGossip','stayMute','changeTopic','anger','ignore'],
+ start:{mind:4,energy:3},
+ monsters:[{name:'悪口の渦',hp:5,power:1,turns:4,look:'「あの子ってさ…」と始まった。'},{name:'同調の圧力',hp:5,power:1,turns:4,look:'みんな、こっちを見ている。'},{name:'明日の空気',hp:6,power:2,turns:4,look:'明日も、このグループ。'}],
+ talk:[['changeSub','話題を変える','「そういえば」と、切り替える。'],['askDirect','本人に直接聞いてみる','悪口じゃなく、本人に聞く。'],['talkTeacher6','先生に相談する','悪口のこと、相談する。']],
+ think:[['uncomfortable','悪口が嫌だ','悪口を聞くと、嫌な気持ち。'],['afraid2','はずされるのが不安','反対したら、はずされるか。'],['whatIsRight','正しいのはどれか','正しいのは、どれだろう。']],
+ reasonKeys:['uncomfortable','afraid2','whatIsRight'],
+ stageGrants:[['walkAway2','defendF','neutralSt'],['tellF4','askBoth2','kindWord','keepOut']],
+ subs:[
+  {title:'悪口を言っていた子が「本当は悪くないと思う」と言った',text:'その子が、本音を漏らした。',stat:'soc',min:0,good:{text:'「そうだよね」と、本音で話せた。',rep:1,mind:1},ok:{text:'ほっとした。',mind:1}},
+  {title:'悪口を言われた子が「一緒に遊ぼう」と誘ってきた',text:'その子が、誘ってきた。',stat:'soc',min:0,good:{text:'「うん」と、仲良くできた。',rep:1},ok:{text:'嬉しかった。',mind:1}}
+ ],
+ onExplore(s,key){const out={text:'',card:null};
+  if(key==='changeSub'){s.flags.changed=true;relation(s,'話題を変えたら、悪口が止まった。');out.text='「そういえば、昨日のテレビ」\n「あ、それ見た見た！」';out.card='changeTopic'}
+  if(key==='askDirect'){s.flags.askedD=true;relation(s,'本人に聞いたら、本当のことが分かった。');out.text='「今日、元気ないけどどうしたの」\n「実は…」';out.card='tellF4'}
+  if(key==='talkTeacher6'){s.flags.talkedT6=true;relation(s,'相談したら、「悪口は乗らなくていいよ」と言ってもらえた。');out.text='「悪口、どうすれば」\n「乗らなくて、いいよ」';out.card='keepOut'}
+  if(key==='uncomfortable'){s.reason='uncomfortable';out.text='悪口を聞くと、嫌な気持ちになった。\nその「嫌」は、正しい。';out.card='changeTopic'}
+  if(key==='afraid2'){s.reason='afraid2';out.text='反対したら、はずされるか不安。\n「中立」「離れる」なら、ぶつからない。';out.card='neutralSt'}
+  if(key==='whatIsRight'){s.reason='whatIsRight';out.text='正しいのは、どれだろう。\n「かばう」は勇気、「悪口のない場」は理想。';out.card='defendF'}
+  return out;
+ },
+ onPlay(s,id){const f=s.flags;
+  if(id==='changeTopic'){f.chTopic=true;return{text:'話題を、変えた。',meaning:'話題を変えると、悪口が止まる。'}}
+  if(id==='walkAway2'){f.walked2=true;return{text:'その場を、離れた。',meaning:'離れるのも、答え。'}}
+  if(id==='defendF'){f.defended=true;return{text:'「いいところもあるよ」と、かばった。',meaning:'かばうのは、勇気。'}}
+  if(id==='neutralSt'){f.neutral2=true;return{text:'「そうかなあ」と、中立でいた。',meaning:'中立でいると、巻き込まれない。'}}
+  if(id==='tellF4'){f.toldF4=true;return{text:'本人に、直接伝えた。',meaning:'正直は、関係を守る。'}}
+  if(id==='askBoth2'){f.askedB2=true;return{text:'両方の話を、聞いた。',meaning:'両方聞くと、本当が分かる。'}}
+  if(id==='kindWord'){f.kindW=true;return{text:'悪口のない会話を、心がけた。',meaning:'悪口のない場は、みんなが楽。'}}
+  if(id==='keepOut'){f.keptOut=true;return{text:'「私は入らない」と、距離を置いた。',meaning:'距離を置くと、巻き込まれない。'}}
+  if(id==='joinGossip'){f.joined=true;s.rep-=1;relation(s,'悪口に乗ったら、あとで心が痛んだ。');return{text:'一緒に、悪口を言った。',meaning:'乗ると、あとで心が痛い。'}}
+  if(id==='stayMute'){f.muted=true;return{text:'黙って、聞き流した。',meaning:'黙ると、仲間だと思われる。'}}
+  return{text:'',meaning:''};
+ },
+ watch(s){return s.stage===0?'悪口は、簡単に広がる。':s.stage===1?'乗らなくていい。でも、方法はいろいろ。':'明日も、このグループがある。'},
+ scene(s){const f=s.flags;
+  if(s.stage===0)return{narrative:'休み時間。「あの子ってさ…」と、悪口の話が始まった。',speaker:'友達',quote:'あの子、なんかムカつくよね',look:'みんな、うなずいている。',self:'悪口、嫌だな…',hint:'悪口を聞いて、何がつらい？'};
+  if(s.stage===1)return{narrative:'話は、どんどん盛り上がっている。みんな、こっちを見ている。',speaker:'友達',quote:'お前も思うよね？',look:'同調を、求められている。',self:s.reason==='afraid2'?'反対したら…':s.reason==='whatIsRight'?'正しいのは…':'嫌だな…',hint:'変える・離れる・かばう・中立、方法はある。'};
+  return{narrative:'翌日。また、そのグループで過ごす。',speaker:'友達',quote:f.defended||f.keptOut?'「お前、あの子のことかばうよな」':'「また悪口の話しようぜ」',look:'明日も、この関係。',self:f.kindW||f.keptOut||f.toldF4?'悪口のない場に、できそう。':'まだ、流されそう。',hint:'本人・両方・悪口なし・距離、選ぼう。'};
+ },
+ progress(s){const f=s.flags;return f.kindW||f.keptOut||f.toldF4||f.askedB2?3:f.chTopic||f.walked2||f.defended||f.neutral2?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.kindW||f.keptOut?'悪口のない場に、近づいた。':f.chTopic||f.defended||f.neutral2?'流されず、立ち回れた。':'まだ、流されそう。変える・離れる・かばう、方法はある。'}
 }
 };
 

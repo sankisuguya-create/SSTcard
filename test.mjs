@@ -442,7 +442,7 @@ console.log('clarity checks OK');
   if((d.stageGrants||[]).length!==d.monsters.length-1)bad.push(name+':stageGrants');
   const keys=[...d.talk.map(o=>o[0]),...d.think.map(o=>o[0])];
   if(new Set(keys).size!==keys.length)bad.push(name+':dup-keys');
-  for(const m of d.monsters)if(m.acts)for(const a of m.acts)if(!['attack','stress','steal','wait'].includes(a))bad.push(name+':acts');
+  for(const m of d.monsters)if(m.acts)for(const a of m.acts)if(!['stress','seal','special','wait'].includes(a))bad.push(name+':acts');
  }
  assert(bad.length===0,'story structure: '+bad.join(','));
  console.log('structure lint OK:',Object.keys(stories).length,'stories');

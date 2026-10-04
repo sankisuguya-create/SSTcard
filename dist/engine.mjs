@@ -485,7 +485,7 @@ sports:{
  goals:['不安の理由を知りたい','自分に合う参加をしたい','困ったときに備えたい'],
  chapters:['運動会まで7日','練習の日','運動会当日'],locations:['教室・帰りの会','校庭・練習の日','校庭・運動会当日'],
  base:['practice','schedule','sora','anger','ignore'],start:{mind:4,energy:4},
- monsters:[{name:'あせりの霧',hp:4,power:0,turns:4,look:'あせりが、足元にまとわりつく。'},{name:'プレッシャーの壁',hp:5,power:1,turns:5,look:'見られる気配が、壁のように立ちはだかる。'},{name:'本番の大男',hp:6,power:1,turns:5,look:'本番の重圧が、目の前に立っている。'}],
+ monsters:[{name:'あせりの霧',hp:4,power:0,turns:4,look:'あせりが、足元にまとわりつく。'},{name:'プレッシャーの壁',hp:5,power:1,turns:5,look:'見られる気配が、壁のように立ちはだかる。'},{name:'本番の大男',hp:6,power:1,turns:5,look:'本番の重圧が、目の前に立っている。',special:[{text:'失敗したところを、見られてしまった。',mind:1},{text:'次の動きが、分からなくなった。',debuff:'ath'}]}],
  talk:[['teacher','先生に、過ごし方を相談する','音や休憩について聞いてみる。'],['friend','ソラに、気持ちを話す','楽しみではない気持ちも伝えてみる。']],
  think:[['movement','動き方が分からないのかな','スタートなど、何をすればよいか不安。'],['judgment','人に見られるのが心配かな','遅いところを見られるのが気になる。'],['noise','音や人の多さがつらいのかな','にぎやかな場所だと、体がぎゅっとなる。'],['unknown','まだ、よく分からない','練習の中で確かめることもできる。']],
  reasonKeys:['movement','judgment','noise','unknown'],
@@ -538,7 +538,7 @@ test:{
  goals:['不安の理由を知りたい','自分に合う準備をしたい','落ち着いて取り組みたい'],
  chapters:['テスト一週間前','勉強の日','テスト当日'],locations:['教室・帰りの会','教室・放課後','教室・テスト当日'],
  base:['range','breathe','easyFirst','ignore','boast'],start:{mind:5,energy:4},
- monsters:[{name:'不安の影',hp:3,power:0,turns:4,look:'不安が、ノートの上をうろついている。'},{name:'わからない山',hp:4,power:1,turns:5,look:'分からないところが、山になっている。'},{name:'テスト大王',hp:5,power:1,turns:5,look:'プリントの向こうから、大王がにらんでいる。'}],
+ monsters:[{name:'不安の影',hp:3,power:0,turns:4,look:'不安が、ノートの上をうろついている。'},{name:'わからない山',hp:4,power:1,turns:5,look:'分からないところが、山になっている。'},{name:'テスト大王',hp:5,power:1,turns:5,look:'プリントの向こうから、大王がにらんでいる。',special:[{text:'難問にぶつかって、手が止まった。',mind:1},{text:'書き間違いに気づいて、やり直しになった。',energy:1}]}],
  talk:[['teacherT','先生に、苦手なところを相談する','範囲や勉強の仕方を聞いてみる。'],['kei','ケイに、気持ちを話す','得意な人にも聞いてみる。']],
  think:[['gaps','分からないところが多いのかな','まちがえたところが重なっている気がする。'],['panic','当日あがってしまうのかな','テストと聞くと、体がこわばる。'],['time','時間が足りないのかな','ゆっくり考えると、終わらない気がする。']],
  reasonKeys:['gaps','panic','time'],
@@ -783,7 +783,7 @@ lose:{
  goals:['悔しさを乗りこなしたい','相手を認めたい','次につなげたい'],
  chapters:['休み時間のドッジボール','放課後','次の日'],locations:['校庭・ドッジボール','教室・放課後','校庭・朝'],
  base:['rematch','quitGame','sourFace','anger','boast'],start:{mind:4,energy:4},
- monsters:[{name:'悔しさの炎',hp:4,power:1,turns:4,look:'負けた悔しさが、胸に火をつける。'},{name:'くやしさの鎖',hp:5,power:1,turns:5,look:'「また負けるかも」が、鎖になって足を引く。'},{name:'再戦魔王',hp:6,power:1,turns:5,look:'「もう一度」の誘惑が、大きくのしかかる。',acts:['attack','steal','attack','stress','steal']}],
+ monsters:[{name:'悔しさの炎',hp:4,power:1,turns:4,look:'負けた悔しさが、胸に火をつける。'},{name:'くやしさの鎖',hp:5,power:1,turns:5,look:'「また負けるかも」が、鎖になって足を引く。'},{name:'再戦魔王',hp:6,power:1,turns:5,look:'「もう一度」の誘惑が、大きくのしかかる。',acts:['stress','seal','stress','special','seal']}],
  talk:[['winnerS','勝ったサキに話を聞く','強さの理由を聞いてみる。'],['teacherE','先生に相談する','悔しさの扱い方を聞く。']],
  think:[['frustrate','悔しくて仕方ない','あと少しだったのに、と思い続けている。'],['face','みんなに負けたのが恥ずかしい','負けた姿を、見られたくない。'],['again','すぐに再戦したい','今すぐにでも、取り返したい。']],
  reasonKeys:['frustrate','face','again'],
@@ -1551,7 +1551,7 @@ rumor:{
  goals:['うわさを止めたい','落ち着いていたい','関係を守りたい'],
  chapters:['休み時間','うわさの広がり','翌日'],locations:['教室・休み時間','廊下・うわさ','教室・翌日'],
  base:['denyR','snapBack','pretendR','anger','ignore'],start:{mind:4,energy:4},
- monsters:[{name:'ささやきの群れ',hp:4,power:0,turns:4,look:'あっちこっちで、こそこそ声がする。'},{name:'大きくなるうわさ',hp:5,power:1,turns:5,look:'うわさが、伝わるたびに大きくなる。'},{name:'みんなの目',hp:6,power:1,turns:5,look:'みんなの目が、こっちを見ている気がする。',acts:['stress','attack','stress','attack','attack']}],
+ monsters:[{name:'ささやきの群れ',hp:4,power:0,turns:4,look:'あっちこっちで、こそこそ声がする。'},{name:'大きくなるうわさ',hp:5,power:1,turns:5,look:'うわさが、伝わるたびに大きくなる。'},{name:'みんなの目',hp:6,power:1,turns:5,look:'みんなの目が、こっちを見ている気がする。',acts:['stress','special','stress','seal','special']}],
  talk:[['rumorKid','うわさを聞いた子に話す','まわりの子に、静かに聞く。'],['teacherRu','先生に相談','広がる前に、止めてもらう。']],
  think:[['whoDid','誰が流したか気になる','誰が言い始めたか、知りたい。'],['whatThey','内容が恥ずかしい','うわさの中身が、恥ずかしい。'],['angry','腹が立つ','勝手に言われて、腹が立つ。']],
  reasonKeys:['whoDid','whatThey','angry'],
@@ -1596,7 +1596,7 @@ lunch:{
  goals:['少しでも食べたい','無理せず向き合いたい','食べるのが楽しみになる日にしたい'],
  chapters:['給食の時間','食べる時間','午後'],locations:['教室・給食','机・食事','教室・午後'],
  base:['forceAll','hideFood','swapFood','anger','ignore'],start:{mind:5,energy:4},
- monsters:[{name:'苦手な一品',hp:3,power:0,turns:4,look:'皿にのった、苦手な食べもの。'},{name:'みんなの視線',hp:4,power:1,turns:5,look:'残すのを、見られる気がする。'},{name:'給食への苦手意識',hp:5,power:1,turns:5,look:'給食の時間が、憂うつになる感じ。',acts:['stress','wait','attack','stress','attack']}],
+ monsters:[{name:'苦手な一品',hp:3,power:0,turns:4,look:'皿にのった、苦手な食べもの。'},{name:'みんなの視線',hp:4,power:1,turns:5,look:'残すのを、見られる気がする。'},{name:'給食への苦手意識',hp:5,power:1,turns:5,look:'給食の時間が、憂うつになる感じ。',acts:['stress','wait','special','stress','seal']}],
  talk:[['teacherL','先生に言う','苦手なことを、先生に伝える。'],['friendL','友達に聞く','好きな子に、食べ方を聞く。']],
  think:[['shame','残すのが恥ずかしい','残すのを見られたくない。'],['texture','食感が苦手','口の中の感じが、無理。'],['fearTry','食べるのが怖い','一口すら、入れたくない。']],
  reasonKeys:['shame','texture','fearTry'],
@@ -2446,16 +2446,30 @@ function resolveSub(s,ev){
  say(s,'event',ev.text+' '+r.text);trackMind(s);
  return{text:ev.text,result:r.text,good};
 }
-// モンスターの毎ターン行動: attack=反撃 / stress=威圧で精神力-1 / steal=手札を1枚使いにくくする / wait=様子見
+// モンスターの毎ターン行動（反撃は実装しない方針）:
+// stress=プレッシャーで気持ちを削る / seal=時間のかかる手札を封印 / special=属性・場面別の干渉 / wait=様子見
 const MONSTER_ACT={
- attack(s,m){const d=Math.max(0,m.power-Math.min(2,s.clarity||0))+(s.bolster||0)+(s.rep<=0?1:0);if(d>0)s.mind=s.mind>0?Math.max(1,s.mind-d):s.mind-d;return{mdmg:d,counter:monsterFaded(s)&&m.power>0&&d<=0?'正体が見えて、怖さが薄らいだ。':s.rep<=0?'まわりの目が冷たい。孤立が不安を増やし、余計に傷ついた。':s.bolster?'未解決の課題が重なり、反撃が強くなった。':'モンスターが反撃してきた。'}},
- stress(s){s.mind=s.mind>0?Math.max(1,s.mind-1):s.mind-1;return{mdmg:1,counter:'モンスターの威圧が、気持ちにのしかかった。'}},
- steal(s){const pool=available(s).filter(id=>!cards[id].dark);if(!pool.length)return{counter:'モンスターは狙いを定めている。'};const rid=pool[Math.floor(Math.random()*pool.length)];s.used.push(rid);return{counter:'モンスターが「'+cards[rid].title+'」を使いにくくした。',stolen:rid}},
+ stress(s,m){const d=Math.max(0,m.power-Math.min(2,s.clarity||0))+(s.bolster||0)+(s.rep<=0?1:0);if(d>0)s.mind=s.mind>0?Math.max(1,s.mind-d):s.mind-d;return{mdmg:d,counter:monsterFaded(s)&&m.power>0&&d<=0?'正体が見えて、怖さが薄らいだ。':s.rep<=0?'まわりの目が冷たい。孤立が不安を増やし、余計に傷ついた。':s.bolster?'未解決の課題が重なり、プレッシャーが強くなった。':'モンスターの威圧が、気持ちにのしかかった。'}},
+ // 時間の消費: 時間がかかる系の手札（コスト2以上優先）を、この場では使えなくする
+ seal(s){const pool=available(s).filter(id=>!cards[id].dark);if(!pool.length)return MONSTER_ACT.wait();const rid=pool.find(id=>cards[id].cost>=2)||pool[Math.floor(Math.random()*pool.length)];s.used.push(rid);return{counter:'「'+cards[rid].title+'」は時間がかかる。この場では使えなくなった。',stolen:rid}},
+ // 特殊行動: シチュエーション固有の干渉。m.specialがあればそれ、なければ属性プールから
+ special(s,m){const pool=m.special||specPool[def(s).attrs[0]]||specPool.soc;const sp=pool[(s.turns-1)%pool.length];
+  if(sp.mind)s.mind=s.mind>0?Math.max(1,s.mind-sp.mind):s.mind-sp.mind;
+  if(sp.energy)s.energy=Math.max(0,s.energy-sp.energy);
+  if(sp.debuff)s.stats[sp.debuff]=clamp(s.stats[sp.debuff]-1,-2,2);
+  let stolen=null;if(sp.seal){const pool2=available(s).filter(id=>!cards[id].dark&&cards[id].kind===sp.seal);if(pool2.length){stolen=pool2[Math.floor(Math.random()*pool2.length)];s.used.push(stolen)}}
+  return{mdmg:sp.mind||0,counter:sp.text,stolen}},
  wait(){return{counter:'モンスターは様子をうかがっている。'}}
+};
+// 属性別の特殊行動プール: ストレス値・行動力・デバフ・手札に干渉する
+const specPool={
+ study:[{text:'難問に出くわして、手が止まった。',mind:1},{text:'書き間違いに気づいて、やり直しになった。',energy:1},{text:'聞きたいことが、言えなくなった。',seal:'talk'}],
+ ath:[{text:'失敗したところを、見られてしまった。',mind:1},{text:'息があがって、体が重くなった。',energy:1},{text:'次の動きが、分からなくなった。',debuff:'ath'}],
+ soc:[{text:'まわりの目が、気になった。',mind:1},{text:'空気が重くなって、動きづらくなった。',energy:1},{text:'言おうとしたことが、出てこなくなった。',seal:'talk'}]
 };
 export function monsterFaded(s){return (s.clarity||0)>=2}
 export function monsterPower(s,m){return Math.max(0,m.power-Math.min(2,s.clarity||0))}
-function monsterAct(s,m){const acts=m.acts||((m.power>=2||m.hp>=6)?['attack','stress','attack','steal','attack']:(m.hp>=4?['attack','attack','wait','stress']:['attack','wait','attack']));let a=acts[(s.turns-1)%acts.length];if(monsterFaded(s)&&a!=='attack')a='wait';return MONSTER_ACT[a](s,m)}
+function monsterAct(s,m){const acts=m.acts||((m.power>=2||m.hp>=6)?['stress','special','seal','stress','special']:(m.hp>=4?['stress','seal','stress','wait','special']:['stress','wait','seal']));let a=acts[(s.turns-1)%acts.length];if(monsterFaded(s)&&a!=='stress')a='wait';return MONSTER_ACT[a](s,m)}
 export function monsterSize(m){return (m.power>=2||m.hp>=6)?'huge':(m.hp<=3&&m.power<=1)?'small':'normal'}
 // 苦手意識: 同じ属性の課題に負け続けると、その属性の手札の消費気持ちが+1される（ストーリー間で持ち越す）
 function addLoss(s){
@@ -2490,8 +2504,8 @@ export function play(s,id){
  if(c.bond)s.rep=Math.min(5,s.rep+1);
  // モンスターへの攻撃。同属性の力(stats[attr])があれば効果が上下する
  const dmg=cardAtk(s,id);s.monsterHp-=dmg;
- // 生き残ったモンスターの反撃。評判が0だと、まわりの目が冷たく反撃が+1される
- // 反撃は「気持ちがいっぱい」（精神力1）までは削るが直接倒さない。大失敗は自分でコストを払いすぎた時だけ起きる
+ // 生き残ったモンスターの行動（威圧・封印・特殊・様子見）。評判が0だと威圧が+1される
+ // 威圧は「気持ちがいっぱい」（精神力1）までは削るが直接倒さない。大失敗は自分でコストを払いすぎた時だけ起きる
  let mdmg=0,counter='',stolen=null;
  if(s.monsterHp>0){const r=monsterAct(s,m);mdmg=r.mdmg||0;counter=r.counter||'';stolen=r.stolen||null;}
  // 苦手意識: その属性の手札は、消費する気持ちが+1される

@@ -369,3 +369,11 @@ rt{font-size:.55em}
  .axis-label{width:96px;font-size:12.5px}
  .axis strong{min-width:60px;font-size:13px}
 }
+
+/* モンスターの手強さ＝イラストの大きさ。強敵は枠いっぱいに拡大して圧迫感を出す */
+.arena.size-huge .arena-img{transform:scale(1.28);transform-origin:center 32%;filter:saturate(1.15) contrast(1.06) brightness(.96)}
+.arena.size-small .arena-img{transform:scale(.88);transform-origin:center 40%}
+.arena.size-huge .arena-name{font-size:20px}
+.stat.trauma{background:#5b3a3a;color:#ffd9d9;border:1px solid #a05555}
+.trauma-note{color:#8a3030;font-weight:600;font-size:13px}
+.bonus-banner.good{border-color:#7ba85b}

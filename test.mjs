@@ -250,7 +250,7 @@ Math.random=()=>0.1;
 }
 Math.random=origRandom;
 
-let explored=0;function walk(s,depth){assert(s.mind>=0&&s.mind<=6);assert(s.energy>=0&&s.energy<=5);assert(s.progress>=0&&s.progress<=3);assert(s.rep>=0&&s.rep<=5);for(const k of ['study','ath','soc'])assert(s.stats[k]>=-2&&s.stats[k]<=2);assert(s.monsterHp>=-20);if(depth===0||s.finished)return;const ids=available(s).filter(id=>canPlay(s,id));for(const id of ids){const t=structuredClone(s);assert(play(t,id));assert(t.feedback.text.length>0,id);advance(t);explored++;walk(t,depth-1)}}
+let explored=0;function walk(s,depth){assert(s.mind>=0&&s.mind<=s.mindMax);assert(s.energy>=0&&s.energy<=5);assert(s.progress>=0&&s.progress<=3);assert(s.rep>=0&&s.rep<=5);for(const k of ['study','ath','soc'])assert(s.stats[k]>=-2&&s.stats[k]<=2);assert(s.monsterHp>=-20);if(depth===0||s.finished)return;const ids=available(s).filter(id=>canPlay(s,id));for(const id of ids){const t=structuredClone(s);assert(play(t,id));assert(t.feedback.text.length>0,id);advance(t);explored++;walk(t,depth-1)}}
 Math.random=()=>0.99;
 for(const story of ['fight','sports','test','join','blame','hurt','alone','lose','change','picked','item','scold','forgot','friend','confused','noise','role','cheat','newClass','present','spill','pair','promise','duty','rumor','lunch','lie','relay','sickDay','craft','vault','meeting','leader','late','lostBook','seat','visit','makeUp','secret','byWatch','score','trend']){for(const goal of [0,1,2]){const s=initial(story);setGoal(s,goal);for(const k of MAP[story].explore)explore(s,k);s.energy=5;s.mind=6;walk(s,3)}}
 Math.random=origRandom;
@@ -305,7 +305,7 @@ const referenced=new Set();
 for(const [name,body] of Object.entries(storyBlocks)){
  // talk/thinkオプションキー＋reasonKeys はカードIDではないので除外
  const keyNames=new Set();
- for(const arr of body.matchAll(/(?:talk|think|reasonKeys):\[([\s\S]*?)\]\s*[,\n]/g))for(const mm of arr[1].matchAll(/'([a-zA-Z][a-zA-Z0-9]*)'/g))keyNames.add(mm[1]);
+ for(const arr of body.matchAll(/(?:talk|think|reasonKeys|acts):\[([\s\S]*?)\]\s*[,\n]/g))for(const mm of arr[1].matchAll(/'([a-zA-Z][a-zA-Z0-9]*)'/g))keyNames.add(mm[1]);
  const ids=new Set();
  for(const mm of body.matchAll(/'([a-zA-Z][a-zA-Z0-9]*)'/g)){const id=mm[1];if(cards[id]&&!keyNames.has(id))ids.add(id)}
  for(const id of ids)referenced.add(id);
@@ -344,3 +344,69 @@ let tr=initial('trend');explore(tr,'leftOut');assert(available(tr).includes('ask
 let tr2=initial('trend');tr2.energy=5;play(tr2,'pretendKnow');assert(tr2.flags.faked);assert(available(tr2).includes('honestNo')); // 知ったかぶり→正直へ
 let tr3=initial('trend');tr3.energy=5;tr3.hand.push('ownWay');play(tr3,'ownWay');assert(tr3.mind<5);assert(available(tr3).includes('listenFirst')); // 素地なしペースは空回り
 let tr4=initial('trend');explore(tr4,'honestSay2');assert(available(tr4).includes('honestNo'));tr4.energy=5;play(tr4,'honestNo');assert(tr4.flags.honest); // 正直に言う
+
+// ── 新仕様: サブイベント／苦手意識／モンスター行動ローテーション／精神力上限／物語持ち越し ──
+Math.random=()=>0.99;
+{ // サブイベント: 高パラメータでgood結果（rep>=1でgood）
+ const s=initial('fight');s.energy=5;s.mind=6;s.rep=5;
+ s.subQueue=[{id:'okashi',text:'お菓子をもらった。',stat:'rep',min:1,good:{text:'「ありがとう！」と笑いあった。',mind:1,rep:1},ok:{text:'少し元気が出た。',mind:1}}];
+ s.feedback={};s.monsterHp=0;advance(s);
+ assert(Array.isArray(s.bonus)&&s.bonus[0].good,'sub good expected');assert.equal(s.rep,5);
+}
+{ // サブイベント: パラメータ不足でok結果
+ const s=initial('fight');s.energy=5;s.mind=6;s.rep=0;
+ s.subQueue=[{id:'home',text:'先生にほめられた。',stat:'rep',min:3,good:{text:'G',mind:1,rep:1},ok:{text:'「がんばってるね」と言われた。',mind:1}}];
+ s.feedback={};s.monsterHp=0;advance(s);
+ assert(s.bonus&&!s.bonus[0].good,'sub ok expected');
+}
+{ // 強敵討伐で精神力上限+1（fight最終面 hp6 → 上限6→7, 精神力も+1）
+ const s=initial('fight');s.stage=2;s.monsterHp=0;s.mindMax=6;s.mind=5;
+ s.feedback={};advance(s);assert.equal(s.mindMax,7);assert.equal(s.mind,6);assert(s.finished);
+}
+{ // 同じ属性の課題に2度逃すと苦手意識がつき、同属性手札の消費が増える
+ const s=initial('fight');s.energy=5;s.mind=6;
+ s.feedback={};s.monsterHp=9;advance(s);assert(!s.traumas.soc);assert.equal(s.bolster,1);
+ s.feedback={};s.monsterHp=9;advance(s);assert(s.traumas.soc,'trauma expected');
+ s.feedback=null;s.energy=5;assert(play(s,'boundary'));
+ assert(s.feedback.counter.includes('苦手意識'),'trauma surcharge in counter');
+}
+{ // モンスター行動ローテーション: hp4モンスターはattack/attack/wait/stress
+ const s=initial('fight');s.mind=6;s.monsterHp=99;
+ const counters=[];
+ for(let i=0;i<4;i++){s.feedback=null;s.energy=5;const id=available(s).find(x=>canPlay(s,x));if(!id)break;play(s,id);counters.push(s.feedback.counter||'')}
+ assert(counters.some(c=>c.includes('様子')),'wait act seen');
+ assert(counters.some(c=>c.includes('威圧')),'stress act seen');
+}
+{ // 強敵(hp6/power2)は手札を奪う: craft最終面 acts[3]=steal
+ const s=initial('craft');s.stage=2;s.monsterHp=99;s.mind=6;
+ let stole=false;
+ for(let i=0;i<4&&!stole;i++){s.feedback=null;s.energy=5;s.mind=6;const id=available(s).find(x=>canPlay(s,x));if(!id)break;play(s,id);if(s.feedback.stolen)stole=true}
+ assert(stole,'steal act expected');
+}
+{ // 物語持ち越し: 評判・苦手意識・上限を引き継ぐ
+ const s=initial('join',{rep:4,traumas:{soc:true},mindMax:7});
+ assert.equal(s.rep,4);assert.equal(s.mindMax,7);assert(s.traumas.soc);
+}
+{ // サブイベント抽選: subQueueが満たされる（既定2件,重複なし）
+ const s=initial('fight');assert(s.subQueue.length===3);assert(new Set(s.subQueue.map(e=>e.id)).size===3);
+}
+Math.random=origRandom;
+console.log('new-spec checks OK: sub-events, trauma, monster acts, mindMax, carry');
+
+// ── カード性能のもっともらしさlint: コスト・効果のレンジと整合性 ──
+{
+ const bad=[];
+ for(const [id,c] of Object.entries(cards)){
+  if(!Number.isInteger(c.cost)||c.cost<0||c.cost>5)bad.push(id+':cost');
+  if(!c.dark&&!c.minus){
+   if(c.strain&&(c.strain<0||c.strain>4))bad.push(id+':strain');
+   if((c.atk||0)>4)bad.push(id+':atk>4');
+   if((c.atk||0)>0&&!c.attr)bad.push(id+':atk-no-attr'); // 攻撃カードは属性を持つべき
+  }else{
+   if(!(c.heal>0))bad.push(id+':heal'); // マイナス/ダークは回復手段
+  }
+  if(c.attr&&!['study','ath','soc'].includes(c.attr))bad.push(id+':attr');
+ }
+ assert(bad.length===0,'implausible cards: '+bad.join(','));
+ console.log('plausibility lint OK:',Object.keys(cards).length,'cards');
+}

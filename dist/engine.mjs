@@ -155,7 +155,7 @@ export const cards={
  pleaseQ:{title:'「少し静かにして」とお願い',kind:'talk',label:'静かにとお願い',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'うるさい友達に、やんわりお願いする。',hint:'お願いのしかたで、受け取り方が変わる',icon:'people'},
  breatheQuiet:{title:'静かな所で深呼吸',kind:'think',label:'深呼吸',cost:1,atk:0,up:'study',desc:'少し離れて、呼吸を整える。',hint:'一度離れて、整えると楽になる',icon:'sun'},
  sulkR:{title:'ふてくされる',kind:'think',label:'ふてくされる',cost:0,strain:1,atk:0,desc:'不満を抱えて、うつむく。',hint:'抱え込むだけでは、何も変わらない',icon:'skull'},
- dragFeet:{title:'だらだら練習する',kind:'think',label:'だらだら',cost:0,atk:1,desc:'やる気なく、流れに任せる。',hint:'流れだけでは、気持ちは晴れない',icon:'clock'},
+ dragFeet:{title:'だらだら練習する',kind:'think',label:'だらだら',cost:0,atk:1,attr:'ath',desc:'やる気なく、流れに任せる。',hint:'流れだけでは、気持ちは晴れない',icon:'clock'},
  skipCheer:{title:'応援をサボる',kind:'talk',label:'サボる',cost:0,atk:0,desc:'応援係を、やる気なくやる。',hint:'サボると、まわりの目が気になる',icon:'eye'},
  cryOK:{title:'「悔しい」と認める',kind:'think',label:'悔しさを認める',cost:1,atk:1,attr:'soc',up:'soc',desc:'悔しさを、きちんと感じる。',hint:'悔しいと認めてこそ、先に進める',icon:'heart'},
  askHow2:{title:'「どうやって決まるの？」と聞く',kind:'talk',label:'決まり方を聞く',cost:1,bond:1,atk:1,attr:'soc',up:'soc',desc:'選手や順番の、決まり方を聞く。',hint:'決まり方が分かると、納得しやすい',icon:'hand'},
@@ -783,7 +783,7 @@ lose:{
  goals:['悔しさを乗りこなしたい','相手を認めたい','次につなげたい'],
  chapters:['休み時間のドッジボール','放課後','次の日'],locations:['校庭・ドッジボール','教室・放課後','校庭・朝'],
  base:['rematch','quitGame','sourFace','anger','boast'],start:{mind:4,energy:4},
- monsters:[{name:'悔しさの炎',hp:4,power:1,turns:4,look:'負けた悔しさが、胸に火をつける。'},{name:'くやしさの鎖',hp:5,power:1,turns:5,look:'「また負けるかも」が、鎖になって足を引く。'},{name:'再戦魔王',hp:6,power:1,turns:5,look:'「もう一度」の誘惑が、大きくのしかかる。'}],
+ monsters:[{name:'悔しさの炎',hp:4,power:1,turns:4,look:'負けた悔しさが、胸に火をつける。'},{name:'くやしさの鎖',hp:5,power:1,turns:5,look:'「また負けるかも」が、鎖になって足を引く。'},{name:'再戦魔王',hp:6,power:1,turns:5,look:'「もう一度」の誘惑が、大きくのしかかる。',acts:['attack','steal','attack','stress','steal']}],
  talk:[['winnerS','勝ったサキに話を聞く','強さの理由を聞いてみる。'],['teacherE','先生に相談する','悔しさの扱い方を聞く。']],
  think:[['frustrate','悔しくて仕方ない','あと少しだったのに、と思い続けている。'],['face','みんなに負けたのが恥ずかしい','負けた姿を、見られたくない。'],['again','すぐに再戦したい','今すぐにでも、取り返したい。']],
  reasonKeys:['frustrate','face','again'],
@@ -1551,7 +1551,7 @@ rumor:{
  goals:['うわさを止めたい','落ち着いていたい','関係を守りたい'],
  chapters:['休み時間','うわさの広がり','翌日'],locations:['教室・休み時間','廊下・うわさ','教室・翌日'],
  base:['denyR','snapBack','pretendR','anger','ignore'],start:{mind:4,energy:4},
- monsters:[{name:'ささやきの群れ',hp:4,power:0,turns:4,look:'あっちこっちで、こそこそ声がする。'},{name:'大きくなるうわさ',hp:5,power:1,turns:5,look:'うわさが、伝わるたびに大きくなる。'},{name:'みんなの目',hp:6,power:1,turns:5,look:'みんなの目が、こっちを見ている気がする。'}],
+ monsters:[{name:'ささやきの群れ',hp:4,power:0,turns:4,look:'あっちこっちで、こそこそ声がする。'},{name:'大きくなるうわさ',hp:5,power:1,turns:5,look:'うわさが、伝わるたびに大きくなる。'},{name:'みんなの目',hp:6,power:1,turns:5,look:'みんなの目が、こっちを見ている気がする。',acts:['stress','attack','stress','attack','attack']}],
  talk:[['rumorKid','うわさを聞いた子に話す','まわりの子に、静かに聞く。'],['teacherRu','先生に相談','広がる前に、止めてもらう。']],
  think:[['whoDid','誰が流したか気になる','誰が言い始めたか、知りたい。'],['whatThey','内容が恥ずかしい','うわさの中身が、恥ずかしい。'],['angry','腹が立つ','勝手に言われて、腹が立つ。']],
  reasonKeys:['whoDid','whatThey','angry'],
@@ -1596,7 +1596,7 @@ lunch:{
  goals:['少しでも食べたい','無理せず向き合いたい','食べるのが楽しみになる日にしたい'],
  chapters:['給食の時間','食べる時間','午後'],locations:['教室・給食','机・食事','教室・午後'],
  base:['forceAll','hideFood','swapFood','anger','ignore'],start:{mind:5,energy:4},
- monsters:[{name:'苦手な一品',hp:3,power:0,turns:4,look:'皿にのった、苦手な食べもの。'},{name:'みんなの視線',hp:4,power:1,turns:5,look:'残すのを、見られる気がする。'},{name:'給食への苦手意識',hp:5,power:1,turns:5,look:'給食の時間が、憂うつになる感じ。'}],
+ monsters:[{name:'苦手な一品',hp:3,power:0,turns:4,look:'皿にのった、苦手な食べもの。'},{name:'みんなの視線',hp:4,power:1,turns:5,look:'残すのを、見られる気がする。'},{name:'給食への苦手意識',hp:5,power:1,turns:5,look:'給食の時間が、憂うつになる感じ。',acts:['stress','wait','attack','stress','attack']}],
  talk:[['teacherL','先生に言う','苦手なことを、先生に伝える。'],['friendL','友達に聞く','好きな子に、食べ方を聞く。']],
  think:[['shame','残すのが恥ずかしい','残すのを見られたくない。'],['texture','食感が苦手','口の中の感じが、無理。'],['fearTry','食べるのが怖い','一口すら、入れたくない。']],
  reasonKeys:['shame','texture','fearTry'],
@@ -2412,17 +2412,58 @@ trend:{
 function snap(s){return {mind:s.mind,energy:s.energy,rep:s.rep,progress:s.progress,monsterHp:s.monsterHp,stats:{...s.stats}}}
 function trackMind(s){s.mindLog.push(s.mind)}
 // 場面の合間に入るおまけイベント。困っている時の救いにも、順調な時のごほうびにもなる
-const bonusPool=[
- {text:'お菓子をもらった。少し元気が出た。',mind:1},
- {text:'廊下で友達と笑いあった。',rep:1},
- {text:'ぐっすり眠れた。体が軽い。',energy:1},
- {text:'本で、役立つ考え方を見つけた。',stats:'study'},
- {text:'思いきり体を動かして、すっきりした。',stats:'ath'},
- {text:'困っている子を手伝った。',stats:'soc',rep:1}
+const subPool=[
+ {id:'okashi',text:'お菓子をもらった。',stat:'rep',min:1,good:{text:'「ありがとう！」と笑いあった。',mind:1,rep:1},ok:{text:'少し元気が出た。',mind:1}},
+ {id:'home',text:'先生に近ごろのことをほめられた。',stat:'rep',min:3,good:{text:'「いつも助かるよ」と言われた。',mind:1,rep:1},ok:{text:'「がんばってるね」と言われた。',mind:1}},
+ {id:'book',text:'図書室で面白そうな本を見つけた。',stat:'study',min:1,good:{text:'役立つ考え方を見つけた。',stat:'study',mind:1},ok:{text:'少しだけ読んで、気分転換できた。',mind:1}},
+ {id:'kasa',text:'雨。傘を忘れた子がいた。',stat:'soc',min:1,good:{text:'一緒に入れてあげた。',rep:1},ok:{text:'気にかけておいた。',mind:1}},
+ {id:'hakobi',text:'重い荷物を運ぶ人がいた。',stat:'ath',min:1,good:{text:'軽々運べて、感謝された。',rep:1,stat:'ath'},ok:{text:'少し重かったが、届いた。',energy:1}},
+ {id:'housou',text:'放送係が堂々と読み上げていた。',stat:'rep',min:4,good:{text:'自分も前に立てる気がした。',mindMax:1},ok:{text:'すごいなと思った。',mind:1}},
+ {id:'yotsuba',text:'校庭で四つ葉のクローバーを見つけた。',stat:'rep',min:2,good:{text:'いいことありそうな気分。',mind:1,energy:1},ok:{text:'いいことありそうな気分。',mind:1}},
+ {id:'todoke',text:'落とし物を届けた。',stat:'rep',min:1,good:{text:'受付の人に深く礼を言われた。',rep:1},ok:{text:'届けられて、ほっとした。',mind:1}},
+ {id:'teate',text:'転んだ子がいて、手当てを手伝った。',stat:'soc',min:1,good:{text:'「ありがとう」と泣き止んだ。',rep:1,mind:1},ok:{text:'保健室まで一緒に行った。',mind:1}},
+ {id:'jitaku',text:'日直の仕事を手伝った。',stat:'ath',min:1,good:{text:'早く終わって、ほめられた。',energy:1,rep:1},ok:{text:'終わって、すっきりした。',energy:1}},
+ {id:'okawari',text:'給食のおかわり、じゃんけんに勝った。',stat:'rep',min:2,good:{text:'うれしいおかわり。',mind:1,energy:1},ok:{text:'うれしいおかわり。',mind:1}},
+ {id:'hanni',text:'先輩がテストの出やすい所を教えてくれた。',stat:'study',min:1,good:{text:'どこを見ればいいか分かった。',stat:'study'},ok:{text:'なんとなく分かった気がした。',mind:1}},
+ {id:'usagi',text:'飼育小屋のうさぎの世話をした。',stat:'soc',min:1,good:{text:'うさぎがなついてきた。',mind:1,rep:1},ok:{text:'モフモフで、癒やされた。',mind:1}},
+ {id:'souko',text:'体育倉庫の整理を手伝った。',stat:'ath',min:1,good:{text:'体がほぐれて、すっきり。',stat:'ath'},ok:{text:'片付いて、気持ちいい。',energy:1}},
+ {id:'sakuhin',text:'図工室で上手な作品を見た。',stat:'study',min:1,good:{text:'作り方のコツが分かった。',stat:'study',mind:1},ok:{text:'きれいだなと思った。',mind:1}},
+ {id:'hitori',text:'一人でいる子に気づいた。',stat:'soc',min:2,good:{text:'声をかけたら、笑顔になった。',rep:1,mind:1},ok:{text:'気にかけておいた。',mind:1}},
+ {id:'aisatsu',text:'校門で校長先生にあいさつした。',stat:'rep',min:2,good:{text:'大きな声で返してもらえた。',rep:1},ok:{text:'返してもらえた。',mind:1}},
+ {id:'uta',text:'好きな歌を口ずさんだ。',stat:'rep',min:1,good:{text:'隣の子が一緒に歌った。',rep:1,mind:1},ok:{text:'気分が明るくなった。',mind:1}},
+ {id:'asobi',text:'休み時間の遊びに誘われた。',stat:'soc',min:1,good:{text:'みんなで笑いあった。',rep:1},ok:{text:'見ているだけでも楽しかった。',mind:1}},
+ {id:'morning',text:'朝のあいさつ運動に参加した。',stat:'rep',min:1,good:{text:'「おはよう！」が広がった。',rep:1},ok:{text:'元気に言えた。',mind:1}}
 ];
-export function initial(story='fight'){
+function pickSubs(n){const pool=[...subPool],out=[];while(out.length<n&&pool.length){out.push(pool.splice(Math.floor(Math.random()*pool.length),1)[0])}return out}
+function resolveSub(s,ev){
+ const stat=ev.stat==='rep'?s.rep:s.stats[ev.stat];
+ const good=stat>=ev.min,r=good?ev.good:ev.ok;
+ if(r.mind)s.mind=Math.min(s.mindMax,s.mind+r.mind);
+ if(r.energy)s.energy=Math.min(5,s.energy+r.energy);
+ if(r.rep)s.rep=clamp(s.rep+r.rep,0,5);
+ if(r.stat)s.stats[r.stat]=clamp(s.stats[r.stat]+1,-2,2);
+ if(r.mindMax&&s.mindMax<8){s.mindMax++;s.mind=Math.min(s.mindMax,s.mind+1)}
+ say(s,'event',ev.text+' '+r.text);trackMind(s);
+ return{text:ev.text,result:r.text,good};
+}
+// モンスターの毎ターン行動: attack=反撃 / stress=威圧で精神力-1 / steal=手札を1枚使いにくくする / wait=様子見
+const MONSTER_ACT={
+ attack(s,m){const d=m.power+(s.bolster||0)+(s.rep<=0?1:0);if(d>0)s.mind=s.mind>0?Math.max(1,s.mind-d):s.mind-d;return{mdmg:d,counter:s.rep<=0?'まわりの目が冷たい。孤立が不安を増やし、余計に傷ついた。':s.bolster?'未解決の課題が重なり、反撃が強くなった。':'モンスターが反撃してきた。'}},
+ stress(s){s.mind=s.mind>0?Math.max(1,s.mind-1):s.mind-1;return{mdmg:1,counter:'モンスターの威圧が、気持ちにのしかかった。'}},
+ steal(s){const pool=available(s).filter(id=>!cards[id].dark);if(!pool.length)return{counter:'モンスターは狙いを定めている。'};const rid=pool[Math.floor(Math.random()*pool.length)];s.used.push(rid);return{counter:'モンスターが「'+cards[rid].title+'」を使いにくくした。',stolen:rid}},
+ wait(){return{counter:'モンスターは様子をうかがっている。'}}
+};
+function monsterAct(s,m){const acts=m.acts||((m.power>=2||m.hp>=6)?['attack','stress','attack','steal','attack']:(m.hp>=4?['attack','attack','wait','stress']:['attack','wait','attack']));return MONSTER_ACT[acts[(s.turns-1)%acts.length]](s,m)}
+export function monsterSize(m){return (m.power>=2||m.hp>=6)?'huge':(m.hp<=3&&m.power<=1)?'small':'normal'}
+// 苦手意識: 同じ属性の課題に負け続けると、その属性の手札の消費気持ちが+1される（ストーリー間で持ち越す）
+function addLoss(s){
+ for(const a of def(s).attrs){s.losses[a]=(s.losses[a]||0)+1;
+  if(s.losses[a]>=2&&!s.traumas[a]){s.traumas[a]=true;note(s,statMeta[a].attr+'の場面に苦手意識を持ってしまった。関連する手札の気持ち消費が+1される。');say(s,'event','苦手意識が、ついてしまった…')}
+ }
+}
+export function initial(story='fight',carry=null){
  const d=stories[story];
- const s={story,stage:0,mind:d.start.mind,energy:d.start.energy,rep:1,stats:{study:0,ath:0,soc:0},monsterHp:d.monsters[0].hp,turns:0,slain:[],escaped:[],dead:false,mindLog:[],bonus:null,progress:0,goal:0,hand:[...d.base],discovered:[],used:[],flags:{},clues:[],relations:[],growth:[],log:[],explored:[],rested:[],observed:[],passed:[],minused:[],transcript:[],feedback:null,finished:false,reason:null,reflection:null};
+ const s={story,stage:0,mind:d.start.mind,energy:d.start.energy,rep:carry?carry.rep:1,mindMax:carry?carry.mindMax:6,stats:{study:0,ath:0,soc:0},monsterHp:d.monsters[0].hp,turns:0,slain:[],escaped:[],dead:false,mindLog:[],bonus:null,bolster:0,losses:{},traumas:carry?{...carry.traumas}:{},subQueue:pickSubs(d.subs??3),progress:0,goal:0,hand:[...d.base],discovered:[],used:[],flags:{},clues:[],relations:[],growth:[],log:[],explored:[],rested:[],observed:[],passed:[],minused:[],transcript:[],feedback:null,finished:false,reason:null,reflection:null};
  sayScene(s);return s;
 }
 export function monster(s){return def(s).monsters[s.stage]}
@@ -2449,19 +2490,18 @@ export function play(s,id){
  const dmg=cardAtk(s,id);s.monsterHp-=dmg;
  // 生き残ったモンスターの反撃。評判が0だと、まわりの目が冷たく反撃が+1される
  // 反撃は「気持ちがいっぱい」（精神力1）までは削るが直接倒さない。大失敗は自分でコストを払いすぎた時だけ起きる
- let mdmg=0,counter='';
- if(s.monsterHp>0){
-  mdmg=m.power+(s.rep<=0?1:0);
-  if(mdmg>0){s.mind=s.mind>0?Math.max(1,s.mind-mdmg):s.mind-mdmg;counter=s.rep<=0?'まわりの目が冷たい。孤立が不安を増やし、余計に傷ついた。':'モンスターが反撃してきた。';}
- }
- s.mind=clamp(s.mind,0,6);s.energy=clamp(s.energy,0,5);s.rep=clamp(s.rep,0,5);
+ let mdmg=0,counter='',stolen=null;
+ if(s.monsterHp>0){const r=monsterAct(s,m);mdmg=r.mdmg||0;counter=r.counter||'';stolen=r.stolen||null;}
+ // 苦手意識: その属性の手札は、消費する気持ちが+1される
+ if(c.attr&&s.traumas[c.attr]){s.mind=s.mind>0?Math.max(1,s.mind-1):s.mind-1;counter+=(counter?'　':'')+'苦手意識で、消費する気持ちが増えた。';}
+ s.mind=clamp(s.mind,0,s.mindMax);s.energy=clamp(s.energy,0,5);s.rep=clamp(s.rep,0,5);
  for(const k of ['study','ath','soc'])s.stats[k]=clamp(s.stats[k],-2,2);
  growth(s,'「'+c.title+'」を試した。');
  const killed=s.monsterHp<=0,escaped=!killed&&s.turns>=m.turns;
  if(s.mind<=0){s.dead=true;s.finished=true}
  s.progress=def(s).progress(s);
  s.log.push({stage:s.stage,title:c.title,text,meaning});
- s.feedback={title:c.title,text,meaning,before,after:snap(s),dmg,mdmg,counter,killed,escaped,monster:m.name};
+ s.feedback={title:c.title,text,meaning,before,after:snap(s),dmg,mdmg,counter,killed,escaped,monster:m.name,stolen};
  say(s,'card',text);
  trackMind(s);
  return true;
@@ -2471,21 +2511,32 @@ export function continueTurn(s){if(!s.feedback)return false;s.feedback=null;retu
 export function setGoal(s,n){if(!Number.isInteger(n)||n<0||n>2)return false;s.goal=n;s.progress=def(s).progress(s);return true}
 export function advance(s){
  if(!s.feedback)return false;s.feedback=null;
- if(s.dead){s.finished=true;return true}
- if(s.monsterHp<=0)add(s.slain,s.stage);else add(s.escaped,s.stage);
- if(s.stage===2){s.finished=true;return true}
+ if(s.dead){addLoss(s);s.finished=true;return true}
+ const failed=s.monsterHp>0;
+ if(failed)add(s.escaped,s.stage);else add(s.slain,s.stage);
+ // 負け続けると、その属性に苦手意識がつく
+ if(failed)addLoss(s);
+ // 強敵（大きなモンスター）を退けると、稀に精神力の上限が上がる
+ const m0=monster(s);
+ if(!failed&&(m0.power>=2||m0.hp>=6)&&s.mindMax<8){s.mindMax++;s.mind=Math.min(s.mindMax,s.mind+1);growth(s,'強い課題を退けて、心の器が広がった（精神力上限+1）。');}
+ if(s.stage===def(s).monsters.length-1){s.finished=true;return true}
  s.stage++;s.turns=0;s.monsterHp=monster(s).hp;s.energy=Math.min(5,s.energy+1);
- // ランダムなおまけイベント（約45%）。運でも少しだけ楽になることがある
- s.bonus=null;
- if(Math.random()<0.45){const b=bonusPool[Math.floor(Math.random()*bonusPool.length)];if(b.mind)s.mind=Math.min(6,s.mind+b.mind);if(b.energy)s.energy=Math.min(5,s.energy+b.energy);if(b.rep)s.rep=Math.min(5,s.rep+b.rep);if(b.stats)s.stats[b.stats]=clamp(s.stats[b.stats]+1,-2,2);s.bonus=b.text;say(s,'event',b.text);trackMind(s);}
+ // 逃した課題は次のモンスターを強くする（分岐: 失敗が持ち越される）
+ s.bolster=failed?1:0;
+ // サブイベント: 場面の合間に共通プールから。パラメータが高いほど良い結果
+ s.bonus=[];
+ const left=def(s).monsters.length-1-s.stage;
+ const k=Math.ceil(s.subQueue.length/(left+1));
+ for(let i=0;i<k&&s.subQueue.length;i++)s.bonus.push(resolveSub(s,s.subQueue.shift()));
+ if(!s.bonus.length)s.bonus=null;
  for(const c of def(s).stageGrants[s.stage-1]||[])if(!s.used.includes(c)&&!s.hand.includes(c))s.hand.push(c);
  sayScene(s);
  return true;
 }
 export function safety(s,type){
  if(s.finished||s.feedback)return false;
- if(type==='rest'){if(s.rested.includes(s.stage))return false;s.rested.push(s.stage);s.mind=Math.min(6,s.mind+2);s.energy=Math.min(5,s.energy+2);growth(s,'休んで、次の作戦を考える余力をつくった。');say(s,'free','静かな場所で、少し休んだ。');trackMind(s);return true}
- if(type==='help'||type==='leave'){s.flags[type]=true;if(type==='help')s.rep=Math.min(5,s.rep+1);s.progress=def(s).progress(s);s.mind=Math.min(6,s.mind+1);s.finished=true;growth(s,type==='help'?'困りごとを大人に伝えた。':'安全な場所へ移る選択をした。');trackMind(s);return true}
+ if(type==='rest'){if(s.rested.includes(s.stage))return false;s.rested.push(s.stage);s.mind=Math.min(s.mindMax,s.mind+2);s.energy=Math.min(5,s.energy+2);growth(s,'休んで、次の作戦を考える余力をつくった。');say(s,'free','静かな場所で、少し休んだ。');trackMind(s);return true}
+ if(type==='help'||type==='leave'){s.flags[type]=true;if(type==='help')s.rep=Math.min(5,s.rep+1);s.progress=def(s).progress(s);s.mind=Math.min(s.mindMax,s.mind+1);s.finished=true;growth(s,type==='help'?'困りごとを大人に伝えた。':'安全な場所へ移る選択をした。');trackMind(s);return true}
  return false;
 }
 export function canExplore(s){return !s.finished&&!s.feedback&&s.mind>1}
@@ -2507,7 +2558,7 @@ export function minus(s,id){
  if(!canMinus(s))return null;
  const m=minusCards[id];if(!m||s.minused.includes(s.stage+':'+id))return null;
  s.minused.push(s.stage+':'+id);
- s.mind=Math.min(6,s.mind+m.recover);
+ s.mind=Math.min(s.mindMax,s.mind+m.recover);
  if(m.energy)s.energy=Math.min(5,s.energy+m.energy);
  if(m.rep)s.rep=Math.max(0,s.rep+m.rep);
  if(m.dn)s.stats[m.dn]=Math.max(-2,s.stats[m.dn]-1);
@@ -2524,11 +2575,11 @@ export function free(s,type){
  return false;
 }
 export function scene(s){return def(s).scene(s)}
-export function summary(s){const f=s.flags;let situation;if(s.dead)situation='気持ちがいっぱいをこえて、その場から逃げ出してしまった。ふりかえって、次の作戦を考えよう。';else if(f.help)situation='大人に困りごとを伝え、次のことを一緒に考えることにした。';else if(f.leave)situation='安全な場所へ移った。問題の続きは、落ち着いてから考えられる。';else situation=def(s).situation(s);const outcome=s.dead?'fail':(f.help||f.leave)?'exit':s.slain.includes(2)?'clear':s.slain.length?'partial':'survived';
+export function summary(s){const f=s.flags;let situation;if(s.dead)situation='気持ちがいっぱいをこえて、その場から逃げ出してしまった。ふりかえって、次の作戦を考えよう。';else if(f.help)situation='大人に困りごとを伝え、次のことを一緒に考えることにした。';else if(f.leave)situation='安全な場所へ移った。問題の続きは、落ち着いてから考えられる。';else situation=def(s).situation(s);const outcome=s.dead?'fail':(f.help||f.leave)?'exit':s.slain.includes(def(s).monsters.length-1)?'clear':s.slain.length?'partial':'survived';
  // 総合評価: 精神力の平均・最終手札・評判・バフ総量・イベント成否から算出
  const mindAvg=s.mindLog.length?s.mindLog.reduce((a,b)=>a+b,0)/s.mindLog.length:s.mind;
  const buffTotal=s.stats.study+s.stats.ath+s.stats.soc;
  const handSize=s.hand.length;
  const score=Math.round(mindAvg)+handSize+s.rep+buffTotal+s.slain.length*3+(s.dead?-4:0);
  const tier=score>=20?'よく乗りこなした！':score>=14?'だいぶ乗りこなせた':score>=8?'まずまず乗りこなせた':'しんどい回だった';
- return {situation,relation:s.relations.length?s.relations.join(' '):'今回は、相手との新しい約束や気持ちの共有はまだない。あとから話すこともできる。',growth:s.growth,goal:def(s).goals[s.goal],progress:s.progress,mind:s.mind,energy:s.energy,rep:s.rep,stats:{...s.stats},discovered:s.discovered.length,outcome,slain:s.slain.length,escaped:s.escaped.length,mindAvg,buffTotal,handSize,tier,lowMind:mindAvg<=3}}
+ return {situation,relation:s.relations.length?s.relations.join(' '):'今回は、相手との新しい約束や気持ちの共有はまだない。あとから話すこともできる。',growth:s.growth,goal:def(s).goals[s.goal],progress:s.progress,mind:s.mind,energy:s.energy,rep:s.rep,stats:{...s.stats},discovered:s.discovered.length,outcome,slain:s.slain.length,escaped:s.escaped.length,mindAvg,buffTotal,handSize,tier,lowMind:mindAvg<=3,traumas:{...s.traumas},mindMax:s.mindMax}}

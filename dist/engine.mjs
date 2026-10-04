@@ -209,6 +209,15 @@ export const cards={
  teacherPair:{title:'先生に組を調整してもらう',kind:'support',label:'先生に言う',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'余ったことを、先生に伝える。',hint:'先生に言うのは、甘えじゃない',icon:'flag'},
  pairUp:{title:'余った子同士で組む',kind:'talk',label:'余った子と組む',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'同じく余った子と、一緒に組む。',hint:'余った同士なら、声をかけやすい',icon:'people'},
  offerNext:{title:'「次は一緒にね」と約束する',kind:'support',label:'次は一緒に',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'今回はこれで、次の約束をする。',hint:'次の約束で、関係は続く',icon:'sun'},
+ waitLong:{title:'そのまま待ち続ける',kind:'think',label:'待つ',cost:0,atk:0,desc:'来るかもと、ずっと待つ。',hint:'待つだけでは、気持ちが晴れない',icon:'clock'},
+ accuse:{title:'「嘘つき！」と責める',kind:'talk',label:'責める',cost:0,strain:1,atk:0,desc:'会うなり、強く責める。',hint:'責めると、相手は黙る',icon:'bolt'},
+ actNormal:{title:'何もなかったように遊ぶ',kind:'think',label:'気にしないふり',cost:0,atk:1,attr:'soc',desc:'気にしていないふりをする。',hint:'気にしないふりは、心の中に残る',icon:'eye'},
+ askWhy:{title:'「どうして？」と理由を聞く',kind:'talk',label:'理由を聞く',cost:1,bond:1,atk:1,attr:'soc',up:'soc',desc:'責めずに、理由だけ聞く。',hint:'理由を聞くと、怒らずに済む',icon:'ear'},
+ tellFeel:{title:'「寂しかった」と気持ちを言う',kind:'talk',label:'気持ちを言う',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'責めずに、自分の気持ちを伝える。',hint:'気持ちを言うと、相手は聞ける',icon:'heart'},
+ newPlan:{title:'新しい約束を立てる',kind:'support',label:'新しい約束',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'終わったことより、次の約束をする。',hint:'次の約束で、関係は続く',icon:'sun'},
+ dayAlone:{title:'一人で遊ぶ日にする',kind:'think',label:'一人の日',cost:1,atk:2,attr:'study',up:'study',desc:'来ないなら、一人で楽しむ。',hint:'一人の日も、無駄じゃない',icon:'book'},
+ hearOut:{title:'話を最後まで聞く',kind:'talk',label:'最後まで聞く',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'相手の言い分を、最後まで聞く。',hint:'全部聞いてから、決めていい',icon:'ear'},
+ bigPromise:{title:'「約束は大事」と伝えて次を約束',kind:'support',label:'約束の大事さ',cost:1,atk:2,attr:'soc',up:'soc',desc:'気持ちを伝えて、次も約束する。',hint:'気持ちを伝えた約束は、守られやすい',icon:'flag'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -1265,6 +1274,51 @@ pair:{
  },
  progress(s){const f=s.flags;return s.goal===0?(f.clearedP?3:f.askedP||f.pairedUp?2:s.reason?1:0):s.goal===1?(f.ownExp||f.three?3:f.clearedP?2:s.reason?1:0):(f.offered?3:f.clearedP?2:s.reason?1:0)},
  situation(s){const f=s.flags;return f.clearedP?'組めた。誘う・入る・一人・先生に言うがある。':f.askedP||f.pairedUp?'組み方が見つかった。':'まだ余っている。入り方は練習できる。'}
+},
+promise:{
+ title:'約束を忘れられていた',nav:'約束破り',num:'23',attrs:['soc'],
+ goals:['気持ちを伝えたい','関係を切らずに済ませたい','次につなげたい'],
+ chapters:['約束の日','翌日会う','その後'],locations:['公園・待ち合わせ','学校・翌日','公園・その後'],
+ base:['waitLong','accuse','actNormal','anger','ignore'],start:{mind:4,energy:4},
+ monsters:[{name:'待ちぼうけの影',hp:4,power:0,turns:4,look:'待っていた時間が、長い影になった。'},{name:'裏切りのトゲ',hp:5,power:1,turns:5,look:'「約束したのに」が、トゲになって刺さる。'},{name:'離れる距離',hp:6,power:1,turns:5,look:'友達との距離が、少し離れていく感じ。'}],
+ talk:[['kenP','本人に話す','約束を忘れた子に、直接話す。'],['teacherPr','先生に相談','つらい気持ちを、先生に話す。']],
+ think:[['sad','寂しくて怒っている','約束を忘れられて、悲しい。'],['doubt','自分は軽い存在かも','私って、そんなに軽いのかな。'],['worryRel','関係が壊れそう','このまま、仲が悪くなりそう。']],
+ reasonKeys:['sad','doubt','worryRel'],
+ stageGrants:[['bigPromise'],[]],
+ onExplore(s,key){
+  const out={text:'',card:null};
+  if(key==='kenP'){s.flags.faced=true;note(s,'本人に話したら、謝られた。');out.text='相手「ごめん！本当に忘れてた」\n話したら、ちゃんと謝られた。';out.card='hearOut'}
+  if(key==='teacherPr'){s.flags.toldPr=true;note(s,'先生に話したら、気持ちが軽くなった。');out.text='先生「待っていたんだね。それは悲しかったね」\n話すだけで、気持ちが軽くなった。';out.card='newPlan'}
+  if(key==='sad'){s.reason='sad';note(s,'寂しくて、怒っている。');out.text='「待っていたのに…」';out.card='tellFeel'}
+  if(key==='doubt'){s.reason='doubt';note(s,'自分は軽い存在かも、と疑っている。');out.text='「私は、軽い存在なのかな」';out.card='askWhy'}
+  if(key==='worryRel'){s.reason='worryRel';note(s,'関係が壊れそうで、不安。');out.text='「このまま、仲が悪くなりそう」';out.card='newPlan'}
+  return out;
+ },
+ onPlay(s,id){
+  const f=s.flags;let text='',meaning='';
+  if(id==='waitLong'){f.waited=true;text='そのまま、ずっと待った。\n結局、来なかった。';meaning='待つだけでは、気持ちが晴れない。';grant(s,'dayAlone')}
+  if(id==='accuse'){f.accused=true;s.rep-=1;relation(s,'「嘘つき！」と責めたら、相手が黙ってしまった。');text='「嘘つき！」\n相手は、黙ってしまった。';meaning='責めると、相手は黙る。';grant(s,'tellFeel')}
+  if(id==='actNormal'){f.actedN=true;text='何もなかったように遊んだ。\nでも、心の中には残っている。';meaning='気にしないふりは、心に残る。';grant(s,'tellFeel')}
+  if(id==='askWhy'){f.askedWhy=true;f.clearedPr=true;note(s,'理由を聞いたら、事情が分かった。');text='「どうして来なかったの？」\n相手「おばあちゃんの家に行ってた」\n事情があって、忘れてただけだった。';meaning='理由を聞くと、怒らずに済む。'}
+  if(id==='tellFeel'){f.toldFeel=true;f.clearedPr=true;relation(s,'「寂しかった」と言ったら、相手がちゃんと謝った。');text='「寂しかったよ」\n相手「ごめん。次は絶対来る」\n気持ちを言うと、届く。';meaning='気持ちを言うと、相手は聞ける。'}
+  if(id==='newPlan'){f.newPlanned=true;f.clearedPr=true;relation(s,'新しい約束を立てたら、また会える日ができた。');text='「じゃあ、今度の土曜にね」\n次の約束が、できた。';meaning='次の約束で、関係は続く。'}
+  if(id==='dayAlone'){f.aloneDay=true;f.clearedPr=true;note(s,'一人で遊んだら、悪くない一日になった。');text='一人で公園を回った。\n自分のペースで、悪くない一日だった。';meaning='一人の日も、無駄じゃない。'}
+  if(id==='hearOut'){f.heard=true;f.clearedPr=true;relation(s,'最後まで聞いたら、相手の事情が分かった。');text='話を全部聞いたら、\n悪気がなかったことが分かった。';meaning='全部聞いてから、決めていい。'}
+  if(id==='bigPromise'){if(f.toldFeel||f.heard){f.bigPromised=true;f.clearedPr=true;relation(s,'約束の大事さを伝えて、次も約束できた。');text='「約束は大事だからね」\n相手「うん、分かった」\n気持ちを伝えた約束は、守られやすい。';meaning='気持ちを伝えた約束は、守られやすい。'}else{s.mind-=1;text='約束の大事さを言おうとしたが、まだ話せていないので届かなかった。';meaning='まず気持ちを伝えてから、約束の大事さを言うと良い。';grant(s,'tellFeel')}}
+  return {text,meaning};
+ },
+ watch(s){
+  if(s.stage===0)return '約束の時間は、過ぎている。';
+  if(s.stage===1)return 'あの子が、教室にいる。';
+  return 'また、遊ぶ約束ができそうだ。';
+ },
+ scene(s){const f=s.flags;
+  if(s.stage===0)return {narrative:'公園。約束の時間を、30分過ぎた。',speaker:'友達',quote:'（来ない…）',look:'誰も、いない。時計だけが進む。',self:'来ない… 約束したのに',hint:'約束を忘れられたときの、つらさはどこ？'};
+  if(s.stage===1)return {narrative:'翌日の教室。あの子は、普通にしている。',speaker:'友達',quote:f.clearedPr?'昨日はごめんね':f.accused?'……':'おはよう',look:f.clearedPr?'ちゃんと謝られた。':'あの子は、普通にしている。',self:s.reason==='sad'?'寂しくて怒っている。':s.reason==='doubt'?'私は軽いのかな。':s.reason==='worryRel'?'仲が悪くなりそう。':'どう切り出す？',hint:'聞く・伝える・一人・先生、方法はある。'};
+  return {narrative:'その後。また、約束ができる雰囲気になった。',speaker:'友達',quote:f.clearedPr?'今度は忘れない！':f.newPlanned?'次の土曜ね':'……',look:'二人の距離が、戻ってきている。',self:f.clearedPr?'言ってよかった。関係は続く。':'まだ少し、気になっている。',hint:'約束は、また作れる。'};
+ },
+ progress(s){const f=s.flags;return s.goal===0?(f.clearedPr?3:f.toldFeel||f.heard?2:s.reason?1:0):s.goal===1?(f.toldFeel?3:f.clearedPr?2:s.reason?1:0):(f.bigPromised||f.newPlanned?3:f.clearedPr?2:s.reason?1:0)},
+ situation(s){const f=s.flags;return f.clearedPr?'約束の件を、整理できた。聞く・伝える・一人・新約束がある。':f.toldFeel||f.heard?'気持ちを届けられた。':'まだ、モヤモヤが残っている。伝え方は練習できる。'}
 }
 };
 

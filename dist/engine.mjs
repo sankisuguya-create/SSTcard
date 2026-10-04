@@ -379,6 +379,16 @@ export const cards={
  standTogether:{title:'「みんなでやめよう」と言う',kind:'support',label:'みんなで止める',cost:2,atk:3,attr:'soc',up:'soc',desc:'友達と一緒に、「やめよう」と言う。',hint:'仲間がいると、言える',icon:'flag'},
  inviteThem:{title:'「一緒に行こう」と誘う',kind:'support',label:'誘う',cost:2,atk:3,attr:'soc',up:'soc',desc:'その子を、自分たちの輪に誘う。',hint:'誘うと、孤立がほどける',icon:'hand'},
  talkSecret:{title:'毎日、少しずつ関わる',kind:'support',label:'関わり続ける',cost:2,atk:3,attr:'soc',up:'soc',desc:'その子と毎日、少しずつ話す。',hint:'続けると、信頼が育つ',icon:'spark'},
+ hideScore:{title:'点数を隠す・ごまかす',kind:'think',label:'点数を隠す',cost:0,strain:1,atk:1,attr:'study',desc:'点数を、内緒にする・ごまかす。',hint:'隠すと、ずっと気になる',icon:'eye'},
+ bragBack:{title:'「自分の方が上」と言い返す',kind:'talk',label:'言い返す',cost:0,strain:1,atk:1,attr:'soc',desc:'点数で、言い返す。',hint:'比べ合いは、みんなつらい',icon:'bolt'},
+ sayHonest:{title:'正直に点数を言う',kind:'talk',label:'正直に言う',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'聞かれたら、正直に言う。',hint:'正直は、一番楽',icon:'heart'},
+ askMethod:{title:'どう勉強したか聞く',kind:'talk',label:'勉強法を聞く',cost:1,bond:1,atk:2,attr:'study',up:'study',desc:'点がいい子に、やり方を聞く。',hint:'聞くと、真似できる',icon:'ear'},
+ selfGoal:{title:'自分の前回と比べる',kind:'think',label:'自分と比べる',cost:1,atk:2,attr:'study',up:'study',desc:'人ではなく、前回の自分と比べる。',hint:'自分比べは、成長が分かる',icon:'up'},
+ ignoreRank:{title:'順位を気にしない',kind:'think',label:'気にしない',cost:1,atk:2,attr:'study',up:'study',desc:'順位より、できたかどうかを見る。',hint:'気にしないのも、強さ',icon:'sun'},
+ praiseOther:{title:'「すごいね」とほめる',kind:'talk',label:'ほめる',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'点がいい子を、素直にほめる。',hint:'ほめられる関係は、いい関係',icon:'spark'},
+ keepScore:{title:'点数は内緒にすると決める',kind:'think',label:'内緒にする',cost:1,atk:2,attr:'study',up:'study',desc:'次からは、言わないと決める。',hint:'決めるのも、一つの答え',icon:'list'},
+ studyPlan:{title:'次の勉強計画を立てる',kind:'support',label:'計画を立てる',cost:2,atk:3,attr:'study',up:'study',desc:'次のテストに向けて、計画を立てる。',hint:'計画があると、前を向ける',icon:'list'},
+ honestReply:{title:'点数を気にしないと伝える',kind:'support',label:'伝える',cost:2,atk:3,attr:'soc',up:'soc',desc:'「点数より、一緒に遊びたい」と言う。',hint:'伝えると、関係が変わる',icon:'hand'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -2287,6 +2297,55 @@ byWatch:{
  },
  progress(s){const f=s.flags;return f.stood||f.invitedT||f.keptOn?3:f.checkQ||f.toldBy||f.askedF||f.stayed||f.watched?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.stood||f.keptOn?'行動できて、関わり続けている。':f.checkQ||f.toldBy?'一歩動けた。次の関わり方を選べる。':'見て見ぬふりのまま。声をかける・伝える、方法はある。'}
+},
+
+// STORY 41 ── テストの点数を比べられた ──
+score:{
+ title:'テストの点数を比べられた',nav:'点数を比べられた',num:'41',attrs:['study','soc'],
+ goals:['点数をどう受け止めるか決めたい','相手とどう関わるか決めたい','次の目標を立てたい'],
+ chapters:['点数が返ってきた','受け止める','次の目標'],locations:['教室','教室','帰り道'],
+ base:['hideScore','bragBack','anger','ignore','boast'],start:{mind:4,energy:4},
+ monsters:[{name:'テンカスの影',hp:4,power:1,turns:4,look:'点数が、頭から離れない。'},{name:'クラベの影',hp:4,power:1,turns:4,look:'友達と比べて、気持ちが揺れている。'},{name:'モクヒョウの影',hp:6,power:2,turns:5,look:'次の目標が、まだ見えていない。'}],
+ talk:[['honestSay','正直に点数を言う','聞かれたら、正直に言う。'],['methodAsk','どう勉強したか聞く','点がいい子に、やり方を聞く。'],['praiseSay','「すごいね」とほめる','点がいい子を、素直にほめる。']],
+ think:[['shameS','点数が低くて恥ずかしい','人より低くて、恥ずかしい。'],['jealous','うらやましくて嫌になる','あの子に、負けたくない。'],['worry','次もできないかもと不安','このままじゃ、また低いかも。']],
+ reasonKeys:['shameS','jealous','worry'],
+ stageGrants:[['sayHonest','selfGoal','ignoreRank','keepScore'],['studyPlan','honestReply']],
+ onExplore(s,key){
+  const out={text:'',card:null};
+  if(key==='honestSay'){s.flags.saidH=true;relation(s,'正直に言ったら、相手も「自分も苦手ある」と言った。');out.text='「76点…」\n「自分も、苦手あるよ」';out.card='sayHonest'}
+  if(key==='methodAsk'){s.flags.askedM=true;note(s,'「前の日に、10分だけ復習してる」と聞いた。');out.text='「どうやって勉強したの？」\n「前の日に、10分だけ」';out.card='askMethod'}
+  if(key==='praiseSay'){s.flags.praised=true;relation(s,'ほめたら、相手はうれしそうだった。');out.text='「すごいね」\n相手が、うれしそうに笑った。';out.card='praiseOther'}
+  if(key==='shameS'){s.reason='shameS';note(s,'恥ずかしさは、自分と比べると消える。');out.text='「点数が低くて、恥ずかしい」\n自分と比べてみよう。';out.card='selfGoal'}
+  if(key==='jealous'){s.reason='jealous';note(s,'うらやましさは、ほめると仲間に変わる。');out.text='「うらやましい…」\nほめると、仲間に変わる。';out.card='praiseOther'}
+  if(key==='worry'){s.reason='worry';note(s,'不安は、やり方を聞くと消える。');out.text='「次もできないかも…」\nやり方を、聞いてみよう。';out.card='askMethod'}
+  return out;
+ },
+ onPlay(s,id){
+  const f=s.flags;let text='',meaning='';
+  if(id==='hideScore'){f.hidS=true;s.mind-=1;note(s,'隠したが、ずっと気になった。');text='点数を、隠した。\nでも、ずっと気になった。';meaning='隠すと、気持ちが残る。';grant(s,'sayHonest')}
+  if(id==='bragBack'){f.bragged=true;s.rep-=1;relation(s,'言い返したら、気まずくなった。');text='「自分の方が上だし」\n気まずい空気に、なった。';meaning='比べ合いは、みんなつらい。';grant(s,'selfGoal')}
+  if(id==='sayHonest'){f.saidH=true;relation(s,'正直に言ったら、楽になった。');text='「76点だった」\n言えて、楽になった。';meaning='正直は、一番楽。'}
+  if(id==='askMethod'){f.askedM=true;note(s,'復習の仕方を、教えてもらった。');text='「前の日に、10分だけ復習してる」\nやり方を、教えてもらった。';meaning='聞くと、真似できる。'}
+  if(id==='selfGoal'){f.selfG=true;note(s,'前回より5点上がっていた。');text='前回は71点。今回は76点。\n自分は、前に進んでいた。';meaning='自分比べは、成長が分かる。'}
+  if(id==='ignoreRank'){f.ignoredR=true;note(s,'順位より、できたことを見ることにした。');text='「順位は、気にしない」\nできたことを、見ることにした。';meaning='気にしないのも、強さ。'}
+  if(id==='praiseOther'){f.praised=true;relation(s,'ほめたら、相手も「お互いがんばろう」と言った。');text='「すごいね」\n「お互い、がんばろう」';meaning='ほめられる関係は、いい関係。'}
+  if(id==='keepScore'){f.keptS=true;note(s,'次からは言わないと決めた。');text='「点数は、内緒にする」\n決めて、楽になった。';meaning='決めるのも、一つの答え。'}
+  if(id==='studyPlan'){if(f.askedM||f.selfG){f.plannedSt=true;note(s,'次の勉強計画を立てた。');text='「毎日、10分復習する」\n計画を、立てた。';meaning='計画があると、前を向ける。'}else{s.mind-=1;text='計画を立てようとしたが、やり方が分からなかった。';meaning='まず聞く・自分と比べてから、立てると良い。';grant(s,'askMethod')}}
+  if(id==='honestReply'){if(f.saidH||f.praised){f.repliedH=true;relation(s,'点数より一緒に遊びたいと伝えた。');text='「点数より、一緒に遊びたいよ」\n伝えて、関係が変わった。';meaning='伝えると、関係が変わる。'}else{s.mind-=1;text='伝えようとしたが、言い出せなかった。';meaning='まず正直に言う・ほめてから、伝えると良い。';grant(s,'sayHonest')}}
+  return {text,meaning};
+ },
+ watch(s){
+  if(s.stage===0)return '点数が、頭から離れない。';
+  if(s.stage===1)return '友達と比べて、気持ちが揺れている。';
+  return '次の目標が、まだ見えていない。';
+ },
+ scene(s){const f=s.flags;
+  if(s.stage===0)return {narrative:'テストが返ってきた。76点。隣の子は95点だった。',speaker:'隣の子',quote:'何点だった？',look:'隣の答案が、チラリと見える。',self:'うわ…',hint:'比べられたとき、何がつらい？'};
+  if(s.stage===1)return {narrative:'休み時間。点数を聞かれて、どう答えるか。',speaker:'隣の子',quote:'自分は95点だよ',look:'答案が、机に置いてある。',self:s.reason==='shameS'?'恥ずかしい…':s.reason==='jealous'?'うらやましい…':s.reason==='worry'?'次も不安…':'どうしよう…',hint:'正直・聞く・ほめる・自分比べ、方法はある。'};
+  return {narrative:'帰り道。次のテストに向けて、考える。',speaker:'隣の子',quote:f.praised?'お互いがんばろう':'じゃあね',look:'夕日が、長く伸びている。',self:f.plannedSt?'計画がある。':'まだ、決めていない。',hint:'計画を立てる・伝える、選ぼう。'};
+ },
+ progress(s){const f=s.flags;return f.plannedSt||f.repliedH?3:f.saidH||f.askedM||f.selfG||f.ignoredR||f.praised||f.keptS?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.plannedSt?'計画を立てて、前を向けた。':f.saidH||f.selfG?'受け止められた。次の目標を立てられる。':'比べられたまま。正直・自分比べ、方法はある。'}
 }
 };
 

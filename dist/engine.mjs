@@ -508,6 +508,16 @@ export const cards={
  slowDown:{title:'追いかけず深呼吸する',kind:'think',label:'深呼吸',cost:1,atk:2,attr:'ath',up:'ath',desc:'追いかける前に、深呼吸する。',hint:'深呼吸で、気持ちが落ち着く',icon:'sun'},
  waitPatience:{title:'戻ってくるのを待つ',kind:'support',label:'待つ',cost:1,atk:2,attr:'soc',up:'soc',desc:'「そのうち戻ってくるかな」と待つ。',hint:'待てるのも、力',icon:'clock'},
  nextTime:{title:'「次は一緒に行こう」と約束する',kind:'support',label:'次の約束',cost:2,atk:3,attr:'soc',up:'soc',desc:'「次は一緒に行こう」と、約束する。',hint:'約束で、次が変わる',icon:'flag'},
+ stayWrong:{title:'間違えたまま返事をする',kind:'think',label:'そのまま返事',cost:0,strain:1,atk:1,attr:'soc',desc:'違う名前でも、返事をしてしまう。',hint:'そのままだと、ずっと間違えられる',icon:'eye'},
+ yellName:{title:'「違うよ！」と怒る',kind:'talk',label:'怒る',cost:0,strain:1,atk:1,attr:'soc',desc:'大声で、訂正する。',hint:'怒ると、まわりが引く',icon:'bolt'},
+ correctCalm:{title:'「××です」と落ち着いて直す',kind:'talk',label:'落ち着いて直す',cost:1,atk:2,attr:'soc',up:'soc',desc:'落ち着いて、正しい名前を言う。',hint:'落ち着くと、伝わる',icon:'pen'},
+ writeName:{title:'名札・ノートに名前を書く',kind:'think',label:'名前を書く',cost:1,atk:2,attr:'study',up:'study',desc:'名札を見せて、覚えてもらう。',hint:'見せると、覚えてもらえる',icon:'pen'},
+ askFix:{title:'「名前、違います」とはっきり言う',kind:'talk',label:'はっきり言う',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'笑って、「名前、違います」と言う。',hint:'はっきり言うと、直してもらえる',icon:'hand'},
+ jokeName:{title:'「苗字の覚え方」を教える',kind:'talk',label:'覚え方を教える',cost:1,atk:2,attr:'soc',up:'soc',desc:'「○○って覚えてね」と、覚え方を教える。',hint:'教えると、覚えてもらえる',icon:'message'},
+ ownName2:{title:'自分の名前を大切にする',kind:'think',label:'名前を大切に',cost:1,atk:2,attr:'study',up:'study',desc:'自分の名前は、大切なもの。',hint:'大切にすると、堂々と言える',icon:'heart'},
+ proudName:{title:'名前の由来を話す',kind:'think',label:'由来を話す',cost:1,atk:2,attr:'soc',up:'soc',desc:'名前の由来を、話してみる。',hint:'由来を話すと、興味を持ってもらえる',icon:'book'},
+ askParents2:{title:'家の人に相談する',kind:'talk',label:'家で相談',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'家の人に、相談する。',hint:'相談は、逃げじゃない',icon:'people'},
+ quietTake:{title:'一度だけ優しく直す',kind:'support',label:'優しく直す',cost:2,atk:3,attr:'soc',up:'soc',desc:'一度だけ、優しく名前を直す。',hint:'優しい訂正は、角が立たない',icon:'sun'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -2975,6 +2985,48 @@ leftOut:{title:'遊びから置いて行かれた',nav:'置いて行かれた',n
  },
  progress(s){const f=s.flags;return f.found2||f.othered||f.waited||f.nexted?3:f.saidW2||f.toldH3||f.askedW3||f.slowed?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.found2||f.othered||f.nexted?'一人でも、楽しくいられる。':f.saidW2||f.toldH3?'気持ちを、伝えられた。':'まだ、置いて行かれたまま。伝える・自分の遊び・待つ、方法はある。'}
+},
+nameWrong:{title:'名前を間違えられ続ける',nav:'名前を間違えられる',num:54,attrs:['soc'],goals:['正しい名前で呼んでもらいたい','関係をこわさず訂正したい','自分の名前を大切にしたい'],chapters:['また間違えられた','どう訂正するか','名前で呼ばれる日'],locations:['教室','休み時間','翌日'],base:['stayWrong','yellName','correctCalm','anger','ignore'],
+ start:{mind:4,energy:3},
+ monsters:[{name:'間違った呼び名',hp:5,power:1,turns:4,look:'「△△くん」と、また呼ばれた。'},{name:'訂正する勇気',hp:5,power:1,turns:4,look:'言うか、言わないか。'},{name:'名前の自分',hp:6,power:2,turns:4,look:'自分の名前は、自分のもの。'}],
+ talk:[['tellTeacher7','先生に「違います」と言う','落ち着いて、訂正する。'],['showCard','名札を見せる','名札で、覚えてもらう。'],['tellFriend5','友達に相談する','「どう言えばいい？」と聞く。']],
+ think:[['small','自分が小さく思える','何度も間違えられて、小さく思えた。'],['awkward2','言いにくい','訂正するのが、言いにくい。'],['myName','名前は大切','名前は、自分の大切なもの。']],
+ reasonKeys:['small','awkward2','myName'],
+ stageGrants:[['writeName','askFix','jokeName'],['ownName2','proudName','askParents2','quietTake']],
+ subs:[
+  {title:'先生が「ごめん、ずっと間違えてたね」と言った',text:'先生が、気づいて謝ってくれた。',stat:'soc',min:0,good:{text:'「大丈夫です」と言えた。',rep:1,mind:1},ok:{text:'ほっとした。',mind:1}},
+  {title:'友達が「僕も覚えたよ」と言ってくれた',text:'友達が、名前を覚えてくれた。',stat:'soc',min:0,good:{text:'「ありがとう」と言えた。',rep:1},ok:{text:'嬉しかった。',mind:1}}
+ ],
+ onExplore(s,key){const out={text:'',card:null};
+  if(key==='tellTeacher7'){s.flags.toldT7=true;relation(s,'言ったら、先生が「ごめんね」と言ってくれた。');out.text='「先生、名前違います」\n「あ、ごめんね」';out.card='askFix'}
+  if(key==='showCard'){s.flags.showedC=true;relation(s,'名札を見せたら、覚えてくれた。');out.text='「ここに、名前あります」\n「あ、これが△△じゃなくて××ね」';out.card='writeName'}
+  if(key==='tellFriend5'){s.flags.toldF5=true;relation(s,'相談したら、「はっきり言えばいいよ」と言ってもらえた。');out.text='「名前、間違えられて」\n「はっきり言えばいいよ」';out.card='askFix'}
+  if(key==='small'){s.reason='small';out.text='何度も間違えられて、小さく思えた。\nでも名前は、自分のもの。';out.card='ownName2'}
+  if(key==='awkward2'){s.reason='awkward2';out.text='訂正するのが、言いにくかった。\n「優しく」「落ち着いて」なら、言いやすい。';out.card='quietTake'}
+  if(key==='myName'){s.reason='myName';out.text='名前は、自分の大切なもの。\n正しく呼んでもらうのは、当然。';out.card='correctCalm'}
+  return out;
+ },
+ onPlay(s,id){const f=s.flags;
+  if(id==='correctCalm'){f.corrected=true;return{text:'「××です」と、落ち着いて直した。',meaning:'落ち着くと、伝わる。'}}
+  if(id==='writeName'){f.wrote=true;return{text:'名札を見せて、覚えてもらった。',meaning:'見せると、覚えてもらえる。'}}
+  if(id==='askFix'){f.askedF=true;return{text:'「名前、違います」と、はっきり言った。',meaning:'はっきり言うと、直してもらえる。'}}
+  if(id==='jokeName'){f.joked=true;return{text:'覚え方を、教えた。',meaning:'教えると、覚えてもらえる。'}}
+  if(id==='ownName2'){f.ownedN=true;return{text:'名前を、大切にすることにした。',meaning:'大切にすると、堂々と言える。'}}
+  if(id==='proudName'){f.prouded=true;return{text:'名前の由来を、話した。',meaning:'由来を話すと、興味を持ってもらえる。'}}
+  if(id==='askParents2'){f.askedP2=true;return{text:'家の人に、相談した。',meaning:'相談は、逃げじゃない。'}}
+  if(id==='quietTake'){f.quieted=true;return{text:'一度だけ、優しく直した。',meaning:'優しい訂正は、角が立たない。'}}
+  if(id==='stayWrong'){f.stayedW=true;return{text:'間違えたまま、返事をした。',meaning:'そのままだと、ずっと間違えられる。'}}
+  if(id==='yellName'){f.yelledN=true;s.rep-=1;relation(s,'怒って直したら、まわりが引いた。');return{text:'「違うよ！」と、怒った。',meaning:'怒ると、まわりが引く。'}}
+  return{text:'',meaning:''};
+ },
+ watch(s){return s.stage===0?'名前は、みんなの入口。':s.stage===1?'訂正は、攻撃じゃない。':'明日も、名前で呼ばれる。'},
+ scene(s){const f=s.flags;
+  if(s.stage===0)return{narrative:'朝の会。「△△くん」と、また間違った名前で呼ばれた。',speaker:'先生',quote:'△△くん、今日の当番だよ',look:'名前を、間違えられた。',self:'違うんだけどな…',hint:'間違えられて、何がつらい？'};
+  if(s.stage===1)return{narrative:'休み時間。訂正するか、このままか。',speaker:'心の声',quote:'言うか、言わないか',look:'名札が、光っている。',self:s.reason==='awkward2'?'言いにくい…':s.reason==='myName'?'名前は大切…':'小さい気持ち…',hint:'直す・見せる・教える、方法はある。'};
+  return{narrative:'翌日。今日は、どう呼ばれるか。',speaker:'友達',quote:f.corrected||f.askedF||f.joked?'「××くん、おはよう」':'「△△くんだっけ」',look:'今日も、名前で呼ばれる。',self:f.ownedN||f.quieted||f.prouded?'名前で、呼ばれそう。':'まだ、間違えられそう。',hint:'大切に・由来・相談・優しく、選ぼう。'};
+ },
+ progress(s){const f=s.flags;return f.ownedN||f.quieted||f.prouded||f.askedP2?3:f.corrected||f.wrote||f.askedF||f.joked?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.ownedN||f.quieted?'名前を、守れた。':f.corrected||f.askedF?'訂正、できた。':'まだ、間違えたまま。直す・見せる・教える、方法はある。'}
 }
 };
 

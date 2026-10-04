@@ -438,6 +438,16 @@ export const cards={
  helpThem:{title:'「一緒にやろう」と誘う',kind:'support',label:'一緒にやる',cost:2,atk:3,attr:'soc',up:'soc',desc:'次の課題を、一緒にやる誘い。',hint:'一緒だと、ライバルが仲間になる',icon:'hand'},
  stayHumble:{title:'次は静かに力をつける',kind:'think',label:'静かに力をつける',cost:1,atk:2,attr:'study',up:'study',desc:'言い返すより、次の力をつける。',hint:'実力は、一番の答え',icon:'pen'},
  ignoreJab:{title:'嫌味は流してやり過ごす',kind:'support',label:'流す',cost:1,atk:2,attr:'ath',up:'ath',desc:'嫌味は、気にせず流す。',hint:'流せるのも、強さ',icon:'flag'},
+ accuseH:{title:'「お前が隠したろ」と決めつける',kind:'talk',label:'決めつける',cost:0,strain:1,atk:1,attr:'soc',desc:'犯人を、決めつけて責める。',hint:'決めつけると、関係がこわれる',icon:'bolt'},
+ prankBack:{title:'やり返して隠す',kind:'think',label:'やり返す',cost:0,strain:1,atk:1,attr:'soc',desc:'相手の物を、隠して仕返し。',hint:'仕返しは、いたちごっこ',icon:'skull'},
+ lookNear:{title:'まず近くを探す',kind:'think',label:'近くを探す',cost:1,atk:2,attr:'study',up:'study',desc:'机の中・まわりから、探す。',hint:'探すと、手がかりが出る',icon:'search'},
+ stayCool2:{title:'「隠しごと？」と冷静に言う',kind:'talk',label:'冷静に言う',cost:1,atk:2,attr:'soc',up:'soc',desc:'慌てず、「隠しごと？」と聞く。',hint:'冷静だと、相手も素直になる',icon:'sun'},
+ askAround3:{title:'見ていた人に聞く',kind:'talk',label:'見ていた人に聞く',cost:1,atk:2,attr:'soc',up:'soc',desc:'「誰か見なかった？」と聞く。',hint:'聞くと、証言が集まる',icon:'ear'},
+ tellT3:{title:'先生に相談する',kind:'talk',label:'先生に相談',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'一人で抱えず、先生に言う。',hint:'相談は、逃げじゃない',icon:'heart'},
+ askCalm3:{title:'「なんで隠したの？」と聞く',kind:'talk',label:'理由を聞く',cost:1,atk:2,attr:'soc',up:'soc',desc:'相手に、理由を聞いてみる。',hint:'理由が分かると、次がある',icon:'message'},
+ checkDesk:{title:'自分の持ち場を確かめる',kind:'think',label:'持ち場を確かめる',cost:1,atk:2,attr:'study',up:'study',desc:'自分の置き場所を、もう一度確かめる。',hint:'確認すると、勘違いも分かる',icon:'check'},
+ letItGo2:{title:'笑いごとで済ませる',kind:'support',label:'笑いごとにする',cost:2,atk:3,attr:'soc',up:'soc',desc:'「びっくりしたー」と、笑いごとにする。',hint:'笑えると、角が立たない',icon:'sun'},
+ makeRule2:{title:'「隠すのなし」ルールにする',kind:'support',label:'ルールを決める',cost:2,atk:3,attr:'soc',up:'soc',desc:'みんなで、「隠しごとなし」にする。',hint:'ルールで、次を防ぐ',icon:'flag'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -2611,6 +2621,48 @@ praised:{title:'褒められて嫌味を言われた',nav:'嫌味を言われた
  },
  progress(s){const f=s.flags;return f.shared||f.cheered||f.helped||f.humbled?3:f.toldF2||f.askedJ||f.thanked||f.askedB?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.shared||f.cheered||f.helped?'関係を、つなげた。':f.toldF2||f.askedJ||f.thanked?'気持ちを、やり取りできた。':'嫌味が、残っている。伝える・流す・分かち合う、方法はある。'}
+},
+hidden:{title:'筆箱を隠された',nav:'隠された',num:47,attrs:['soc'],goals:['冷静に対処したい','関係をこわさず解決したい','次に備えたい'],chapters:['筆箱がない','誰が隠した？','明日の約束'],locations:['教室・朝','休み時間','帰り道'],base:['accuseH','prankBack','lookNear','anger','ignore'],
+ start:{mind:4,energy:3},
+ monsters:[{name:'消えた筆箱',hp:5,power:1,turns:4,look:'机の上に、何もない。'},{name:'隠した何か',hp:5,power:1,turns:4,look:'だれかが、にやにやしている。'},{name:'明日の持ち物',hp:6,power:2,turns:4,look:'明日、同じことがあるか。'}],
+ talk:[['tellFeel3','「隠すの、やめて」と伝える','正直に、やめてと言う。'],['askTeacher3','先生に相談する','困ったことは、相談する。'],['askWho','「誰か見なかった？」と聞く','目撃者を、探す。']],
+ think:[['annoyed','困る・腹が立つ','勝手に隠されて、腹が立つ。'],['worried2','明日も不安','明日も、同じことになるか。'],['whoDid2','誰がやったのか','誰が、隠したのか。']],
+ reasonKeys:['annoyed','worried2','whoDid2'],
+ stageGrants:[['stayCool2','askAround3','tellT3'],['askCalm3','checkDesk','letItGo2','makeRule2']],
+ subs:[
+  {title:'「ごめん、遊びのつもりだった」と言ってきた',text:'その子が、謝ってきた。',stat:'soc',min:0,good:{text:'「もうやめてね」と、許せた。',rep:1,mind:1},ok:{text:'許すことにした。',mind:1}},
+  {title:'筆箱が、戻ってきた',text:'机の上に、戻っていた。',stat:'soc',min:0,good:{text:'「ありがとう」と言えた。',rep:1},ok:{text:'ほっとした。',mind:1}}
+ ],
+ onExplore(s,key){const out={text:'',card:null};
+  if(key==='tellFeel3'){s.flags.toldF3=true;relation(s,'「やめて」と伝えた。相手が、少し考えた。');out.text='「隠すの、やめて」\n「…ごめん」';out.card='stayCool2'}
+  if(key==='askTeacher3'){s.flags.askedT3=true;relation(s,'相談したら、先生が「見とくね」と言った。');out.text='「先生、相談していいですか」\n「あとで見とくね」';out.card='tellT3'}
+  if(key==='askWho'){s.flags.askedW=true;relation(s,'「見なかった？」聞いたら、証言が出た。');out.text='「誰か、見なかった？」\n「あ、さっきあの子が机のとこにいた」';out.card='askAround3'}
+  if(key==='annoyed'){s.reason='annoyed';out.text='勝手に隠されて、腹が立った。\n怒る前に、まず確かめよう。';out.card='lookNear'}
+  if(key==='worried2'){s.reason='worried2';out.text='明日も、同じことになるか不安。\n「次を防ぐ」ことを考えよう。';out.card='makeRule2'}
+  if(key==='whoDid2'){s.reason='whoDid2';out.text='誰がやったか、気になる。\n「聞く」と「決めつける」は違う。';out.card='askAround3'}
+  return out;
+ },
+ onPlay(s,id){const f=s.flags;
+  if(id==='lookNear'){f.looked=true;return{text:'近くを、探した。手がかりが出てきた。',meaning:'まず探すと、事実が分かる。'}}
+  if(id==='stayCool2'){f.cooled2=true;return{text:'「隠しごと？」と、冷静に聞いた。',meaning:'冷静だと、相手も素直になる。'}}
+  if(id==='askAround3'){f.askedA3=true;return{text:'見ていた人に、聞いた。',meaning:'聞くと、証言が集まる。'}}
+  if(id==='tellT3'){f.told3=true;return{text:'先生に、相談した。',meaning:'相談は、逃げじゃない。'}}
+  if(id==='askCalm3'){f.askedC3=true;return{text:'「なんで隠したの？」と聞いた。',meaning:'理由が分かると、次がある。'}}
+  if(id==='checkDesk'){f.checked=true;return{text:'置き場所を、もう一度確かめた。',meaning:'確認すると、勘違いも分かる。'}}
+  if(id==='letItGo2'){f.letGo=true;return{text:'「びっくりしたー」と、笑いごとにした。',meaning:'笑えると、角が立たない。'}}
+  if(id==='makeRule2'){f.ruled=true;return{text:'「隠しごとなし」のルールにした。',meaning:'ルールで、次を防ぐ。'}}
+  if(id==='accuseH'){f.accused=true;s.rep-=1;relation(s,'決めつけて責めたら、嫌われた。');return{text:'「お前が隠したろ」と決めつけた。嫌われた。',meaning:'決めつけると、関係がこわれる。'}}
+  if(id==='prankBack'){f.pranked=true;s.rep-=1;relation(s,'仕返ししたら、いたちごっこになった。');return{text:'仕返しして、隠した。いたちごっこになった。',meaning:'仕返しは、終わらない。'}}
+  return{text:'',meaning:''};
+ },
+ watch(s){return s.stage===0?'「遊び」がエスカレートすると、嫌な関係になる。':s.stage===1?'聞くと、理由や気持ちが見える。':'明日も、教室は同じ。'},
+ scene(s){const f=s.flags;
+  if(s.stage===0)return{narrative:'朝、机の上に筆箱がない。だれかが、にやにやしている。',speaker:'だれか',quote:'（くすくす）',look:'誰かが、こちらを見ている。',self:'勝手に隠された…',hint:'隠されて、何がつらい？'};
+  if(s.stage===1)return{narrative:'休み時間。誰がやったか、気になる。',speaker:'友達',quote:'あの子、さっき机のとこにいたよ',look:'証言が、集まってきた。',self:s.reason==='whoDid2'?'誰だろう…':s.reason==='worried2'?'明日も不安…':'むかつく…',hint:'冷静・聞く・相談、方法はある。'};
+  return{narrative:'帰り道。明日から、どうするか。',speaker:'友達',quote:f.ruled?'「じゃ、なしだね」':'「またあるかも…」',look:'明日も、同じ教室。',self:f.letGo||f.ruled||f.askedC3?'次を、防げそう。':'まだ、不安が残る。',hint:'理由を聞く・確かめる・笑いごと・ルール、選ぼう。'};
+ },
+ progress(s){const f=s.flags;return f.letGo||f.ruled||f.askedC3?3:f.cooled2||f.askedA3||f.told3||f.looked||f.checked?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.ruled||f.letGo?'次を、防ぐ準備ができた。':f.cooled2||f.askedA3?'冷静に、対処できている。':'まだ、モヤモヤ。冷静・聞く・相談、方法はある。'}
 }
 };
 

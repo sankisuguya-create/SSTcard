@@ -16,4 +16,20 @@ for(const story of ['fight','sports']){
  const s2=initial(story);s2.stress=5;assert(free(s2,'observe'));assert(free(s2,'pass'));assert(safety(s2,'rest'));// いつでも選べる作戦は気持ちがいっぱいでも使える
 }
 assert(!free(initial('fight'),'bogus'));
-let explored=0;function walk(s,depth){assert(s.stress>=0&&s.stress<=6);assert(s.energy>=0&&s.energy<=5);assert(s.progress>=0&&s.progress<=3);if(depth===0||s.finished)return;const ids=available(s).filter(id=>canPlay(s,id));for(const id of ids){const t=structuredClone(s);assert(play(t,id));assert(t.feedback.text.length>0,id);advance(t);explored++;walk(t,depth-1)}}for(const story of ['fight','sports']){for(const goal of [0,1,2]){const s=initial(story);setGoal(s,goal);if(story==='fight'){for(const k of ['haru','mina','why','respect','feeling'])explore(s,k)}else{explore(s,'noise');explore(s,'teacher');explore(s,'friend')}s.energy=5;walk(s,3)}}console.log('PASS: branches, context-sensitive outcomes, safety, resource bounds; explored',explored,'moves');
+
+// いいなと思う人: 向社会的な行動で増え、一人でやる行動・自問では増えない（上限5）
+for(const story of ['fight','sports']){
+ const s=initial(story);assert.equal(s.liked,1);
+ explore(s,story==='fight'?'haru':'teacher');assert.equal(s.liked,2);
+ explore(s,story==='fight'?'why':'movement');assert.equal(s.liked,2);
+ s.energy=5;play(s,story==='fight'?'ask':'schedule');assert.equal(s.liked,3);s.feedback=null;
+ play(s,story==='fight'?'distance':'practice');assert.equal(s.liked,3);s.feedback=null;
+}
+{
+ const s=initial('fight'),l=s.liked;
+ assert(free(s,'observe'));assert.equal(s.liked,l+1);
+ assert(free(s,'pass'));assert.equal(s.liked,l+1);
+ const s2=initial('fight');assert(safety(s2,'help'));assert.equal(s2.liked,2);
+ const s3=initial('fight');s3.liked=5;explore(s3,'mina');assert.equal(s3.liked,5);play(s3,'boundary');assert.equal(s3.liked,5);
+}
+let explored=0;function walk(s,depth){assert(s.stress>=0&&s.stress<=6);assert(s.energy>=0&&s.energy<=5);assert(s.progress>=0&&s.progress<=3);assert(s.liked>=0&&s.liked<=5);if(depth===0||s.finished)return;const ids=available(s).filter(id=>canPlay(s,id));for(const id of ids){const t=structuredClone(s);assert(play(t,id));assert(t.feedback.text.length>0,id);advance(t);explored++;walk(t,depth-1)}}for(const story of ['fight','sports']){for(const goal of [0,1,2]){const s=initial(story);setGoal(s,goal);if(story==='fight'){for(const k of ['haru','mina','why','respect','feeling'])explore(s,k)}else{explore(s,'noise');explore(s,'teacher');explore(s,'friend')}s.energy=5;walk(s,3)}}console.log('PASS: branches, context-sensitive outcomes, safety, resource bounds; explored',explored,'moves');

@@ -1,34 +1,34 @@
 // All numbers describe fictional characters, not psychological measurements.
 // Safety actions never require a card or energy. Exploring never reveals another person's private thoughts.
 export const cards={
- boundary:{title:'勝手に外さないで',kind:'talk',label:'伝える',cost:1,desc:'嫌だったことを、短い言葉で伝える。',hint:'自分の境界を知らせる',icon:'message'},
- ask:{title:'何のじゃまだったの？',kind:'talk',label:'確かめる',cost:1,desc:'まだ分からない理由を、相手に聞く。',hint:'新しい手がかりを得る',icon:'search'},
+ boundary:{title:'勝手に外さないで',kind:'talk',label:'伝える',cost:1,bond:1,desc:'嫌だったことを、短い言葉で伝える。',hint:'自分の境界を知らせる',icon:'message'},
+ ask:{title:'何のじゃまだったの？',kind:'talk',label:'確かめる',cost:1,bond:1,desc:'まだ分からない理由を、相手に聞く。',hint:'新しい手がかりを得る',icon:'search'},
  distance:{title:'いったん離れる',kind:'support',label:'整える',cost:0,desc:'少し距離をとって、次の作戦を考える。',hint:'今は話さない、も選べる',icon:'door'},
- relocate:{title:'場所を変えてつけ直す',kind:'talk',label:'提案する',cost:2,desc:'飾りを残して、ふたも閉まる場所を探す。',hint:'両方の希望をかなえる方法',icon:'puzzle'},
- promise:{title:'次から先に聞いて',kind:'talk',label:'伝える',cost:1,desc:'これからの関わり方を、相談する。',hint:'明日の関係につながる',icon:'hand'},
- effort:{title:'頑張って作ったんだ',kind:'think',label:'気持ちを伝える',cost:1,desc:'自分が大切にしていたことを話す。',hint:'相手が知らない自分のこと',icon:'heart'},
- mina:{title:'ミナと一緒に伝える',kind:'support',label:'協力する',cost:1,desc:'二人だけでは難しい話を、手伝ってもらう。',hint:'一人で解決しなくてもいい',icon:'people'},
- repair:{title:'言い方と気持ちを伝える',kind:'talk',label:'関係をつなぐ',cost:2,desc:'強く言ったことを謝り、嫌だったことも伝える。',hint:'自分の気持ちも大切にする',icon:'message'},
- together:{title:'一緒に決め直す',kind:'talk',label:'相談する',cost:2,desc:'お互いの希望を出して、作り方を考える。',hint:'話す余裕や手がかりが大切',icon:'puzzle'},
- later:{title:'あとで話す時間を決める',kind:'support',label:'時間をおく',cost:0,desc:'今は中断して、続きの話をする時間を決める。',hint:'保留にも次の一手を',icon:'clock'},
+ relocate:{title:'場所を変えてつけ直す',kind:'talk',label:'提案する',cost:2,bond:1,desc:'飾りを残して、ふたも閉まる場所を探す。',hint:'両方の希望をかなえる方法',icon:'puzzle'},
+ promise:{title:'次から先に聞いて',kind:'talk',label:'伝える',cost:1,bond:1,desc:'これからの関わり方を、相談する。',hint:'明日の関係につながる',icon:'hand'},
+ effort:{title:'頑張って作ったんだ',kind:'think',label:'気持ちを伝える',cost:1,bond:1,desc:'自分が大切にしていたことを話す。',hint:'相手が知らない自分のこと',icon:'heart'},
+ mina:{title:'ミナと一緒に伝える',kind:'support',label:'協力する',cost:1,bond:1,desc:'二人だけでは難しい話を、手伝ってもらう。',hint:'一人で解決しなくてもいい',icon:'people'},
+ repair:{title:'言い方と気持ちを伝える',kind:'talk',label:'関係をつなぐ',cost:2,bond:1,desc:'強く言ったことを謝り、嫌だったことも伝える。',hint:'自分の気持ちも大切にする',icon:'message'},
+ together:{title:'一緒に決め直す',kind:'talk',label:'相談する',cost:2,bond:1,desc:'お互いの希望を出して、作り方を考える。',hint:'話す余裕や手がかりが大切',icon:'puzzle'},
+ later:{title:'あとで話す時間を決める',kind:'support',label:'時間をおく',cost:0,bond:1,desc:'今は中断して、続きの話をする時間を決める。',hint:'保留にも次の一手を',icon:'clock'},
  practice:{title:'少し練習してみる',kind:'talk',label:'試してみる',cost:2,desc:'短い距離で、スタートの動きを試す。',hint:'役立つかは、苦手の理由しだい',icon:'flag'},
- schedule:{title:'先生に予定を聞く',kind:'talk',label:'確かめる',cost:1,desc:'何をするのか、どこで休めるのかを聞く。',hint:'見通しをつくる',icon:'search'},
- sora:{title:'ソラに気持ちを話す',kind:'think',label:'伝える',cost:1,desc:'楽しみな人にも、気が重いことを伝えてみる。',hint:'違う気持ちを知ってもらう',icon:'message'},
+ schedule:{title:'先生に予定を聞く',kind:'talk',label:'確かめる',cost:1,bond:1,desc:'何をするのか、どこで休めるのかを聞く。',hint:'見通しをつくる',icon:'search'},
+ sora:{title:'ソラに気持ちを話す',kind:'think',label:'伝える',cost:1,bond:1,desc:'楽しみな人にも、気が重いことを伝えてみる。',hint:'違う気持ちを知ってもらう',icon:'message'},
  small:{title:'一つの動きだけ練習',kind:'talk',label:'試してみる',cost:1,desc:'全部ではなく、スタートだけを試す。',hint:'小さく区切って確かめる',icon:'flag'},
- private:{title:'二人でタイムなし練習',kind:'support',label:'協力する',cost:1,desc:'ソラと、人の少ない場所で練習する。',hint:'見られ方を変える',icon:'people'},
- place:{title:'待つ場所を変える',kind:'support',label:'環境を変える',cost:1,desc:'先生と決めた、スピーカーから遠い場所へ。',hint:'音の負担に合った作戦',icon:'door'},
- signal:{title:'休憩の合図を決める',kind:'support',label:'助けを準備する',cost:1,desc:'つらくなったら伝わる合図を、先生と決める。',hint:'困ったときの道をつくる',icon:'hand'},
- notice:{title:'試したことを見てほしい',kind:'think',label:'伝える',cost:1,desc:'順位より、取り組んだことを見てほしいと話す。',hint:'応援のしかたを相談する',icon:'heart'},
+ private:{title:'二人でタイムなし練習',kind:'support',label:'協力する',cost:1,bond:1,desc:'ソラと、人の少ない場所で練習する。',hint:'見られ方を変える',icon:'people'},
+ place:{title:'待つ場所を変える',kind:'support',label:'環境を変える',cost:1,bond:1,desc:'先生と決めた、スピーカーから遠い場所へ。',hint:'音の負担に合った作戦',icon:'door'},
+ signal:{title:'休憩の合図を決める',kind:'support',label:'助けを準備する',cost:1,bond:1,desc:'つらくなったら伝わる合図を、先生と決める。',hint:'困ったときの道をつくる',icon:'hand'},
+ notice:{title:'試したことを見てほしい',kind:'think',label:'伝える',cost:1,bond:1,desc:'順位より、取り組んだことを見てほしいと話す。',hint:'応援のしかたを相談する',icon:'heart'},
  observe:{title:'つらいところを確かめる',kind:'think',label:'自分を知る',cost:1,desc:'練習の中で、負担が増えるときを見つける。',hint:'まだ分からなくても大丈夫',icon:'search'},
  participate:{title:'決めたことを試す',kind:'talk',label:'自分で選ぶ',cost:1,desc:'今の自分が試したい範囲で参加する。',hint:'順位ではなく、自分の目的',icon:'flag'},
- adjust:{title:'参加のしかたを相談',kind:'support',label:'選び直す',cost:1,desc:'参加する範囲や別の役割を、先生と考える。',hint:'当日でも作戦は変えられる',icon:'puzzle'},
+ adjust:{title:'参加のしかたを相談',kind:'support',label:'選び直す',cost:1,bond:1,desc:'参加する範囲や別の役割を、先生と考える。',hint:'当日でも作戦は変えられる',icon:'puzzle'},
  useSignal:{title:'合図を使って休む',kind:'support',label:'自分を守る',cost:0,desc:'決めた合図で伝えて、休憩場所へ移る。',hint:'その後のことは、休んでから',icon:'hand'}
 };
 export const stories={
  fight:{title:'ふたりで作ったはずなのに',nav:'クラスの子とのケンカ',num:'01',goals:['大切なことを伝えたい','一緒に作品を直したい','まず言い争いを止めたい'],chapters:['図工の時間','どう伝えよう？','翌日の班活動'],locations:['教室・図工の時間','教室・片づけの前','教室・次の日'],base:['boundary','ask','distance']},
  sports:{title:'あと一週間、どうしよう',nav:'苦手な運動会',num:'02',goals:['不安の理由を知りたい','自分に合う参加をしたい','困ったときに備えたい'],chapters:['運動会まで7日','練習の日','運動会当日'],locations:['教室・帰りの会','校庭・練習の日','校庭・運動会当日'],base:['practice','schedule','sora']}
 };
-export function initial(story='fight'){return {story,stage:0,stress:story==='fight'?4:3,energy:story==='fight'?3:4,progress:0,goal:0,hand:[...stories[story].base],discovered:[],used:[],flags:{},clues:[],relations:[],growth:[],log:[],explored:[],rested:[],observed:[],passed:[],feedback:null,finished:false,reason:null,reflection:null};}
+export function initial(story='fight'){return {story,stage:0,stress:story==='fight'?4:3,energy:story==='fight'?3:4,liked:1,progress:0,goal:0,hand:[...stories[story].base],discovered:[],used:[],flags:{},clues:[],relations:[],growth:[],log:[],explored:[],rested:[],observed:[],passed:[],feedback:null,finished:false,reason:null,reflection:null};}
 const add=(arr,v)=>{if(!arr.includes(v))arr.push(v)};
 function grant(s,id){if(!s.hand.includes(id))s.hand.push(id);add(s.discovered,id)}
 function note(s,t){add(s.clues,t)}
@@ -42,6 +42,7 @@ export function explore(s,key){
  if(!opts.includes(key))return null;
  if(['movement','judgment','noise','unknown'].includes(key)&&s.reason)return null;
  s.explored.push(key);
+ if(['haru','mina','teacher','friend'].includes(key))s.liked=Math.min(5,s.liked+1);
  if(key==='haru'){s.flags.reason=true;note(s,'飾りがあると、ふたが閉まらなかった。');out.text='ハル「ふたが閉まらなかったんだ。片づけの時間も近かったから……」\n外した理由が分かった。飾りを残す方法もありそう。';out.card='relocate'}
  if(key==='mina'){s.flags.mina=true;note(s,'飾りは、机の上に置いてある。');out.text='ミナ「捨てたんじゃなくて、机に置いてあるよ。必要なら、一緒に話そうか？」';out.card='mina'}
  if(key==='why'){out.text='「飾りをなくしたくなかったんだ。置く場所を変える方法もあるかな」';out.card='relocate';growth(s,'大切にしたいものを考えた。')}
@@ -59,7 +60,7 @@ export function available(s){return s.hand.filter(id=>!s.used.includes(id));}
 export function canPlay(s,id){return !s.finished&&!s.feedback&&available(s).includes(id)&&s.energy>=cards[id].cost&&!(s.stress>=6&&cards[id].cost>=2);}
 export function play(s,id){
  if(!canPlay(s,id))return false;
- const c=cards[id],before={stress:s.stress,energy:s.energy,progress:s.progress};s.energy-=c.cost;s.used.push(id);let text='',meaning='';
+ const c=cards[id],before={stress:s.stress,energy:s.energy,progress:s.progress,liked:s.liked};s.energy-=c.cost;s.used.push(id);let text='',meaning='';
  if(s.story==='fight'){
   if(id==='boundary'){s.flags.boundary=true;s.stress=Math.min(6,s.stress+1);relation(s,'勝手に変えられるのは嫌だと、ハルに伝えた。');text='ハル「そんなに大事だったの？ 勝手に取ったのは悪かった」\n少し緊張したけれど、嫌だったことは伝わった。';meaning='境界は伝わった。外した理由や、直し方はまだ別の話。'}
   if(id==='ask'){s.flags.reason=true;note(s,'飾りがあると、ふたが閉まらなかった。');grant(s,'relocate');s.stress--;text='ハル「ふたが閉まらなかったんだよ。もう片づけの時間だったし」\n「場所を変えてつけ直す」が手札に加わった。';meaning='理由が分かると、新しい提案ができる。'}
@@ -89,13 +90,13 @@ export function play(s,id){
   if(id==='adjust'){s.flags.adjusted=true;s.stress--;text='先生と相談して、参加する範囲を変えた。\n次にどうしたいかは、また選べる。';meaning='当日でも、自分に合う形へ作戦を変えられる。'}
   if(id==='useSignal'){s.flags.restPlan=true;s.stress-=2;s.energy+=1;text='合図で伝えて、先生と休憩場所へ移った。\n戻るかどうかは、休んでから相談する。';meaning='準備した作戦を、必要なときに使えた。'}
  }
- growth(s,'「'+c.title+'」を試した。');s.stress=Math.max(0,Math.min(6,s.stress));s.energy=Math.max(0,Math.min(5,s.energy));updateProgress(s);
- s.log.push({stage:s.stage,title:c.title,text,meaning});s.feedback={title:c.title,text,meaning,before,after:{stress:s.stress,energy:s.energy,progress:s.progress}};return true;
+ growth(s,'「'+c.title+'」を試した。');s.stress=Math.max(0,Math.min(6,s.stress));s.energy=Math.max(0,Math.min(5,s.energy));if(c.bond)s.liked=Math.min(5,s.liked+c.bond);updateProgress(s);
+ s.log.push({stage:s.stage,title:c.title,text,meaning});s.feedback={title:c.title,text,meaning,before,after:{stress:s.stress,energy:s.energy,progress:s.progress,liked:s.liked}};return true;
 }
 function updateProgress(s){const f=s.flags;if(s.story==='fight'){s.progress=s.goal===0?(f.boundary||f.promise?3:0):s.goal===1?(f.fixed?3:f.reason?1:0):(f.distance||f.later||f.mediated||f.repaired||f.help||f.leave?3:f.boundary?1:0)}else{s.progress=s.goal===0?(s.reason&&s.reason!=='unknown'?3:s.clues.length?1:0):s.goal===1?(f.participated||f.adjusted?3:f.place||f.practiced?2:0):(f.signal||f.restPlan?3:f.teacher?1:0)}}
 export function setGoal(s,n){if(!Number.isInteger(n)||n<0||n>2)return false;s.goal=n;updateProgress(s);return true}
 export function advance(s){if(!s.feedback)return false;s.feedback=null;if(s.stage===2){s.finished=true;return true}s.stage++;s.energy=Math.min(5,s.energy+1);if(s.story==='fight'){for(const c of s.stage===1?['repair','together','later']:['promise','together','later']){if(!s.used.includes(c)&&!s.hand.includes(c))s.hand.push(c)}}else{for(const c of s.stage===1?['observe','adjust']:['participate','adjust'])if(!s.used.includes(c)&&!s.hand.includes(c))s.hand.push(c)}return true}
-export function safety(s,type){if(s.finished||s.feedback)return false;if(type==='rest'){if(s.rested.includes(s.stage))return false;s.rested.push(s.stage);s.stress=Math.max(0,s.stress-2);s.energy=Math.min(5,s.energy+2);growth(s,'休んで、次の作戦を考える余力をつくった。');return true}if(type==='help'||type==='leave'){s.flags[type]=true;updateProgress(s);s.stress=Math.max(0,s.stress-1);s.finished=true;growth(s,type==='help'?'困りごとを大人に伝えた。':'安全な場所へ移る選択をした。');return true}return false}
+export function safety(s,type){if(s.finished||s.feedback)return false;if(type==='rest'){if(s.rested.includes(s.stage))return false;s.rested.push(s.stage);s.stress=Math.max(0,s.stress-2);s.energy=Math.min(5,s.energy+2);growth(s,'休んで、次の作戦を考える余力をつくった。');return true}if(type==='help'||type==='leave'){s.flags[type]=true;if(type==='help')s.liked=Math.min(5,s.liked+1);updateProgress(s);s.stress=Math.max(0,s.stress-1);s.finished=true;growth(s,type==='help'?'困りごとを大人に伝えた。':'安全な場所へ移る選択をした。');return true}return false}
 function watch(s){
  if(s.story==='fight'){
   if(s.stage===0)return 'ハルは「じゃまだから」と言った。飾りやふたのことで、理由がありそうだ。';
@@ -108,7 +109,7 @@ function watch(s){
 }
 export function free(s,type){
  if(s.finished||s.feedback)return false;
- if(type==='observe'){if(s.observed.includes(s.stage))return false;s.observed.push(s.stage);const w=watch(s);note(s,w);growth(s,'相手の様子や、その場の手がかりを確かめた。');return {title:'様子を確かめた',text:w,meaning:'じっくり見るだけでも、分かることが増える。'}}
+ if(type==='observe'){if(s.observed.includes(s.stage))return false;s.observed.push(s.stage);const w=watch(s);note(s,w);s.liked=Math.min(5,s.liked+1);growth(s,'相手の様子や、その場の手がかりを確かめた。');return {title:'様子を確かめた',text:w,meaning:'じっくり見るだけでも、分かることが増える。'}}
  if(type==='pass'){if(s.passed.includes(s.stage))return false;s.passed.push(s.stage);s.energy=Math.min(5,s.energy+1);const t='すぐには動かず、その場をやり過ごした。\n何も変わらなかったが、少し余力が戻った。';s.log.push({stage:s.stage,title:'何もしない',text:t,meaning:'何もしないことも、選べる作戦の一つ。'});growth(s,'何もしないで、様子を見る時間をつくった。');return {title:'何もしない',text:t,meaning:'何もしないことも、選べる作戦の一つ。'}}
  return false;
 }
@@ -121,4 +122,4 @@ export function scene(s){const f=s.flags;if(s.story==='fight'){
  if(s.stage===1)return {narrative:'校庭での練習が始まった。走る友達や、放送の音が気になる。',speaker:s.flags.sora?'ソラ':'先生',quote:s.flags.sora?'どんなやり方なら、一緒に試せそう？':'練習を始めるよ。困ったことがあったら教えてね。',look:s.flags.sora?'ソラは、こちらのペースを気にかけている。':'先生は、ゆっくりした声で話している。',self:s.reason==='noise'?'大きな音が、つらいのかもしれない。':s.reason==='judgment'?'走るところを見られるのが、気になる。':s.reason==='movement'?'スタートの動きを、少し確かめたい。':'どこでつらくなるか、確かめてみよう。',hint:'苦手の理由によって、合う作戦は変わる。'};
  return {narrative:'運動会当日。校庭にはたくさんの人がいる。少しドキドキする。',speaker:'ソラ',quote:f.sora?'今日はどうする？ 一緒に待てる時間もあるよ。':'そろそろ出番だね。今日はどうする？',look:'ソラは、少し心配そうにこちらを見ている。',self:f.signal?'つらくなったときの合図は、決めてある。':f.place?'自分に合う待つ場所を、相談できた。':'今の自分に合う過ごし方を選ぼう。',hint:'準備した作戦は、当日でも選び直せる。'};
 }
-export function summary(s){const f=s.flags;let situation;if(f.help)situation='大人に困りごとを伝え、次のことを一緒に考えることにした。';else if(f.leave)situation='安全な場所へ移った。問題の続きは、落ち着いてから考えられる。';else if(s.story==='fight')situation=f.fixed?'飾りを残し、ふたも閉まる形に直せた。':f.later?'話す時間を決めて、いったん保留にした。':'気持ちや事情を確かめた。作品を直す方法は、まだ相談できる。';else situation=f.restPlan?'合図を使って休憩した。その後の参加は、休んでから相談する。':f.adjusted?'先生と、自分に合う参加のしかたを相談した。':f.participated?'自分で決めた範囲で参加した。順位とは別に、試した経験が残った。':'準備の作戦を試した。当日の過ごし方は、これからも選べる。';return {situation,relation:s.relations.length?s.relations.join(' '):'今回は、相手との新しい約束や気持ちの共有はまだない。あとから話すこともできる。',growth:s.growth,goal:stories[s.story].goals[s.goal],progress:s.progress,stress:s.stress,energy:s.energy}}
+export function summary(s){const f=s.flags;let situation;if(f.help)situation='大人に困りごとを伝え、次のことを一緒に考えることにした。';else if(f.leave)situation='安全な場所へ移った。問題の続きは、落ち着いてから考えられる。';else if(s.story==='fight')situation=f.fixed?'飾りを残し、ふたも閉まる形に直せた。':f.later?'話す時間を決めて、いったん保留にした。':'気持ちや事情を確かめた。作品を直す方法は、まだ相談できる。';else situation=f.restPlan?'合図を使って休憩した。その後の参加は、休んでから相談する。':f.adjusted?'先生と、自分に合う参加のしかたを相談した。':f.participated?'自分で決めた範囲で参加した。順位とは別に、試した経験が残った。':'準備の作戦を試した。当日の過ごし方は、これからも選べる。';return {situation,relation:s.relations.length?s.relations.join(' '):'今回は、相手との新しい約束や気持ちの共有はまだない。あとから話すこともできる。',growth:s.growth,goal:stories[s.story].goals[s.goal],progress:s.progress,stress:s.stress,energy:s.energy,liked:s.liked}}

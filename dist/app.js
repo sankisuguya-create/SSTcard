@@ -105,6 +105,7 @@ function handZone(s){
    <div class="resources" aria-label="のこりの力">
     ${pip('bolt','行動力',s.energy,5,'作戦カードを出すための力。休むと少し戻る')}
     ${pip('heart','こころの余裕',6-s.stress,6,'ストレスが増えると減る。なくなる前に休もう')}
+    ${pip('people','いいなと思う人',s.liked,5,'あなたのことを「いいな」と思ってくれている人。話したり相談したりすると増える')}
    </div>
   </div>
   ${s.stress>=6?'<div class="notice">こころがいっぱい。重い作戦（行動力2）は使えない。まず休もう。</div>':s.stress>=5?'<div class="notice">気持ちがいっぱいで、「話す・相談する」「自分に問う」は使えない。休む・離れると落ち着く。</div>':''}
@@ -123,7 +124,7 @@ function cardView(id,i,n){
 
 function feedbackView(){
  const f=state.feedback;
- return `<section class="feedback" tabindex="-1" id="feedback"><div class="eyebrow">YOUR CHOICE ／ 試してみた</div><h2>「${f.title}」を使った</h2><p>${f.text}</p><div class="changes"><span class="change">ストレス ${f.before.stress} → ${f.after.stress}</span><span class="change">余力 ${f.before.energy} → ${f.after.energy}</span><span class="change">目的 ${f.before.progress} → ${f.after.progress}</span></div><div class="notice">${icon('spark')} ${f.meaning}</div><div class="feedback-actions"><button data-action="undo">別の作戦を試す</button><button class="primary" data-action="next">${state.stage===2?'今回をふりかえる':'次の場面へ'}</button></div></section>`;
+ return `<section class="feedback" tabindex="-1" id="feedback"><div class="eyebrow">YOUR CHOICE ／ 試してみた</div><h2>「${f.title}」を使った</h2><p>${f.text}</p><div class="changes"><span class="change">ストレス ${f.before.stress} → ${f.after.stress}</span><span class="change">余力 ${f.before.energy} → ${f.after.energy}</span><span class="change">目的 ${f.before.progress} → ${f.after.progress}</span>${f.after.liked>f.before.liked?`<span class="change liked-up">いいなと思う人 ${f.before.liked} → ${f.after.liked}</span>`:''}</div><div class="notice">${icon('spark')} ${f.meaning}</div><div class="feedback-actions"><button data-action="undo">別の作戦を試す</button><button class="primary" data-action="next">${state.stage===2?'今回をふりかえる':'次の場面へ'}</button></div></section>`;
 }
 
 function resultView(){
@@ -131,7 +132,7 @@ function resultView(){
  return `<div class="result-header"><div class="eyebrow">YOUR STORY ／ 今回のふりかえり</div><h1>選んだ作戦が、経験になった。</h1><p class="muted">うまくいったことも、まだ気になることも。次の作戦の手がかりにしよう。</p></div>
  <div class="result-grid">
   <section class="result-box"><h3>${icon('flag')}状況はどうなった？</h3><p>${r.situation}</p><div class="changes"><span class="change">${r.goal}：${r.progress===3?'進められた':r.progress?'少し進んだ':'これから考えられる'}</span></div></section>
-  <section class="result-box"><h3>${icon('heart')}自分の状態</h3><p>ストレス ${r.stress} / 6　・　余力 ${r.energy} / 5</p><p class="smalltext muted">気持ちが残っていても、伝えられたことや見つけたことは残ります。</p></section>
+  <section class="result-box"><h3>${icon('heart')}自分の状態</h3><p>ストレス ${r.stress} / 6　・　余力 ${r.energy} / 5　・　いいなと思う人 ${r.liked} 人</p><p class="smalltext muted">気持ちが残っていても、伝えられたことや見つけたことは残ります。</p></section>
   <section class="result-box"><h3>${icon('people')}関係に残ったこと</h3><p>${r.relation}</p></section>
   <section class="result-box"><h3>${icon('spark')}自分に増えた経験</h3>${r.growth.length?r.growth.slice(-4).map(t=>`<p class="smalltext">・${t}</p>`).join(''):'<p>今回は、立ち止まって次を考える時間をつくった。</p>'}</section>
   <section class="result-box wide"><h3>${icon('cards')}今回の作戦の道すじ</h3><div class="timeline">${s.log.length?s.log.map((l,i)=>`<span>${i+1}. ${l.title}</span>`).join(''):'<span>いつでも選べる作戦を使った</span>'}</div>${previous&&previous.story===s.story?`<div class="comparison"><strong>前に試した道すじ</strong><br>${previous.titles.join(' ／ ')||'休憩・離脱・援助を選んだ'}<br>${previous.situation}</div>`:''}</section>
@@ -153,7 +154,7 @@ function showNotebook(){
 
 function dispatch(action,id){
  if(action==='close'){close();return}
- if(action==='guide'){modal('あそびかた',`<div class="dialog-options"><p><strong>1. 場面と、今の手札を見る</strong><br>何を大切にしたいか、目的を選べます。</p><p><strong>2. 話す・考える・カードを使う</strong><br>会話や自問自答で手札が増えます。カードの数字は使う行動力です。気持ちがいっぱいの時は、じっくり考える作戦は使えません。</p><p><strong>3. 結果を見て、選び直す</strong><br>同じカードでも、状況によって結果が変わります。きき返す・何もしない・休む・離れる・助けを求めることは、いつでも選べます。</p></div><div class="notice">登場人物や数値は架空です。合計点や順位はありません。このモックはページを閉じると記録が消えます。</div><button class="primary" data-action="close">おはなしに戻る</button>`);return}
+ if(action==='guide'){modal('あそびかた',`<div class="dialog-options"><p><strong>1. 場面と、今の手札を見る</strong><br>何を大切にしたいか、目的を選べます。</p><p><strong>2. 話す・考える・カードを使う</strong><br>会話や自問自答で手札が増えます。カードの数字は使う行動力です。気持ちがいっぱいの時は、じっくり考える作戦は使えません。話したり相談したりすると、「いいなと思う人」が増えます。</p><p><strong>3. 結果を見て、選び直す</strong><br>同じカードでも、状況によって結果が変わります。きき返す・何もしない・休む・離れる・助けを求めることは、いつでも選べます。</p></div><div class="notice">登場人物や数値は架空です。合計点や順位はありません。このモックはページを閉じると記録が消えます。</div><button class="primary" data-action="close">おはなしに戻る</button>`);return}
  if(action==='story'){if(!stories[id]||id===state.story)return;sessions[state.story]={state:structuredClone(state),history:structuredClone(history),previous};const saved=sessions[id];state=saved?saved.state:initial(id);history=saved?saved.history:[];previous=saved?saved.previous:null;render();window.scrollTo(0,0);return}
  if(action==='goal'){modal('今回、大切にしたいこと',`<p class="dialog-copy">途中で目的を変えても大丈夫。</p><div class="dialog-options">${stories[state.story].goals.map((g,n)=>`<button data-action="setGoal" data-id="${n}" ${state.goal===n?'aria-current="true"':''}>${state.goal===n?'✓ ':''}${g}</button>`).join('')}</div>`);return}
  if(action==='setGoal'){snapshot();setGoal(state,Number(id));close();render();return}
@@ -174,4 +175,4 @@ function dispatch(action,id){
 document.addEventListener('click',e=>{const b=e.target.closest('[data-action]');if(b&&!b.disabled)dispatch(b.dataset.action,b.dataset.id)});
 render();
 // Optional browser integration; shares the same validated game actions as the UI.
-if(document.modelContext?.registerTool){const ac=new AbortController();const list=[{name:'read_story_state',description:'Read the current fictional story, hand and parameters.',inputSchema:{type:'object',properties:{},additionalProperties:false},annotations:{readOnlyHint:true},execute:()=>({story:state.story,stage:state.stage,stress:state.stress,energy:state.energy,hand:available(state).map(id=>({id,title:cards[id].title,playable:canPlay(state,id)})),finished:state.finished})},{name:'play_story_card',description:'Play an available card and show its outcome in the current fictional story.',inputSchema:{type:'object',properties:{cardId:{type:'string'}},required:['cardId'],additionalProperties:false},annotations:{readOnlyHint:false},execute:input=>{if(!input||typeof input.cardId!=='string'||!canPlay(state,input.cardId))throw Error('This card cannot be played now.');dispatch('play',input.cardId);return {outcome:state.feedback.text,stress:state.stress,energy:state.energy}}}];for(const t of list){try{Promise.resolve(document.modelContext.registerTool(t,{signal:ac.signal})).catch(()=>{})}catch{}}window.addEventListener('pagehide',()=>ac.abort(),{once:true})}
+if(document.modelContext?.registerTool){const ac=new AbortController();const list=[{name:'read_story_state',description:'Read the current fictional story, hand and parameters.',inputSchema:{type:'object',properties:{},additionalProperties:false},annotations:{readOnlyHint:true},execute:()=>({story:state.story,stage:state.stage,stress:state.stress,energy:state.energy,liked:state.liked,hand:available(state).map(id=>({id,title:cards[id].title,playable:canPlay(state,id)})),finished:state.finished})},{name:'play_story_card',description:'Play an available card and show its outcome in the current fictional story.',inputSchema:{type:'object',properties:{cardId:{type:'string'}},required:['cardId'],additionalProperties:false},annotations:{readOnlyHint:false},execute:input=>{if(!input||typeof input.cardId!=='string'||!canPlay(state,input.cardId))throw Error('This card cannot be played now.');dispatch('play',input.cardId);return {outcome:state.feedback.text,stress:state.stress,energy:state.energy}}}];for(const t of list){try{Promise.resolve(document.modelContext.registerTool(t,{signal:ac.signal})).catch(()=>{})}catch{}}window.addEventListener('pagehide',()=>ac.abort(),{once:true})}

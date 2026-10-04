@@ -428,6 +428,16 @@ export const cards={
  bothTry:{title:'両方やってみる提案をする',kind:'support',label:'両方やる',cost:2,atk:3,attr:'soc',up:'soc',desc:'「両方やってみよう」と提案する。',hint:'両方やると、みんな試せる',icon:'people'},
  writePlan:{title:'手順を書いて示す',kind:'support',label:'手順を書く',cost:2,atk:3,attr:'study',up:'study',desc:'決めたことを、手順にして示す。',hint:'見えると、やりやすい',icon:'pen'},
  decideFair:{title:'公平な決め方を提案する',kind:'support',label:'公平に決める',cost:2,atk:3,attr:'study',up:'study',desc:'じゃんけん・くじ・多数決、公平な決め方を提案。',hint:'公平だと、不満が残らない',icon:'check'},
+ brushOff:{title:'「調子に乗るなよ」への無言',kind:'think',label:'黙る',cost:0,strain:1,atk:1,attr:'soc',desc:'嫌味に、何も言い返さない。',hint:'飲みこむと、心に残る',icon:'eye'},
+ proudOut:{title:'「だって褒められたし」と言い返す',kind:'talk',label:'言い返す',cost:0,strain:1,atk:1,attr:'soc',desc:'嫌味に、まっすぐ言い返す。',hint:'ぶつかると、空気が重い',icon:'bolt'},
+ modestSay:{title:'「まぐれだよ」と謙虚に言う',kind:'talk',label:'謙遜',cost:1,atk:2,attr:'soc',up:'soc',desc:'「たまたまだよ」と、謙虚に受ける。',hint:'謙遜で、角が立たない',icon:'sun'},
+ shareWin:{title:'「みんなもできたじゃん」と分かち合う',kind:'talk',label:'分かち合う',cost:1,atk:2,attr:'soc',up:'soc',desc:'ほめを、みんなにも返す。',hint:'分かち合うと、輪になる',icon:'people'},
+ askBack2:{title:'「そう言うの、どうして？」と聞く',kind:'talk',label:'聞く',cost:1,atk:2,attr:'soc',up:'soc',desc:'嫌味の理由を、聞いてみる。',hint:'聞くと、本当の気持ちが見える',icon:'ear'},
+ thankT:{title:'先生にお礼を言う',kind:'talk',label:'お礼を言う',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'褒めてくれた先生に、お礼を言う。',hint:'お礼は、関係を育てる',icon:'heart'},
+ cheerThem:{title:'相手のいいところを言う',kind:'talk',label:'相手をほめる',cost:1,atk:2,attr:'soc',up:'soc',desc:'「あなたも、ここがすごいよ」と言う。',hint:'ほめると、ほめ返される',icon:'spark'},
+ helpThem:{title:'「一緒にやろう」と誘う',kind:'support',label:'一緒にやる',cost:2,atk:3,attr:'soc',up:'soc',desc:'次の課題を、一緒にやる誘い。',hint:'一緒だと、ライバルが仲間になる',icon:'hand'},
+ stayHumble:{title:'次は静かに力をつける',kind:'think',label:'静かに力をつける',cost:1,atk:2,attr:'study',up:'study',desc:'言い返すより、次の力をつける。',hint:'実力は、一番の答え',icon:'pen'},
+ ignoreJab:{title:'嫌味は流してやり過ごす',kind:'support',label:'流す',cost:1,atk:2,attr:'ath',up:'ath',desc:'嫌味は、気にせず流す。',hint:'流せるのも、強さ',icon:'flag'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -2559,6 +2569,48 @@ deadlock:{title:'話し合いが決まらない',nav:'決まらない',num:45,at
  },
  progress(s){const f=s.flags;return f.mixed||f.tried||f.planned2||f.faired?3:f.heardAll||f.suggestedR||f.voted||f.turned||f.listed?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.mixed||f.faired||f.planned2?'決め方が、まとまった。':f.voted||f.turned||f.listed?'進め方を、見つけた。':'まだ、平行線。決め方を決める、方法はある。'}
+},
+praised:{title:'褒められて嫌味を言われた',nav:'嫌味を言われた',num:46,attrs:['soc'],goals:['関係をこわさず受け取りたい','自分の調子を保ちたい','相手ともうまくやりたい'],chapters:['褒められた直後','嫌味が刺さる','明日の関係'],locations:['教室','休み時間','帰り道'],base:['brushOff','proudOut','modestSay','anger','ignore'],
+ start:{mind:4,energy:3},
+ monsters:[{name:'ねたみの視線',hp:5,power:1,turns:4,look:'じろっと、にらんでいる。'},{name:'刺さった言葉',hp:5,power:1,turns:4,look:'言葉が、胸に残っている。'},{name:'明日の空気',hp:6,power:2,turns:4,look:'明日、どう接するか。'}],
+ talk:[['tellFeel2','「その言い方、つらい」と伝える','正直に、気持ちを伝える。'],['thankTeacher','先生にお礼を言う','褒めてくれたことへの、お礼。'],['askWhyJab','「どうして？」と聞く','嫌味のわけを、聞く。']],
+ think:[['wantLike','好かれたい','嫌味を言われて、悲しい。'],['fair2','褒められただけなのに','悪いこと、してないのに。'],['worriedR','関係が心配','明日から、どう接するか。']],
+ reasonKeys:['wantLike','fair2','worriedR'],
+ stageGrants:[['shareWin','askBack2','thankT'],['cheerThem','helpThem','stayHumble','ignoreJab']],
+ subs:[
+  {title:'別の友達が「よかったね」と言ってくれた',text:'「よかったじゃん」と、声をかけてくれた。',stat:'soc',min:0,good:{text:'素直に「ありがとう」と言えた。',mind:1,rep:1},ok:{text:'少し、救われた。',mind:1}},
+  {title:'嫌味を言った子が一人でいた',text:'その子が、一人でいる。',stat:'soc',min:1,good:{text:'「さっきの、気にしてる？」と聞けた。',rep:1,mind:1},ok:{text:'様子を見ることにした。',mind:1}}
+ ],
+ onExplore(s,key){const out={text:'',card:null};
+  if(key==='tellFeel2'){s.flags.toldF2=true;relation(s,'「その言い方、つらい」と伝えた。相手が、黙った。');out.text='「その言い方、つらいんだ」\n「…ごめん」';out.card='askBack2'}
+  if(key==='thankTeacher'){s.flags.thanked=true;relation(s,'お礼を言ったら、先生がにっこりした。');out.text='「褒めてくれて、ありがとうございます」\n「うれしいよ」';out.card='thankT'}
+  if(key==='askWhyJab'){s.flags.askedJ=true;relation(s,'「どうして？」聞いたら、相手も褒められたかった様子。');out.text='「どうして、そんなこと言うの？」\n「…うるさい」';out.card='shareWin'}
+  if(key==='wantLike'){s.reason='wantLike';out.text='嫌味を言われて、悲しかった。\n「みんなに好かれたい」気持ちが見えた。';out.card='shareWin'}
+  if(key==='fair2'){s.reason='fair2';out.text='悪いことをしたわけじゃない。\n「謙虚に受ける」こともできる。';out.card='modestSay'}
+  if(key==='worriedR'){s.reason='worriedR';out.text='明日からの関係が、心配。\n「つなぐ」方法を考えよう。';out.card='helpThem'}
+  return out;
+ },
+ onPlay(s,id){const f=s.flags;
+  if(id==='modestSay'){f.modest=true;return{text:'「まぐれだよ」と、謙虚に受けた。',meaning:'謙遜で、角が立たない。'}}
+  if(id==='shareWin'){f.shared=true;return{text:'「みんなも、できたじゃん」と返した。',meaning:'分かち合うと、輪になる。'}}
+  if(id==='askBack2'){f.askedB=true;return{text:'「どうして？」と聞いた。',meaning:'聞くと、本当の気持ちが見える。'}}
+  if(id==='thankT'){f.thanked=true;return{text:'先生に、お礼を言えた。',meaning:'お礼は、関係を育てる。'}}
+  if(id==='cheerThem'){f.cheered=true;return{text:'相手のいいところを、言った。',meaning:'ほめると、ほめ返される。'}}
+  if(id==='helpThem'){f.helped=true;return{text:'「一緒にやろう」と誘った。',meaning:'一緒だと、ライバルが仲間になる。'}}
+  if(id==='stayHumble'){f.humbled=true;return{text:'次は、静かに力をつけることにした。',meaning:'実力は、一番の答え。'}}
+  if(id==='ignoreJab'){f.ignored=true;return{text:'嫌味は、気にせず流した。',meaning:'流せるのも、強さ。'}}
+  if(id==='brushOff'){f.swallowed=true;return{text:'何も言い返さなかった。心に残った。',meaning:'飲みこむと、心に残る。'}}
+  if(id==='proudOut'){f.outed=true;s.rep-=1;relation(s,'言い返したら、空気が重くなった。');return{text:'「だって褒められたし」と言い返した。空気が、重くなった。',meaning:'ぶつかると、空気が重い。'}}
+  return{text:'',meaning:''};
+ },
+ watch(s){return s.stage===0?'嫌味を言う子は、本当は褒められたそう。':s.stage===1?'「つらい」と伝えるか、流すか、分かれる。':'明日も、顔を合わせる相手。'},
+ scene(s){const f=s.flags;
+  if(s.stage===0)return{narrative:'先生に、みんなの前でほめられた。うれしい。その直後、「調子に乗るなよ」と、ぽつり。',speaker:'友達',quote:'調子に乗るなよ',look:'じろっと、にらんでいる。',self:'せっかく褒められたのに…',hint:'嫌味を言われて、何がつらい？'};
+  if(s.stage===1)return{narrative:'休み時間。さっきの言葉が、胸に残っている。',speaker:'友達',quote:'ふん',look:'その子も、一人でいる。',self:s.reason==='wantLike'?'好かれたいのに…':s.reason==='fair2'?'悪くないのに…':'心配…',hint:'謙遜・分かち合う・お礼・聞く、方法はある。'};
+  return{narrative:'帰り道。明日も、同じ教室で会う。',speaker:'友達',quote:f.cheered||f.helped?'「…明日もよろしく」':'「…」',look:'少しずつ、距離が戻っている。',self:f.shared||f.cheered||f.helped?'関係を、つなげそう。':'まだ、言葉が残る。',hint:'ほめる・一緒にやる・静かに・流す、選ぼう。'};
+ },
+ progress(s){const f=s.flags;return f.shared||f.cheered||f.helped||f.humbled?3:f.toldF2||f.askedJ||f.thanked||f.askedB?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.shared||f.cheered||f.helped?'関係を、つなげた。':f.toldF2||f.askedJ||f.thanked?'気持ちを、やり取りできた。':'嫌味が、残っている。伝える・流す・分かち合う、方法はある。'}
 }
 };
 

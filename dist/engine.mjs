@@ -146,6 +146,15 @@ export const cards={
  showWork:{title:'「ここから分からない」と見せる',kind:'talk',label:'壁を見せる',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'ノートを見せて、分からない所を指す。',hint:'場所を示すと、教えてもらいやすい',icon:'book'},
  togetherQ:{title:'友達と一緒に考える',kind:'support',label:'一緒に考える',cost:1,bond:1,atk:2,attr:'study',up:'soc',desc:'分かってる友達と、一緒に考える。',hint:'一緒だと、分からないも怖くない',icon:'people'},
  askSmall:{title:'「ちょっとだけ」部分を聞く',kind:'talk',label:'部分だけ聞く',cost:1,atk:2,attr:'soc',up:'soc',desc:'全部でなく、分からない所だけ聞く。',hint:'一部分でも、質問は質問',icon:'ear'},
+ plugEars:{title:'耳をふさぐ',kind:'think',label:'耳をふさぐ',cost:0,atk:1,attr:'study',desc:'手で耳をおおって、音をやわらげる。',hint:'音を小さくするだけでも、楽になる',icon:'ear'},
+ shout:{title:'「うるさい！」と叫ぶ',kind:'talk',label:'叫ぶ',cost:0,strain:1,atk:0,desc:'思わず、声が出る。',hint:'叫ぶと、余計うるさくなる',icon:'bolt'},
+ distractTry:{title:'気にしないようにする',kind:'think',label:'気にしない',cost:0,atk:0,desc:'気にしないよう、顔をそむける。',hint:'気にしないだけでは、音は消えない',icon:'eye'},
+ cover:{title:'耳を守る体勢をとる',kind:'support',label:'耳を守る',cost:1,atk:1,attr:'study',up:'study',desc:'耳を押さえる・耳栓など、自分を守る。',hint:'音から自分を守るのは、作戦の一つ',icon:'heart'},
+ quietSpot:{title:'静かな場所へ移る',kind:'talk',label:'静かな所へ',cost:1,atk:1,attr:'soc',up:'soc',desc:'廊下や隅など、静かな所に行く。',hint:'場所を変えるのも、対処になる',icon:'door'},
+ oneThing:{title:'一つのことに絞る',kind:'think',label:'一つに絞る',cost:1,atk:2,attr:'study',up:'study',desc:'先生の声だけ・ノートだけ、一つに絞る。',hint:'絞ると、音は気にならなくなる',icon:'puzzle'},
+ sayLoud:{title:'「うるさくて困る」と伝える',kind:'talk',label:'困ると伝える',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'先生に、困っていることを伝える。',hint:'困りごとは、伝えていい',icon:'hand'},
+ pleaseQ:{title:'「少し静かにして」とお願い',kind:'talk',label:'静かにとお願い',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'うるさい友達に、やんわりお願いする。',hint:'お願いのしかたで、受け取り方が変わる',icon:'people'},
+ breatheQuiet:{title:'静かな所で深呼吸',kind:'think',label:'深呼吸',cost:1,atk:0,up:'study',desc:'少し離れて、呼吸を整える。',hint:'一度離れて、整えると楽になる',icon:'sun'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -887,6 +896,51 @@ confused:{
  },
  progress(s){const f=s.flags;return s.goal===0?(f.clearedQ?3:f.located||f.shown?2:s.reason?1:0):s.goal===1?(f.askedClass||f.after?3:f.shown?2:s.reason?1:0):(f.clearedQ?3:f.located?2:0)},
  situation(s){const f=s.flags;return f.clearedQ?'分からないを解決できた。質問の形はいろいろある。':f.located||f.shown?'壁の場所が見つかって、聞きやすくなった。':'分からないまま残っている。聞き方は練習できる。'}
+},
+noise:{
+ title:'まわりがうるさい',nav:'音がつらい',num:'16',attrs:['soc','study'],
+ goals:['音に負けず集中したい','自分を守る方法を見つけたい','上手に伝えたい'],
+ chapters:['帰りの会','休み時間','放課後'],locations:['教室・帰りの会','教室・休み時間','教室・放課後'],
+ base:['plugEars','shout','distractTry','anger','ignore'],start:{mind:4,energy:4},
+ monsters:[{name:'ガヤガヤ団',hp:4,power:1,turns:4,look:'あちこちのおしゃべりが、大きな固まりになっている。'},{name:'耳に残る音の玉',hp:5,power:1,turns:5,look:'音がぐるぐる回って、頭の中に残る。'},{name:'イライラの熱',hp:6,power:1,turns:5,look:'溜まったイライラが、ぽっと燃えている。'}],
+ talk:[['teacherN','先生に伝える','うるさくて困ると伝える。'],['friendN','うるさい友達にお願い','「少し静かにして」と言う。']],
+ think:[['ears','耳がうるさくて痛い','音そのものが、耳に刺さる。'],['head','頭が痛くなってきた','うるささで、頭がズキズキする。'],['cantFocus','何も頭に入ってこない','音が気になって、集中できない。']],
+ reasonKeys:['ears','head','cantFocus'],
+ stageGrants:[['breatheQuiet'],[]],
+ onExplore(s,key){
+  const out={text:'',card:null};
+  if(key==='teacherN'){s.flags.said=true;note(s,'先生が「静かにしよう」と言ってくれた。');out.text='先生「みんな、少し静かにしようか」\n伝えたら、動いてくれた。';out.card='sayLoud'}
+  if(key==='friendN'){s.flags.askedN=true;relation(s,'おしゃべりの子が、少し声を落とした。');out.text='友達「あ、ごめん。少し静かにするね」';out.card='pleaseQ'}
+  if(key==='ears'){s.reason='ears';note(s,'音そのものが、耳に刺さっている。');out.text='「音が、ビリビリする」';out.card='cover'}
+  if(key==='head'){s.reason='head';note(s,'うるささで、頭が痛くなってきた。');out.text='「ズキズキしてきた…」';out.card='quietSpot'}
+  if(key==='cantFocus'){s.reason='cantFocus';note(s,'音が気になって、集中できない。');out.text='「何も頭に入ってこない」';out.card='oneThing'}
+  return out;
+ },
+ onPlay(s,id){
+  const f=s.flags;let text='',meaning='';
+  if(id==='plugEars'){f.plugged=true;s.mind+=1;text='耳をふさいだ。\n少しだけ、楽になった。';meaning='音を小さくするだけでも、助けになる。'}
+  if(id==='shout'){f.shouted=true;s.rep-=1;relation(s,'叫んだら、まわりが静まった。でも、気まずくなった。');text='「うるさい！」と叫んだ。\n一瞬静まったが、変な空気になった。';meaning='叫ぶと相手もうるさく感じる。伝え方を変えると良い。';grant(s,'pleaseQ')}
+  if(id==='distractTry'){f.distractTry=true;text='気にしないようにした。\nでも、音は耳に入ってくる。';meaning='気にしないだけでは、音は消えない。'}
+  if(id==='cover'){f.covered=true;f.clearedN=true;note(s,'耳を守ったら、少し聞き取れるようになった。');text='耳を押さえたら、音がやわらいだ。\n少し、集中できそうだ。';meaning='自分を守るのも、対処の一つ。'}
+  if(id==='quietSpot'){f.moved=true;f.clearedN=true;note(s,'静かな所に移ったら、頭がすっきりした。');text='少し離れたら、頭が軽くなった。\n聞こえるようになった。';meaning='場所を変えるのも、立派な対処。'}
+  if(id==='oneThing'){f.focused=true;f.clearedN=true;note(s,'先生の声だけに絞ったら、他の音が小さくなった。');text='「先生の声だけを聞こう」\n一つに絞ると、音が後ろに下がった。';meaning='一つに絞ると、まわりの音は気にならなくなる。'}
+  if(id==='sayLoud'){f.said=true;f.clearedN=true;note(s,'「うるさくて困る」と言ったら、先生が対応してくれた。');text='先生「みんな、おしゃべりはあとにしよう」\n伝えたら、状況が変わった。';meaning='困りごとは、伝えていい。'}
+  if(id==='pleaseQ'){f.askedN=true;f.clearedN=true;relation(s,'「少し静かにして」の一言で、友達が声を落とした。');text='友達「あ、ごめんごめん」\nお願いのしかたで、相手の答えが変わる。';meaning='お願いのしかたで、受け取り方が変わる。'}
+  if(id==='breatheQuiet'){f.breathed=true;s.mind+=1;text='少し離れて、深呼吸した。\nイライラが、少し収まった。';meaning='一度離れて整えると、楽になる。'}
+  return {text,meaning};
+ },
+ watch(s){
+  if(s.stage===0)return 'まわりの声で、先生の話がかき消されている。';
+  if(s.stage===1)return 'おしゃべりは、まだ続いている。';
+  return '教室は、少し静まってきた。';
+ },
+ scene(s){const f=s.flags;
+  if(s.stage===0)return {narrative:'帰りの会。まわりがうるさくて、先生の話が聞こえない。',speaker:'先生',quote:'連絡があるので、静かに聞いてください',look:'あちこちで、おしゃべりが続いている。',self:'うるさい… 頭が痛くなりそう',hint:'音のつらさの、どこが一番つらい？'};
+  if(s.stage===1)return {narrative:'休み時間。教室は、相変わらずにぎやかだ。',speaker:'友達',quote:f.clearedN?'少し静かにするね':f.plugged?'耳、大丈夫？':f.said?'先生が言ってたね':'……',look:f.clearedN?'まわりは、少し静まった。':'まわりのおしゃべりは、続いている。',self:s.reason==='ears'?'耳に刺さる。':s.reason==='head'?'頭が痛い。':s.reason==='cantFocus'?'集中できない。':'音と、どう付き合う？',hint:'守る・移る・伝える、方法はある。'};
+  return {narrative:'放課後。教室が、少し静まってきた。',speaker:'先生',quote:f.clearedN?'今日はお疲れさま。よく伝えられたね':f.said?'困ったときは、言ってくれていいよ':'明日も頑張ろうね',look:'教室は、だんだん静かになっている。',self:f.clearedN?'音への対処法が、見つかった。':'まだ少し、耳に残っている。',hint:'つらさは、伝えると軽くなる。'};
+ },
+ progress(s){const f=s.flags;return s.goal===0?(f.clearedN?3:f.covered||f.moved||f.focused?2:s.reason?1:0):s.goal===1?(f.clearedN?3:f.plugged||f.breathed?2:s.reason?1:0):(f.said||f.askedN?3:f.clearedN?2:s.reason?1:0)},
+ situation(s){const f=s.flags;return f.clearedN?'音への対処法が見つかった。守る・移る・伝えるがある。':f.plugged||f.breathed?'少し楽になった。根本の対処もできる。':'音がつらいまま残っている。対処法は練習できる。'}
 }
 };
 

@@ -416,7 +416,7 @@ export const minusCards={
 export const statMeta={study:{label:'かしこさ',attr:'学習系'},ath:{label:'運動能力',attr:'運動系'},soc:{label:'社交性',attr:'社交系'}};
 const add=(arr,v)=>{if(!arr.includes(v))arr.push(v)};
 const clamp=(v,lo,hi)=>Math.max(lo,Math.min(hi,v));
-function grant(s,id){if(!s.hand.includes(id))s.hand.push(id);add(s.discovered,id)}
+function grant(s,id){if(!s.hand.includes(id)&&!s.used.includes(id))s.hand.push(id);add(s.discovered,id)}
 function note(s,t){add(s.clues,t)}
 function relation(s,t){add(s.relations,t)}
 function growth(s,t){add(s.growth,t)}
@@ -2470,7 +2470,7 @@ const specPool={
 export function monsterFaded(s){return (s.clarity||0)>=2}
 export function monsterPower(s,m){return Math.max(0,m.power-Math.min(2,s.clarity||0))}
 function monsterAct(s,m){const acts=m.acts||((m.power>=2||m.hp>=6)?['stress','special','seal','stress','special']:(m.hp>=4?['stress','seal','stress','wait','special']:['stress','wait','seal']));let a=acts[(s.turns-1)%acts.length];if(monsterFaded(s)&&a!=='stress')a='wait';return MONSTER_ACT[a](s,m)}
-export function monsterSize(m){return (m.power>=2||m.hp>=6)?'huge':(m.hp<=3&&m.power<=1)?'small':'normal'}
+export function monsterSize(m){return m.weak?'small':(m.power>=2||m.hp>=6)?'huge':(m.hp<=3&&m.power<=1)?'small':'normal'}
 // 苦手意識: 同じ属性の課題に負け続けると、その属性の手札の消費気持ちが+1される（ストーリー間で持ち越す）
 function addLoss(s){
  for(const a of def(s).attrs){s.losses[a]=(s.losses[a]||0)+1;
@@ -2482,7 +2482,7 @@ export function initial(story='fight',carry=null){
  const s={story,stage:0,mind:d.start.mind,energy:d.start.energy,rep:carry?carry.rep:1,mindMax:carry?carry.mindMax:6,stats:{study:0,ath:0,soc:0},monsterHp:d.monsters[0].hp,turns:0,slain:[],escaped:[],dead:false,mindLog:[],bonus:null,bolster:0,losses:{},traumas:carry?{...carry.traumas}:{},clarity:0,subQueue:pickSubs(d.subs??3),progress:0,goal:0,hand:[...d.base],discovered:[],used:[],flags:{},clues:[],relations:[],growth:[],log:[],explored:[],rested:[],observed:[],passed:[],minused:[],transcript:[],feedback:null,finished:false,reason:null,reflection:null};
  sayScene(s);return s;
 }
-export function monster(s){return def(s).monsters[s.stage]}
+export function monster(s){const m=def(s).monsters[s.stage];if(s.progress>=3)return{...m,hp:Math.min(m.hp,2),power:0,weak:true};return m}
 export function available(s){return s.hand.filter(id=>!s.used.includes(id));}
 export function cardAtk(s,id){const c=cards[id];return Math.max(0,(c.atk||0)+(c.attr&&!c.dark?s.stats[c.attr]:0));}
 export function canPlay(s,id){return !s.finished&&!s.feedback&&available(s).includes(id)&&s.energy>=cards[id].cost&&s.mind>1;}

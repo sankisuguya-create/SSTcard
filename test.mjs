@@ -447,3 +447,17 @@ console.log('clarity checks OK');
  assert(bad.length===0,'story structure: '+bad.join(','));
  console.log('structure lint OK:',Object.keys(stories).length,'stories');
 }
+
+// ── 課題解決済みなら残りモンスターは弱く小さい＋使った手札は再付与されない ──
+{
+ const s=initial('makeUp');explore(s,'myFault');s.energy=5;play(s,'realSorry');assert(s.flags.sorry);
+ s.feedback=null;s.mind=5;s.stage=2;s.hand.push('makeUpDone');play(s,'makeUpDone');assert(s.flags.madeUp);assert(s.progress>=3);
+ const m=monster(s);assert(m.weak&&m.hp<=2&&m.power===0,'resolved monsters weakened');
+ // 使った手札は再びavailableに出ない
+ assert(!available(s).includes('realSorry'));
+}
+{ // 未解決では弱体化しない
+ const s=initial('fight');const m=monster(s);assert(!m.weak&&m.power===0);
+ const s2=initial('craft');s2.stage=2;assert(!monster(s2).weak&&monster(s2).power===2);
+}
+console.log('resolve-weaken checks OK');

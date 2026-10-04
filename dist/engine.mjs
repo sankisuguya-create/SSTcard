@@ -409,6 +409,16 @@ export const cards={
  quietDay:{title:'今日は静かに過ごす',kind:'support',label:'静かに過ごす',cost:1,atk:2,attr:'study',up:'study',desc:'無理せず、今日は静かに過ごす。',hint:'休むのも、立て直し',icon:'sun'},
  faceAgain:{title:'次はもっと準備する',kind:'support',label:'もっと準備',cost:2,atk:3,attr:'study',up:'study',desc:'次は、もっと準備して臨む。',hint:'準備は、不安を削る',icon:'list'},
  bounceBack:{title:'切り替えて次に進む',kind:'support',label:'切り替える',cost:2,atk:3,attr:'soc',up:'soc',desc:'失敗は失敗。切り替えて、次に進む。',hint:'切り替えは、強さ',icon:'bolt'},
+ pickSide:{title:'とりあえず片方の味方につく',kind:'talk',label:'味方につく',cost:0,strain:1,atk:1,attr:'soc',desc:'急いで、どちらかの味方につく。',hint:'急ぐと、もう片方を失う',icon:'bolt'},
+ avoidDays:{title:'二人から離れて過ごす',kind:'think',label:'離れて過ごす',cost:0,strain:1,atk:1,attr:'soc',desc:'関わらないように、避ける。',hint:'避けるだけでは、元に戻らない',icon:'door'},
+ calmAsk2:{title:'「どうしたの？」と聞く',kind:'talk',label:'聞く',cost:1,atk:2,attr:'soc',up:'soc',desc:'まず、事情を聞いてみる。',hint:'聞くと、全体が見える',icon:'ear'},
+ hearBoth:{title:'両方の言い分を聞く',kind:'talk',label:'両方聞く',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'片方ずつ、言い分を聞く。',hint:'両方聞くと、中立でいられる',icon:'people'},
+ neutralSay:{title:'「どっちも選べない」と言う',kind:'talk',label:'選べないと言う',cost:1,atk:2,attr:'soc',up:'soc',desc:'選べないことを、正直に言う。',hint:'正直は、両方を守る',icon:'heart'},
+ takeSpace:{title:'少し距離を置く',kind:'support',label:'距離を置く',cost:1,atk:2,attr:'study',up:'study',desc:'今は少し、距離を置いて様子を見る。',hint:'距離も、選び方の一つ',icon:'sun'},
+ fairBridge:{title:'二人の橋渡しをする',kind:'support',label:'橋渡し',cost:2,atk:3,attr:'soc',up:'soc',desc:'両方の言い分を、伝え合う手伝いをする。',hint:'橋渡しは、関係をつなぐ',icon:'hand'},
+ stayFriend:{title:'「どっちも友達」と伝える',kind:'talk',label:'どっちも友達',cost:2,atk:3,attr:'soc',up:'soc',desc:'両方に、「友達だ」と伝える。',hint:'友達宣言は、勇気がいる',icon:'flag'},
+ inviteBoth:{title:'二人を一緒に誘う',kind:'support',label:'一緒に誘う',cost:2,atk:3,attr:'soc',up:'soc',desc:'二人を、同じ遊びに誘う。',hint:'同じ場は、仲直りの入口',icon:'spark'},
+ threeTalk:{title:'三人で話す場をつくる',kind:'support',label:'三人で話す',cost:2,atk:3,attr:'study',up:'study',desc:'三人で、話す場をつくる。',hint:'場があると、言いやすい',icon:'list'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -2457,6 +2467,48 @@ stumble:{title:'みんなの前で間違えた',nav:'発表で間違えた',num:
  },
  progress(s){const f=s.flags;return f.bounced||f.faced||f.praisedSelf?3:f.laughedW||f.retried||f.practiced||f.toldS||f.askedS?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.bounced||f.faced?'失敗から立て直せた。':f.laughedW||f.retried||f.practiced?'やり直しの一歩を、踏み出した。':'失敗が、残っている。笑う・やり直す・練習、方法はある。'}
+},
+sides:{title:'どっちの味方か迫られた',nav:'板ばさみ',num:44,attrs:['soc'],goals:['どっちも失いたくない','正直に伝えたい','関係をつなぎたい'],chapters:['板ばさみ','選ぶプレッシャー','決裂のあと'],locations:['休み時間','下校前','翌日'],base:['pickSide','avoidDays','calmAsk2','anger','ignore'],
+ start:{mind:4,energy:3},
+ monsters:[{name:'板ばさみ',hp:5,power:1,turns:4,look:'二人の間で、揺れている。'},{name:'選ぶプレッシャー',hp:5,power:1,turns:4,look:'「どっちなの？」と、詰め寄る。'},{name:'決裂のあと',hp:6,power:2,turns:4,look:'ぎくしゃくした空気が残る。'}],
+ talk:[['listenBoth','両方の言い分を聞く','片方ずつ、話を聞く。'],['tellNeutral','「どっちも選べない」と言う','正直に、気持ちを言う。'],['askTeacher2','先生に相談する','一人で抱えず、相談する。']],
+ think:[['forced','選ばないとと焦る','どっちか選ばないと、と焦る。'],['bothFriends','どっちも友達','二人とも、大切な友達。'],['scaredFight','ケンカがこわい','ケンカの空気が、こわい。']],
+ reasonKeys:['forced','bothFriends','scaredFight'],
+ stageGrants:[['hearBoth','neutralSay','takeSpace'],['fairBridge','stayFriend','inviteBoth','threeTalk']],
+ subs:[
+  {title:'片方が「あいつと遊ぶな」と言った',text:'「あいつと遊ぶな」と言われた。',stat:'soc',min:0,good:{text:'「二人とも友達だよ」と言えた。',rep:1,stat:'soc'},ok:{text:'うなずいてしまった。少し、苦しい。',mind:1}},
+  {title:'休み時間、二人とも一人でいた',text:'二人とも、一人でいる。',stat:'soc',min:0,good:{text:'両方に、少しずつ話しかけられた。',mind:1,rep:1},ok:{text:'様子を見ることにした。',mind:1}}
+ ],
+ onExplore(s,key){const out={text:'',card:null};
+  if(key==='listenBoth'){s.flags.heardBoth=true;relation(s,'両方の言い分を聞いた。二人とも、うれしそうだった。');out.text='「どうしたの？」\n二人とも、たくさん話してくれた。';out.card='hearBoth'}
+  if(key==='tellNeutral'){s.flags.saidN=true;relation(s,'「選べない」と言ったら、二人とも少し考えた。');out.text='「どっちも、選べない」\n「……そっか」';out.card='neutralSay'}
+  if(key==='askTeacher2'){s.flags.askedT2=true;relation(s,'先生に相談したら、見守り方を教えてもらった。');out.text='「相談していい？」\n「二人の様子、見守っとくね」';out.card='takeSpace'}
+  if(key==='forced'){s.reason='forced';out.text='どっちか選ばないと、と焦っていた。\n「急がなくていい」ことに気づいた。';out.card='takeSpace'}
+  if(key==='bothFriends'){s.reason='bothFriends';out.text='どっちも、大切な友達。\n「選ぶ」のが答えじゃないかも。';out.card='stayFriend'}
+  if(key==='scaredFight'){s.reason='scaredFight';out.text='ケンカの空気が、こわかった。\nこわい気持ちも、伝えられる。';out.card='neutralSay'}
+  return out;
+ },
+ onPlay(s,id){const f=s.flags;
+  if(id==='calmAsk2'){f.askedWhat=true;return{text:'「どうしたの？」と聞いた。事情が、少し見えた。',meaning:'まず聞くと、選び方が見える。'}}
+  if(id==='hearBoth'){f.heardBoth=true;return{text:'両方の言い分を、聞いた。',meaning:'両方聞くと、中立でいられる。'}}
+  if(id==='neutralSay'){f.saidN=true;return{text:'「どっちも選べない」と正直に言えた。',meaning:'正直な「選べない」も、答え。'}}
+  if(id==='takeSpace'){f.tookSpace=true;return{text:'少し距離を置いて、様子を見た。',meaning:'距離を置くのも、選び方。'}}
+  if(id==='fairBridge'){f.bridged2=true;return{text:'二人の言い分を、伝え合う手伝いをした。',meaning:'橋渡しは、関係をつなぐ。'}}
+  if(id==='stayFriend'){f.stayed=true;return{text:'「どっちも友達」と伝えた。',meaning:'友達宣言は、両方を守る。'}}
+  if(id==='inviteBoth'){f.invited=true;return{text:'二人を、同じ遊びに誘った。',meaning:'同じ場は、仲直りの入口。'}}
+  if(id==='threeTalk'){f.talked3=true;return{text:'三人で話す場を、つくった。',meaning:'場があると、言いやすい。'}}
+  if(id==='pickSide'){f.picked2=true;s.rep-=1;relation(s,'急いで味方についたら、もう片方が離れた。');return{text:'急いで、味方についた。もう片方が、離れてしまった。',meaning:'急いで選ぶと、片方を失う。'}}
+  if(id==='avoidDays'){f.avoided=true;return{text:'二人から、離れて過ごした。',meaning:'避けるだけでは、元に戻らない。'}}
+  return{text:'',meaning:''};
+ },
+ watch(s){return s.stage===0?'二人とも、本当は仲直りしたそうに見える。':s.stage===1?'焦って選ぶと、どちらかが傷つきそう。':'まだ、つなぐチャンスはある。'},
+ scene(s){const f=s.flags;
+  if(s.stage===0)return{narrative:'仲のいい二人が、大ゲンカ。「どっちの味方か、はっきりして」と、迫られた。',speaker:'二人',quote:'どっちなの！？',look:'二人とも、こちらを見ている。',self:'板ばさみだ…',hint:'板ばさみで、何がつらい？'};
+  if(s.stage===1)return{narrative:'下校前。二人とも、「答えは？」と目で聞いてくる。',speaker:'二人',quote:'ねえ、どっち？',look:'二人の目が、こちらに向く。',self:s.reason==='bothFriends'?'どっちも、友達なのに…':s.reason==='scaredFight'?'こわい…':'焦る…',hint:'聞く・正直に言う・距離を置く、方法はある。'};
+  return{narrative:'翌日。二人の空気は、まだぎくしゃくしている。',speaker:'二人',quote:f.bridged2||f.invited?'「…まあ、いいけど」':'「…」',look:'少しずつ、距離が近づいている。',self:f.bridged2||f.stayed||f.talked3?'関係を、つなげそう。':'まだ、板ばさみかも。',hint:'橋渡し・どっちも友達・一緒に誘う、選ぼう。'};
+ },
+ progress(s){const f=s.flags;return f.bridged2||f.stayed||f.invited||f.talked3?3:f.heardBoth||f.saidN||f.tookSpace||f.askedT2?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.bridged2||f.stayed||f.talked3?'関係を、つなげた。':f.heardBoth||f.saidN||f.tookSpace?'中立の立ち方を、見つけた。':'まだ、板ばさみ。聞く・正直・距離、方法はある。'}
 }
 };
 

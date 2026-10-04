@@ -488,6 +488,16 @@ export const cards={
  askBoth2:{title:'両方の話を聞く',kind:'think',label:'両方を聞く',cost:1,atk:2,attr:'study',up:'study',desc:'悪口の側と本人の側、両方聞く。',hint:'両方聞くと、本当が分かる',icon:'ear'},
  kindWord:{title:'悪口のない会話をする',kind:'support',label:'悪口のない会話',cost:2,atk:3,attr:'soc',up:'soc',desc:'悪口のない会話を、心がける。',hint:'悪口のない場は、みんなが楽',icon:'spark'},
  keepOut:{title:'「私は入らない」と距離を置く',kind:'support',label:'距離を置く',cost:2,atk:3,attr:'soc',up:'soc',desc:'「私はそういうの入らない」と、距離を置く。',hint:'距離を置くと、巻き込まれない',icon:'flag'},
+ hideBroke:{title:'壊したのを隠す',kind:'think',label:'隠す',cost:0,strain:1,atk:1,attr:'soc',desc:'壊れたものを、そのまま返す。',hint:'隠すと、あとで困る',icon:'eye'},
+ blameIt:{title:'「知らない」ととぼける',kind:'talk',label:'とぼける',cost:0,strain:1,atk:1,attr:'soc',desc:'「知らない」と、とぼける。',hint:'とぼけると、信用を失う',icon:'bolt'},
+ tellOwner:{title:'「ごめん、壊しちゃった」と言う',kind:'talk',label:'正直に言う',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'持ち主に、正直に謝る。',hint:'正直に謝ると、許してもらえる',icon:'heart'},
+ fixIt:{title:'直せるか試す',kind:'think',label:'直す',cost:1,atk:2,attr:'study',up:'study',desc:'壊れたところを、直せるか試す。',hint:'直せたら、一番いい',icon:'check'},
+ askSorry:{title:'「本当にごめん」ともう一度謝る',kind:'talk',label:'もう一度謝る',cost:1,atk:2,attr:'soc',up:'soc',desc:'ちゃんと向き合って、もう一度謝る。',hint:'丁寧な謝罪は、届く',icon:'hand'},
+ payBack2:{title:'「弁償するよ」と言う',kind:'talk',label:'弁償する',cost:1,atk:2,attr:'soc',up:'soc',desc:'「弁償するよ」と、責任を持つ。',hint:'責任を持つのは、誠実',icon:'flag'},
+ askAdult2:{title:'家の人・先生に相談する',kind:'talk',label:'大人に相談',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'一人で抱えず、大人に相談。',hint:'相談は、逃げじゃない',icon:'people'},
+ beCareful:{title:'次は丁寧に借りる',kind:'think',label:'丁寧に借りる',cost:1,atk:2,attr:'study',up:'study',desc:'借りるときは、丁寧に扱う。',hint:'丁寧は、約束の形',icon:'pen'},
+ ownMistake:{title:'「私がやった」と責任を持つ',kind:'think',label:'責任を持つ',cost:1,atk:2,attr:'soc',up:'soc',desc:'言い訳せず、責任を持つ。',hint:'責任は、信頼の土台',icon:'check'},
+ ownTruth:{title:'真実を自分に認める',kind:'support',label:'真実を認める',cost:2,atk:3,attr:'study',up:'study',desc:'ごまかさず、真実を認める。',hint:'真実は、後腐れがない',icon:'sun'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -2871,6 +2881,48 @@ gossip:{title:'友達の悪口を聞いた',nav:'悪口を聞いた',num:51,attr
  },
  progress(s){const f=s.flags;return f.kindW||f.keptOut||f.toldF4||f.askedB2?3:f.chTopic||f.walked2||f.defended||f.neutral2?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.kindW||f.keptOut?'悪口のない場に、近づいた。':f.chTopic||f.defended||f.neutral2?'流されず、立ち回れた。':'まだ、流されそう。変える・離れる・かばう、方法はある。'}
+},
+broke:{title:'借りたものを壊した',nav:'壊した',num:52,attrs:['soc'],goals:['正直に謝りたい','責任を取りたい','次は丁寧に扱いたい'],chapters:['壊れてしまった','どう伝えるか','返すとき'],locations:['教室','休み時間','翌日'],base:['hideBroke','blameIt','tellOwner','anger','ignore'],
+ start:{mind:4,energy:3},
+ monsters:[{name:'壊れたもの',hp:5,power:1,turns:4,look:'壊れたものが、手の中にある。'},{name:'持ち主の顔',hp:5,power:1,turns:4,look:'持ち主が、近づいてくる。'},{name:'返すときの信用',hp:6,power:2,turns:4,look:'明日も、顔を合わせる。'}],
+ talk:[['confess','「ごめん、壊した」と言う','正直に、謝る。'],['askHelp5','大人に相談する','どうすればいいか、聞く。'],['tryFix','直せるか試す','直せるところは、直す。']],
+ think:[['guilty','悪いことをした','壊してしまって、悪かった。'],['scared3','怒られるのがこわい','怒られるのが、こわい。'],['responsibility','責任は取るべきか','責任を、どう取るか。']],
+ reasonKeys:['guilty','scared3','responsibility'],
+ stageGrants:[['fixIt','askSorry','payBack2'],['askAdult2','beCareful','ownMistake','ownTruth']],
+ subs:[
+  {title:'持ち主が「気にしないで」と言ってくれた',text:'その子が、優しく許してくれた。',stat:'soc',min:0,good:{text:'「ごめん、ありがとう」と言えた。',rep:1,mind:1},ok:{text:'ほっとした。',mind:1}},
+  {title:'直せるところが見つかった',text:'壊れたところ、直せそうだった。',stat:'study',min:0,good:{text:'丁寧に直せた。',stat:'study'},ok:{text:'ちょっと直せた。',mind:1}}
+ ],
+ onExplore(s,key){const out={text:'',card:null};
+  if(key==='confess'){s.flags.confessed=true;relation(s,'正直に謝ったら、相手は静かに聞いてくれた。');out.text='「ごめん、壊しちゃった」\n「…そっか。ありがとう、言ってくれて」';out.card='tellOwner'}
+  if(key==='askHelp5'){s.flags.askedH5=true;relation(s,'相談したら、「謝るのが一番」と言ってもらえた。');out.text='「壊しちゃった…」\n「謝るのが、一番だよ」';out.card='askAdult2'}
+  if(key==='tryFix'){s.flags.triedFix=true;relation(s,'試したら、少し直せた。');out.text='「この部分、戻せるかも」';out.card='fixIt'}
+  if(key==='guilty'){s.reason='guilty';out.text='壊してしまって、悪かった。\n「悪い」は、正直に言うべき気持ち。';out.card='tellOwner'}
+  if(key==='scared3'){s.reason='scared3';out.text='怒られるのが、こわい。\nでも「隠す」より「謝る」が先。';out.card='askSorry'}
+  if(key==='responsibility'){s.reason='responsibility';out.text='責任を、どう取るか。\n「弁償」「直す」「謝る」がある。';out.card='payBack2'}
+  return out;
+ },
+ onPlay(s,id){const f=s.flags;
+  if(id==='tellOwner'){f.toldO=true;return{text:'「ごめん、壊しちゃった」と言えた。',meaning:'正直に謝ると、許してもらえる。'}}
+  if(id==='fixIt'){f.fixed=true;return{text:'直せるところを、直した。',meaning:'直せたら、一番いい。'}}
+  if(id==='askSorry'){f.sorryA=true;return{text:'ちゃんと向き合って、もう一度謝った。',meaning:'丁寧な謝罪は、届く。'}}
+  if(id==='payBack2'){f.paid=true;return{text:'「弁償するよ」と、責任を持った。',meaning:'責任を持つのは、誠実。'}}
+  if(id==='askAdult2'){f.askedA2=true;return{text:'大人に、相談した。',meaning:'相談は、逃げじゃない。'}}
+  if(id==='beCareful'){f.careful=true;return{text:'次は丁寧に、借りることにした。',meaning:'丁寧は、約束の形。'}}
+  if(id==='ownMistake'){f.owned=true;return{text:'「私がやった」と、責任を持った。',meaning:'責任は、信頼の土台。'}}
+  if(id==='ownTruth'){f.ownedT=true;return{text:'ごまかさず、真実を認めた。',meaning:'真実は、後腐れがない。'}}
+  if(id==='hideBroke'){f.hidB=true;return{text:'壊したのを、隠して返した。',meaning:'隠すと、あとで困る。'}}
+  if(id==='blameIt'){f.blamed=true;s.rep-=1;relation(s,'とぼけたら、あとでばれて信用を失った。');return{text:'「知らない」と、とぼけた。',meaning:'とぼけると、信用を失う。'}}
+  return{text:'',meaning:''};
+ },
+ watch(s){return s.stage===0?'壊したものは、戻らない。でも対応はできる。':s.stage===1?'正直は、一番の弁償。':'明日も、顔を合わせる。'},
+ scene(s){const f=s.flags;
+  if(s.stage===0)return{narrative:'借りたものを、落として壊してしまった。',speaker:'心の声',quote:'どうしよう…',look:'壊れたものが、手の中にある。',self:'隠したい…',hint:'壊して、何がつらい？'};
+  if(s.stage===1)return{narrative:'持ち主が、近づいてくる。どう伝えるか。',speaker:'持ち主',quote:'あれ、返してくれる？',look:'持ち主が、笑っている。',self:s.reason==='scared3'?'怒られるかも…':s.reason==='responsibility'?'責任は…':'悪いな…',hint:'正直・直す・弁償・相談、方法はある。'};
+  return{narrative:'返したあと。明日も、顔を合わせる。',speaker:'持ち主',quote:f.toldO||f.sorryA?'「正直に言ってくれてありがとう」':'「まあ、仕方ないか」',look:'明日も、この関係。',self:f.owned||f.ownedT||f.careful?'信用を、守れた。':'まだ、心が重い。',hint:'相談・丁寧・責任・真実、選ぼう。'};
+ },
+ progress(s){const f=s.flags;return f.owned||f.ownedT||f.careful||f.askedA2?3:f.toldO||f.fixed||f.sorryA||f.paid?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.owned||f.ownedT?'責任を、取れた。':f.toldO||f.fixed||f.paid?'正直に、対応できた。':'まだ、隠したまま。正直・直す・弁償、方法はある。'}
 }
 };
 

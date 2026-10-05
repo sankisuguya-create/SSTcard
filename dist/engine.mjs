@@ -648,6 +648,16 @@ export const cards={
  mondayFeel:{title:'「月曜は重い」を認める',kind:'think',label:'重さを認める',cost:1,atk:2,attr:'study',up:'study',desc:'「月曜は重い」のを、認める。',hint:'認めると、楽になる',icon:'puzzle'},
  smallGoal2:{title:'一時間目だけ頑張る',kind:'think',label:'一時間目だけ',cost:1,atk:2,attr:'ath',up:'ath',desc:'「一時間目だけ」頑張ることにする。',hint:'短い目標は、達成できる',icon:'clock'},
  wantStay2:{title:'「休みたい気持ち」と向き合う',kind:'think',label:'気持ちと向き合う',cost:1,atk:2,attr:'study',up:'study',desc:'休みたい気持ちと、向き合う。',hint:'向き合うと、分かる',icon:'heart'},
+ skipHw:{title:'宿題を後回しにする',kind:'think',label:'後回し',cost:0,strain:1,atk:1,attr:'study',desc:'宿題を、どんどん後回しにする。',hint:'後回しは、大きくなる',icon:'eye'},
+ fiveMin:{title:'「5分だけ」で始める',kind:'think',label:'5分だけ',cost:1,atk:2,attr:'study',up:'study',desc:'「5分だけ」にして、始めてみる。',hint:'始めるだけで、変わる',icon:'clock'},
+ timerSet:{title:'タイマーをかける',kind:'think',label:'タイマー',cost:1,atk:2,attr:'study',up:'study',desc:'タイマーをかけて、時間を区切る。',hint:'区切ると、集中できる',icon:'clock'},
+ askStudy:{title:'友達と一緒にやる',kind:'talk',label:'一緒にやる',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'友達と、一緒に宿題をやる。',hint:'一緒は、続く',icon:'people'},
+ breakDown2:{title:'小さく分けてやる',kind:'think',label:'分けてやる',cost:1,atk:2,attr:'study',up:'study',desc:'宿題を、小さく分けてやる。',hint:'分けると、できる',icon:'list'},
+ rewardAfter:{title:'終わったらごほうびを',kind:'think',label:'ごほうび',cost:1,atk:2,attr:'study',up:'study',desc:'終わったら、ごほうびを考える。',hint:'ごほうびは、やる気の糧',icon:'sun'},
+ wantPlay:{title:'「遊びたい」を認める',kind:'think',label:'遊びたい',cost:1,atk:2,attr:'soc',up:'soc',desc:'遊びたい気持ちを、認める。',hint:'認めると、分かる',icon:'puzzle'},
+ boringFeel:{title:'「つまらない」を認める',kind:'think',label:'つまらない',cost:1,atk:2,attr:'study',up:'study',desc:'つまらない気持ちを、認める。',hint:'認めると、変わる',icon:'heart'},
+ startOne:{title:'一問だけ解いてみる',kind:'think',label:'一問だけ',cost:1,atk:2,attr:'study',up:'study',desc:'一問だけ、解いてみる。',hint:'一問は、始まり',icon:'pen'},
+ focusNow:{title:'目の前の一つに集中',kind:'think',label:'集中する',cost:1,atk:2,attr:'study',up:'study',desc:'目の前の一つだけに、集中。',hint:'集中は、完成の近道',icon:'spark'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -3703,6 +3713,48 @@ mondayBlues:{title:'月曜の朝、行きたくない',nav:'月曜の朝が重�
  },
  progress(s){const f=s.flags;return f.friend2||f.arrive||f.told||f.fun2?3:f.up||f.ready?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.friend2||f.told?'学校に向かえた。':f.arrive||f.fun2?'目標を決めた。':'まだ、家にいる気持ち。言う・つくだけ・一緒、方法はある。'}
+},
+hwLazy:{title:'宿題のやる気が出ない',nav:'宿題のやる気が出ない',num:68,attrs:['study'],goals:['宿題を終わらせたい','やる気を出したい','ちゃんとやった自分を見たい'],chapters:['宿題があるけど','始めるか後回し','終わらせるまで'],locations:['家の机','家の机','家の机'],base:['skipHw','wantPlay','boringFeel','anger','ignore'],
+ start:{mind:4,energy:2},
+ monsters:[{name:'やる気のなさ',hp:5,power:1,turns:4,look:'やる気が、出ない。'},{name:'後回しの罠',hp:5,power:1,turns:4,look:'後回しすると、大きくなる。'},{name:'終わらせるまで',hp:6,power:2,turns:4,look:'終わるまでが、長い。'}],
+ talk:[['askStudy2','友達と一緒にやる','一緒だと、続く。'],['tellMom2','「やりたくない」と家に言う','気持ちを、言う。'],['askTeacher5','先生に「難しい」と言う','助けを、求める。']],
+ think:[['noMotiv','やる気が出ない','やる気が、出ない。'],['wantPlay2','遊びたい','宿題より、遊びたい。'],['wantDone2','終わらせたい','ちゃんと終わらせたい。']],
+ reasonKeys:['noMotiv','wantPlay2','wantDone2'],
+ stageGrants:[['fiveMin','timerSet','breakDown2'],['askStudy','rewardAfter','startOne','focusNow','wantPlay']],
+ subs:[
+  {title:'お母さんが「一緒にやろうか」と言った',text:'助けがあれば、できる。',stat:'soc',min:0,good:{text:'一緒にできた。',mind:1},ok:{text:'続けられた。',mind:1}},
+  {title:'終わったら友達と遊べる',text:'終わった後の楽しみは、やる気になる。',stat:'study',min:0,good:{text:'早く終わらせられた。',mind:1},ok:{text:'やる気が出た。',mind:1}}
+ ],
+ onExplore(s,key){const out={text:'',card:null};
+  if(key==='askStudy2'){s.flags.studyF=true;relation(s,'友達と一緒にやったら、宿題が楽しくなった。');out.text='「一緒にやろう」\n「うん、競争しよう」';out.card='askStudy'}
+  if(key==='tellMom2'){s.flags.toldM=true;out.text='「やりたくない」\n「そうか、じゃあ一緒に考えよう」';out.card='wantPlay'}
+  if(key==='askTeacher5'){s.flags.askedT5=true;out.text='「難しいです」\n「ここから始めるんだよ」';out.card='breakDown2'}
+  if(key==='noMotiv'){s.reason='noMotiv';out.text='やる気が、出ない。\n「5分だけ」「タイマー」で、小さく始めよう。';out.card='fiveMin'}
+  if(key==='wantPlay2'){s.reason='wantPlay2';out.text='遊びたい。\n「ごほうび」「友達と」で、気持ちを作ろう。';out.card='rewardAfter'}
+  if(key==='wantDone2'){s.reason='wantDone2';out.text='終わらせたい。\n「分ける」「一問だけ」で、進めよう。';out.card='startOne'}
+  return out;
+ },
+ onPlay(s,id){const f=s.flags;
+  if(id==='fiveMin'){f.five=true;return{text:'「5分だけ」で、始めた。',meaning:'始めるだけで、変わる。'}}
+  if(id==='timerSet'){f.timer=true;return{text:'タイマーを、かけた。',meaning:'区切ると、集中できる。'}}
+  if(id==='askStudy'){f.studyF2=true;return{text:'友達と、一緒にやった。',meaning:'一緒は、続く。'}}
+  if(id==='breakDown2'){f.broke2=true;return{text:'宿題を、小さく分けた。',meaning:'分けると、できる。'}}
+  if(id==='rewardAfter'){f.reward=true;return{text:'ごほうびを、考えた。',meaning:'ごほうびは、やる気の糧。'}}
+  if(id==='wantPlay'){f.wanted=true;return{text:'遊びたい気持ちを、認めた。',meaning:'認めると、分かる。'}}
+  if(id==='boringFeel'){f.bored=true;return{text:'つまらない気持ちを、認めた。',meaning:'認めると、変わる。'}}
+  if(id==='startOne'){f.started=true;return{text:'一問だけ、解いた。',meaning:'一問は、始まり。'}}
+  if(id==='focusNow'){f.focused=true;return{text:'目の前の一つに、集中した。',meaning:'集中は、完成の近道。'}}
+  if(id==='skipHw'){f.skipped=true;return{text:'宿題を、後回しにした。',meaning:'後回しは、大きくなる。'}}
+  return{text:'',meaning:''};
+ },
+ watch(s){return s.stage===0?'やる気がないのは、みんなある。':s.stage===1?'小さく始めると、続く。':'終わると、すっきり。'},
+ scene(s){const f=s.flags;
+  if(s.stage===0)return{narrative:'宿題がある。でも、やる気が出ない。',speaker:'お母さん',quote:'宿題は？',look:'ランドセルが、閉じたまま。',self:'やりたくない…',hint:'宿題で、何がつらい？'};
+  if(s.stage===1)return{narrative:'始めるか、後回しか。',speaker:'お母さん',quote:'そろそろ夕食だよ',look:'時間が、過ぎていく。',self:s.reason==='wantPlay2'?'遊びたい…':s.reason==='wantDone2'?'終わらせたい…':'やる気がない…',hint:'5分・タイマー・分ける・ごほうび、方法はある。'};
+  return{narrative:'宿題を、終わらせる。',speaker:'お母さん',quote:f.studyF2||f.started?'「お疲れ様、できたね」':'「まだ？」',look:'机の上が、片づいていく。',self:f.studyF2||f.started||f.focused?'終わった。':'まだ、やってない。',hint:'一問・集中・分ける、選ぼう。'};
+ },
+ progress(s){const f=s.flags;return f.studyF2||f.started||f.focused?3:f.five||f.timer||f.broke2||f.reward?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.studyF2||f.started?'終わった。':f.five||f.timer?'始めた。':'まだ、やってない。5分・分ける・一問、方法はある。'}
 }
 };
 

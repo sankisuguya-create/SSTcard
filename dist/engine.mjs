@@ -909,6 +909,16 @@ export const cards={
  compliment2:{title:'「すごいね」とほめる',kind:'talk',label:'すごいね',cost:1,atk:2,attr:'soc',up:'soc',desc:'「すごいね」と、ほめる。',hint:'ほめるは、評判',icon:'heart'},
  boundarySet:{title:'「これだけはやめて」と境界を引く',kind:'talk',label:'境界を引く',cost:1,atk:2,attr:'soc',up:'soc',desc:'「これだけはやめて」と、境界を引く。',hint:'境界は、自衛',icon:'check'},
  flattered2:{title:'ほめられたと受け取る',kind:'think',label:'ほめられた',cost:1,atk:2,attr:'soc',up:'soc',desc:'まねはほめられたと、受け取る。',hint:'ほめは、前向き',icon:'sun'},
+ oneShoe:{title:'上履きが片方ない',kind:'think',label:'片方ない',cost:0,strain:1,atk:1,attr:'study',desc:'上履きが、片方ない。',hint:'片方ないと、歩けない',icon:'bolt'},
+ shoeGone:{title:'どこにもない',kind:'think',label:'どこにもない',cost:0,strain:1,atk:1,attr:'study',desc:'上履きが、どこにもない。',hint:'ないと、焦る',icon:'eye'},
+ noShoePanic:{title:'焦って探す',kind:'think',label:'焦って探す',cost:0,strain:1,atk:1,attr:'study',desc:'焦って、探す。',hint:'焦ると、見つからない',icon:'bolt'},
+ askSeen4:{title:'「見なかった？」と聞く',kind:'talk',label:'見なかった？',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'「上履き見なかった？」と、聞く。',hint:'聞くは、協力',icon:'ear'},
+ lookAround4:{title:'落ち着いて探す',kind:'think',label:'落ち着いて探す',cost:1,atk:2,attr:'study',up:'study',desc:'落ち着いて、探す。',hint:'落ち着くは、発見',icon:'search'},
+ spareShoe:{title:'予備の上履きを借りる',kind:'talk',label:'予備を借りる',cost:1,atk:2,attr:'soc',up:'soc',desc:'予備の上履きを、借りる。',hint:'借りるは、工夫',icon:'hand'},
+ tellLost2:{title:'「上履きがない」と伝える',kind:'talk',label:'ないと伝える',cost:1,atk:2,attr:'soc',up:'soc',desc:'「上履きがない」と、伝える。',hint:'伝えるは、正直',icon:'message'},
+ outsideShoe:{title:'外履きを持ってくる',kind:'think',label:'外履きを持ってくる',cost:1,atk:2,attr:'study',up:'study',desc:'外履きを、持ってくる。',hint:'外履きは、代替',icon:'door'},
+ everyoneLook:{title:'みんなに探してもらう',kind:'talk',label:'みんなに探してもらう',cost:1,atk:2,attr:'soc',up:'soc',desc:'みんなに、探してもらう。',hint:'みんなは、力',icon:'people'},
+ laughShoe:{title:'「隠れたのかな」と笑う',kind:'think',label:'隠れたのかな',cost:1,atk:2,attr:'soc',up:'soc',desc:'「隠れたのかな」と、笑う。',hint:'笑うは、余裕',icon:'sun'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -5057,6 +5067,48 @@ copyMe:{title:'まねされて嫌な気持ち',nav:'まねされて嫌',num:93,a
  },
  progress(s){const f=s.flags;return f.own||f.flattered||f.boundary?3:f.told||f.asked||f.ok||f.complimented2?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.own||f.boundary?'自分らしくできた。':f.told||f.asked?'正直に言えた。':'まだ、まねされる。なんで・やめて・自分らしさ、方法はある。'}
+},
+lostShoe:{title:'上履きが片方ない',nav:'上履きがない',num:94,attrs:['study','soc'],goals:['上履きを見つけたい','焦らず探したい','みんなに協力してもらいたい'],chapters:['上履きがない','どこを探すか','見つけるか代替する'],locations:['昇降口','昇降口','昇降口'],base:['oneShoe','shoeGone','noShoePanic','anger','ignore'],
+ start:{mind:4,energy:3},
+ monsters:[{name:'片方の不安',hp:5,power:1,turns:4,look:'片方なくて、不安。'},{name:'焦る心',hp:5,power:1,turns:4,look:'焦って、見つからない。'},{name:'見つける工夫',hp:6,power:2,turns:4,look:'見つける、工夫。'}],
+ talk:[['askSeen5','「見なかった？」と聞く','みんなに、聞く。'],['tellLost3','「ない」と伝える','正直に、伝える。'],['spareShoe2','予備を借りる','予備を、借りる。']],
+ think:[['shoeMiss','片方ない','上履きが、片方ない。'],['wantFind','見つけたい','見つけたい。'],['wantShoe','歩きたい','ちゃんと、歩きたい。']],
+ reasonKeys:['shoeMiss','wantFind','wantShoe'],
+ stageGrants:[['askSeen4','lookAround4','spareShoe'],['tellLost2','outsideShoe','everyoneLook','laughShoe','noShoePanic']],
+ subs:[
+  {title:'友達が「見てあげる」と言った',text:'友達は、協力。',stat:'soc',min:0,good:{text:'「ありがとう」と言えた。',rep:1,mind:1},ok:{text:'一緒に探せた。',mind:1}},
+  {title:'予備の上履きがあった',text:'予備は、助け。',stat:'study',min:0,good:{text:'「助かる」と言えた。',rep:1,mind:1},ok:{text:'歩けた。',mind:1}}
+ ],
+ onExplore(s,key){const out={text:'',card:null};
+  if(key==='askSeen5'){s.flags.seen=true;relation(s,'「上履き見なかった？」と聞いたら、「見てあげる」と言ってくれた。');out.text='「上履き見なかった？」\n「見てあげる」';out.card='askSeen4'}
+  if(key==='tellLost3'){s.flags.told=true;relation(s,'「上履きがない」と伝えたら、「予備があるよ」と言ってくれた。');out.text='「上履きがない」\n「予備があるよ」';out.card='tellLost2'}
+  if(key==='spareShoe2'){s.flags.spare=true;out.text='予備の上履きを、借りた。\n「これで歩ける」';out.card='spareShoe'}
+  if(key==='shoeMiss'){s.reason='shoeMiss';out.text='上履きが、片方ない。\n「見なかった？」「ないと伝える」で、聞こう。';out.card='askSeen4'}
+  if(key==='wantFind'){s.reason='wantFind';out.text='見つけたい。\n「落ち着いて」「みんな」で、探そう。';out.card='lookAround4'}
+  if(key==='wantShoe'){s.reason='wantShoe';out.text='ちゃんと、歩きたい。\n「予備」「外履き」で、歩こう。';out.card='spareShoe'}
+  return out;
+ },
+ onPlay(s,id){const f=s.flags;
+  if(id==='askSeen4'){f.seen2=true;return{text:'「見なかった？」と、聞いた。',meaning:'聞くは、協力。'}}
+  if(id==='lookAround4'){f.looked=true;return{text:'落ち着いて、探した。',meaning:'落ち着くは、発見。'}}
+  if(id==='spareShoe'){f.spared=true;return{text:'予備の上履きを、借りた。',meaning:'借りるは、工夫。'}}
+  if(id==='tellLost2'){f.told2=true;return{text:'「上履きがない」と、伝えた。',meaning:'伝えるは、正直。'}}
+  if(id==='outsideShoe'){f.outside=true;return{text:'外履きを、持ってきた。',meaning:'外履きは、代替。'}}
+  if(id==='everyoneLook'){f.everyone=true;return{text:'みんなに、探してもらった。',meaning:'みんなは、力。'}}
+  if(id==='laughShoe'){f.laughed=true;return{text:'「隠れたのかな」と、笑った。',meaning:'笑うは、余裕。'}}
+  if(id==='oneShoe'){f.one=true;return{text:'上履きが、片方なかった。',meaning:'片方ないと、歩けない。'}}
+  if(id==='shoeGone'){f.gone=true;return{text:'どこにも、なかった。',meaning:'ないと、焦る。'}}
+  if(id==='noShoePanic'){f.panicked=true;return{text:'焦って、探した。',meaning:'焦ると、見つからない。'}}
+  return{text:'',meaning:''};
+ },
+ watch(s){return s.stage===0?'なくすは、みんなある。':s.stage===1?'落ち着くは、発見。':'借りるは、工夫。'},
+ scene(s){const f=s.flags;
+  if(s.stage===0)return{narrative:'昇降口。上履きが片方ない。外履きしかない。',speaker:'昇降口の仲間',quote:'どうしたの？',look:'片方だけの足。',self:'なくなった…',hint:'片方なくて、何がつらい？'};
+  if(s.stage===1)return{narrative:'焦って探すか、落ち着いて聞くか。',speaker:'昇降口の仲間',quote:'どこかに隠れたのかな',look:'みんなが、探している。',self:s.reason==='wantFind'?'見つけたい…':s.reason==='wantShoe'?'歩きたい…':'焦る…',hint:'見なかった・落ち着いて・予備、方法はある。'};
+  return{narrative:'見つけるか、代替する。',speaker:'昇降口の仲間',quote:f.seen2||f.everyone?'「みんなで探そう」':'「どうしたの？」',look:'上履きか予備が、待っている。',self:f.looked||f.spared||f.everyone?'探せた。':'まだ、ない。',hint:'見なかった・みんな・予備、選ぼう。'};
+ },
+ progress(s){const f=s.flags;return f.looked||f.spared||f.everyone?3:f.seen2||f.told2||f.outside||f.laughed?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.looked||f.everyone?'探せた。':f.spared||f.outside?'歩けた。':'まだ、ない。見なかった・みんな・予備、方法はある。'}
 }
 };
 

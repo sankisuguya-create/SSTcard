@@ -688,6 +688,16 @@ export const cards={
  askOldSchool:{title:'前の学校を聞く',kind:'talk',label:'前の学校',cost:1,atk:2,attr:'soc',up:'soc',desc:'前の学校のことを、聞く。',hint:'聞くと、分かる',icon:'ear'},
  shareNote:{title:'ノートを見せる',kind:'talk',label:'ノートを見せる',cost:1,atk:2,attr:'soc',up:'soc',desc:'ノートを、見せてあげる。',hint:'見せるは、親切',icon:'book'},
  buddyNew:{title:'「困ったら聞いてね」と言う',kind:'talk',label:'聞いてね',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'「困ったら聞いてね」と、伝える。',hint:'伝えると、安心',icon:'heart'},
+ lastPlace:{title:'ビリのまま終わる',kind:'think',label:'ビリのまま',cost:0,strain:1,atk:1,attr:'ath',desc:'ビリのまま、終わる。',hint:'ビリのままでは、悔しい',icon:'eye'},
+ ownTime:{title:'自分の記録と比べる',kind:'think',label:'自分と比べる',cost:1,atk:2,attr:'ath',up:'ath',desc:'自分の前の記録と、比べる。',hint:'自分比べは、進歩',icon:'clock'},
+ practiceSprint:{title:'ちょっとずつ練習',kind:'think',label:'練習する',cost:1,atk:2,attr:'ath',up:'ath',desc:'ちょっとずつ、練習する。',hint:'練習は、変わる',icon:'runner'},
+ acceptLast:{title:'「ビリでもいい」と認める',kind:'think',label:'認める',cost:1,atk:2,attr:'soc',up:'soc',desc:'「ビリでもいい」と、認める。',hint:'認めると、楽になる',icon:'puzzle'},
+ cheerWinner:{title:'1位の人を祝う',kind:'talk',label:'1位を祝う',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'1位の人を、祝う。',hint:'祝うは、心の強さ',icon:'sun'},
+ nextYear:{title:'来年はがんばる',kind:'think',label:'来年がんばる',cost:1,atk:2,attr:'ath',up:'ath',desc:'来年は、がんばると決める。',hint:'決めると、動ける',icon:'flag'},
+ cryBit:{title:'少しだけ泣く',kind:'think',label:'少し泣く',cost:1,atk:2,attr:'soc',up:'soc',desc:'悔しくて、少しだけ泣く。',hint:'泣くのは、気持ちの出口',icon:'heart'},
+ wantWin:{title:'「勝ちたい」を認める',kind:'think',label:'勝ちたい',cost:1,atk:2,attr:'ath',up:'ath',desc:'勝ちたい気持ちを、認める。',hint:'認めると、やる気になる',icon:'spark'},
+ ashamedLose:{title:'「恥ずかしい」と向き合う',kind:'think',label:'恥ずかしい',cost:1,atk:2,attr:'soc',up:'soc',desc:'恥ずかしさと、向き合う。',hint:'向き合うと、分かる',icon:'puzzle'},
+ slowStart:{title:'ゆっくりでも走り続ける',kind:'think',label:'走り続ける',cost:1,atk:2,attr:'ath',up:'ath',desc:'ゆっくりでも、走り続ける。',hint:'続けるは、頑張り',icon:'runner'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -3911,6 +3921,48 @@ newKid:{title:'転校生が来た',nav:'転校生が来た',num:71,attrs:['soc']
  },
  progress(s){const f=s.flags;return f.invited2||f.buddy||f.showed?3:f.hi||f.intro||f.asked?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.invited2||f.buddy?'仲良くなれた。':f.hi||f.intro?'近づいた。':'まだ、遠くにいる。あいさつ・誘う・案内、方法はある。'}
+},
+raceLast:{title:'徒競走でビリ',nav:'徒競走でビリ',num:72,attrs:['ath'],goals:['悔しさを乗り越えたい','次はがんばりたい','自分なりに評価したい'],chapters:['徒競走が始まる','ビリになった','悔しさと向き合う'],locations:['校庭','校庭','教室'],base:['lastPlace','wantWin','ashamedLose','anger','ignore'],
+ start:{mind:4,energy:3},
+ monsters:[{name:'ビリの気持ち',hp:5,power:1,turns:4,look:'ビリで、悔しい。'},{name:'みんなの目',hp:5,power:1,turns:4,look:'みんなの目が、気になる。'},{name:'次の自分',hp:6,power:2,turns:4,look:'次は、どうするか。'}],
+ talk:[['cheerWinner2','1位を祝う','1位を、祝う。'],['ownTime2','自分と比べる','記録を、比べる。'],['ashamedTell2','「恥ずかしい」と言う','気持ちを、言う。']],
+ think:[['lostRace','負けた','ビリに、なった。'],['wantWin2','勝ちたかった','勝ちたかったのに…。'],['nextYear2','来年がんばりたい','次は、がんばりたい。']],
+ reasonKeys:['lostRace','wantWin2','nextYear2'],
+ stageGrants:[['ownTime','practiceSprint','cryBit'],['acceptLast','cheerWinner','nextYear','slowStart','wantWin']],
+ subs:[
+  {title:'先生が「走り続けたのは立派」と言った',text:'努力は、認められた。',stat:'ath',min:0,good:{text:'「ありがとう」と言えた。',rep:1,mind:1},ok:{text:'少し楽になった。',mind:1}},
+  {title:'1位の人が「応援ありがとう」と言った',text:'祝うと、関係が続く。',stat:'soc',min:0,good:{text:'笑顔になった。',mind:1},ok:{text:'心が軽くなった。',mind:1}}
+ ],
+ onExplore(s,key){const out={text:'',card:null};
+  if(key==='cheerWinner2'){s.flags.cheered=true;relation(s,'1位を祝ったら、「ありがとう」と笑ってくれた。');out.text='「1位おめでとう」\n「ありがとう」';out.card='cheerWinner'}
+  if(key==='ownTime2'){s.flags.compared=true;out.text='前の自分と比べると、少し速くなってた。\n進歩だ。';out.card='ownTime'}
+  if(key==='ashamedTell2'){s.flags.told=true;out.text='「恥ずかしかった」\n「そうか、でも最後まで走れたね」';out.card='ashamedLose'}
+  if(key==='lostRace'){s.reason='lostRace';out.text='ビリに、なった。\n「少し泣く」「自分と比べる」で、気持ちを出そう。';out.card='cryBit'}
+  if(key==='wantWin2'){s.reason='wantWin2';out.text='勝ちたかった。\n「練習」「祝う」で、次につなげよう。';out.card='practiceSprint'}
+  if(key==='nextYear2'){s.reason='nextYear2';out.text='次は、がんばりたい。\n「来年」「走り続ける」で、前を向こう。';out.card='nextYear'}
+  return out;
+ },
+ onPlay(s,id){const f=s.flags;
+  if(id==='ownTime'){f.compared2=true;return{text:'自分の記録と、比べた。',meaning:'自分比べは、進歩。'}}
+  if(id==='practiceSprint'){f.practiced=true;return{text:'ちょっとずつ、練習した。',meaning:'練習は、変わる。'}}
+  if(id==='acceptLast'){f.accepted=true;return{text:'「ビリでもいい」と、認めた。',meaning:'認めると、楽になる。'}}
+  if(id==='cheerWinner'){f.cheered2=true;return{text:'1位を、祝った。',meaning:'祝うは、心の強さ。'}}
+  if(id==='nextYear'){f.next=true;return{text:'来年は、がんばると決めた。',meaning:'決めると、動ける。'}}
+  if(id==='cryBit'){f.cried=true;return{text:'少しだけ、泣いた。',meaning:'泣くのは、気持ちの出口。'}}
+  if(id==='wantWin'){f.wanted=true;return{text:'勝ちたい気持ちを、認めた。',meaning:'認めると、やる気になる。'}}
+  if(id==='ashamedLose'){f.faced=true;return{text:'恥ずかしさと、向き合った。',meaning:'向き合うと、分かる。'}}
+  if(id==='slowStart'){f.slow=true;return{text:'ゆっくりでも、走り続けた。',meaning:'続けるは、頑張り。'}}
+  if(id==='lastPlace'){f.last=true;return{text:'ビリのまま、終わった。',meaning:'ビリのままでは、悔しい。'}}
+  return{text:'',meaning:''};
+ },
+ watch(s){return s.stage===0?'負けるのは、みんなある。':s.stage===1?'祝うは、心の強さ。':'次が、ある。'},
+ scene(s){const f=s.flags;
+  if(s.stage===0)return{narrative:'徒競走。スタートで出遅れて、ビリになった。',speaker:'担任の先生',quote:'みんな、お疲れ様',look:'ゴールが、遠い。',self:'ビリ…',hint:'ビリで、何がつらい？'};
+  if(s.stage===1)return{narrative:'悔しさと、みんなの目。',speaker:'1位の人',quote:'お疲れ、走れたね',look:'みんなが、盛り上がっている。',self:s.reason==='wantWin2'?'勝ちたかった…':s.reason==='nextYear2'?'来年がんばろう…':'ビリで悔しい…',hint:'比べる・祝う・泣く・認める、方法はある。'};
+  return{narrative:'次に、どうするか。',speaker:'1位の人',quote:f.cheered2||f.next?'「来年も一緒に走ろうね」':'「お疲れ」',look:'空が、広がる。',self:f.cheered2||f.next||f.accepted?'前を向いた。':'まだ、悔しがってる。',hint:'認める・祝う・来年・続ける、選ぼう。'};
+ },
+ progress(s){const f=s.flags;return f.cheered2||f.next||f.accepted?3:f.compared2||f.practiced||f.cried?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.cheered2||f.next?'前を向いた。':f.compared2||f.practiced?'進歩を見た。':'まだ、悔しがってる。比べる・祝う・認める、方法はある。'}
 }
 };
 

@@ -638,6 +638,16 @@ export const cards={
  feelUsed:{title:'モヤモヤを認める',kind:'think',label:'モヤモヤ認める',cost:1,atk:2,attr:'soc',up:'soc',desc:'貸しすぎのモヤモヤを、認める。',hint:'認めると、次が見える',icon:'puzzle'},
  lendLimit:{title:'貸す回数を決める',kind:'think',label:'回数を決める',cost:1,atk:2,attr:'study',up:'study',desc:'何回まで貸すか、決めておく。',hint:'決めると、迷わない',icon:'list'},
  smileSay:{title:'笑顔で「ダメ」と言う',kind:'talk',label:'笑顔で断る',cost:1,atk:2,attr:'soc',up:'soc',desc:'笑顔のまま、「ダメ」と言う。',hint:'優しさは、伝わる',icon:'sun'},
+ stayBed:{title:'布団に戻る',kind:'think',label:'布団に戻る',cost:0,strain:1,atk:1,attr:'soc',desc:'起きられず、布団に戻ってしまう。',hint:'戻ると、遅刻になる',icon:'eye'},
+ dragUp:{title:'ゆっくりでも起き上がる',kind:'think',label:'起き上がる',cost:1,atk:2,attr:'ath',up:'ath',desc:'ゆっくりでも、体を起こす。',hint:'起きるだけが、第一歩',icon:'up'},
+ tellHome2:{title:'「行きたくない」と家で言う',kind:'talk',label:'家で言う',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'「行きたくない」と、家の人に言う。',hint:'言うと、助けてもらえる',icon:'message'},
+ justArrive:{title:'「学校につくだけ」を目標に',kind:'think',label:'つくだけ目標',cost:1,atk:2,attr:'ath',up:'ath',desc:'「つくだけ」に、目標を変える。',hint:'目標を小さくすると、動ける',icon:'flag'},
+ findFun:{title:'今日の楽しみを一つ見つける',kind:'think',label:'楽しみを探す',cost:1,atk:2,attr:'study',up:'study',desc:'今日の楽しみを、一つ見つける。',hint:'楽しみは、心の燃料',icon:'sun'},
+ walkFriend:{title:'友達と登校する約束',kind:'talk',label:'一緒に行く',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'友達と、登校の約束をする。',hint:'一緒だと、行きやすい',icon:'people'},
+ slowReady:{title:'自分のペースで準備する',kind:'think',label:'ゆっくり準備',cost:1,atk:2,attr:'study',up:'study',desc:'急がず、自分のペースで準備。',hint:'自分のペースで、続く',icon:'clock'},
+ mondayFeel:{title:'「月曜は重い」を認める',kind:'think',label:'重さを認める',cost:1,atk:2,attr:'study',up:'study',desc:'「月曜は重い」のを、認める。',hint:'認めると、楽になる',icon:'puzzle'},
+ smallGoal2:{title:'一時間目だけ頑張る',kind:'think',label:'一時間目だけ',cost:1,atk:2,attr:'ath',up:'ath',desc:'「一時間目だけ」頑張ることにする。',hint:'短い目標は、達成できる',icon:'clock'},
+ wantStay2:{title:'「休みたい気持ち」と向き合う',kind:'think',label:'気持ちと向き合う',cost:1,atk:2,attr:'study',up:'study',desc:'休みたい気持ちと、向き合う。',hint:'向き合うと、分かる',icon:'heart'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -3651,6 +3661,48 @@ refuseLend:{title:'貸してばかりで断りたい',nav:'貸すのを断りた
  },
  progress(s){const f=s.flags;return f.honest2||f.smiled||f.kept?3:f.saidNo2||f.explained2||f.offered?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.honest2||f.smiled?'断れた。':f.saidNo2||f.explained2?'一回、折り合いついた。':'まだ、貸し続けてる。断る・理由・正直、方法はある。'}
+},
+mondayBlues:{title:'月曜の朝、行きたくない',nav:'月曜の朝が重い',num:67,attrs:['soc','study'],goals:['学校につきたい','気持ちを伝えたい','小さな目標で乗り切りたい'],chapters:['月曜の朝','家を出るか迷う','教室につく'],locations:['家','家の前','教室'],base:['stayBed','dragUp','slowReady','anger','ignore'],
+ start:{mind:4,energy:2},
+ monsters:[{name:'起き上がれない重さ',hp:5,power:1,turns:4,look:'体が、起き上がれない。'},{name:'学校への足が進まない',hp:5,power:1,turns:4,look:'学校への足が、進まない。'},{name:'週の始まり',hp:6,power:2,turns:4,look:'週の始まりが、重い。'}],
+ talk:[['tellHome3','「行きたくない」と言う','家の人に、言う。'],['walkFriend2','友達と登校する','一緒に、行く。'],['findFun2','楽しみを見つける','今日の、楽しみを。']],
+ think:[['cantGetUp','起き上がれない','体が、起き上がれない。'],['dontWantGo','行きたくない','今日は、行きたくない。'],['justArrive2','つくだけ目標','「つくだけ」に、目標を変えよう。']],
+ reasonKeys:['cantGetUp','dontWantGo','justArrive2'],
+ stageGrants:[['tellHome2','justArrive','findFun'],['walkFriend','slowReady','mondayFeel','smallGoal2','wantStay2']],
+ subs:[
+  {title:'お母さんが「先生に言ってあげるよ」と言った',text:'味方がいると、心強い。',stat:'soc',min:0,good:{text:'家を出られた。',mind:1},ok:{text:'心が軽くなった。',mind:1}},
+  {title:'友達が家に迎えに来た',text:'待っている人がいると、動ける。',stat:'ath',min:0,good:{text:'一緒に歩けた。',rep:1,mind:1},ok:{text:'学校が近く感じた。',mind:1}}
+ ],
+ onExplore(s,key){const out={text:'',card:null};
+  if(key==='tellHome3'){s.flags.toldH=true;relation(s,'「行きたくない」と言ったら、「無理して行こう」と言ってもらえた。');out.text='「行きたくない」\n「つらいね。でも、無理なく一歩ずつ」';out.card='tellHome2'}
+  if(key==='walkFriend2'){s.flags.friend=true;relation(s,'友達が迎えに来て、一緒に歩けるようになった。');out.text='「一緒に行こう」\n「うん、待ってるね」';out.card='walkFriend'}
+  if(key==='findFun2'){s.flags.fun=true;out.text='「今日は給食が好き」\n楽しみが、一つ見つかった。';out.card='findFun'}
+  if(key==='cantGetUp'){s.reason='cantGetUp';out.text='起き上がれない。\n「ゆっくり準備」「つくだけ目標」で、少しずつ。';out.card='slowReady'}
+  if(key==='dontWantGo'){s.reason='dontWantGo';out.text='行きたくない。\n「家で言う」「一緒に行く」で、助けを呼ぼう。';out.card='tellHome2'}
+  if(key==='justArrive2'){s.reason='justArrive2';out.text='「つくだけ」に目標を変えよう。\n「一時間目だけ」「楽しみを探す」で、小さく始めよう。';out.card='smallGoal2'}
+  return out;
+ },
+ onPlay(s,id){const f=s.flags;
+  if(id==='dragUp'){f.up=true;return{text:'ゆっくりでも、起き上がった。',meaning:'起きるだけが、第一歩。'}}
+  if(id==='tellHome2'){f.told=true;return{text:'「行きたくない」と、言った。',meaning:'言うと、助けてもらえる。'}}
+  if(id==='justArrive'){f.arrive=true;return{text:'「つくだけ」を、目標にした。',meaning:'目標を小さくすると、動ける。'}}
+  if(id==='findFun'){f.fun2=true;return{text:'今日の楽しみを、見つけた。',meaning:'楽しみは、心の燃料。'}}
+  if(id==='walkFriend'){f.friend2=true;return{text:'友達と、登校する約束をした。',meaning:'一緒だと、行きやすい。'}}
+  if(id==='slowReady'){f.ready=true;return{text:'自分のペースで、準備した。',meaning:'自分のペースで、続く。'}}
+  if(id==='mondayFeel'){f.felt=true;return{text:'「月曜は重い」を、認めた。',meaning:'認めると、楽になる。'}}
+  if(id==='smallGoal2'){f.goal=true;return{text:'「一時間目だけ」頑張ることにした。',meaning:'短い目標は、達成できる。'}}
+  if(id==='wantStay2'){f.stayed=true;return{text:'休みたい気持ちと、向き合った。',meaning:'向き合うと、分かる。'}}
+  if(id==='stayBed'){f.bed=true;return{text:'布団に、戻ってしまった。',meaning:'戻ると、遅刻になる。'}}
+  return{text:'',meaning:''};
+ },
+ watch(s){return s.stage===0?'行きたくないのは、みんなある。':s.stage===1?'つくだけで、いい。':'一歩ずつが、大事。'},
+ scene(s){const f=s.flags;
+  if(s.stage===0)return{narrative:'月曜の朝。まだ眠い。学校に、行きたくない気持ちがある。',speaker:'お母さん',quote:'おはよう。時間だよ',look:'カーテンから、朝日。',self:'行きたくない…',hint:'月曜の朝、何がつらい？'};
+  if(s.stage===1)return{narrative:'起きるか、家にいるか。',speaker:'お母さん',quote:'先生に連絡しようか？',look:'時間が、迫っている。',self:s.reason==='dontWantGo'?'行きたくない…':s.reason==='justArrive2'?'つくだけ、頑張ろう…':'起き上がれない…',hint:'家で言う・一緒に・つくだけ、方法はある。'};
+  return{narrative:'学校についた。',speaker:'担任の先生',quote:f.friend2||f.arrive?'「おはよう、来てくれて嬉しい」':'「おはよう」',look:'教室のドアが、開く。',self:f.friend2||f.arrive||f.told?'つけた。':'まだ、家にいる気持ち。',hint:'一時間目・楽しみ・休みたい、選ぼう。'};
+ },
+ progress(s){const f=s.flags;return f.friend2||f.arrive||f.told||f.fun2?3:f.up||f.ready?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.friend2||f.told?'学校に向かえた。':f.arrive||f.fun2?'目標を決めた。':'まだ、家にいる気持ち。言う・つくだけ・一緒、方法はある。'}
 }
 };
 

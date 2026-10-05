@@ -839,6 +839,16 @@ export const cards={
  tryAgain:{title:'もう一度やり直す',kind:'think',label:'やり直す',cost:1,atk:2,attr:'ath',up:'ath',desc:'もう一度、やり直す。',hint:'やり直しは、挽回',icon:'up'},
  blameLuck:{title:'運のせいにする',kind:'think',label:'運のせい',cost:0,strain:1,atk:1,attr:'soc',desc:'運のせいに、する。',hint:'運のせいは、逃げ',icon:'eye'},
  keepGoing:{title:'試合を続ける',kind:'think',label:'続ける',cost:1,atk:2,attr:'ath',up:'ath',desc:'試合を、続ける。',hint:'続けるは、前向き',icon:'runner'},
+ topSpot:{title:'1位の重圧',kind:'think',label:'1位の重圧',cost:0,strain:1,atk:1,attr:'ath',desc:'1位になって、期待される。',hint:'1位は、期待の重さ',icon:'flag'},
+ fakeFine:{title:'平気なふりをする',kind:'think',label:'平気なふり',cost:0,strain:1,atk:1,attr:'ath',desc:'重圧なのに、平気なふりをする。',hint:'ふりは、本音がつらい',icon:'eye'},
+ nervousWin:{title:'あがってしまう',kind:'think',label:'あがる',cost:0,strain:1,atk:1,attr:'ath',desc:'期待が重くて、あがってしまう。',hint:'あがると、力が出ない',icon:'bolt'},
+ enjoyWin:{title:'1位を喜ぶ',kind:'think',label:'1位を喜ぶ',cost:1,bond:1,atk:2,attr:'ath',up:'ath',desc:'1位を、素直に喜ぶ。',hint:'喜びは、本音',icon:'sun'},
+ normalMe:{title:'「いつもの自分で」と思う',kind:'think',label:'いつもの自分',cost:1,atk:2,attr:'study',up:'study',desc:'「いつもの自分で」と、思う。',hint:'いつもの自分は、力',icon:'heart'},
+ modesty2:{title:'「たまたまだよ」と謙虚',kind:'talk',label:'たまたま',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'「たまたまだよ」と、謙虚に言う。',hint:'謙虚は、評判',icon:'message'},
+ askPraise:{title:'「すごいね」と言ってもらう',kind:'talk',label:'ほめてもらう',cost:1,atk:2,attr:'soc',up:'soc',desc:'「すごいね」と、言ってもらう。',hint:'ほめは、エネルギー',icon:'spark'},
+ shareSpot:{title:'仲間と喜びを分かち合う',kind:'talk',label:'喜びを分かち合う',cost:1,atk:2,attr:'soc',up:'soc',desc:'仲間と、喜びを分かち合う。',hint:'分かち合うは、絆',icon:'people'},
+ nervousCalm:{title:'深呼吸で落ち着く',kind:'think',label:'深呼吸で落ち着く',cost:1,atk:2,attr:'ath',up:'ath',desc:'深呼吸で、落ち着く。',hint:'深呼吸は、落ち着き',icon:'heart'},
+ beMyself:{title:'自分らしく走る',kind:'think',label:'自分らしく',cost:1,atk:2,attr:'ath',up:'ath',desc:'自分らしく、走る。',hint:'自分らしさは、力',icon:'runner'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -4693,6 +4703,48 @@ teamLose:{title:'チーム戦で自分のミスで負けた',nav:'自分のミ�
  },
  progress(s){const f=s.flags;return f.sorry2||f.apologized2||f.retried?3:f.accepted||f.next?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.sorry2||f.apologized2?'謝れた。':f.accepted||f.next?'認めた。':'まだ、罪を抱えてる。ごめん・次・やり直す、方法はある。'}
+},
+winFirst:{title:'1位になって重圧を感じる',nav:'1位の重圧',num:87,attrs:['ath','soc'],goals:['1位を楽しみたい','期待に負けないようにしたい','自分らしくいたい'],chapters:['1位に選ばれる','期待の重さ','自分らしく向き合う'],locations:['運動場','運動場','教室'],base:['topSpot','fakeFine','nervousWin','anger','ignore'],
+ start:{mind:4,energy:3},
+ monsters:[{name:'期待の重さ',hp:5,power:1,turns:4,look:'期待が、重い。'},{name:'あがりの心',hp:5,power:1,turns:4,look:'あがって、力が出ない。'},{name:'自分らしい力',hp:6,power:2,turns:4,look:'自分らしく、走る。'}],
+ talk:[['enjoyWin2','1位を喜ぶ','素直に、喜ぶ。'],['askPraise2','「すごいね」と言ってもらう','ほめて、もらう。'],['shareSpot2','仲間と分かち合う','喜びを、分かち合う。']],
+ think:[['expectW','期待の重さ','期待が、重い。'],['wantEnjoy','楽しみたい','1位を、楽しみたい。'],['feelPress','プレッシャー','プレッシャーを、感じる。']],
+ reasonKeys:['expectW','wantEnjoy','feelPress'],
+ stageGrants:[['enjoyWin','normalMe','modesty2'],['askPraise','shareSpot','nervousCalm','beMyself','fakeFine']],
+ subs:[
+  {title:'仲間が「すごいね」と言った',text:'ほめは、エネルギー。',stat:'soc',min:0,good:{text:'「ありがとう」と言えた。',rep:1,mind:1},ok:{text:'嬉しくなった。',mind:1}},
+  {title:'監督が「力を出せばいい」と言った',text:'期待は、力になる。',stat:'ath',min:0,good:{text:'力が出た。',mind:1},ok:{text:'落ち着いた。',mind:1}}
+ ],
+ onExplore(s,key){const out={text:'',card:null};
+  if(key==='enjoyWin2'){s.flags.enjoy=true;relation(s,'素直に喜んだら、「おめでとう」と言ってくれた。');out.text='「（素直に喜ぶ）」\n「おめでとう」';out.card='enjoyWin'}
+  if(key==='askPraise2'){s.flags.praised=true;out.text='「すごいね」と、言ってもらった。\n「嬉しい」';out.card='askPraise'}
+  if(key==='shareSpot2'){s.flags.shared=true;out.text='仲間と、喜びを分かち合った。\n「おめでとう！」';out.card='shareSpot'}
+  if(key==='expectW'){s.reason='expectW';out.text='期待が、重い。\n「喜ぶ」「いつもの自分」で、向き合おう。';out.card='enjoyWin'}
+  if(key==='wantEnjoy'){s.reason='wantEnjoy';out.text='1位を、楽しみたい。\n「喜ぶ」「分かち合う」で、楽しもう。';out.card='enjoyWin'}
+  if(key==='feelPress'){s.reason='feelPress';out.text='プレッシャーを、感じる。\n「深呼吸」「いつもの自分」で、落ち着こう。';out.card='nervousCalm'}
+  return out;
+ },
+ onPlay(s,id){const f=s.flags;
+  if(id==='enjoyWin'){f.enjoyed=true;return{text:'1位を、素直に喜んだ。',meaning:'喜びは、本音。'}}
+  if(id==='normalMe'){f.normal=true;return{text:'「いつもの自分で」と、思った。',meaning:'いつもの自分は、力。'}}
+  if(id==='modesty2'){f.modest=true;return{text:'「たまたまだよ」と、謙虚に言った。',meaning:'謙虚は、評判。'}}
+  if(id==='askPraise'){f.praised2=true;return{text:'「すごいね」と、言ってもらった。',meaning:'ほめは、エネルギー。'}}
+  if(id==='shareSpot'){f.shared2=true;return{text:'仲間と、喜びを分かち合った。',meaning:'分かち合うは、絆。'}}
+  if(id==='nervousCalm'){f.calmed=true;return{text:'深呼吸で、落ち着いた。',meaning:'深呼吸は、落ち着き。'}}
+  if(id==='beMyself'){f.myself=true;return{text:'自分らしく、走った。',meaning:'自分らしさは、力。'}}
+  if(id==='topSpot'){f.top=true;return{text:'1位になって、期待された。',meaning:'1位は、期待の重さ。'}}
+  if(id==='fakeFine'){f.faked=true;return{text:'平気なふりを、した。',meaning:'ふりは、本音がつらい。'}}
+  if(id==='nervousWin'){f.nervous=true;return{text:'あがって、しまった。',meaning:'あがると、力が出ない。'}}
+  return{text:'',meaning:''};
+ },
+ watch(s){return s.stage===0?'1位は、みんなある。':s.stage===1?'喜びは、本音。':'いつもの自分は、力。'},
+ scene(s){const f=s.flags;
+  if(s.stage===0)return{narrative:'かけっこで1位。みんなが「すごい！」と期待する。',speaker:'クラスの仲間',quote:'すごい！　1位だ！',look:'期待の目が、集まる。',self:'重い…',hint:'期待されて、何がつらい？'};
+  if(s.stage===1)return{narrative:'重圧か、喜ぶか。',speaker:'クラスの仲間',quote:'1位、すごいね',look:'期待が、肩にのる。',self:s.reason==='wantEnjoy'?'楽しみたい…':s.reason==='feelPress'?'重い…':'あがる…',hint:'喜ぶ・深呼吸・いつもの自分、方法はある。'};
+  return{narrative:'自分らしく、向き合う。',speaker:'クラスの仲間',quote:f.enjoyed||f.myself?'「すごかったね」':'「1位、すごいね」',look:'自分の力が、待っている。',self:f.enjoyed||f.myself||f.shared2?'自分らしくできた。':'まだ、重い。',hint:'喜ぶ・分かち合う・いつもの自分、選ぼう。'};
+ },
+ progress(s){const f=s.flags;return f.enjoyed||f.myself||f.shared2?3:f.normal||f.calmed||f.modest?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.enjoyed||f.myself?'自分らしくできた。':f.normal||f.calmed?'落ち着いた。':'まだ、重い。喜ぶ・深呼吸・いつもの自分、方法はある。'}
 }
 };
 

@@ -819,6 +819,16 @@ export const cards={
  practiceWord:{title:'言うことを決めておく',kind:'think',label:'言うことを決める',cost:1,atk:2,attr:'study',up:'study',desc:'言うことを、決めておく。',hint:'決めるは、準備',icon:'list'},
  stepForward:{title:'一歩前に出る',kind:'think',label:'前に出る',cost:1,atk:2,attr:'ath',up:'ath',desc:'一歩、前に出る。',hint:'前に出るは、勇気',icon:'runner'},
  assemblyEyes:{title:'みんなの目を気にする',kind:'think',label:'目を気にする',cost:1,atk:2,attr:'soc',up:'soc',desc:'みんなの目を、気にする。',hint:'気にすると、見える',icon:'people'},
+ noUmbrella:{title:'傘がない',kind:'think',label:'傘がない',cost:0,strain:1,atk:1,attr:'soc',desc:'雨なのに、傘がない。',hint:'傘がないと、帰れない',icon:'bolt'},
+ runRain:{title:'雨に突っ込む',kind:'think',label:'突っ込む',cost:0,strain:1,atk:1,attr:'ath',desc:'雨の中に、突っ込む。',hint:'突っ込むと、濡れる',icon:'runner'},
+ waitRain:{title:'雨がやむのを待つ',kind:'think',label:'やむのを待つ',cost:1,atk:2,attr:'ath',up:'ath',desc:'雨がやむのを、待つ。',hint:'待つは、受け入れ',icon:'clock'},
+ borrowUmb:{title:'「傘貸して」と頼む',kind:'talk',label:'傘貸して',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'「傘貸して」と、頼む。',hint:'頼むは、助けをもらう',icon:'hand'},
+ askShare:{title:'「入れて」と相合傘',kind:'talk',label:'入れて',cost:1,atk:2,attr:'soc',up:'soc',desc:'「入れて」と、相合傘を頼む。',hint:'相合傘は、近づく',icon:'heart'},
+ tellRain:{title:'「傘がない」と言う',kind:'talk',label:'傘がない',cost:1,atk:2,attr:'soc',up:'soc',desc:'「傘がない」と、言う。',hint:'言うと、助けが来る',icon:'message'},
+ staySchool:{title:'迎えが来るまで残る',kind:'think',label:'迎えを待つ',cost:1,atk:2,attr:'ath',up:'ath',desc:'迎えが来るまで、残る。',hint:'残るは、待つ選択',icon:'door'},
+ callHome2:{title:'家に電話してもらう',kind:'talk',label:'家に電話',cost:1,atk:2,attr:'soc',up:'soc',desc:'家に電話して、迎えを頼む。',hint:'電話は、助け',icon:'message'},
+ acceptRain:{title:'濡れてもいいと覚悟',kind:'think',label:'濡れてもいい',cost:1,atk:2,attr:'ath',up:'ath',desc:'濡れてもいいと、覚悟する。',hint:'覚悟は、強さ',icon:'flag'},
+ lookSky:{title:'空を見て雨を読む',kind:'think',label:'空を見る',cost:1,atk:2,attr:'study',up:'study',desc:'空を見て、雨を読む。',hint:'読むは、判断',icon:'eye'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -4589,6 +4599,48 @@ assemblyFreeze:{title:'朝礼で人前に呼ばれてあがる',nav:'朝礼で�
  },
  progress(s){const f=s.flags;return f.short2||f.stepped||f.practiced2?3:f.breathed||f.looked2||f.accepted?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.short2||f.stepped?'言えた。':f.breathed||f.looked2?'落ち着いた。':'まだ、黙ってる。深呼吸・短く・決める、方法はある。'}
+},
+rainHome:{title:'下校時に傘がない',nav:'傘がない',num:85,attrs:['soc','study'],goals:['濡れずに帰りたい','助けを呼びたい','待つのも選びたい'],chapters:['下校の時間、雨','傘がないことに気づく','帰り方を決める'],locations:['昇降口','昇降口','昇降口'],base:['noUmbrella','runRain','acceptRain','anger','ignore'],
+ start:{mind:4,energy:3},
+ monsters:[{name:'濡れる不安',hp:5,power:1,turns:4,look:'濡れたく、ない。'},{name:'帰れない壁',hp:5,power:1,turns:4,look:'帰れない、壁。'},{name:'帰り道の工夫',hp:6,power:2,turns:4,look:'帰り道を、工夫する。'}],
+ talk:[['borrowUmb2','「傘貸して」と頼む','傘を、貸してもらう。'],['askShare2','「入れて」と頼む','相合傘を、頼む。'],['callHome3','家に電話する','迎えを、頼む。']],
+ think:[['noUmb','傘がない','傘が、ない。'],['wantHome','帰りたい','早く、帰りたい。'],['wetScared','濡れたくない','濡れたく、ない。']],
+ reasonKeys:['noUmb','wantHome','wetScared'],
+ stageGrants:[['borrowUmb','tellRain','lookSky'],['askShare','waitRain','staySchool','callHome2','runRain']],
+ subs:[
+  {title:'友達が「入っていいよ」と言った',text:'頼むと、助けが来る。',stat:'soc',min:0,good:{text:'「ありがとう」と言えた。',rep:1,mind:1},ok:{text:'相合傘で帰れた。',mind:1}},
+  {title:'雨が小降りになった',text:'待つと、雨は小さくなる。',stat:'ath',min:0,good:{text:'濡れずに帰れた。',mind:1},ok:{text:'待ちきれた。',mind:1}}
+ ],
+ onExplore(s,key){const out={text:'',card:null};
+  if(key==='borrowUmb2'){s.flags.borrowed=true;relation(s,'「傘貸して」と頼んだら、「いいよ、使って」と言ってくれた。');out.text='「傘貸して」\n「いいよ、使って」';out.card='borrowUmb'}
+  if(key==='askShare2'){s.flags.shared=true;out.text='「入れて」と、頼んだ。\n「いいよ、一緒にいこう」';out.card='askShare'}
+  if(key==='callHome3'){s.flags.called=true;out.text='家に電話して、迎えを頼んだ。\n「迎えに行くね」';out.card='callHome2'}
+  if(key==='noUmb'){s.reason='noUmb';out.text='傘が、ない。\n「貸して」「入れて」で、頼もう。';out.card='borrowUmb'}
+  if(key==='wantHome'){s.reason='wantHome';out.text='早く、帰りたい。\n「貸して」「電話」で、帰ろう。';out.card='borrowUmb'}
+  if(key==='wetScared'){s.reason='wetScared';out.text='濡れたく、ない。\n「待つ」「空を見る」で、様子を見よう。';out.card='waitRain'}
+  return out;
+ },
+ onPlay(s,id){const f=s.flags;
+  if(id==='borrowUmb'){f.borrowed2=true;return{text:'傘を、貸してもらった。',meaning:'頼むは、助けをもらう。'}}
+  if(id==='askShare'){f.shared2=true;return{text:'相合傘を、頼んだ。',meaning:'相合傘は、近づく。'}}
+  if(id==='tellRain'){f.told=true;return{text:'「傘がない」と、言った。',meaning:'言うと、助けが来る。'}}
+  if(id==='waitRain'){f.waited=true;return{text:'雨がやむのを、待った。',meaning:'待つは、受け入れ。'}}
+  if(id==='staySchool'){f.stayed=true;return{text:'迎えが来るまで、残った。',meaning:'残るは、待つ選択。'}}
+  if(id==='callHome2'){f.called2=true;return{text:'家に電話して、迎えを頼んだ。',meaning:'電話は、助け。'}}
+  if(id==='acceptRain'){f.accepted=true;return{text:'濡れてもいいと、覚悟した。',meaning:'覚悟は、強さ。'}}
+  if(id==='lookSky'){f.saw=true;return{text:'空を見て、雨を読んだ。',meaning:'読むは、判断。'}}
+  if(id==='noUmbrella'){f.no=true;return{text:'傘が、なかった。',meaning:'傘がないと、帰れない。'}}
+  if(id==='runRain'){f.ran=true;return{text:'雨に、突っ込んだ。',meaning:'突っ込むと、濡れる。'}}
+  return{text:'',meaning:''};
+ },
+ watch(s){return s.stage===0?'濡れるは、みんなある。':s.stage===1?'頼むは、助け。':'覚悟は、強さ。'},
+ scene(s){const f=s.flags;
+  if(s.stage===0)return{narrative:'下校の時間。外は雨。ポケットには傘がない。',speaker:'傘を持つ子',quote:'傘、ないの？',look:'雨が、降っている。',self:'濡れちゃう…',hint:'傘がなくて、何がつらい？'};
+  if(s.stage===1)return{narrative:'突っ込むか、頼むか。',speaker:'傘を持つ子',quote:'一緒に入る？',look:'雨が、降っている。',self:s.reason==='wantHome'?'帰りたい…':s.reason==='wetScared'?'濡れたくない…':'傘がない…',hint:'貸して・入れて・電話、方法はある。'};
+  return{narrative:'帰り方を、決める。',speaker:'傘を持つ子',quote:f.borrowed2||f.shared2?'「一緒にいこう」':'「一緒に入る？」',look:'帰り道が、待っている。',self:f.borrowed2||f.shared2||f.called2||f.waited?'帰れる。':'まだ、立ち尽くしてる。',hint:'貸して・入れて・電話、選ぼう。'};
+ },
+ progress(s){const f=s.flags;return f.borrowed2||f.shared2||f.called2||f.waited?3:f.saw||f.accepted||f.stayed?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.borrowed2||f.shared2?'帰れる。':f.waited||f.stayed?'待てた。':'まだ、立ち尽くしてる。貸して・入れて・電話、方法はある。'}
 }
 };
 

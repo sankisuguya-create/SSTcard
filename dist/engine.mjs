@@ -718,6 +718,16 @@ export const cards={
  inviteBack:{title:'「また遊ぼう」と誘う',kind:'talk',label:'また遊ぼう',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'「また遊ぼう」と、誘う。',hint:'誘うは、関係修復',icon:'people'},
  hotHead:{title:'頭に血が上る',kind:'think',label:'頭に血',cost:0,strain:1,atk:1,attr:'ath',desc:'頭に血が上り、感情で動く。',hint:'血は、悪化させる',icon:'bolt'},
  wantMakeUp2:{title:'仲直りしたい気持ち',kind:'think',label:'仲直りしたい',cost:1,atk:2,attr:'soc',up:'soc',desc:'仲直りしたい気持ちを、認める。',hint:'認めると、動ける',icon:'heart'},
+ grabToy:{title:'奪い合う',kind:'think',label:'奪い合う',cost:0,strain:1,atk:1,attr:'soc',desc:'おもちゃを、奪い合う。',hint:'奪い合いは、悪化する',icon:'bolt'},
+ holdToy:{title:'離さない',kind:'think',label:'離さない',cost:0,strain:1,atk:1,attr:'ath',desc:'おもちゃを、離さない。',hint:'離さないと、終われない',icon:'eye'},
+ wantPlay2:{title:'遊びたい気持ちを認める',kind:'think',label:'遊びたい',cost:1,atk:2,attr:'soc',up:'soc',desc:'遊びたい気持ちを、認める。',hint:'認めると、分かる',icon:'puzzle'},
+ sayTurn2:{title:'「じゅんばんだよ」と言う',kind:'talk',label:'じゅんばん',cost:1,atk:2,attr:'soc',up:'soc',desc:'「じゅんばん、だよ」と伝える。',hint:'順番は、公平',icon:'list'},
+ shareToy:{title:'「一緒に使おう」と言う',kind:'talk',label:'一緒に使おう',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'「一緒に、使おう」と伝える。',hint:'一緒は、仲直り',icon:'people'},
+ tradeToy:{title:'別のおもちゃと交換する',kind:'talk',label:'交換する',cost:1,atk:2,attr:'soc',up:'soc',desc:'別のおもちゃと、交換する。',hint:'交換は、解決',icon:'puzzle'},
+ countDown:{title:'時間を決めて使う',kind:'think',label:'時間を決める',cost:1,atk:2,attr:'study',up:'study',desc:'時間を決めて、使う。',hint:'時間決めは、公平',icon:'clock'},
+ letGo:{title:'ゆずる勇気を出す',kind:'think',label:'ゆずる',cost:1,atk:2,attr:'soc',up:'soc',desc:'ゆずる勇気を、出す。',hint:'ゆずるは、強さ',icon:'heart'},
+ askRules2:{title:'「使い方のルールは？」と聞く',kind:'talk',label:'ルールを聞く',cost:1,atk:2,attr:'soc',up:'soc',desc:'「使い方のルールは？」と、聞く。',hint:'聞くと、分かる',icon:'ear'},
+ fightOver:{title:'けんかになる',kind:'think',label:'けんかになる',cost:0,strain:1,atk:1,attr:'soc',desc:'おもちゃで、けんかになる。',hint:'けんかは、悪化する',icon:'bolt'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -4067,6 +4077,48 @@ bffFight:{title:'仲良しとけんか',nav:'仲良しとけんか',num:74,attrs
  },
  progress(s){const f=s.flags;return f.sorry2||f.invited2?3:f.cooled||f.thought2||f.waited||f.noted?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.sorry2||f.invited2?'仲直りできた。':f.cooled||f.thought2?'落ち着いた。':'まだ、距離がある。ごめん・誘う・手紙、方法はある。'}
+},
+toyFight:{title:'おもちゃを取り合った',nav:'おもちゃを取り合う',num:75,attrs:['soc'],goals:['遊びたいを伝えたい','順番・ルールを守りたい','一緒に解決したい'],chapters:['おもちゃが1つしかない','取り合いになる','どう使うか決める'],locations:['教室','教室','遊び場'],base:['grabToy','holdToy','fightOver','anger','ignore'],
+ start:{mind:4,energy:3},
+ monsters:[{name:'奪い合いの手',hp:5,power:1,turns:4,look:'奪い合って、いる。'},{name:'遊びたい気持ち',hp:5,power:1,turns:4,look:'遊びたくて、たまらない。'},{name:'公平な使い方',hp:6,power:2,turns:4,look:'公平を、決める。'}],
+ talk:[['sayTurn3','「じゅんばん」と言う','順番を、伝える。'],['shareToy2','「一緒に使おう」と言う','一緒に、使う。'],['askRuleToy','「ルールは？」と聞く','ルールを、確かめる。']],
+ think:[['wantToy','遊びたい','おもちゃで、遊びたい。'],['unfairToy','不公平だ','ずっと自分だけ。'],['wantShare','一緒に使いたい','一緒に、使いたい。']],
+ reasonKeys:['wantToy','unfairToy','wantShare'],
+ stageGrants:[['sayTurn2','wantPlay2','letGo'],['shareToy','tradeToy','countDown','askRules2','fightOver']],
+ subs:[
+  {title:'先生が「どうやって使う？」と聞いた',text:'聞かれると、決められる。',stat:'study',min:0,good:{text:'「時間を分ける」と言えた。',rep:1,mind:1},ok:{text:'ルールが決まった。',mind:1}},
+  {title:'相手が「じゃあ先に使って」と言った',text:'ゆずると、関係が続く。',stat:'soc',min:0,good:{text:'「ありがとう」と言えた。',rep:1,mind:1},ok:{text:'仲直りできた。',mind:1}}
+ ],
+ onExplore(s,key){const out={text:'',card:null};
+  if(key==='sayTurn3'){s.flags.saidT=true;relation(s,'「じゅんばん」と言ったら、「そうだね」と順番になった。');out.text='「じゅんばん、だよ」\n「そうだね、じゅんばん」';out.card='sayTurn2'}
+  if(key==='shareToy2'){s.flags.shared=true;relation(s,'「一緒に使おう」と言ったら、「いいよ」と仲良く使えた。');out.text='「一緒に使おう」\n「いいよ、一緒に」';out.card='shareToy'}
+  if(key==='askRuleToy'){s.flags.asked=true;out.text='「使い方のルールは？」\n「時間で分けるか、一緒に使うか」';out.card='askRules2'}
+  if(key==='wantToy'){s.reason='wantToy';out.text='おもちゃで、遊びたい。\n「じゅんばん」「一緒に」で、伝えよう。';out.card='sayTurn2'}
+  if(key==='unfairToy'){s.reason='unfairToy';out.text='ずっと自分だけで、不公平。\n「ルール」「時間決め」で、公平にしよう。';out.card='askRules2'}
+  if(key==='wantShare'){s.reason='wantShare';out.text='一緒に、使いたい。\n「一緒に」「交換」で、仲良くしよう。';out.card='shareToy'}
+  return out;
+ },
+ onPlay(s,id){const f=s.flags;
+  if(id==='sayTurn2'){f.saidT2=true;return{text:'「じゅんばん」と、言った。',meaning:'順番は、公平。'}}
+  if(id==='wantPlay2'){f.wanted=true;return{text:'遊びたい気持ちを、認めた。',meaning:'認めると、分かる。'}}
+  if(id==='letGo'){f.let=true;return{text:'ゆずる勇気を、出した。',meaning:'ゆずるは、強さ。'}}
+  if(id==='shareToy'){f.shared2=true;return{text:'「一緒に使おう」と、言った。',meaning:'一緒は、仲直り。'}}
+  if(id==='tradeToy'){f.traded=true;return{text:'別のおもちゃと、交換した。',meaning:'交換は、解決。'}}
+  if(id==='countDown'){f.counted=true;return{text:'時間を決めて、使った。',meaning:'時間決めは、公平。'}}
+  if(id==='askRules2'){f.asked2=true;return{text:'「ルールは？」と、聞いた。',meaning:'聞くと、分かる。'}}
+  if(id==='grabToy'){f.grabbed=true;return{text:'奪い合った。',meaning:'奪い合いは、悪化する。'}}
+  if(id==='holdToy'){f.held=true;return{text:'離さなかった。',meaning:'離さないと、終われない。'}}
+  if(id==='fightOver'){f.fought=true;return{text:'けんかになった。',meaning:'けんかは、悪化する。'}}
+  return{text:'',meaning:''};
+ },
+ watch(s){return s.stage===0?'取り合いは、みんなある。':s.stage===1?'順番は、公平。':'一緒は、仲直り。'},
+ scene(s){const f=s.flags;
+  if(s.stage===0)return{narrative:'休み時間。1つしかないおもちゃを、取り合い始めた。',speaker:'取り合う友達',quote:'これは、ぼくの',look:'おもちゃが、引っ張り合い。',self:'私も使いたい…',hint:'取り合いで、何がつらい？'};
+  if(s.stage===1)return{narrative:'けんかになるか、順番・ルールで決めるか。',speaker:'取り合う友達',quote:'ぼくが先',look:'おもちゃが、離れない。',self:s.reason==='unfairToy'?'不公平…':s.reason==='wantShare'?'一緒にしたい…':'遊びたい…',hint:'じゅんばん・一緒に・ルール、方法はある。'};
+  return{narrative:'公平に、使うか。',speaker:'取り合う友達',quote:f.shared2||f.saidT2?'「じゃあ、じゅんばんね」':'「ぼくが先」',look:'おもちゃが、待っている。',self:f.shared2||f.saidT2||f.traded?'仲良く使えた。':'まだ、取り合ってる。',hint:'じゅんばん・一緒・交換、選ぼう。'};
+ },
+ progress(s){const f=s.flags;return f.shared2||f.saidT2||f.traded||f.counted?3:f.let||f.asked2?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.shared2?'一緒に使えた。':f.saidT2||f.asked2?'順番を決めた。':'まだ、取り合ってる。じゅんばん・一緒・ルール、方法はある。'}
 }
 };
 

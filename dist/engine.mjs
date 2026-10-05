@@ -5790,7 +5790,11 @@ function maybeUnlock(s){const got=[];for(const u of UNLOCKS){if(s.unlocked.inclu
 export function reqMet(s,req){if(!req)return true;if(req.stat)return(s.stats[req.stat]||0)>=(req.min||1);if(req.rep)return s.rep>=req.rep;if(req.card)return s.hand.includes(req.card)||s.used.includes(req.card);return true}
 export function available(s){return s.hand.filter(id=>!s.used.includes(id));}
 export function cardAtk(s,id){const c=cards[id];return Math.max(0,(c.atk||0)+(c.attr&&!c.dark?s.stats[c.attr]:0));}
-export function canPlay(s,id){const c=cards[id];return !s.finished&&!s.feedback&&!s.subNow&&available(s).includes(id)&&s.energy>=c.cost&&s.mind>1&&reqMet(s,c.req)&&s.turns<SCENE_PLAYS;}
+export function canPlayCard(s,id){const c=cards[id];return available(s).includes(id)&&s.energy>=c.cost&&s.mind>1&&reqMet(s,c.req);}
+// 場面中にまだ出せる手があるか。フィードバック表示中（s.feedback が立っている間）でも評価できる —
+// フィードバックの「もう一枚、作戦を試す」ボタンの表示判定に使う（canPlay は表示中必ず false になるため使えない）
+export function nextHandPlayable(s){return s.turns<SCENE_PLAYS&&available(s).some(id=>canPlayCard(s,id));}
+export function canPlay(s,id){const c=cards[id];return !s.finished&&!s.feedback&&!s.subNow&&canPlayCard(s,id)&&s.turns<SCENE_PLAYS;}
 export function play(s,id){
  if(!canPlay(s,id))return false;
  const c=cards[id],m=monster(s),before=snap(s);

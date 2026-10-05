@@ -1,4 +1,4 @@
-import {cards,minusCards,stories,statMeta,initial,monster,monsterSize,monsterFaded,monsterPower,cardAtk,explore,available,canPlay,canExplore,canMinus,play,advance,continueTurn,safety,free,minus,scene,summary,setGoal,chooseSub,enterEvent,reqMet,SCENE_PLAYS} from './engine.mjs';
+import {cards,minusCards,stories,statMeta,initial,monster,monsterSize,monsterFaded,monsterPower,cardAtk,explore,available,canPlay,nextHandPlayable,canExplore,canMinus,play,advance,continueTurn,safety,free,minus,scene,summary,setGoal,chooseSub,enterEvent,reqMet,SCENE_PLAYS} from './engine.mjs';
 const app=document.querySelector('#app'),dialog=document.querySelector('#dialog');
 let state=initial(),history=[],previous=null,focusReturn=null;
 const sessions={};
@@ -251,7 +251,8 @@ function feedbackView(){
  ].filter(Boolean).join('');
   const extra=f.killed?`<div class="notice clear-notice">${icon('skull')} 「${f.monster}」を退けた！ ${s.turns<SCENE_PLAYS?'のこりの時間でさらに作戦を試すか、次の場面へ進める。':'次の場面へ進める。'}</div>`:f.escaped?`<div class="notice">この場面の時間がおわった。課題はまだ残っている… 次のできごとへ進もう。</div>`:'';
  // 未討伐なら残り手数は使い切る — 退けた・時間切れ・出せる手がない時だけ次へ進める
- const canAct=s.turns<SCENE_PLAYS&&s.hand.some(id=>canPlay(s,id));
+ // (canPlay はフィードバック表示中必ず false を返すので、表示中でも評価できる nextHandPlayable を使う)
+ const canAct=nextHandPlayable(s);
  const showNext=s.dead||f.sub||f.killed||f.escaped||!canAct;
  return `<section class="feedback" tabindex="-1" id="feedback"><div class="eyebrow">YOUR CHOICE ／ 試してみた</div><h2>「${f.title}」を使った</h2><p>${f.text}</p>${f.counter?`<p class="monster-act">${f.counter}</p>`:''}<div class="changes">${chips}</div>${s.dead?`<div class="notice fail-notice">${icon('skull')} 精神力が0になった。気持ちがあふれて、その場から逃げ出してしまった…</div>`:''}${extra}<div class="notice">${icon('spark')} ${f.meaning}</div><div class="feedback-actions"><button data-action="undo" ${s.dead?'disabled':''}>別の作戦を試す</button>${!s.dead&&!f.sub&&!f.escaped&&canAct?`<button ${showNext?'':'class="primary" '}data-action="continue">もう一枚、作戦を試す（のこり ${SCENE_PLAYS-s.turns}手）</button>`:''}${showNext?`<button class="primary" data-action="next">${s.dead?'ふりかえりへ':f.sub?'つぎへ':f.killed||f.escaped?'次の場面へ':state.stage===2?'今回をふりかえる':'次の場面へ'}</button>`:''}</div></section>`;
 }

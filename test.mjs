@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {initial,explore,play,advance,continueTurn,safety,available,canPlay,canExplore,canMinus,free,minus,setGoal,summary,monster,cardAtk,stories,monsterFaded,monsterPower,chooseSub,enterEvent} from './dist/engine.mjs';
+import {initial,explore,play,advance,continueTurn,safety,available,canPlay,nextHandPlayable,canExplore,canMinus,free,minus,setGoal,summary,monster,cardAtk,stories,monsterFaded,monsterPower,chooseSub,enterEvent} from './dist/engine.mjs';
 // 乱数は決定的に（ランダムイベントはUI装飾。発動有無を別途検証）
 const origRandom=Math.random;Math.random=()=>0.99; // おまけイベントは原則offで探索
 function toNext(s){if(!advance(s))return false;while(s.subNow&&!s.finished){const chs=s.subNow.choices||[];chooseSub(s,chs.length-1);advance(s)}return true} // メイン場面へ進む（サブは最後の『見送る』選択肢で通過）
@@ -226,6 +226,14 @@ for(const story of ['fight','sports','test','join','blame','hurt','alone','lose'
  const atk2=available(s).find(x=>canPlay(s,x));assert(play(s,atk2));assert(s.feedback.escaped);assert(!s.feedback.killed);
  s.energy=5;s.mind=6;s.feedback=null;assert(!available(s).some(x=>canPlay(s,x)),'4枚目は出せない');
  s.feedback={};toNext(s);assert(s.escaped.includes(0));assert(s.slain.length===0);
+}
+{ // 継続ボタン表示判定（nextHandPlayable）: フィードバック表示中でも「まだ出せる手があるか」を正しく評価
+ const s=initial('fight');s.stage=0;s.monsterHp=99;s.turns=0;s.mind=6;s.energy=5;
+ const act1=available(s).find(x=>canPlay(s,x));assert(play(s,act1));
+ assert(s.feedback&&!s.feedback.killed);assert(!canPlay(s,act1),'feedback中のcanPlayはfalse');
+ assert(nextHandPlayable(s),'feedback中も出せる手がある＝継続ボタン表示判定');
+ s.mind=1;assert(!nextHandPlayable(s),'mind1では出せる手がない＝次へ進めるフェイルセーフ');s.mind=6;
+ s.turns=3;assert(!nextHandPlayable(s),'手数切れでもfalse');
 }
 // 場面の手数上限と撃破の進行を直接確認
 {

@@ -6257,7 +6257,11 @@ function maybeUnlock(s){const got=[];for(const u of UNLOCKS){if(s.unlocked.inclu
 function reqMet(s,req){if(!req)return true;if(req.stat)return(s.stats[req.stat]||0)>=(req.min||1);if(req.rep)return s.rep>=req.rep;if(req.card)return s.hand.includes(req.card)||s.used.includes(req.card);return true}
 function available(s){return s.hand.filter(id=>!s.used.includes(id));}
 function cardAtk(s,id){const c=cards[id];return Math.max(0,(c.atk||0)+(c.attr&&!c.dark?s.stats[c.attr]:0));}
-function canPlay(s,id){const c=cards[id];return !s.finished&&!s.feedback&&!s.subNow&&available(s).includes(id)&&s.energy>=c.cost&&s.mind>1&&reqMet(s,c.req)&&s.turns<SCENE_PLAYS;}
+function canPlayCard(s,id){const c=cards[id];return available(s).includes(id)&&s.energy>=c.cost&&s.mind>1&&reqMet(s,c.req);}
+// 場面中にまだ出せる手があるか。フィードバック表示中（s.feedback が立っている間）でも評価できる —
+// フィードバックの「もう一枚、作戦を試す」ボタンの表示判定に使う（canPlay は表示中必ず false になるため使えない）
+function nextHandPlayable(s){return s.turns<SCENE_PLAYS&&available(s).some(id=>canPlayCard(s,id));}
+function canPlay(s,id){const c=cards[id];return !s.finished&&!s.feedback&&!s.subNow&&canPlayCard(s,id)&&s.turns<SCENE_PLAYS;}
 function play(s,id){
  if(!canPlay(s,id))return false;
  const c=cards[id],m=monster(s),before=snap(s);
@@ -6705,7 +6709,8 @@ function feedbackView(){
  ].filter(Boolean).join('');
   const extra=f.killed?`<div class="notice clear-notice">${icon('skull')} 「${f.monster}」を退けた！ ${s.turns<SCENE_PLAYS?'のこりの時間でさらに作戦を試すか、次の場面へ進める。':'次の場面へ進める。'}</div>`:f.escaped?`<div class="notice">この場面の時間がおわった。課題はまだ残っている… 次のできごとへ進もう。</div>`:'';
  // 未討伐なら残り手数は使い切る — 退けた・時間切れ・出せる手がない時だけ次へ進める
- const canAct=s.turns<SCENE_PLAYS&&s.hand.some(id=>canPlay(s,id));
+ // (canPlay はフィードバック表示中必ず false を返すので、表示中でも評価できる nextHandPlayable を使う)
+ const canAct=nextHandPlayable(s);
  const showNext=s.dead||f.sub||f.killed||f.escaped||!canAct;
  return `<section class="feedback" tabindex="-1" id="feedback"><div class="eyebrow">YOUR CHOICE ／ 試してみた</div><h2>「${f.title}」を使った</h2><p>${f.text}</p>${f.counter?`<p class="monster-act">${f.counter}</p>`:''}<div class="changes">${chips}</div>${s.dead?`<div class="notice fail-notice">${icon('skull')} 精神力が0になった。気持ちがあふれて、その場から逃げ出してしまった…</div>`:''}${extra}<div class="notice">${icon('spark')} ${f.meaning}</div><div class="feedback-actions"><button data-action="undo" ${s.dead?'disabled':''}>別の作戦を試す</button>${!s.dead&&!f.sub&&!f.escaped&&canAct?`<button ${showNext?'':'class="primary" '}data-action="continue">もう一枚、作戦を試す（のこり ${SCENE_PLAYS-s.turns}手）</button>`:''}${showNext?`<button class="primary" data-action="next">${s.dead?'ふりかえりへ':f.sub?'つぎへ':f.killed||f.escaped?'次の場面へ':state.stage===2?'今回をふりかえる':'次の場面へ'}</button>`:''}</div></section>`;
 }

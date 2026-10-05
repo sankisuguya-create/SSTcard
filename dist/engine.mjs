@@ -628,6 +628,16 @@ export const cards={
  toiletAsk:{title:'トイレの場所を確かめる',kind:'talk',label:'トイレ確認',cost:1,atk:2,attr:'study',up:'study',desc:'先に、トイレの場所を確かめる。',hint:'確かめると、安心',icon:'search'},
  ownPace5:{title:'疲れたら自分のペースで',kind:'think',label:'自分のペース',cost:1,atk:2,attr:'ath',up:'ath',desc:'疲れたら、自分のペースで行く。',hint:'ペースが、続く',icon:'clock'},
  enjoyTrip:{title:'楽しむことに集中する',kind:'think',label:'楽しむ',cost:1,atk:2,attr:'ath',up:'ath',desc:'不安より、楽しむことに集中。',hint:'楽しむは、気持ちを上げる',icon:'sun'},
+ lendAgain:{title:'また黙って貸す',kind:'think',label:'黙って貸す',cost:0,strain:1,atk:1,attr:'soc',desc:'断れず、また貸してしまう。',hint:'貸すだけでは、気持ちが溜まる',icon:'eye'},
+ sayNo3:{title:'「ごめん、今日は」と断る',kind:'talk',label:'断る',cost:1,atk:2,attr:'soc',up:'soc',desc:'「ごめん、今日は」と、優しく断る。',hint:'断るのも、大切',icon:'hand'},
+ lendOnce:{title:'今日だけ貸して明日は断る',kind:'talk',label:'今日だけ',cost:1,atk:2,attr:'soc',up:'soc',desc:'今日だけ貸して、明日からは断る。',hint:'一回は、折り合い',icon:'clock'},
+ explainWhy2:{title:'「私も使うから」と理由を言う',kind:'talk',label:'理由を言う',cost:1,atk:2,attr:'soc',up:'soc',desc:'「私も使うから」と、理由を言う。',hint:'理由があれば、分かりやすい',icon:'message'},
+ offerAlt:{title:'別のものを勧める',kind:'talk',label:'別を勧める',cost:1,atk:2,attr:'soc',up:'soc',desc:'「これなら」と、別を勧める。',hint:'代替案は、親切',icon:'cards'},
+ honestNo2:{title:'「貸しすぎは嫌」と正直',kind:'talk',label:'正直に言う',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'「貸しすぎは嫌かも」と、正直に。',hint:'正直は、関係を守る',icon:'heart'},
+ keepBoundary:{title:'自分のものは自分で守る',kind:'think',label:'境界を守る',cost:1,atk:2,attr:'soc',up:'soc',desc:'自分のものは、自分で守る。',hint:'守るのは、権利',icon:'list'},
+ feelUsed:{title:'モヤモヤを認める',kind:'think',label:'モヤモヤ認める',cost:1,atk:2,attr:'soc',up:'soc',desc:'貸しすぎのモヤモヤを、認める。',hint:'認めると、次が見える',icon:'puzzle'},
+ lendLimit:{title:'貸す回数を決める',kind:'think',label:'回数を決める',cost:1,atk:2,attr:'study',up:'study',desc:'何回まで貸すか、決めておく。',hint:'決めると、迷わない',icon:'list'},
+ smileSay:{title:'笑顔で「ダメ」と言う',kind:'talk',label:'笑顔で断る',cost:1,atk:2,attr:'soc',up:'soc',desc:'笑顔のまま、「ダメ」と言う。',hint:'優しさは、伝わる',icon:'sun'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -3599,6 +3609,48 @@ tripAnx:{title:'遠足の日が不安',nav:'遠足の日が不安',num:65,attrs:
  },
  progress(s){const f=s.flags;return f.enjoyed||f.buddied2||f.followed?3:f.packed||f.neared||f.mapped||f.toldA2?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.enjoyed||f.buddied2?'楽しめた。':f.packed||f.mapped?'準備できた。':'まだ、不安なまま。相棒・地図・正直、方法はある。'}
+},
+refuseLend:{title:'貸してばかりで断りたい',nav:'貸すのを断りたい',num:66,attrs:['soc'],goals:['断りたいけど仲良くしたい','モヤモヤを伝えたい','自分のものを守りたい'],chapters:['また「貸して」と言われた','断るか貸すか','自分の気持ちを伝える'],locations:['教室','教室','廊下'],base:['lendAgain','sayNo3','lendOnce','anger','ignore'],
+ start:{mind:4,energy:3},
+ monsters:[{name:'断れない気持ち',hp:5,power:1,turns:4,look:'断りたいのに、断れない。'},{name:'嫌がられる恐れ',hp:5,power:1,turns:4,look:'断ると、嫌がられそう。'},{name:'自分の気持ち',hp:6,power:2,turns:4,look:'本当の気持ちを、言いたい。'}],
+ talk:[['sayNo4','「今日は」と断る','優しく、断る。'],['explainWhy3','理由を言う','「私も使うから」と。'],['honestNo3','「嫌」と正直に','気持ちを、伝える。']],
+ think:[['cantRefuse','断れない','断りたいのに、断れない。'],['fearDislike','嫌がられそう','断ると、嫌がられそう。'],['wantSay','気持ちを言いたい','モヤモヤを、伝えたい。']],
+ reasonKeys:['cantRefuse','fearDislike','wantSay'],
+ stageGrants:[['explainWhy2','lendOnce','offerAlt'],['honestNo2','keepBoundary','feelUsed','lendLimit','smileSay']],
+ subs:[
+  {title:'「ありがとう」と言われた',text:'断っても、関係は続く。',stat:'soc',min:0,good:{text:'「また明日ね」と言えた。',rep:1,mind:1},ok:{text:'関係が続いた。',mind:1}},
+  {title:'友達が「そうか」と納得した',text:'正直は、通じた。',stat:'study',min:0,good:{text:'「断ってよかった」と思えた。',mind:1},ok:{text:'気持ちが楽になった。',mind:1}}
+ ],
+ onExplore(s,key){const out={text:'',card:null};
+  if(key==='sayNo4'){s.flags.saidNo=true;relation(s,'「今日は」と断ったら、「そうか」と引き下がった。');out.text='「ごめん、今日は自分で使うの」\n「そうか、明日は？」';out.card='sayNo3'}
+  if(key==='explainWhy3'){s.flags.explained=true;out.text='「私も使うから」\n「あ、そうか、ごめんね」';out.card='explainWhy2'}
+  if(key==='honestNo3'){s.flags.honest=true;relation(s,'「貸しすぎは嫌」と正直に言ったら、「ごめん、知らなかった」と言ってもらえた。');out.text='「貸しすぎは、嫌かも」\n「ごめん、知らなかった」';out.card='honestNo2'}
+  if(key==='cantRefuse'){s.reason='cantRefuse';out.text='断りたいのに、断れない。\n「今日だけ」「別を勧める」で折り合い。';out.card='lendOnce'}
+  if(key==='fearDislike'){s.reason='fearDislike';out.text='断ると、嫌がられそう。\n「理由を言う」「笑顔で」で、優しく。';out.card='explainWhy2'}
+  if(key==='wantSay'){s.reason='wantSay';out.text='モヤモヤを、伝えたい。\n「正直」「回数を決める」で、自分を守る。';out.card='honestNo2'}
+  return out;
+ },
+ onPlay(s,id){const f=s.flags;
+  if(id==='sayNo3'){f.saidNo2=true;return{text:'「今日は」と、断った。',meaning:'断るのも、大切。'}}
+  if(id==='lendOnce'){f.once=true;return{text:'今日だけ貸した。',meaning:'一回は、折り合い。'}}
+  if(id==='explainWhy2'){f.explained2=true;return{text:'理由を、言った。',meaning:'理由があれば、分かりやすい。'}}
+  if(id==='offerAlt'){f.offered=true;return{text:'別のものを、勧めた。',meaning:'代替案は、親切。'}}
+  if(id==='honestNo2'){f.honest2=true;return{text:'「貸しすぎは嫌」と、正直に言った。',meaning:'正直は、関係を守る。'}}
+  if(id==='keepBoundary'){f.kept=true;return{text:'自分のものを、守った。',meaning:'守るのは、権利。'}}
+  if(id==='feelUsed'){f.felt=true;return{text:'モヤモヤを、認めた。',meaning:'認めると、次が見える。'}}
+  if(id==='lendLimit'){f.limited=true;return{text:'貸す回数を、決めた。',meaning:'決めると、迷わない。'}}
+  if(id==='smileSay'){f.smiled=true;return{text:'笑顔で、「ダメ」と言った。',meaning:'優しさは、伝わる。'}}
+  if(id==='lendAgain'){f.again=true;return{text:'また、黙って貸した。',meaning:'貸すだけでは、気持ちが溜まる。'}}
+  return{text:'',meaning:''};
+ },
+ watch(s){return s.stage===0?'断れないのは、みんなある。':s.stage===1?'断るのも、大切。':'正直は、関係を守る。'},
+ scene(s){const f=s.flags;
+  if(s.stage===0)return{narrative:'また「貸して」と言われた。貸しすぎて、自分が使えない。',speaker:'いつも借りる友達',quote:'ねえ、それ貸して',look:'友達が、手を出す。',self:'断りたい…',hint:'貸しすぎで、何がつらい？'};
+  if(s.stage===1)return{narrative:'断るか、貸すか。どうするか。',speaker:'いつも借りる友達',quote:'今日も、お願い',look:'手が、差し出される。',self:s.reason==='fearDislike'?'嫌がられそう…':s.reason==='wantSay'?'モヤモヤする…':'断れない…',hint:'断る・今日だけ・別を勧める・理由、方法はある。'};
+  return{narrative:'気持ちを、伝えてみる。',speaker:'いつも借りる友達',quote:f.honest2||f.smiled?'「ごめん、知らなかった」':'「明日は？」',look:'友達が、答えを待っている。',self:f.honest2||f.smiled||f.saidNo2?'断れた。':'まだ、貸し続けてる。',hint:'正直・守る・回数・笑顔、選ぼう。'};
+ },
+ progress(s){const f=s.flags;return f.honest2||f.smiled||f.kept?3:f.saidNo2||f.explained2||f.offered?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.honest2||f.smiled?'断れた。':f.saidNo2||f.explained2?'一回、折り合いついた。':'まだ、貸し続けてる。断る・理由・正直、方法はある。'}
 }
 };
 

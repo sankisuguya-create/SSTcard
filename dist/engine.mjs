@@ -849,6 +849,16 @@ export const cards={
  shareSpot:{title:'仲間と喜びを分かち合う',kind:'talk',label:'喜びを分かち合う',cost:1,atk:2,attr:'soc',up:'soc',desc:'仲間と、喜びを分かち合う。',hint:'分かち合うは、絆',icon:'people'},
  nervousCalm:{title:'深呼吸で落ち着く',kind:'think',label:'深呼吸で落ち着く',cost:1,atk:2,attr:'ath',up:'ath',desc:'深呼吸で、落ち着く。',hint:'深呼吸は、落ち着き',icon:'heart'},
  beMyself:{title:'自分らしく走る',kind:'think',label:'自分らしく',cost:1,atk:2,attr:'ath',up:'ath',desc:'自分らしく、走る。',hint:'自分らしさは、力',icon:'runner'},
+ noInvite:{title:'呼ばれなかった',kind:'think',label:'呼ばれない',cost:0,strain:1,atk:1,attr:'soc',desc:'誕生会に、呼ばれなかった。',hint:'呼ばれないと、外される',icon:'eye'},
+ pretendNo:{title:'気にしないふり',kind:'think',label:'気にしないふり',cost:0,strain:1,atk:1,attr:'soc',desc:'気にしないふりを、する。',hint:'ふりは、本音がつらい',icon:'eye'},
+ heardParty:{title:'みんなの話で知る',kind:'think',label:'みんなの話',cost:0,strain:1,atk:1,attr:'soc',desc:'みんなの話で、誕生会を知る。',hint:'知ると、寂しくなる',icon:'ear'},
+ askFriend:{title:'「楽しかった？」と聞く',kind:'talk',label:'楽しかった？',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'「楽しかった？」と、聞く。',hint:'聞くは、興味',icon:'ear'},
+ ownPlans:{title:'自分の計画を立てる',kind:'think',label:'自分の計画',cost:1,atk:2,attr:'study',up:'study',desc:'自分の計画を、立てる。',hint:'自分の計画は、自立',icon:'list'},
+ wishWell:{title:'「楽しんでね」と言う',kind:'talk',label:'楽しんでね',cost:1,atk:2,attr:'soc',up:'soc',desc:'「楽しんでね」と、言う。',hint:'祝福は、成熟',icon:'heart'},
+ tellFeel5:{title:'「呼ばれなくて寂しい」と伝える',kind:'talk',label:'寂しいと伝える',cost:1,atk:2,attr:'soc',up:'soc',desc:'「呼ばれなくて寂しい」と、伝える。',hint:'伝えるは、正直',icon:'message'},
+ acceptRule:{title:'みんな呼べるわけじゃないと納得',kind:'think',label:'納得する',cost:1,atk:2,attr:'study',up:'study',desc:'みんな呼べるわけじゃないと、納得する。',hint:'納得は、理解',icon:'check'},
+ ownParty:{title:'自分も誘う機会を作る',kind:'think',label:'自分も誘う',cost:1,atk:2,attr:'soc',up:'soc',desc:'自分も誘う機会を、作る。',hint:'誘うは、積極性',icon:'people'},
+ letItGo:{title:'気にしないで進む',kind:'think',label:'気にしない',cost:1,atk:2,attr:'ath',up:'ath',desc:'気にしないで、進む。',hint:'進むは、前向き',icon:'flag'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -4745,6 +4755,48 @@ winFirst:{title:'1位になって重圧を感じる',nav:'1位の重圧',num:87,
  },
  progress(s){const f=s.flags;return f.enjoyed||f.myself||f.shared2?3:f.normal||f.calmed||f.modest?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.enjoyed||f.myself?'自分らしくできた。':f.normal||f.calmed?'落ち着いた。':'まだ、重い。喜ぶ・深呼吸・いつもの自分、方法はある。'}
+},
+inviteMiss:{title:'友達の誕生会に呼ばれなかった',nav:'誕生会に呼ばれない',num:88,attrs:['soc'],goals:['寂しさを受け止めたい','友達とよい関係でいたい','自分の道を進みたい'],chapters:['みんなの話で知る','寂しさと向き合う','自分の道を選ぶ'],locations:['教室','教室','教室'],base:['noInvite','pretendNo','heardParty','anger','ignore'],
+ start:{mind:4,energy:3},
+ monsters:[{name:'外された寂しさ',hp:5,power:1,turns:4,look:'外されて、寂しい。'},{name:'呼ばれない疑い',hp:5,power:1,turns:4,look:'なぜ呼ばれないのかと、疑う。'},{name:'自分の道',hp:6,power:2,turns:4,look:'自分の道を、進む。'}],
+ talk:[['askFriend2','「楽しかった？」と聞く','興味を、聞く。'],['tellFeel6','「寂しい」と伝える','本音を、伝える。'],['wishWell2','「楽しんでね」と言う','祝福を、言う。']],
+ think:[['shutOut','外された','呼ばれて、外された。'],['wantKnow','なぜか知りたい','なぜか、知りたい。'],['wantMove','自分の道を行きたい','自分の道を、行きたい。']],
+ reasonKeys:['shutOut','wantKnow','wantMove'],
+ stageGrants:[['askFriend','tellFeel5','acceptRule'],['wishWell','ownPlans','ownParty','letItGo','pretendNo']],
+ subs:[
+  {title:'友達が「ごめん、人数が…」と言った',text:'呼べない事情が、ある。',stat:'soc',min:0,good:{text:'「大丈夫だよ」と言えた。',rep:1,mind:1},ok:{text:'分かってもらえた。',mind:1}},
+  {title:'別の友達が遊びに誘ってくれた',text:'呼ばれなくても、友達はいる。',stat:'soc',min:0,good:{text:'「行く！」と言えた。',rep:1,mind:1},ok:{text:'楽しめた。',mind:1}}
+ ],
+ onExplore(s,key){const out={text:'',card:null};
+  if(key==='askFriend2'){s.flags.asked=true;relation(s,'「楽しかった？」と聞いたら、「楽しかったよ」と笑顔で答えてくれた。');out.text='「楽しかった？」\n「楽しかったよ」';out.card='askFriend'}
+  if(key==='tellFeel6'){s.flags.told=true;relation(s,'「呼ばれなくて寂しい」と伝えたら、「ごめん、人数が…」と正直に言ってくれた。');out.text='「呼ばれなくて、寂しかった」\n「ごめん、人数が…」';out.card='tellFeel5'}
+  if(key==='wishWell2'){s.flags.wished=true;out.text='「楽しんでね」と、言った。\n「ありがとう」';out.card='wishWell'}
+  if(key==='shutOut'){s.reason='shutOut';out.text='呼ばれて、外された。\n「楽しかった？」「寂しい」で、向き合おう。';out.card='askFriend'}
+  if(key==='wantKnow'){s.reason='wantKnow';out.text='なぜか、知りたい。\n「寂しい」「聞く」で、確かめよう。';out.card='tellFeel5'}
+  if(key==='wantMove'){s.reason='wantMove';out.text='自分の道を、行きたい。\n「自分の計画」「楽しんでね」で、進もう。';out.card='ownPlans'}
+  return out;
+ },
+ onPlay(s,id){const f=s.flags;
+  if(id==='askFriend'){f.asked2=true;return{text:'「楽しかった？」と、聞いた。',meaning:'聞くは、興味。'}}
+  if(id==='tellFeel5'){f.told2=true;return{text:'「寂しい」と、伝えた。',meaning:'伝えるは、正直。'}}
+  if(id==='wishWell'){f.wished2=true;return{text:'「楽しんでね」と、言った。',meaning:'祝福は、成熟。'}}
+  if(id==='ownPlans'){f.plans=true;return{text:'自分の計画を、立てた。',meaning:'自分の計画は、自立。'}}
+  if(id==='acceptRule'){f.accepted=true;return{text:'納得した。',meaning:'納得は、理解。'}}
+  if(id==='ownParty'){f.own=true;return{text:'自分も誘う機会を、考えた。',meaning:'誘うは、積極性。'}}
+  if(id==='letItGo'){f.letGo=true;return{text:'気にしないで、進んだ。',meaning:'進むは、前向き。'}}
+  if(id==='noInvite'){f.no=true;return{text:'呼ばれなかった。',meaning:'呼ばれないと、外される。'}}
+  if(id==='pretendNo'){f.pretended=true;return{text:'気にしないふりを、した。',meaning:'ふりは、本音がつらい。'}}
+  if(id==='heardParty'){f.heard=true;return{text:'みんなの話で、知った。',meaning:'知ると、寂しくなる。'}}
+  return{text:'',meaning:''};
+ },
+ watch(s){return s.stage===0?'外されるは、みんなある。':s.stage===1?'納得は、理解。':'自分の道は、前向き。'},
+ scene(s){const f=s.flags;
+  if(s.stage===0)return{narrative:'みんなの話で、友達の誕生会を知る。自分は呼ばれていない。',speaker:'話す子',quote:'誕生会、楽しみだよ',look:'みんなが、誕生会の話をしている。',self:'外され…',hint:'呼ばれなくて、何がつらい？'};
+  if(s.stage===1)return{narrative:'気にしないふりか、向き合うか。',speaker:'話す子',quote:'あんたは来ないの？',look:'誕生会の話が、続く。',self:s.reason==='wantKnow'?'なぜ…':s.reason==='wantMove'?'自分の道を…':'外された…',hint:'聞く・寂しい・自分の計画、方法はある。'};
+  return{narrative:'自分の道を、選ぶ。',speaker:'話す子',quote:f.asked2||f.wished2?'「楽しんでね」':'「あんたは来ないの？」',look:'自分の道が、待っている。',self:f.asked2||f.wished2||f.plans||f.letGo?'前を向けた。':'まだ、外されてる。',hint:'楽しかった・楽しんでね・自分の計画、選ぼう。'};
+ },
+ progress(s){const f=s.flags;return f.asked2||f.wished2||f.plans||f.letGo?3:f.told2||f.accepted||f.own?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.asked2||f.wished2?'向き合えた。':f.plans||f.letGo?'自分の道を行った。':'まだ、外されてる。聞く・寂しい・自分の計画、方法はある。'}
 }
 };
 

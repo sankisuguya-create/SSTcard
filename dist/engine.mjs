@@ -869,6 +869,16 @@ export const cards={
  wantFun2:{title:'楽しみたい気持ちを持つ',kind:'think',label:'楽しみたい',cost:1,atk:2,attr:'soc',up:'soc',desc:'楽しみたい気持ちを、持つ。',hint:'楽しいは、大切',icon:'sun'},
  friendsWait:{title:'みんなが聞きたい時間を守る',kind:'think',label:'時間を守る',cost:1,atk:2,attr:'soc',up:'soc',desc:'みんなが聞きたい時間を、守る。',hint:'時間を守るは、配慮',icon:'clock'},
  sayLater:{title:'「あとで話そう」と言う',kind:'talk',label:'あとで話そう',cost:1,atk:2,attr:'soc',up:'soc',desc:'「あとで話そう」と、言う。',hint:'あとでは、待てる',icon:'message'},
+ feelSleepy:{title:'眠くなる',kind:'think',label:'眠い',cost:0,strain:1,atk:1,attr:'study',desc:'眠くなって、集中できない。',hint:'眠いと、力が出ない',icon:'bolt'},
+ fakeAwake:{title:'起きてるふり',kind:'think',label:'起きてるふり',cost:0,strain:1,atk:1,attr:'study',desc:'起きてるふりを、する。',hint:'ふりは、すぐバレる',icon:'eye'},
+ eyesHeavy:{title:'目が重い',kind:'think',label:'目が重い',cost:0,strain:1,atk:1,attr:'study',desc:'目が重くて、閉じそう。',hint:'目が重いと、寝てしまう',icon:'eye'},
+ drinkWater2:{title:'水を飲む',kind:'think',label:'水を飲む',cost:1,atk:2,attr:'study',up:'study',desc:'水を飲んで、目をさます。',hint:'水は、覚醒',icon:'sun'},
+ pinchSelf:{title:'自分をつまむ',kind:'think',label:'自分をつまむ',cost:1,atk:2,attr:'ath',up:'ath',desc:'自分をつまんで、目をさます。',hint:'つまむは、刺激',icon:'hand'},
+ askWash:{title:'「顔を洗ってもいい？」と聞く',kind:'talk',label:'顔を洗ってもいい？',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'「顔を洗ってもいい？」と、聞く。',hint:'聞くは、正直',icon:'message'},
+ tellSleepy:{title:'「眠い」と先生に伝える',kind:'talk',label:'眠いと伝える',cost:1,atk:2,attr:'soc',up:'soc',desc:'「眠い」と、先生に伝える。',hint:'伝えるは、助け',icon:'message'},
+ sitUp2:{title:'姿勢を正す',kind:'think',label:'姿勢を正す',cost:1,atk:2,attr:'ath',up:'ath',desc:'姿勢を正して、目をさます。',hint:'姿勢は、覚醒',icon:'up'},
+ planSleep:{title:'今夜の睡眠計画を立てる',kind:'think',label:'睡眠計画',cost:1,atk:2,attr:'study',up:'study',desc:'今夜の睡眠計画を、立てる。',hint:'計画は、予防',icon:'list'},
+ morningPrep:{title:'朝の準備を思い出す',kind:'think',label:'朝の準備',cost:1,atk:2,attr:'study',up:'study',desc:'朝の準備を、思い出す。',hint:'思い出すは、対策',icon:'book'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -4849,6 +4859,48 @@ loudClass:{title:'うるさくして先生に注意された',nav:'うるさく�
  },
  progress(s){const f=s.flags;return f.quiet||f.whispered2||f.adjusted?3:f.noticed||f.fun||f.later2?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.quiet||f.whispered2?'静かにできた。':f.noticed||f.later2?'気づいた。':'まだ、うるさい。静かに・ひそひそ・あとで、方法はある。'}
+},
+sleepyClass:{title:'授業中に眠い',nav:'授業で眠い',num:90,attrs:['study'],goals:['目をさましたい','正直に伝えたい','今夜から対策したい'],chapters:['授業中、眠い','先生に注意されるか','目をさます方法を選ぶ'],locations:['教室','教室','教室'],base:['feelSleepy','fakeAwake','eyesHeavy','anger','ignore'],
+ start:{mind:4,energy:3},
+ monsters:[{name:'重い目',hp:5,power:1,turns:4,look:'目が、重い。'},{name:'眠気の誘惑',hp:5,power:1,turns:4,look:'眠気が、誘う。'},{name:'覚醒の方法',hp:6,power:2,turns:4,look:'目を、さます。'}],
+ talk:[['askWash2','顔を洗ってもいい？','顔を洗う許可を、聞く。'],['tellSleepy2','「眠い」と伝える','正直に、伝える。'],['askHelp2','先生に助けを求める','先生に、助けを求める。']],
+ think:[['wantSleep','眠りたい','眠りたい。'],['wantStay','起きてたい','起きて、いたい。'],['feelDrowsy','眠気','眠気に、負けそう。']],
+ reasonKeys:['wantSleep','wantStay','feelDrowsy'],
+ stageGrants:[['drinkWater2','pinchSelf','sitUp2'],['askWash','tellSleepy','planSleep','morningPrep','fakeAwake']],
+ subs:[
+  {title:'先生が「大丈夫？　水を飲んできな」と言った',text:'先生は、助けてくれる。',stat:'soc',min:0,good:{text:'「ありがとう」と言えた。',rep:1,mind:1},ok:{text:'水を飲んで目が覚めた。',mind:1}},
+  {title:'友達が「つまんであげる」と言った',text:'友達は、助けてくれる。',stat:'soc',min:0,good:{text:'「ありがとう」と言えた。',rep:1,mind:1},ok:{text:'目が覚めた。',mind:1}}
+ ],
+ onExplore(s,key){const out={text:'',card:null};
+  if(key==='askWash2'){s.flags.wash=true;relation(s,'「顔を洗ってもいい？」と聞いたら、「いいよ、行っておいで」と言ってくれた。');out.text='「顔を洗ってもいい？」\n「いいよ、行っておいで」';out.card='askWash'}
+  if(key==='tellSleepy2'){s.flags.told=true;relation(s,'「眠い」と伝えたら、「水を飲んできな」と言ってくれた。');out.text='「眠い」\n「水を飲んできな」';out.card='tellSleepy'}
+  if(key==='askHelp2'){s.flags.help=true;out.text='先生に、助けを求めた。\n「顔を洗ってきな」';out.card='tellSleepy'}
+  if(key==='wantSleep'){s.reason='wantSleep';out.text='眠りたい。\n「起きてるふり」「顔を洗う」で、選ぼう。';out.card='fakeAwake'}
+  if(key==='wantStay'){s.reason='wantStay';out.text='起きて、いたい。\n「水を飲む」「つまむ」で、目をさまそう。';out.card='drinkWater2'}
+  if(key==='feelDrowsy'){s.reason='feelDrowsy';out.text='眠気に、負けそう。\n「姿勢」「つまむ」で、目をさまそう。';out.card='pinchSelf'}
+  return out;
+ },
+ onPlay(s,id){const f=s.flags;
+  if(id==='drinkWater2'){f.drank=true;return{text:'水を飲んで、目をさました。',meaning:'水は、覚醒。'}}
+  if(id==='pinchSelf'){f.pinched=true;return{text:'自分をつまんで、目をさました。',meaning:'つまむは、刺激。'}}
+  if(id==='sitUp2'){f.sat=true;return{text:'姿勢を正して、目をさました。',meaning:'姿勢は、覚醒。'}}
+  if(id==='askWash'){f.washed=true;return{text:'顔を洗って、目をさました。',meaning:'洗うは、覚醒。'}}
+  if(id==='tellSleepy'){f.told2=true;return{text:'「眠い」と、伝えた。',meaning:'伝えるは、助け。'}}
+  if(id==='planSleep'){f.planned=true;return{text:'今夜の睡眠計画を、立てた。',meaning:'計画は、予防。'}}
+  if(id==='morningPrep'){f.prepped=true;return{text:'朝の準備を、思い出した。',meaning:'思い出すは、対策。'}}
+  if(id==='feelSleepy'){f.sleepy=true;return{text:'眠くなった。',meaning:'眠いと、力が出ない。'}}
+  if(id==='fakeAwake'){f.faked=true;return{text:'起きてるふりを、した。',meaning:'ふりは、すぐバレる。'}}
+  if(id==='eyesHeavy'){f.heavy=true;return{text:'目が重くて、閉じそう。',meaning:'目が重いと、寝てしまう。'}}
+  return{text:'',meaning:''};
+ },
+ watch(s){return s.stage===0?'眠いは、みんなある。':s.stage===1?'正直は、助け。':'目をさますは、対策。'},
+ scene(s){const f=s.flags;
+  if(s.stage===0)return{narrative:'午後の授業。目が重くて、眠い。先生がこっちを見ている。',speaker:'担任の先生',quote:'○○さん、聞いてる？',look:'眠い目が、自分を見ている。',self:'眠い…',hint:'眠いと、何がつらい？'};
+  if(s.stage===1)return{narrative:'起きてるふりか、正直に伝えるか。',speaker:'担任の先生',quote:'顔を洗ってきなさい',look:'先生が、見ている。',self:s.reason==='wantStay'?'起きてたい…':s.reason==='feelDrowsy'?'眠い…':'ふりでいい…',hint:'水・つまむ・顔を洗う、方法はある。'};
+  return{narrative:'目をさまして、今夜から対策する。',speaker:'担任の先生',quote:f.drank||f.washed||f.sat?'「顔を洗ってきな」':'「聞いてる？」',look:'目が覚める方法が、待っている。',self:f.drank||f.washed||f.pinched||f.sat?'目が覚めた。':'まだ、眠い。',hint:'水・顔を洗う・睡眠計画、選ぼう。'};
+ },
+ progress(s){const f=s.flags;return f.drank||f.washed||f.pinched||f.sat?3:f.told2||f.planned||f.prepped?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.drank||f.washed?'目が覚めた。':f.told2||f.planned?'正直に言えた。':'まだ、眠い。水・顔を洗う・睡眠計画、方法はある。'}
 }
 };
 

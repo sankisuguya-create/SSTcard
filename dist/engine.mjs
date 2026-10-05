@@ -889,6 +889,16 @@ export const cards={
  buddyHold:{title:'近くの友達と手をつなぐ',kind:'talk',label:'手をつなぐ',cost:1,atk:2,attr:'soc',up:'soc',desc:'近くの友達と、手をつなぐ。',hint:'つなぐは、安心',icon:'people'},
  rememberRule:{title:'訓練の意味を思い出す',kind:'think',label:'訓練の意味',cost:1,atk:2,attr:'study',up:'study',desc:'訓練の意味を、思い出す。',hint:'意味は、納得',icon:'book'},
  drillDone:{title:'訓練をやり遂げる',kind:'think',label:'やり遂げる',cost:1,atk:2,attr:'study',up:'study',desc:'訓練を、やり遂げる。',hint:'やり遂げるは、成長',icon:'flag'},
+ dutyShift:{title:'係を押し付けられた',kind:'think',label:'押し付けられた',cost:0,strain:1,atk:1,attr:'soc',desc:'嫌な係を、押し付けられる。',hint:'押し付けは、不公平',icon:'bolt'},
+ itsYour:{title:'「おまえの番だ」と言われる',kind:'think',label:'おまえの番だ',cost:0,strain:1,atk:1,attr:'soc',desc:'「おまえの番だ」と、言われる。',hint:'押し付けは、負担',icon:'eye'},
+ complainDuty:{title:'「なんで私だけ」と文句',kind:'talk',label:'文句',cost:0,strain:1,atk:1,attr:'soc',desc:'「なんで私だけ」と、文句を言う。',hint:'文句は、言い合いになる',icon:'bolt'},
+ takeDuty:{title:'今回は引き受ける',kind:'think',label:'引き受ける',cost:1,atk:2,attr:'soc',up:'soc',desc:'今回は、引き受ける。',hint:'引き受けるは、大人',icon:'hand'},
+ askFair:{title:'「じゃんけんで決めよう」と提案',kind:'talk',label:'じゃんけんで決めよう',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'「じゃんけんで決めよう」と、提案する。',hint:'公平は、納得',icon:'check'},
+ swapDuty:{title:'交代を提案する',kind:'talk',label:'交代を提案',cost:1,atk:2,attr:'soc',up:'soc',desc:'交代を、提案する。',hint:'交代は、公平',icon:'people'},
+ tellNo2:{title:'「やりたくない」と伝える',kind:'talk',label:'やりたくない',cost:1,atk:2,attr:'soc',up:'soc',desc:'「やりたくない」と、伝える。',hint:'伝えるは、正直',icon:'message'},
+ doOnce:{title:'一度やってみる',kind:'think',label:'やってみる',cost:1,atk:2,attr:'study',up:'study',desc:'一度、やってみる。',hint:'やってみるは、経験',icon:'flag'},
+ planFair:{title:'公平な順番を提案する',kind:'talk',label:'公平な順番',cost:1,atk:2,attr:'soc',up:'soc',desc:'公平な順番を、提案する。',hint:'公平は、解決',icon:'list'},
+ askTeacher6:{title:'先生に相談する',kind:'talk',label:'先生に相談',cost:1,atk:2,attr:'soc',up:'soc',desc:'先生に、相談する。',hint:'相談は、助け',icon:'message'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -4953,6 +4963,48 @@ drillScare:{title:'避難訓練で不安になる',nav:'避難訓練の不安',n
  },
  progress(s){const f=s.flags;return f.done||f.calm?3:f.hid||f.rule||f.held?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.done?'やり遂げた。':f.calm||f.hid?'避難できた。':'まだ、怖い。机の下・お・は・し・手をつなぐ、方法はある。'}
+},
+dutyPush:{title:'嫌な係を押し付けられた',nav:'係を押し付けられた',num:92,attrs:['soc'],goals:['不公平を伝えたい','公平に決めたい','納得して引き受けたい'],chapters:['嫌な係が出る','おまえの番だと言われる','公平に決める'],locations:['教室','教室','教室'],base:['dutyShift','itsYour','complainDuty','anger','ignore'],
+ start:{mind:4,energy:3},
+ monsters:[{name:'押し付けの不公平',hp:5,power:1,turns:4,look:'押し付けは、不公平。'},{name:'言い返すか迷う心',hp:5,power:1,turns:4,look:'言い返すか、迷う。'},{name:'公平な解決',hp:6,power:2,turns:4,look:'公平に、決める。'}],
+ talk:[['askFair2','「じゃんけんで決めよう」と言う','公平に、決める。'],['tellNo3','「やりたくない」と伝える','正直に、伝える。'],['swapDuty2','交代を提案する','交代を、提案する。']],
+ think:[['unfair','不公平','押し付けは、不公平。'],['wantSay','言いたい','言いたい。'],['wantFair','公平にしたい','公平に、したい。']],
+ reasonKeys:['unfair','wantSay','wantFair'],
+ stageGrants:[['takeDuty','tellNo2','askFair'],['swapDuty','doOnce','planFair','askTeacher6','complainDuty']],
+ subs:[
+  {title:'みんなが「じゃんけんでいいよ」と言った',text:'公平は、納得。',stat:'soc',min:0,good:{text:'「じゃんけん！」と言えた。',rep:1,mind:1},ok:{text:'納得して決められた。',mind:1}},
+  {title:'先生が「公平に決めてえらい」と言った',text:'公平は、認められる。',stat:'soc',min:0,good:{text:'「ありがとう」と言えた。',rep:1,mind:1},ok:{text:'解決した。',mind:1}}
+ ],
+ onExplore(s,key){const out={text:'',card:null};
+  if(key==='askFair2'){s.flags.fair=true;relation(s,'「じゃんけんで決めよう」と言ったら、「いいよ」と言ってくれた。');out.text='「じゃんけんで決めよう」\n「いいよ」';out.card='askFair'}
+  if(key==='tellNo3'){s.flags.no=true;relation(s,'「やりたくない」と伝えたら、「じゃあ、じゃんけんにしよう」と言ってくれた。');out.text='「やりたくない」\n「じゃあ、じゃんけんにしよう」';out.card='tellNo2'}
+  if(key==='swapDuty2'){s.flags.swap=true;out.text='交代を、提案した。\n「それならいいよ」';out.card='swapDuty'}
+  if(key==='unfair'){s.reason='unfair';out.text='押し付けは、不公平。\n「じゃんけん」「やりたくない」で、言おう。';out.card='askFair'}
+  if(key==='wantSay'){s.reason='wantSay';out.text='言いたい。\n「やりたくない」「じゃんけん」で、伝えよう。';out.card='tellNo2'}
+  if(key==='wantFair'){s.reason='wantFair';out.text='公平に、したい。\n「じゃんけん」「交代」で、決めよう。';out.card='askFair'}
+  return out;
+ },
+ onPlay(s,id){const f=s.flags;
+  if(id==='askFair'){f.fair2=true;return{text:'「じゃんけんで決めよう」と、言った。',meaning:'公平は、納得。'}}
+  if(id==='tellNo2'){f.no2=true;return{text:'「やりたくない」と、伝えた。',meaning:'伝えるは、正直。'}}
+  if(id==='swapDuty'){f.swapped=true;return{text:'交代を、提案した。',meaning:'交代は、公平。'}}
+  if(id==='takeDuty'){f.took=true;return{text:'今回は、引き受けた。',meaning:'引き受けるは、大人。'}}
+  if(id==='doOnce'){f.once=true;return{text:'一度、やってみた。',meaning:'やってみるは、経験。'}}
+  if(id==='planFair'){f.planned=true;return{text:'公平な順番を、提案した。',meaning:'公平は、解決。'}}
+  if(id==='askTeacher6'){f.teacher=true;return{text:'先生に、相談した。',meaning:'相談は、助け。'}}
+  if(id==='dutyShift'){f.shift=true;return{text:'嫌な係を、押し付けられた。',meaning:'押し付けは、不公平。'}}
+  if(id==='itsYour'){f.your=true;return{text:'「おまえの番だ」と、言われた。',meaning:'押し付けは、負担。'}}
+  if(id==='complainDuty'){f.complain=true;return{text:'文句を、言った。',meaning:'文句は、言い合いになる。'}}
+  return{text:'',meaning:''};
+ },
+ watch(s){return s.stage===0?'押し付けは、みんなある。':s.stage===1?'公平は、納得。':'公平は、解決。'},
+ scene(s){const f=s.flags;
+  if(s.stage===0)return{narrative:'みんなが嫌がる係が出る。「おまえの番だ」と言われた。',speaker:'クラスの仲間',quote:'おまえの番だ',look:'みんなが、自分を見ている。',self:'なんで私だけ…',hint:'押し付けられて、何がつらい？'};
+  if(s.stage===1)return{narrative:'文句か、公平に決めるか。',speaker:'クラスの仲間',quote:'どする？',look:'不公平が、続く。',self:s.reason==='wantSay'?'言いたい…':s.reason==='wantFair'?'公平にしたい…':'なんで私だけ…',hint:'じゃんけん・やりたくない・交代、方法はある。'};
+  return{narrative:'公平に決めて、納得する。',speaker:'クラスの仲間',quote:f.fair2||f.swapped?'「じゃんけん！」':'「どうする？」',look:'公平な決め方が、待っている。',self:f.fair2||f.swapped||f.planned?'公平に決められた。':'まだ、不公平。',hint:'じゃんけん・交代・順番、選ぼう。'};
+ },
+ progress(s){const f=s.flags;return f.fair2||f.swapped||f.planned?3:f.no2||f.once||f.took?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.fair2||f.swapped?'公平に決められた。':f.no2||f.took?'正直に言えた。':'まだ、不公平。じゃんけん・やりたくない・交代、方法はある。'}
 }
 };
 

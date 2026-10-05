@@ -578,6 +578,16 @@ export const cards={
  ownShoes:{title:'「忘れた自分が悪い」と認める',kind:'think',label:'自分を認める',cost:1,atk:2,attr:'study',up:'study',desc:'忘れたのは自分と、認める。',hint:'認めると、次に進める',icon:'check'},
  checkBag2:{title:'明日は前日に確かめる',kind:'think',label:'前日確かめ',cost:1,atk:2,attr:'study',up:'study',desc:'明日から、前の日に持ち物を確かめる。',hint:'習慣は、忘れ物を防ぐ',icon:'list'},
  apologizeT:{title:'先生に「ごめんなさい」と言う',kind:'talk',label:'謝る',cost:1,atk:2,attr:'soc',up:'soc',desc:'忘れてごめんなさい、と言う。',hint:'謝ると、次が始まる',icon:'heart'},
+ skipClean:{title:'掃除をサボって遊ぶ',kind:'think',label:'サボる',cost:0,strain:1,atk:1,attr:'soc',desc:'掃除をサボって、遊びに行く。',hint:'サボると、誰かが倍やる',icon:'bolt'},
+ fakeBusy:{title:'忙しいふりをする',kind:'think',label:'忙しいふり',cost:0,strain:1,atk:1,attr:'soc',desc:'掃除せず、忙しいふりをする。',hint:'ふりは、バレるとつらい',icon:'eye'},
+ smallClean:{title:'小さなところから始める',kind:'think',label:'小さく始める',cost:1,atk:2,attr:'study',up:'study',desc:'「まずここだけ」と、小さく始める。',hint:'小さく始めると、続く',icon:'check'},
+ askEasy:{title:'「楽なところを担当して」と言う',kind:'talk',label:'楽なところ',cost:1,atk:2,attr:'soc',up:'soc',desc:'「今日は楽なところを」と、言う。',hint:'言えると、続く',icon:'message'},
+ tiredSay:{title:'「疲れた」と正直に言う',kind:'talk',label:'疲れたと言う',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'「疲れたから少し休む」と、言う。',hint:'正直は、助けを呼ぶ',icon:'heart'},
+ quickClean:{title:'手早く片付ける',kind:'think',label:'手早く',cost:1,atk:2,attr:'ath',up:'ath',desc:'だらだらせず、手早くやる。',hint:'手早いと、早く終わる',icon:'bolt'},
+ swapJob:{title:'担当を替えてもらう',kind:'talk',label:'担当を替える',cost:1,atk:2,attr:'soc',up:'soc',desc:'「担当替えて」と、頼んでみる。',hint:'替わると、やれる',icon:'people'},
+ ownClean:{title:'「自分の担当」と考える',kind:'think',label:'自分の担当',cost:1,atk:2,attr:'study',up:'study',desc:'掃除は、自分の担当と考える。',hint:'担当は、やりがい',icon:'flag'},
+ teamClean:{title:'「一緒にやろう」と声をかける',kind:'talk',label:'一緒に',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'「一緒にやろう」と、声をかける。',hint:'一緒なら、楽',icon:'people'},
+ doneClean:{title:'「終わった」と報告する',kind:'talk',label:'終わった報告',cost:1,atk:2,attr:'soc',up:'soc',desc:'終わったら、「できました」と言う。',hint:'報告は、達成感',icon:'check'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -3339,6 +3349,48 @@ noShoes:{title:'上履きを忘れた',nav:'上履きを忘れた',num:60,attrs:
  },
  progress(s){const f=s.flags;return f.checkB||f.ownedS||f.apologized?3:f.toldS3||f.borrowed2||f.foundBox||f.askedF10?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.checkB||f.ownedS?'明日の準備ができた。':f.toldS3||f.borrowed2?'今日を、乗り切れた。':'まだ、靴下のまま。正直・借りる・探す、方法はある。'}
+},
+cleanSkip:{title:'掃除当番、逃げたい',nav:'掃除をサボりたい',num:61,attrs:['soc','study'],goals:['逃げずにやりたい','正直に気持ちを言いたい','自分の担当を果たしたい'],chapters:['掃除の時間が来た','やるか逃げるか','片付け終わり'],locations:['教室','教室','教室'],base:['skipClean','fakeBusy','smallClean','anger','ignore'],
+ start:{mind:4,energy:3},
+ monsters:[{name:'サボりたい気持ち',hp:5,power:1,turns:4,look:'掃除、面倒くさい。'},{name:'めんどくささ',hp:5,power:1,turns:4,look:'早く遊びたい。'},{name:'自分の担当',hp:6,power:2,turns:4,look:'掃除を、果たさなければ。'}],
+ talk:[['askEasy2','「楽なところを」と言う','担当を、相談する。'],['tiredSay2','「疲れた」と正直に言う','気持ちを、伝える。'],['teamClean2','「一緒にやろう」と声をかける','一緒なら、楽。']],
+ think:[['lazy','掃除が面倒くさい','掃除、面倒だな。'],['wantPlay','早く遊びたい','掃除より、遊びたい。'],['wantDone','ちゃんとやりたい','本当は、やって終わりたい。']],
+ reasonKeys:['lazy','wantPlay','wantDone'],
+ stageGrants:[['smallClean','askEasy','tiredSay'],['quickClean','swapJob','ownClean','teamClean','doneClean']],
+ subs:[
+  {title:'「手伝おうか」と声をかけてもらった',text:'手伝いが、来てくれた。',stat:'soc',min:0,good:{text:'一緒にやれた。',rep:1,mind:1},ok:{text:'助かった。',mind:1}},
+  {title:'掃除が終わって達成感',text:'きれいになった教室を見た。',stat:'study',min:0,good:{text:'「やった」と思えた。',mind:1},ok:{text:'気持ちよかった。',mind:1}}
+ ],
+ onExplore(s,key){const out={text:'',card:null};
+  if(key==='askEasy2'){s.flags.askedE=true;out.text='「今日は楽なところを」\n「いいよ、こっちにしよう」';out.card='askEasy'}
+  if(key==='tiredSay2'){s.flags.toldT=true;relation(s,'「疲れた」と言ったら、「少し休んでいいよ」と言ってもらえた。');out.text='「疲れちゃった」\n「少し休んで、できるところから」';out.card='tiredSay'}
+  if(key==='teamClean2'){s.flags.teamed=true;relation(s,'「一緒にやろう」で声をかけたら、分担できた。');out.text='「一緒にやろう」\n「うん、半分ずつやろう」';out.card='teamClean'}
+  if(key==='lazy'){s.reason='lazy';out.text='掃除が、面倒くさい。\n「小さく始める」で、始めてみよう。';out.card='smallClean'}
+  if(key==='wantPlay'){s.reason='wantPlay';out.text='掃除より、遊びたい。\n「手早く」やると、早く終わる。';out.card='quickClean'}
+  if(key==='wantDone'){s.reason='wantDone';out.text='本当は、やって終わりたい。\n「自分の担当」「一緒に」で進めよう。';out.card='ownClean'}
+  return out;
+ },
+ onPlay(s,id){const f=s.flags;
+  if(id==='smallClean'){f.smalledC=true;return{text:'小さなところから、始めた。',meaning:'小さく始めると、続く。'}}
+  if(id==='askEasy'){f.askedE2=true;return{text:'「楽なところを」と、言った。',meaning:'言えると、続く。'}}
+  if(id==='tiredSay'){f.toldT2=true;return{text:'「疲れた」と、正直に言った。',meaning:'正直は、助けを呼ぶ。'}}
+  if(id==='quickClean'){f.quick=true;return{text:'手早く、片付けた。',meaning:'手早いと、早く終わる。'}}
+  if(id==='swapJob'){f.swapped2=true;return{text:'担当を、替えてもらった。',meaning:'替わると、やれる。'}}
+  if(id==='ownClean'){f.ownedC=true;return{text:'「自分の担当」と、考えた。',meaning:'担当は、やりがい。'}}
+  if(id==='teamClean'){f.teamed2=true;return{text:'「一緒にやろう」と、声をかけた。',meaning:'一緒なら、楽。'}}
+  if(id==='doneClean'){f.doneC=true;return{text:'「終わった」と、報告した。',meaning:'報告は、達成感。'}}
+  if(id==='skipClean'){f.skippedC=true;return{text:'サボって、遊びに行った。',meaning:'サボると、誰かが倍やる。'}}
+  if(id==='fakeBusy'){f.faked=true;return{text:'忙しいふりを、した。',meaning:'ふりは、バレるとつらい。'}}
+  return{text:'',meaning:''};
+ },
+ watch(s){return s.stage===0?'面倒は、みんな思う。':s.stage===1?'小さく始めると、続く。':'担当は、やりがい。'},
+ scene(s){const f=s.flags;
+  if(s.stage===0)return{narrative:'掃除の時間。みんなが箒を持っている中、逃げ出したい気持ち。',speaker:'掃除当番',quote:'今日は床掃除だよ',look:'箒とちり取りが、並んでいる。',self:'面倒だな…',hint:'掃除当番で、何がつらい？'};
+  if(s.stage===1)return{narrative:'やるか、逃げるか。自分の担当を、どう進めるか。',speaker:'掃除当番',quote:'早く終わらせよう',look:'教室が、まだ汚いまま。',self:s.reason==='wantPlay'?'遊びたい…':s.reason==='wantDone'?'やりたい…':'面倒…',hint:'小さく・正直・手早く・担当、方法はある。'};
+  return{narrative:'片付けが、終わった。',speaker:'掃除当番',quote:f.doneC||f.ownedC?'「きれいになったね」':'「終わった？」',look:'教室が、すっきりした。',self:f.doneC||f.ownedC||f.teamed2?'やり遂げられた。':'まだ、面倒なまま。',hint:'報告・担当・一緒・替える、選ぼう。'};
+ },
+ progress(s){const f=s.flags;return f.doneC||f.ownedC||f.teamed2?3:f.smalledC||f.askedE2||f.toldT2||f.quick?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.doneC||f.ownedC?'掃除を、果たせた。':f.smalledC||f.quick?'小さく、始められた。':'まだ、面倒なまま。小さく・正直・一緒に、方法はある。'}
 }
 };
 

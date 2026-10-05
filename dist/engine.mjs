@@ -789,6 +789,16 @@ export const cards={
  aloneGroup:{title:'一人でやることにする',kind:'think',label:'一人でやる',cost:1,atk:2,attr:'ath',up:'ath',desc:'一人で、やることにする。',hint:'一人も、選択肢',icon:'flag'},
  wantJoin2:{title:'入りたい気持ちを認める',kind:'think',label:'入りたい',cost:1,atk:2,attr:'soc',up:'soc',desc:'班に入りたい気持ちを、認める。',hint:'認めると、動ける',icon:'heart'},
  feelExtra:{title:'余った感じがする',kind:'think',label:'余った感じ',cost:0,strain:1,atk:1,attr:'soc',desc:'自分だけ、余った感じがする。',hint:'余った感じは、つらい',icon:'bolt'},
+ nickname:{title:'あだ名で呼ばれる',kind:'think',label:'あだ名で呼ばれる',cost:0,strain:1,atk:1,attr:'soc',desc:'嫌なあだ名で、呼ばれる。',hint:'あだ名は、傷つく',icon:'message'},
+ keepSmile:{title:'笑ってごまかす',kind:'think',label:'ごまかす',cost:0,strain:1,atk:1,attr:'soc',desc:'嫌なのに、笑ってごまかす。',hint:'ごまかしは、本音がつらい',icon:'eye'},
+ hateName:{title:'「その名前は嫌」と認める',kind:'think',label:'その名前は嫌',cost:1,atk:2,attr:'soc',up:'soc',desc:'その名前は嫌だと、認める。',hint:'認めると、伝えられる',icon:'puzzle'},
+ sayStop2:{title:'「やめて」とはっきり言う',kind:'talk',label:'やめて',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'「やめて」と、はっきり言う。',hint:'やめては、境界線',icon:'hand'},
+ tellDislike:{title:'「その呼び方は嫌」と伝える',kind:'talk',label:'嫌と伝える',cost:1,atk:2,attr:'soc',up:'soc',desc:'「その呼び方は嫌」と、伝える。',hint:'伝えるは、正直',icon:'message'},
+ ignoreCall:{title:'呼ばれても応えない',kind:'think',label:'応えない',cost:1,atk:2,attr:'ath',up:'ath',desc:'あだ名で呼ばれても、応えない。',hint:'応えないは、意思表示',icon:'flag'},
+ askKind2:{title:'「名前で呼んで」と頼む',kind:'talk',label:'名前で呼んで',cost:1,atk:2,attr:'soc',up:'soc',desc:'「ちゃんと名前で呼んで」と、頼む。',hint:'名前は、尊厳',icon:'heart'},
+ laughItOff2:{title:'自分も笑いに変える',kind:'talk',label:'笑いに変える',cost:1,atk:2,attr:'soc',up:'soc',desc:'あだ名を、自分も笑いに変える。',hint:'笑いに変えるは、強さ',icon:'sun'},
+ feelTeased:{title:'からかわれた感じ',kind:'think',label:'からかわれた',cost:0,strain:1,atk:1,attr:'soc',desc:'からかわれた感じがする。',hint:'からかいは、傷つく',icon:'bolt'},
+ tellTeacher10:{title:'先生に「あだ名で」と相談',kind:'talk',label:'先生に相談',cost:1,atk:2,attr:'soc',up:'soc',desc:'先生に「あだ名で呼ばれる」と相談する。',hint:'相談は、助け',icon:'people'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -4433,6 +4443,48 @@ groupLeft:{title:'班決めで一人余った',nav:'班で一人余った',num:8
  },
  progress(s){const f=s.flags;return f.asked2||f.two2||f.put||f.alone?3:f.offered2||f.wanted?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.asked2||f.two2?'入れた。':f.put||f.alone?'場所ができた。':'まだ、浮いてる。入れて・余った子・一人、方法はある。'}
+},
+nickCall:{title:'嫌なあだ名を呼ばれる',nav:'あだ名を呼ばれる',num:82,attrs:['soc'],goals:['嫌だと伝えたい','名前で呼ばれたい','気持ちを守りたい'],chapters:['あだ名で呼ばれる','嫌な気持ちと向き合う','自分の呼ばれ方を伝える'],locations:['校庭','教室','教室'],base:['nickname','keepSmile','feelTeased','anger','ignore'],
+ start:{mind:4,energy:3},
+ monsters:[{name:'あだ名の棘',hp:5,power:1,turns:4,look:'あだ名が、刺さる。'},{name:'ごまかす自分',hp:5,power:1,turns:4,look:'ごまかして、笑ってる。'},{name:'自分の名前',hp:6,power:2,turns:4,look:'名前で、呼ばれたい。'}],
+ talk:[['sayStop3','「やめて」と言う','やめてと、言う。'],['askKind3','「名前で呼んで」と頼む','名前で、呼ばれる。'],['tellTeacher11','先生に相談する','先生に、相談。']],
+ think:[['calledBad','嫌な呼ばれ方','あだ名で、呼ばれる。'],['wantName','名前で呼ばれたい','ちゃんと、呼ばれたい。'],['hurtSmile','笑ってごまかす','本音を、隠してる。']],
+ reasonKeys:['calledBad','wantName','hurtSmile'],
+ stageGrants:[['hateName','tellDislike','sayStop2'],['askKind2','ignoreCall','laughItOff2','tellTeacher10','keepSmile']],
+ subs:[
+  {title:'友達が「その呼び方、良くない」と言った',text:'味方がいると、言いやすい。',stat:'soc',min:0,good:{text:'「そうだね」と言えた。',rep:1,mind:1},ok:{text:'場が変わった。',mind:1}},
+  {title:'呼ぶ子が「ごめん、そういう意味じゃ」と言った',text:'伝えると、分かる。',stat:'soc',min:0,good:{text:'許せた。',rep:1,mind:1},ok:{text:'名前で呼んでくれた。',mind:1}}
+ ],
+ onExplore(s,key){const out={text:'',card:null};
+  if(key==='sayStop3'){s.flags.stop=true;relation(s,'「やめて」とはっきり言ったら、「わかった、ごめん」とやめてくれた。');out.text='「やめて」\n「わかった、ごめん」';out.card='sayStop2'}
+  if(key==='askKind3'){s.flags.kind=true;out.text='「名前で呼んで」と、頼んだ。\n「うん、ごめんね」';out.card='askKind2'}
+  if(key==='tellTeacher11'){s.flags.toldT=true;relation(s,'先生に相談したら、「みんなに話しておくね」と言ってくれた。');out.text='「あだ名で呼ばれて嫌です」\n「みんなに話しておくね」';out.card='tellTeacher10'}
+  if(key==='calledBad'){s.reason='calledBad';out.text='あだ名で、呼ばれる。\n「やめて」「嫌と伝える」で、伝えよう。';out.card='sayStop2'}
+  if(key==='wantName'){s.reason='wantName';out.text='ちゃんと、呼ばれたい。\n「名前で」「相談」で、頼もう。';out.card='askKind2'}
+  if(key==='hurtSmile'){s.reason='hurtSmile';out.text='笑って、ごまかしてる。\n「嫌と認める」「応えない」で、本音を出そう。';out.card='hateName'}
+  return out;
+ },
+ onPlay(s,id){const f=s.flags;
+  if(id==='hateName'){f.hated=true;return{text:'嫌だと、認めた。',meaning:'認めると、伝えられる。'}}
+  if(id==='sayStop2'){f.stop2=true;return{text:'「やめて」と、言った。',meaning:'やめては、境界線。'}}
+  if(id==='tellDislike'){f.toldD=true;return{text:'「その呼び方は嫌」と、伝えた。',meaning:'伝えるは、正直。'}}
+  if(id==='askKind2'){f.kind2=true;return{text:'「名前で呼んで」と、頼んだ。',meaning:'名前は、尊厳。'}}
+  if(id==='ignoreCall'){f.ignored=true;return{text:'呼ばれても、応えなかった。',meaning:'応えないは、意思表示。'}}
+  if(id==='laughItOff2'){f.laughed=true;return{text:'自分も、笑いに変えた。',meaning:'笑いに変えるは、強さ。'}}
+  if(id==='tellTeacher10'){f.toldT2=true;return{text:'先生に、相談した。',meaning:'相談は、助け。'}}
+  if(id==='nickname'){f.called=true;return{text:'あだ名で、呼ばれた。',meaning:'あだ名は、傷つく。'}}
+  if(id==='keepSmile'){f.smiled=true;return{text:'笑って、ごまかした。',meaning:'ごまかしは、本音がつらい。'}}
+  if(id==='feelTeased'){f.teased=true;return{text:'からかわれた感じがした。',meaning:'からかいは、傷つく。'}}
+  return{text:'',meaning:''};
+ },
+ watch(s){return s.stage===0?'からかいは、みんなある。':s.stage===1?'やめては、境界線。':'名前は、尊厳。'},
+ scene(s){const f=s.flags;
+  if(s.stage===0)return{narrative:'休み時間。嫌なあだ名で、呼ばれ続けている。',speaker:'あだ名を呼ぶ子',quote:'おい、○○（あだ名）',look:'みんなが、笑ている。',self:'嫌だな…',hint:'あだ名で、何がつらい？'};
+  if(s.stage===1)return{narrative:'ごまかすか、伝えるか。',speaker:'あだ名を呼ぶ子',quote:'なんだよ、いいじゃん',look:'あだ名が、飛んでいる。',self:s.reason==='wantName'?'名前で呼ばれたい…':s.reason==='hurtSmile'?'ごまかしてる…':'嫌だ…',hint:'やめて・名前で・相談、方法はある。'};
+  return{narrative:'自分の呼ばれ方を、伝える。',speaker:'あだ名を呼ぶ子',quote:f.stop2||f.kind2?'「ごめん、名前で呼ぶね」':'「なんだよ、いいじゃん」',look:'名前が、待っている。',self:f.stop2||f.kind2||f.toldT2?'名前で呼ばれた。':'まだ、あだ名のまま。',hint:'やめて・名前で・相談、選ぼう。'};
+ },
+ progress(s){const f=s.flags;return f.stop2||f.kind2||f.toldT2?3:f.hated||f.toldD||f.laughed?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.stop2||f.kind2?'名前で呼ばれた。':f.hated||f.toldD?'気持ちを伝えた。':'まだ、あだ名のまま。やめて・名前で・相談、方法はある。'}
 }
 };
 

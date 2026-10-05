@@ -829,6 +829,16 @@ export const cards={
  callHome2:{title:'家に電話してもらう',kind:'talk',label:'家に電話',cost:1,atk:2,attr:'soc',up:'soc',desc:'家に電話して、迎えを頼む。',hint:'電話は、助け',icon:'message'},
  acceptRain:{title:'濡れてもいいと覚悟',kind:'think',label:'濡れてもいい',cost:1,atk:2,attr:'ath',up:'ath',desc:'濡れてもいいと、覚悟する。',hint:'覚悟は、強さ',icon:'flag'},
  lookSky:{title:'空を見て雨を読む',kind:'think',label:'空を見る',cost:1,atk:2,attr:'study',up:'study',desc:'空を見て、雨を読む。',hint:'読むは、判断',icon:'eye'},
+ myFault2:{title:'自分のせいで負けた',kind:'think',label:'自分のせい',cost:0,strain:1,atk:1,attr:'soc',desc:'自分のミスで、チームが負けた。',hint:'せいがあると、肩が重い',icon:'bolt'},
+ hideFault:{title:'ミスを隠す',kind:'think',label:'ミスを隠す',cost:0,strain:1,atk:1,attr:'soc',desc:'ミスを、隠す。',hint:'隠すと、罪が残る',icon:'eye'},
+ sorryTeam:{title:'「ごめん」とチームに言う',kind:'talk',label:'ごめん',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'「ごめん」と、チームに言う。',hint:'ごめんは、誠実',icon:'heart'},
+ acceptMiss:{title:'ミスを認める',kind:'think',label:'ミスを認める',cost:1,atk:2,attr:'soc',up:'soc',desc:'ミスを、認める。',hint:'認めると、軽くなる',icon:'puzzle'},
+ focusNext:{title:'次のプレーに集中',kind:'think',label:'次に集中',cost:1,atk:2,attr:'ath',up:'ath',desc:'次のプレーに、集中する。',hint:'次は、やり直せる',icon:'flag'},
+ apologize2:{title:'ちゃんと謝る',kind:'talk',label:'謝る',cost:1,atk:2,attr:'soc',up:'soc',desc:'ちゃんと、謝る。',hint:'謝るは、勇気',icon:'message'},
+ teamForgive:{title:'仲間を信じる',kind:'think',label:'仲間を信じる',cost:1,atk:2,attr:'soc',up:'soc',desc:'仲間を、信じる。',hint:'信じるは、力',icon:'people'},
+ tryAgain:{title:'もう一度やり直す',kind:'think',label:'やり直す',cost:1,atk:2,attr:'ath',up:'ath',desc:'もう一度、やり直す。',hint:'やり直しは、挽回',icon:'up'},
+ blameLuck:{title:'運のせいにする',kind:'think',label:'運のせい',cost:0,strain:1,atk:1,attr:'soc',desc:'運のせいに、する。',hint:'運のせいは、逃げ',icon:'eye'},
+ keepGoing:{title:'試合を続ける',kind:'think',label:'続ける',cost:1,atk:2,attr:'ath',up:'ath',desc:'試合を、続ける。',hint:'続けるは、前向き',icon:'runner'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -4641,6 +4651,48 @@ rainHome:{title:'下校時に傘がない',nav:'傘がない',num:85,attrs:['soc
  },
  progress(s){const f=s.flags;return f.borrowed2||f.shared2||f.called2||f.waited?3:f.saw||f.accepted||f.stayed?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.borrowed2||f.shared2?'帰れる。':f.waited||f.stayed?'待てた。':'まだ、立ち尽くしてる。貸して・入れて・電話、方法はある。'}
+},
+teamLose:{title:'チーム戦で自分のミスで負けた',nav:'自分のミスで負けた',num:86,attrs:['ath','soc'],goals:['ミスを認めたい','チームに謝りたい','次に生かしたい'],chapters:['チーム戦の最中','自分のミスで負けた','ミスと向き合う'],locations:['体育館','体育館','教室'],base:['myFault2','hideFault','blameLuck','anger','ignore'],
+ start:{mind:4,energy:3},
+ monsters:[{name:'ミスの重さ',hp:5,power:1,turns:4,look:'ミスが、重い。'},{name:'仲間の視線',hp:5,power:1,turns:4,look:'仲間が、見ている。'},{name:'次のプレー',hp:6,power:2,turns:4,look:'次のプレーで、取り返す。'}],
+ talk:[['sorryTeam2','「ごめん」と言う','チームに、謝る。'],['apologize3','ちゃんと謝る','ちゃんと、謝る。'],['teamTalk3','仲間と話す','仲間と、話す。']],
+ think:[['myMiss','自分のミス','自分のミスで、負けた。'],['wantRedo','やり直したい','もう一度、やり直したい。'],['blameWant','誰かのせいにしたい','誰かのせいに、したい。']],
+ reasonKeys:['myMiss','wantRedo','blameWant'],
+ stageGrants:[['sorryTeam','acceptMiss','focusNext'],['apologize2','teamForgive','tryAgain','keepGoing','myFault2']],
+ subs:[
+  {title:'仲間が「次は取り返そう」と言った',text:'仲間は、励ましてくれる。',stat:'soc',min:0,good:{text:'「ごめん、ありがとう」と言えた。',rep:1,mind:1},ok:{text:'前を向けた。',mind:1}},
+  {title:'監督が「ミスは次に生かせ」と言った',text:'ミスは、学び。',stat:'study',min:0,good:{text:'次のプレーが見えた。',mind:1},ok:{text:'気持ちが軽くなった。',mind:1}}
+ ],
+ onExplore(s,key){const out={text:'',card:null};
+  if(key==='sorryTeam2'){s.flags.sorry=true;relation(s,'「ごめん」と言ったら、「いいよ、次頑張ろう」と言ってくれた。');out.text='「ごめん」\n「いいよ、次頑張ろう」';out.card='sorryTeam'}
+  if(key==='apologize3'){s.flags.apologized=true;out.text='ちゃんと、謝った。\n「分かってるよ」';out.card='apologize2'}
+  if(key==='teamTalk3'){s.flags.talked=true;out.text='仲間と、話した。\n「次は取り返そう」';out.card='teamForgive'}
+  if(key==='myMiss'){s.reason='myMiss';out.text='自分のミスで、負けた。\n「ごめん」「認める」で、向き合おう。';out.card='sorryTeam'}
+  if(key==='wantRedo'){s.reason='wantRedo';out.text='もう一度、やり直したい。\n「次に集中」「やり直す」で、動こう。';out.card='focusNext'}
+  if(key==='blameWant'){s.reason='blameWant';out.text='誰かのせいに、したい。\n「ごめん」「謝る」で、自分を見よう。';out.card='sorryTeam'}
+  return out;
+ },
+ onPlay(s,id){const f=s.flags;
+  if(id==='sorryTeam'){f.sorry2=true;return{text:'「ごめん」と、言った。',meaning:'ごめんは、誠実。'}}
+  if(id==='acceptMiss'){f.accepted=true;return{text:'ミスを、認めた。',meaning:'認めると、軽くなる。'}}
+  if(id==='focusNext'){f.next=true;return{text:'次のプレーに、集中した。',meaning:'次は、やり直せる。'}}
+  if(id==='apologize2'){f.apologized2=true;return{text:'ちゃんと、謝った。',meaning:'謝るは、勇気。'}}
+  if(id==='teamForgive'){f.forgiven=true;return{text:'仲間を、信じた。',meaning:'信じるは、力。'}}
+  if(id==='tryAgain'){f.retried=true;return{text:'もう一度、やり直した。',meaning:'やり直しは、挽回。'}}
+  if(id==='keepGoing'){f.kept=true;return{text:'試合を、続けた。',meaning:'続けるは、前向き。'}}
+  if(id==='myFault2'){f.mine=true;return{text:'自分のせいで、負けた。',meaning:'せいがあると、肩が重い。'}}
+  if(id==='hideFault'){f.hid=true;return{text:'ミスを、隠した。',meaning:'隠すと、罪が残る。'}}
+  if(id==='blameLuck'){f.blamed=true;return{text:'運のせいに、した。',meaning:'運のせいは、逃げ。'}}
+  return{text:'',meaning:''};
+ },
+ watch(s){return s.stage===0?'ミスは、みんなある。':s.stage===1?'ごめんは、誠実。':'次は、やり直せる。'},
+ scene(s){const f=s.flags;
+  if(s.stage===0)return{narrative:'チーム戦の最後。自分のパスミスで、点を取られて負けた。',speaker:'チームの仲間',quote:'あ〜、もう少しだった',look:'仲間が、うなだれている。',self:'自分のせい…',hint:'ミスで、何がつらい？'};
+  if(s.stage===1)return{narrative:'隠すか、謝るか。',speaker:'チームの仲間',quote:'次は取り返そう',look:'仲間の目が、自分を見ている。',self:s.reason==='wantRedo'?'やり直したい…':s.reason==='blameWant'?'誰かのせいに…':'自分のせい…',hint:'ごめん・認める・次、方法はある。'};
+  return{narrative:'ミスと向き合って、次に進む。',speaker:'チームの仲間',quote:f.sorry2||f.apologized2?'「次は取り返そう」':'「次は取り返そう」',look:'次のプレーが、待っている。',self:f.sorry2||f.accepted||f.retried?'向き合えた。':'まだ、罪を抱えてる。',hint:'ごめん・次・やり直す、選ぼう。'};
+ },
+ progress(s){const f=s.flags;return f.sorry2||f.apologized2||f.retried?3:f.accepted||f.next?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.sorry2||f.apologized2?'謝れた。':f.accepted||f.next?'認めた。':'まだ、罪を抱えてる。ごめん・次・やり直す、方法はある。'}
 }
 };
 

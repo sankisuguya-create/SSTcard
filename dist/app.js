@@ -1,4 +1,4 @@
-import {cards,minusCards,stories,statMeta,initial,monster,monsterSize,monsterFaded,monsterPower,cardAtk,explore,available,canPlay,canExplore,canMinus,play,advance,continueTurn,safety,free,minus,scene,summary,setGoal,chooseSub,enterEvent} from './engine.mjs';
+import {cards,minusCards,stories,statMeta,initial,monster,monsterSize,monsterFaded,monsterPower,cardAtk,explore,available,canPlay,canExplore,canMinus,play,advance,continueTurn,safety,free,minus,scene,summary,setGoal,chooseSub,enterEvent,reqMet} from './engine.mjs';
 const app=document.querySelector('#app'),dialog=document.querySelector('#dialog');
 let state=initial(),history=[],previous=null,focusReturn=null;
 const sessions={};
@@ -77,14 +77,14 @@ function render(){
 
 // 中央上部: パズドラ風。大きなモンスターイラスト＋ダイアログ（タップで履歴）
 function arena(s){
- const m=monster(s),left=m.turns-s.turns,img=IMG(`mon-${s.story}-${s.stage}.webp`);
+ const m=monster(s),left=m.turns-s.turns,img=IMG(`mon-${s.story}-${m.imgIdx??s.challengeIdx}.webp`);
  const size=monsterSize(m),faded=monsterFaded(s),ep=monsterPower(s,m)+(s.bolster||0)+(s.rep<=0?1:0),bg=stories[s.story].bg||'class';
  return `<div class="arena ${s.monsterHp<=0?'beaten':''} size-${size} ${faded?'faded':''}" aria-label="立ちはだかるもの ${m.name}、体力 ${Math.max(0,s.monsterHp)} / ${m.hp}">
   <img class="arena-bg" src="${IMG(`bg-${bg}.webp`)}" alt="" aria-hidden="true" onerror="this.style.display='none'">
   <img class="arena-img" src="${img}" alt="${m.name}のイラスト" width="640" height="427" onerror="this.style.display='none'">
   <div class="arena-top">
    <div class="arena-name">${m.name}<span class="arena-look">${m.look}</span></div>
-   <div class="arena-meta"><span class="badge">のこり ${left} 手</span>${faded?'<span class="badge seen">正体が見えて弱くなった</span>':''}${m.power?`<span class="badge monster-power">${ep>0?`プレッシャー 精神力-${ep}${s.bolster?' (前の課題が影響)':''}`:'プレッシャーは弱まった'}</span>`:''}</div>
+   <div class="arena-meta"><span class="badge">のこり ${left} 手</span>${s.monsterBack?'<span class="badge back">まだ解決していない課題が戻ってきた</span>':''}${faded?'<span class="badge seen">正体が見えて弱くなった</span>':''}${m.power?`<span class="badge monster-power">${ep>0?`プレッシャー 精神力-${ep}${s.bolster?' (前の課題が影響)':''}`:'プレッシャーは弱まった'}</span>`:''}</div>
   </div>
   <div class="arena-bottom"><div class="hp-bar" role="meter" aria-label="モンスターの体力 ${Math.max(0,s.monsterHp)} / ${m.hp}"><span class="delta-slot"></span>${Array.from({length:m.hp},(_,i)=>`<i class="${i<s.monsterHp?'on':''}"></i>`).join('')}</div></div>
  </div>`;
@@ -115,23 +115,23 @@ function mapView(){
   <button class="primary map-next" data-action="enter">つぎのできごとへ</button>
  </section>`;
 }
+const reqNote=req=>req.stat?`${statMeta[req.stat].label} が ${req.min||1} 以上でできる`:req.rep?`評判が ${req.rep} 以上でできる`:`「${cards[req.card].title}」を持っているとできる`;
 function subView(){
  const s=state,st=stories[s.story],ev=s.subNow,bg=SUB_BG[ev.id]||('bg-'+(st.bg||'class'));
- const CH=[['積極的に関わる','力があるほど、いい結果になりやすい','spark'],['気にかける','様子を見て、少し気持ちを整える','eye'],['やり過ごす','何もせず、次へ進む','pause']];
  return `
  <div class="title-row"><div><div class="chapter-label">できごと</div><h1>${st.title}</h1></div></div>
  <section class="sub-view" aria-label="できごと">
   <div class="sub-illus"><img src="${IMG(`${bg}.webp`)}" alt="" aria-hidden="true"><div class="sub-caption">${ev.text}</div></div>
-  <div class="sub-choices">${CH.map(([t,d,ic],i)=>`<button class="sub-choice" data-action="subChoose" data-id="${i}"><span class="rail-icon">${icon(ic)}</span><span class="rail-text"><strong>${t}</strong><span>${d}</span></span></button>`).join('')}</div>
+  <div class="sub-choices">${(ev.choices||[]).map((ch,i)=>{const ok=reqMet(s,ch.req);return `<button class="sub-choice ${ok?'':'locked'}" data-action="subChoose" data-id="${i}" ${ok?'':'disabled'} aria-label="${ch.label}${ok?'':'、'+reqNote(ch.req)}"><span class="rail-icon">${icon(ch.icon||'spark')}</span><span class="rail-text"><strong>${ch.label}</strong><span>${ch.desc||''}</span>${ok?'':`<span class="req-note">${icon('search')} ${reqNote(ch.req)}</span>`}</span></button>`}).join('')}</div>
  </section>`;
 }
 function playView(){
  const s=state;
  if(s.map&&!s.finished)return mapView();
- if(s.subNow&&!s.feedback)return subView();
+ if(s.subNow)return subView()+(s.feedback?feedbackView():''); // できごと中は背景もできごと画面のまま（次場面の先行描画を防ぐ）
  const st=stories[s.story],busy=!!s.feedback,calm=canExplore(s),full=s.mind<=1;
  return `
- <div class="title-row"><div><div class="chapter-label">STORY ${st.num} ／ ${st.chapters[s.stage]}</div><h1>${st.title}</h1></div><div class="steps" aria-label="場面 ${s.stage+1} / 3">${[0,1,2].map(n=>`${n?'<span class="step-line"></span>':''}<span class="step ${n===s.stage?'current':n<s.stage?(s.slain.includes(n)?'slain':'done'):''}">${n<s.stage?(s.slain.includes(n)?'✓':'〜'):n+1}</span>`).join('')}</div></div>
+ <div class="title-row"><div><div class="chapter-label">STORY ${st.num} ／ ${st.chapters[s.stage]}</div><h1>${st.title}</h1></div><div class="steps" aria-label="場面 ${s.stage+1} / 3">${[0,1,2].map(n=>{const r=s.stageResults.find(r=>r.stage===n);const win=r&&(r.kind==='slain'||r.kind==='cleaned');return `${n?'<span class="step-line"></span>':''}<span class="step ${n===s.stage?'current':n<s.stage?(win?'slain':'done'):''}">${n<s.stage?(win?'✓':'〜'):n+1}</span>`}).join('')}</div></div>
  <div class="play-grid">
   <section class="board" aria-label="今の場面">
    ${arena(s)}
@@ -225,7 +225,7 @@ function cardView(id,i,n){
  const tr=c.attr&&state.traumas&&state.traumas[c.attr];
  const costLine=c.dark?`<span class="stress-cost">精神力 +${c.heal}</span><span class="rep-down">評判 -1</span>`:`<span>行動力 ${c.cost}</span>${c.strain||tr?`<span class="stress-cost">精神力 ${(c.strain||0)+(tr?1:0)}${tr?'・苦手意識':''}</span>`:''}`;
  const atkLine=atk>0?`<span class="atk">攻撃 ${atk}${mod?'↑':''}</span>`:'';
- return `<button class="game-card ${c.kind} ${c.dark?'dark':''}" data-action="card" data-id="${id}" ${!allowed?'disabled':''} style="${fanStyle(i,n)}" aria-label="${c.title}${c.dark?'、評判を下げるカード':''}、行動力${c.cost}${c.strain?`、精神力${c.strain}消費`:''}${atk>0?`、攻撃${atk}`:''}${!allowed?'、今は行動力や休憩が必要':''}"><div class="card-top"><span>${c.label}</span><span class="costs">${costLine}</span></div>${state.discovered.includes(id)?'<span class="new-tag">発見した作戦</span>':''}${c.dark?'<span class="dark-tag">評判↓</span>':''}<div class="card-inner"><span class="card-icon">${icon(c.icon)}</span><div class="card-title">${c.title}</div><div class="card-desc">${c.desc}</div><div class="card-bottom">${mod}${atkLine}${allowed?c.hint:'休んで行動力を整えると使える'}</div></div></button>`;
+ return `<button class="game-card ${c.kind} ${c.dark?'dark':''} ${c.req&&!reqMet(s,c.req)?'locked':''}" data-action="card" data-id="${id}" ${!allowed?'disabled':''} style="${fanStyle(i,n)}" aria-label="${c.title}${c.dark?'、評判を下げるカード':''}、行動力${c.cost}${c.strain?`、精神力${c.strain}消費`:''}${atk>0?`、攻撃${atk}`:''}${!allowed?(c.req?'、'+reqNote(c.req):'、今は行動力や休憩が必要'):''}"><div class="card-top"><span>${c.label}</span><span class="costs">${costLine}</span></div>${state.discovered.includes(id)?'<span class="new-tag">発見した作戦</span>':''}${c.dark?'<span class="dark-tag">評判↓</span>':''}<div class="card-inner"><span class="card-icon">${icon(c.icon)}</span><div class="card-title">${c.title}</div><div class="card-desc">${c.desc}</div><div class="card-bottom">${mod}${atkLine}${allowed?c.hint:(c.req?`🔒 ${reqNote(c.req)}`:'休んで行動力を整えると使える')}</div></div></button>`;
 }
 
 function changeChip(label,b,a){return a===b?'':`<span class="change ${a>b?'up':'down'}">${label} ${b} → ${a}</span>`}

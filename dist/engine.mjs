@@ -965,7 +965,7 @@ fight:{
  chapters:['図工の時間','どう伝えよう？','翌日の班活動'],locations:['教室・図工の時間','教室・片づけの前','教室・次の日'],
  base:['boundary','ask','distance','anger','boast'],start:{mind:3,energy:3},
  monsters:[
-  {name:'イライラの影',hp:6,power:1,turns:4,look:'イライラが、言葉のさきにまとわりついている。'}
+  {name:'イライラの影',hp:6,power:1,look:'イライラが、言葉のさきにまとわりついている。'}
  ],
  talk:[['haru','ハルに、理由を聞く','何がじゃまだったのか、確かめる。'],['mina','ミナに、話を聞く','見ていた人の手がかりをもらう。']],
  think:[['why','大切なのは、飾りを残すこと？','何を守りたいか考える。'],['respect','先に相談してほしかった？','嫌だったことを、具体的にする。'],['feeling','頑張ったことを知ってほしい？','自分の気持ちに言葉をつける。']],
@@ -1013,7 +1013,7 @@ sports:{
  chapters:['運動会まで7日','練習の日','運動会当日'],locations:['教室・帰りの会','校庭・練習の日','校庭・運動会当日'],
  base:['practice','schedule','sora','anger','ignore'],start:{mind:4,energy:4},
  monsters:[
-  {name:'あせりの霧',hp:6,power:1,turns:4,look:'あせりが、足元にまとわりつく。'}
+  {name:'あせりの霧',hp:6,power:1,look:'あせりが、足元にまとわりつく。'}
  ],
  talk:[['teacher','先生に、過ごし方を相談する','音や休憩について聞いてみる。'],['friend','ソラに、気持ちを話す','楽しみではない気持ちも伝えてみる。']],
  think:[['movement','動き方が分からないのかな','スタートなど、何をすればよいか不安。'],['judgment','人に見られるのが心配かな','遅いところを見られるのが気になる。'],['noise','音や人の多さがつらいのかな','にぎやかな場所だと、体がぎゅっとなる。'],['unknown','まだ、よく分からない','練習の中で確かめることもできる。']],
@@ -1068,7 +1068,7 @@ test:{
  chapters:['テスト一週間前','勉強の日','テスト当日'],locations:['教室・帰りの会','教室・放課後','教室・テスト当日'],
  base:['range','breathe','easyFirst','ignore','boast'],start:{mind:5,energy:4},
  monsters:[
-  {name:'不安の影',hp:5,power:1,turns:4,look:'不安が、ノートの上をうろついている。'}
+  {name:'不安の影',hp:5,power:1,look:'不安が、ノートの上をうろついている。'}
  ],
  talk:[['teacherT','先生に、苦手なところを相談する','範囲や勉強の仕方を聞いてみる。'],['kei','ケイに、気持ちを話す','得意な人にも聞いてみる。']],
  think:[['gaps','分からないところが多いのかな','まちがえたところが重なっている気がする。'],['panic','当日あがってしまうのかな','テストと聞くと、体がこわばる。'],['time','時間が足りないのかな','ゆっくり考えると、終わらない気がする。']],
@@ -1117,7 +1117,7 @@ join:{
  chapters:['休み時間','輪の近くまで','次の休み時間'],locations:['校庭・休み時間','校庭・遊びの輪のそば','校庭・昼休み'],
  base:['peekJoin','watchPlay','soloPlay','anger','ignore'],start:{mind:4,energy:4},
  monsters:[
-  {name:'はいりにくさの影',hp:6,power:1,turns:4,look:'はいりたい気持ちとこわさが、影になって足元にまとわりつく。'}
+  {name:'はいりにくさの影',hp:6,power:1,look:'はいりたい気持ちとこわさが、影になって足元にまとわりつく。'}
  ],
  talk:[['friend2','一人でいるリクに話しかける','同じように輪の外にいる子と、仲間になる。'],['teacherJ','先生に、入り方を相談する','遊びに入るタイミングを聞く。']],
  think:[['fear','断られるのがこわいのかな','「だめ」と言われたら、どうしよう。'],['words','何と言っていいか分からない','入り方のことばが、出てこない。'],['soloOK','一人でいる方が楽かも','無理に入らなくてもいい？']],
@@ -1146,7 +1146,7 @@ join:{
   if(id==='tipJoin'){f.joined=true;f.tip=true;relation(s,'切り替わりのタイミングで聞き、輪に入れた。');text='ちょうどチーム替えのタイミング。\n「うん、こっち来て！」';meaning='相手の都合に合わせた聞き方は、通りやすい。'}
   if(id==='selfTalk'){f.selfTalk=true;s.mind+=1;text='「だめと言われても、負けじゃない。聞くだけだ」\n心の中で唱えた。';meaning='断られても大丈夫と思えると、聞く勇気が出る。'}
   if(id==='phrases'){f.phrased=true;if(s.reason==='words'){s.mind+=1;text='「今から入れて？」「人数、あまってる？」\n練習したことばが、口から出た。';meaning='聞き方のことばを持っていると、足がすくまない。'}else{text='入り方のことばを練習した。';meaning='ことばの準備は、いつでも役立つ。'}}
-  if(id==='ownGame'){f.ownGame=true;if(s.reason==='soloOK'){f.soloOK=true;relation(s,'一人で遊んでいたら、リクが寄ってきてくれた。');s.rep=Math.min(5,s.rep+1);text='一人で遊び始めたら、リクが寄ってきた。\n「それ、面白そうだね」';meaning='自分の遊びを楽しんでいると、人が寄ってくることもある。'}else{text='自分の遊びを始めた。気持ちが少し軽い。';meaning='入るだけが答えではない。'}}
+  if(id==='ownGame'){f.ownGame=true;if(s.reason==='soloOK'){f.soloOK=true;relation(s,'一人で遊んでいたら、リクが寄ってきてくれた。');repUp(s);text='一人で遊び始めたら、リクが寄ってきた。\n「それ、面白そうだね」';meaning='自分の遊びを楽しんでいると、人が寄ってくることもある。'}else{text='自分の遊びを始めた。気持ちが少し軽い。';meaning='入るだけが答えではない。'}}
   if(id==='invite'){f.invited=true;relation(s,'リクや輪の中の子を、自分の遊びに誘った。');text='「リク、一緒にこっちで遊ぼう」\n誘うと、向こうも笑顔になった。';meaning='入るだけでなく、誘うのも仲間づくり。'}
   if(id==='honest'){f.honest=true;relation(s,'一人で遊びたい気持ちを、ユウに正直に伝えた。');text='ユウ「そっか。じゃあ、やりたいときに来てね」';meaning='自分の気持ちを正直に伝えると、関係が楽になる。'}
   return {text,meaning};
@@ -1170,7 +1170,7 @@ blame:{
  chapters:['昼休み','休み時間','帰りの会の前'],locations:['教室・昼休み','廊下・休み時間','教室・帰りの会の前'],
  base:['deny','askBack','stay','anger','ignore'],start:{mind:4,energy:4},
  monsters:[
-  {name:'疑いの目',hp:6,power:1,turns:4,look:'白い目玉がいくつも集まって、じっとこっちを見ている。'}
+  {name:'疑いの目',hp:6,power:1,look:'白い目玉がいくつも集まって、じっとこっちを見ている。'}
  ],
  talk:[['eye','目撃者のアイに話を聞く','ほかの様子を見ていた人がいるかも。'],['teacherB','先生に、相談する','事情をちゃんと聞いてもらう。']],
  think:[['panicB','あせって、ことばが出ない','疑われて、頭がまっ白になる。'],['evidence','証拠がないと信じてもらえない気がする','言い返すだけでは、伝わらないかも。'],['eyesB','みんなの目が気になる','うわさが広がるのが、いちばんつらい。']],
@@ -1220,7 +1220,7 @@ hurt:{
  chapters:['休み時間','放課後','次の日の朝'],locations:['教室・休み時間','廊下・放課後','教室・朝'],
  base:['sayStop','laughOff','walkAway','anger','boast'],start:{mind:4,energy:4},
  monsters:[
-  {name:'トゲの言葉',hp:6,power:1,turns:4,look:'とがった言葉が、空気に刺さって残っている。'}
+  {name:'トゲの言葉',hp:6,power:1,look:'とがった言葉が、空気に刺さって残っている。'}
  ],
  talk:[['friendC','ケイに相談する','一人で抱え込まない方法。'],['teacherC','先生に相談する','仲介を頼む。']],
  think:[['sting','ことばが刺さって痛い','「へただね」の一言が、ずっと残っている。'],['friendQ','仲直りしたいか離れたいか分からない','友達だけど、今日は近づきたくない。'],['laughQ','笑って流せる自信がない','流したいけれど、うまく笑えない。']],
@@ -1270,7 +1270,7 @@ alone:{
  chapters:['休み時間','帰り道','次の日'],locations:['教室・休み時間','帰り道','教室・朝'],
  base:['politeNo','joinIn','vagueNo','runOff','anger','ignore'],start:{mind:4,energy:4},
  monsters:[
-  {name:'誘いの波',hp:6,power:1,turns:4,look:'優しい誘いが、波のように押し寄せる。'}
+  {name:'誘いの波',hp:6,power:1,look:'優しい誘いが、波のように押し寄せる。'}
  ],
  talk:[['friendD','リクに相談する','一緒に断ってもらう方法。'],['teacherD','先生に相談する','断ることばの型を聞く。']],
  think:[['noWords','断ることばが分からない','「いや」と言うのが難しい。'],['guilt','断ると相手が悲しむ気がする','誘ってくれたのに、断るのは悪い？'],['wantAlone','本当は一人の時間がほしい','今日は、ひとりでゆっくりしたい。']],
@@ -1323,7 +1323,7 @@ lose:{
  chapters:['休み時間のドッジボール','放課後','次の日'],locations:['校庭・ドッジボール','教室・放課後','校庭・朝'],
  base:['rematch','quitGame','sourFace','anger','boast'],start:{mind:4,energy:4},
  monsters:[
-  {name:'悔しさの炎',hp:6,power:1,turns:4,look:'負けた悔しさが、胸に火をつける。'}
+  {name:'悔しさの炎',hp:6,power:1,look:'負けた悔しさが、胸に火をつける。'}
  ],
  talk:[['winnerS','勝ったサキに話を聞く','強さの理由を聞いてみる。'],['teacherE','先生に相談する','悔しさの扱い方を聞く。']],
  think:[['frustrate','悔しくて仕方ない','あと少しだったのに、と思い続けている。'],['face','みんなに負けたのが恥ずかしい','負けた姿を、見られたくない。'],['again','すぐに再戦したい','今すぐにでも、取り返したい。']],
@@ -1373,7 +1373,7 @@ change:{
  chapters:['3時間目の発表','放課後','翌朝'],locations:['教室・3時間目','教室・放課後','教室・朝'],
  base:['complain','sulk','acceptQuick','anger','ignore'],start:{mind:4,energy:4},
  monsters:[
-  {name:'予定変更の落とし穴',hp:6,power:1,turns:4,look:'楽しみにしていた穴が、ポッカリと開く。'}
+  {name:'予定変更の落とし穴',hp:6,power:1,look:'楽しみにしていた穴が、ポッカリと開く。'}
  ],
  talk:[['chikaF','チカの話を聞く','同じくがっかりしている友達の話を聞く。'],['teacherP','先生に事情を聞く','変わった理由を聞いてみる。']],
  think:[['disappointed','がっかりして動けない','楽しみにしていたのに、という気持ちが重い。'],['unfair','納得いかない','急すぎて、理不尽に感じる。'],['stuckPlan','予定がこわれると頭が真っ白','何をすればいいか分からなくなる。']],
@@ -1420,7 +1420,7 @@ picked:{
  chapters:['国語の音読発表','放課後','次の日の授業'],locations:['教室・国語','教室・放課後','教室・朝'],
  base:['keepHand','stopHand','bigSigh','anger','ignore'],start:{mind:4,energy:4},
  monsters:[
-  {name:'期待の風船',hp:6,power:1,turns:4,look:'「今度こそ」が膨らんで、大きく割れる。'}
+  {name:'期待の風船',hp:6,power:1,look:'「今度こそ」が膨らんで、大きく割れる。'}
  ],
  talk:[['teacherH','先生に相談する','当て方や気持ちを聞いてもらう。'],['pickedKid','当たった人に聞く','発表のコツを聞いてみる。']],
  think:[['unfairPick','なんで自分じゃないんだ','挙げているのに、選ばれない。'],['giveUpPick','もう挙げるのをやめたい','当たらないなら、挙げる意味がない気がする。'],['embarrassPick','挙げて当たらないのが恥ずかしい','みんなの前で、外れ続けるのが辛い。']],
@@ -1467,7 +1467,7 @@ item:{
  chapters:['図工の時間','休み時間','放課後'],locations:['教室・図工','教室・休み時間','教室・放課後'],
  base:['takeBack','keepQuiet','watchUse','anger','ignore'],start:{mind:4,energy:4},
  monsters:[
-  {name:'借りっぱなしの手',hp:6,power:1,turns:4,look:'断りなしの手が、また伸びてくる。'}
+  {name:'借りっぱなしの手',hp:6,power:1,look:'断りなしの手が、また伸びてくる。'}
  ],
  talk:[['kenB','ケンに話を聞く','なんで勝手に使うのか、聞いてみる。'],['teacherI','先生に相談する','貸し借りの仕方を相談する。']],
  think:[['shy','断るのが苦しい','「いいよ」以外が、言いにくい。'],['angry','勝手に使われて腹が立つ','断りなしは、やっぱり嫌だ。'],['hard','もう貸したくない','大事なものだから、貸したくない。']],
@@ -1514,7 +1514,7 @@ scold:{
  chapters:['廊下で注意された','休み時間','放課後'],locations:['廊下','教室・休み時間','教室・放課後'],
  base:['backTalk','saySorry','goQuiet','anger','ignore'],start:{mind:4,energy:4},
  monsters:[
-  {name:'注意の稲妻',hp:6,power:1,turns:4,look:'突然の「走ったでしょ」が、稲妻のように落ちる。'}
+  {name:'注意の稲妻',hp:6,power:1,look:'突然の「走ったでしょ」が、稲妻のように落ちる。'}
  ],
  talk:[['teacherS','先生に話す','自分の言い分を、聞いてもらう。'],['friendS','友達に愚痴を聞いてもらう','納得いかない気持ちを吐き出す。']],
  think:[['notMe','やってないのに注意された','走ってないのに、走ったと言われた。'],['tooHard','言い方が強すぎる','急に強く言われて、びっくりした。'],['scared','反論するともっと怒られそう','言い返すと、もっと怒られる気がする。']],
@@ -1561,7 +1561,7 @@ forgot:{
  chapters:['朝の提出時間','休み時間','帰りの会'],locations:['教室・朝','教室・休み時間','教室・帰りの会'],
  base:['hideForgot','excuse','panicF','anger','ignore'],start:{mind:4,energy:4},
  monsters:[
-  {name:'忘れ物の落とし穴',hp:6,power:1,turns:4,look:'提出の穴が、朝の机にポッカリ開く。'}
+  {name:'忘れ物の落とし穴',hp:6,power:1,look:'提出の穴が、朝の机にポッカリ開く。'}
  ],
  talk:[['teacherF','先生に話す','忘れたことを、自分から言う。'],['friendF','友達に相談する','見せてもらうなど、助けを求める。']],
  think:[['lateForgot','今朝急いで忘れた','準備する時間が、なかった。'],['fear','怒られるのが怖い','指摘されると、怒られそう。'],['repeat','よく忘れてしまう','また忘れた。何度目か分からない。']],
@@ -1608,7 +1608,7 @@ friend:{
  chapters:['休み時間の校庭','昼休み','放課後'],locations:['校庭・休み時間','教室・昼休み','下校途中'],
  base:['cheerUp','watchFar','playNear','anger','ignore'],start:{mind:4,energy:4},
  monsters:[
-  {name:'沈黙の雲',hp:6,power:1,turns:4,look:'ケイの上に、言葉のない雲がかかっている。'}
+  {name:'沈黙の雲',hp:6,power:1,look:'ケイの上に、言葉のない雲がかかっている。'}
  ],
  talk:[['keiG','ケイに話しかける','「だいじょうぶ？」と聞いてみる。'],['teacherG','先生に伝える','ケイの様子を大人に伝える。']],
  think:[['worry','心配だけど、何と言うか分からない','声をかけたいが、ことばが見つからない。'],['leaveIt','一人にしておくべきか迷う','話したくないときもあるよな、と思う。'],['afraid','自分まで嫌な気分になりそう','近づくと、自分も沈みそう。']],
@@ -1655,7 +1655,7 @@ confused:{
  chapters:['算数の時間','休み時間','放課後'],locations:['教室・算数','教室・休み時間','教室・放課後'],
  base:['stare','copyDown','guess','anger','ignore'],start:{mind:4,energy:4},
  monsters:[
-  {name:'分からなさの迷路',hp:6,power:1,turns:4,look:'板書が、迷路のように入り組んで見える。'}
+  {name:'分からなさの迷路',hp:6,power:1,look:'板書が、迷路のように入り組んで見える。'}
  ],
  talk:[['teacherQ','先生に聞く','分からない所を、聞いてみる。'],['friendQ','分かってる友達に聞く','リンに聞いてみる。']],
  think:[['shyQ','質問が恥ずかしい','みんな分かってそうで、聞きにくい。'],['everyone','みんな分かってそうで言えない','自分だけ分かってない気がする。'],['snowball','分からないが積もっている','どこから分からないか、分からない。']],
@@ -1702,8 +1702,8 @@ noise:{
  chapters:['帰りの会','休み時間','放課後'],locations:['教室・帰りの会','教室・休み時間','教室・放課後'],
  base:['plugEars','shout','distractTry','anger','ignore'],start:{mind:4,energy:4},
  monsters:[
-  {name:'ガヤガヤ団',hp:4,power:1,turns:4,look:'あちこちのおしゃべりが、大きな固まりになっている。'},
-  {name:'イライラの熱',hp:6,power:1,turns:5,look:'溜まったイライラが、ぽっと燃えている。'}
+  {name:'ガヤガヤ団',hp:4,power:1,look:'あちこちのおしゃべりが、大きな固まりになっている。'},
+  {name:'イライラの熱',hp:6,power:1,look:'溜まったイライラが、ぽっと燃えている。'}
  ],
  talk:[['teacherN','先生に伝える','うるさくて困ると伝える。'],['friendN','うるさい友達にお願い','「少し静かにして」と言う。']],
  think:[['ears','耳がうるさくて痛い','音そのものが、耳に刺さる。'],['head','頭が痛くなってきた','うるささで、頭がズキズキする。'],['cantFocus','何も頭に入ってこない','音が気になって、集中できない。']],
@@ -1750,7 +1750,7 @@ role:{
  chapters:['発表の時間','練習の日','運動会前日'],locations:['教室・発表','校庭・練習','教室・前日'],
  base:['sulkR','dragFeet','skipCheer','anger','ignore'],start:{mind:4,energy:4},
  monsters:[
-  {name:'欠けたメダル',hp:6,power:1,turns:4,look:'選ばれなかった気持ちが、欠けた形に固まっている。'}
+  {name:'欠けたメダル',hp:6,power:1,look:'選ばれなかった気持ちが、欠けた形に固まっている。'}
  ],
  talk:[['teacherR','先生に聞く','選び方や、次の方法を聞く。'],['pickedOne','選ばれた友達に聞く','選手の走りを、見せてもらう。']],
  think:[['sad','悔しい・悲しい','選ばれなくて、悔しい気持ちが残る。'],['unfairR','選び方が不公平だ','じゃんけんも投票も、納得いかない。'],['otherRole2','応援係なんて嫌だ','走れないなら、意味がない気がする。']],
@@ -1797,7 +1797,7 @@ cheat:{
  chapters:['ゲームの時間','休み時間','放課後'],locations:['教室・ゲーム','教室・休み時間','教室・放課後'],
  base:['pretendNot','glare','spread','anger','ignore'],start:{mind:4,energy:4},
  monsters:[
-  {name:'見てしまった重み',hp:6,power:1,turns:4,look:'知ってしまったことが、胸に重くのしかかる。'}
+  {name:'見てしまった重み',hp:6,power:1,look:'知ってしまったことが、胸に重くのしかかる。'}
  ],
  talk:[['teacherX','先生に相談','どうするべきか、聞いてみる。'],['friendX','本人に直接言う','「それはズルだ」と伝える。']],
  think:[['tellWhom','先生に言うべきか迷う','告げ口みたいで、気が進まない。'],['betray','友達を売るようで嫌だ','言ったら、友達が嫌われるかも。'],['unfairGame','ズルで勝つなら意味がない','ルールを守らない勝ちは、勝ちじゃない。']],
@@ -1844,7 +1844,7 @@ newClass:{
  chapters:['初日の朝','休み時間','一週間後'],locations:['新しい教室','教室・休み時間','教室・一週間後'],
  base:['corner','wait','fakeSmile','anger','ignore'],start:{mind:4,energy:4},
  monsters:[
-  {name:'知らない顔の群れ',hp:6,power:1,turns:4,look:'知らない顔が、ざわざわと動いている。'}
+  {name:'知らない顔の群れ',hp:6,power:1,look:'知らない顔が、ざわざわと動いている。'}
  ],
  talk:[['newKid','隣の子に話しかける','隣の席の子に、一言かける。'],['teacherNC','先生に話す','不安なことを、先生に話す。']],
  think:[['noFriends','話しかける友達がいない','知っている子が、一人もいない。'],['missOld','前のクラスが恋しい','ユウと離れて、さびしい。'],['shut','自分から話せない','何を話せばいいか、分からない。']],
@@ -1891,7 +1891,7 @@ present:{
  chapters:['音読の前','自分の番','翌日'],locations:['教室・国語','教室・自分の番','教室・翌日'],
  base:['mumble','smallVoice','skipTurn','anger','ignore'],start:{mind:4,energy:4},
  monsters:[
-  {name:'注目の目玉群',hp:6,power:1,turns:4,look:'たくさんの目が、こっちをじっと見ている。'}
+  {name:'注目の目玉群',hp:6,power:1,look:'たくさんの目が、こっちをじっと見ている。'}
  ],
  talk:[['teacherP2','先生に相談','読むのが怖いことを、先生に言う。'],['buddyP','友達に聞いてもらう','一人相手に、練習させてもらう。']],
  think:[['eyes','みんなの目が怖い','注目されると、固まる。'],['stumble','噛むのが怖い','言いよどんで、恥ずかしくなる。'],['laugh','間違えて笑われるのが怖い','失敗したら、笑われそう。']],
@@ -1938,7 +1938,7 @@ spill:{
  chapters:['給食の時間','片づけ','午後の授業'],locations:['教室・給食','床・片づけ','教室・午後'],
  base:['freeze','hideMistake','wipeHalf','anger','ignore'],start:{mind:4,energy:4},
  monsters:[
-  {name:'注目の目玉群',hp:6,power:1,turns:4,look:'たくさんの目が、こっちをじっと見ている。'}
+  {name:'注目の目玉群',hp:6,power:1,look:'たくさんの目が、こっちをじっと見ている。'}
  ],
  talk:[['teacherM','先生に言う','こぼしたことを、すぐ伝える。'],['friendM','近くの友達に頼む','「手伝って」と声をかける。']],
  think:[['embarrass','恥ずかしくて動けない','みんなに見られて、固まる。'],['how2wipe','拭き方が分からない','どう片づければいいか、分からない。'],['laughAt','笑われそうで嫌だ','失敗を、からかわれそう。']],
@@ -1985,7 +1985,7 @@ pair:{
  chapters:['理科の時間前','ペア作り','実験中'],locations:['教室・理科','教室・ペア作り','教室・実験'],
  base:['standStill','followCrowd','pretendBusy','anger','ignore'],start:{mind:4,energy:4},
  monsters:[
-  {name:'余り者の影',hp:6,power:1,turns:4,look:'自分だけが、ぽつんと残されている感じがする。'}
+  {name:'余り者の影',hp:6,power:1,look:'自分だけが、ぽつんと残されている感じがする。'}
  ],
  talk:[['teacherA','先生に言う','余ったことを、先生に伝える。'],['leftKid','余った子に声をかける','同じく余った子が、いるかも。']],
  think:[['noPairAsk','誘えない','自分から、誘えない。'],['hateLeft','余るのが嫌だ','一人だけ余るのが、嫌だ。'],['soloOK','一人でもいい','無理に組まなくても、いいかも。']],
@@ -2032,7 +2032,7 @@ promise:{
  chapters:['約束の日','翌日会う','その後'],locations:['公園・待ち合わせ','学校・翌日','公園・その後'],
  base:['waitLong','accuse','actNormal','anger','ignore'],start:{mind:4,energy:4},
  monsters:[
-  {name:'待ちぼうけの影',hp:6,power:1,turns:4,look:'待っていた時間が、長い影になった。'}
+  {name:'待ちぼうけの影',hp:6,power:1,look:'待っていた時間が、長い影になった。'}
  ],
  talk:[['kenP','本人に話す','約束を忘れた子に、直接話す。'],['teacherPr','先生に相談','つらい気持ちを、先生に話す。']],
  think:[['sad','寂しくて怒っている','約束を忘れられて、悲しい。'],['doubt','自分は軽い存在かも','私って、そんなに軽いのかな。'],['worryRel','関係が壊れそう','このまま、仲が悪くなりそう。']],
@@ -2079,7 +2079,7 @@ duty:{
  chapters:['放課後・当番','仕事中','翌日'],locations:['教室・放課後','教室・仕事','教室・翌日'],
  base:['doAll','slackOff','complainD','anger','ignore'],start:{mind:4,energy:4},
  monsters:[
-  {name:'残った仕事の山',hp:6,power:1,turns:4,look:'机の山が、まだ残っている。'}
+  {name:'残った仕事の山',hp:6,power:1,look:'机の山が、まだ残っている。'}
  ],
  talk:[['slacker','サボった子に声をかける','逃げた相手に、声をかける。'],['teacherD2','先生に相談','一人で抱えず、先生に伝える。']],
  think:[['unfairD','ずるいと思う','一人だけ働くのは、不公平。'],['tired','疲れてきた','一人では、疲れてしまう。'],['dutyOK','当番自体は嫌じゃない','仕事は嫌じゃない、一人が嫌だ。']],
@@ -2126,7 +2126,7 @@ rumor:{
  chapters:['休み時間','うわさの広がり','翌日'],locations:['教室・休み時間','廊下・うわさ','教室・翌日'],
  base:['denyR','snapBack','pretendR','anger','ignore'],start:{mind:4,energy:4},
  monsters:[
-  {name:'ささやきの群れ',hp:6,power:1,turns:4,look:'あっちこっちで、こそこそ声がする。'}
+  {name:'ささやきの群れ',hp:6,power:1,look:'あっちこっちで、こそこそ声がする。'}
  ],
  talk:[['rumorKid','うわさを聞いた子に話す','まわりの子に、静かに聞く。'],['teacherRu','先生に相談','広がる前に、止めてもらう。']],
  think:[['whoDid','誰が流したか気になる','誰が言い始めたか、知りたい。'],['whatThey','内容が恥ずかしい','うわさの中身が、恥ずかしい。'],['angry','腹が立つ','勝手に言われて、腹が立つ。']],
@@ -2173,7 +2173,7 @@ lunch:{
  chapters:['給食の時間','食べる時間','午後'],locations:['教室・給食','机・食事','教室・午後'],
  base:['forceAll','hideFood','swapFood','anger','ignore'],start:{mind:5,energy:4},
  monsters:[
-  {name:'苦手な一品',hp:5,power:1,turns:4,look:'皿にのった、苦手な食べもの。'}
+  {name:'苦手な一品',hp:5,power:1,look:'皿にのった、苦手な食べもの。'}
  ],
  talk:[['teacherL','先生に言う','苦手なことを、先生に伝える。'],['friendL','友達に聞く','好きな子に、食べ方を聞く。']],
  think:[['shame','残すのが恥ずかしい','残すのを見られたくない。'],['texture','食感が苦手','口の中の感じが、無理。'],['fearTry','食べるのが怖い','一口すら、入れたくない。']],
@@ -2220,7 +2220,7 @@ lie:{
  chapters:['放課後','翌日','翌日・放課後'],locations:['教室・放課後','教室・朝','教室・放課後'],
  base:['biggerLie','blameOther','shutMouth','anger','ignore'],start:{mind:5,energy:4},
  monsters:[
-  {name:'小さな嘘',hp:5,power:1,turns:4,look:'最初は、小さな嘘だった。'}
+  {name:'小さな嘘',hp:5,power:1,look:'最初は、小さな嘘だった。'}
  ],
  talk:[['lieKid','友達に聞く','嘘をついた相手の様子を見る。'],['teacherLie','先生に相談','正直に言えないことを相談する。']],
  think:[['scaredTell','正直に言うのが怖い','認めたら、嫌われそう。'],['whyFirst','どうして嘘をついた？','そもそも、なぜ嘘をついたのか。'],['whatNow','このままが楽？','正直に言うか、黙るか。']],
@@ -2266,7 +2266,7 @@ relay:{
  chapters:['放課後の発表','練習日','運動会当日'],locations:['教室・発表','グラウンド・練習','グラウンド・本番'],
  base:['pushHard','dreadRun','skipPractice','anger','ignore'],start:{mind:4,energy:4},
  monsters:[
-  {name:'プレッシャーの影',hp:5,power:1,turns:4,look:'選ばれた重みが、のしかかる。'}
+  {name:'プレッシャーの影',hp:5,power:1,look:'選ばれた重みが、のしかかる。'}
  ],
  talk:[['captain','キャプテンに聞く','リレーのコツを、キャプテンに聞く。'],['teacherRe','先生に相談','不安なことを、先生に言う。']],
  think:[['fearFall','転んだらどうしよう','本番で転ぶことを、想像する。'],['slowSelf','足が遅い','自分の走りに、自信がない。'],['teamPress','みんなに迷惑','チームに迷惑をかけそう。']],
@@ -2313,7 +2313,7 @@ sickDay:{
  chapters:['登校日','休み時間','放課後'],locations:['教室・朝','教室・休み','教室・放課後'],
  base:['panicLate','hideLate','copyOnly','anger','ignore'],start:{mind:5,energy:4},
  monsters:[
-  {name:'たまった連絡',hp:5,power:1,turns:4,look:'休んだ分の連絡が、たまっている。'}
+  {name:'たまった連絡',hp:5,power:1,look:'休んだ分の連絡が、たまっている。'}
  ],
  talk:[['friendSick','友達に聞く','休んだ日のことを、友達に聞く。'],['teacherSick','先生に相談','遅れていることを、先生に言う。']],
  think:[['dontKnow','どこから分からない？','どこが分からないか、分からない。'],['shyAskS','聞くのが恥ずかしい','遅れたのを、知られたくない。'],['tooMuch','量が多すぎる','たまった分が、多すぎる。']],
@@ -2362,7 +2362,7 @@ craft:{
  chapters:['図工の時間','放課後','次の図工'],locations:['図工室','家・帰り道','図工室'],
  base:['coverUp','throwAway','anger','ignore','boast'],start:{mind:5,energy:4},
  monsters:[
-  {name:'グシャグシャの影',hp:6,power:2,turns:4,look:'のりがはみ出して、形が崩れている。'}
+  {name:'グシャグシャの影',hp:6,power:2,look:'のりがはみ出して、形が崩れている。'}
  ],
  talk:[['teacherArt','先生に相談','どう直すか、先生に聞く。'],['friendArt','友達に見てもらう','壊れた作品を、友達に見せる。'],['skillKid','図工が得意な子に聞く','上手な子の、作り方を聞く。']],
  think:[['perfect','完璧じゃなきゃ嫌','直しても、元どおりにならない。'],['noTime','直す時間がない','次の図工まで、時間がない。'],['gaveUp','もう作りたくない','壊れて、作る気がなくなった。']],
@@ -2414,7 +2414,7 @@ vault:{
  chapters:['体育の時間','休み時間','次の体育'],locations:['体育館','体育館・休み','体育館'],
  base:['skipTurn','crash','anger','ignore','boast'],start:{mind:5,energy:4},
  monsters:[
-  {name:'カベの影',hp:6,power:2,turns:4,look:'跳び箱が、大きなカベに見える。'}
+  {name:'カベの影',hp:6,power:2,look:'跳び箱が、大きなカベに見える。'}
  ],
  talk:[['coachAsk','先生にコツを聞く','跳び方のコツを、先生に聞く。'],['mateWatch','跳べる子に聞く','跳べる子の、やり方を聞く。'],['mateTogether','友達と練習する','休み時間、一緒に練習する。']],
  think:[['fearFall','着地がこわい','跳んだあと、こけるのがこわい。'],['tooHigh','高すぎる','跳び箱が、高すぎる。'],['slowRun','助走が遅い','走るのが遅くて、勢いがない。']],
@@ -2464,7 +2464,7 @@ meeting:{
  chapters:['学級会','休み時間','次の学級会'],locations:['教室','教室・休み','教室'],
  base:['withdraw','insist','anger','ignore','boast'],start:{mind:5,energy:4},
  monsters:[
-  {name:'ハンタイの影',hp:6,power:2,turns:4,look:'反対の手が、いっぱい上がった。'}
+  {name:'ハンタイの影',hp:6,power:2,look:'反対の手が、いっぱい上がった。'}
  ],
  talk:[['askOppose','反対した子に聞く','なぜ反対したか、聞く。'],['teacherMeet','先生に相談','提案の通し方を、先生に聞く。'],['allyTalk','賛成した子と話す','賛成してくれた子と、案を練る。']],
  think:[['whyNo','なぜ反対された？','反対された理由を、考える。'],['notMine','独りよがりだった？','自分だけの提案だったかも。'],['badWords','言い方が強すぎた？','「こうすべき」と、言いすぎたかも。']],
@@ -2515,7 +2515,7 @@ leader:{
  chapters:['なわとび会・前日','休み時間','なわとび会・当日'],locations:['運動場','運動場・休み','運動場'],
  base:['scoldKid','ignoreKid','anger','ignore','boast'],start:{mind:5,energy:4},
  monsters:[
-  {name:'バラバラの影',hp:6,power:2,turns:4,look:'班の子が、バラバラに遊んでいる。'}
+  {name:'バラバラの影',hp:6,power:2,look:'班の子が、バラバラに遊んでいる。'}
  ],
  talk:[['kidWhy','本人に理由を聞く','なぜやらないか、本人に聞く。'],['teacherLead','先生に相談','まとめ方を、先生に聞く。'],['senpaiAsk','去年の班長に聞く','上の子の、まとめ方を聞く。']],
  think:[['tooYoung','年下だから？','年下だから、言うことを聞かない？'],['orderBad','言い方が悪い？','命令っぽく、言いすぎたかも。'],['notFun','楽しくない？','会の練習が、楽しくないのかも。']],
@@ -2566,7 +2566,7 @@ late:{
  chapters:['朝・寝坊','登校中','教室'],locations:['家','登校中','教室'],
  base:['rush','makeExcuse','anger','ignore','boast'],start:{mind:5,energy:4},
  monsters:[
-  {name:'マニワナイの影',hp:6,power:2,turns:4,look:'時計の針が、どんどん進んでいる。'}
+  {name:'マニワナイの影',hp:6,power:2,look:'時計の針が、どんどん進んでいる。'}
  ],
  talk:[['callFirst','先生に先に言う','遅れることを、先に言う。'],['teacherHabit','先生に習慣を相談','遅刻ぐせを、先生に相談する。'],['friendMorning','友達と登校の約束','友達と、一緒に登校する約束をする。']],
  think:[['sleepy','夜更かしした','夜、遅くまで起きていた。'],['noPrep','準備をしてなかった','持ち物も服も、決めてなかった。'],['weakMorning','朝が苦手','そもそも、朝が苦手だ。']],
@@ -2617,7 +2617,7 @@ lostBook:{
  chapters:['図書の時間','家','翌日'],locations:['図書室','家','図書室'],
  base:['hideBook','fakeReturn','anger','ignore','boast'],start:{mind:5,energy:4},
  monsters:[
-  {name:'ナイの影',hp:6,power:2,turns:4,look:'カバンの中に、本がない。'}
+  {name:'ナイの影',hp:6,power:2,look:'カバンの中に、本がない。'}
  ],
  talk:[['askLend','貸したか聞く','友達に、貸したか聞く。'],['askLib','図書の先生に相談','図書の先生に、なくしたと言う。'],['teacherBook','担任に相談','担任に、どうするか聞く。']],
  think:[['borrowed','誰かに貸したかも','貸したかもしれない。'],['dropped','どこかに落としたかも','落としたかもしれない。'],['forgotPlace','置き場所を忘れた','どこに置いたか、忘れた。']],
@@ -2669,7 +2669,7 @@ seat:{
  chapters:['席替え','休み時間','数日後'],locations:['教室','教室・休み','教室'],
  base:['sulkSeat','ignoreNew','anger','ignore','boast'],start:{mind:5,energy:4},
  monsters:[
-  {name:'ハナレの影',hp:6,power:2,turns:4,look:'仲良しと、席が離れてしまった。'}
+  {name:'ハナレの影',hp:6,power:2,look:'仲良しと、席が離れてしまった。'}
  ],
  talk:[['oldTalk','仲良しに気持ちを伝える','「さびしい」と、仲良しに言う。'],['newTalk','新しい隣に話す','新しい隣の子に、話してみる。'],['teacherSeat','先生に相談','席替えのことを、先生に言う。']],
  think:[['lonely','さびしい','仲良しと離れて、さびしい。'],['noEnergy','やる気が出ない','新しい席に、なじめない。'],['wantOld','前の席に戻りたい','できれば、前の席に戻りたい。']],
@@ -2719,7 +2719,7 @@ visit:{
  chapters:['参観日の朝','授業中','放課後'],locations:['教室','教室','家'],
  base:['overTry','hideBack','anger','ignore','boast'],start:{mind:5,energy:4},
  monsters:[
-  {name:'ミラレルの影',hp:6,power:2,turns:4,look:'親が、後ろから見ている。'}
+  {name:'ミラレルの影',hp:6,power:2,look:'親が、後ろから見ている。'}
  ],
  talk:[['talkParent','親に緊張と言う','「緊張する」と、親に言う。'],['talkTeacher2','先生に相談','参観日の緊張を、先生に言う。'],['askFriend','友達と励まし合う','友達と「頑張ろう」と言い合う。']],
  think:[['shyWatch','見られて恥ずかしい','見られるのが、恥ずかしい。'],['missFear','間違えたら恥ずかしい','間違えるのが、こわい。'],['wantShow','頑張って見せたい','いいところを、見せたい。']],
@@ -2769,7 +2769,7 @@ makeUp:{
  chapters:['けんかの翌朝','休み時間','放課後'],locations:['教室','教室','校庭'],
  base:['waitSorry','stubbornFace','anger','ignore','boast'],start:{mind:4,energy:4},
  monsters:[
-  {name:'ギクシャクの影',hp:6,power:2,turns:4,look:'目が合っても、そらしてしまう。'}
+  {name:'ギクシャクの影',hp:6,power:2,look:'目が合っても、そらしてしまう。'}
  ],
  talk:[['mutualAsk','共通の友達に相談','仲直りの仕方を、友達に聞く。'],['teacherMake','先生に相談','仲直りを、先生に言う。'],['inviteTry','遊びに誘ってみる','「一緒に遊ぼう」と、誘う。']],
  think:[['myFault','自分も悪かった','自分も、悪いところがあった。'],['pride','意地を張っている','意地を張って、動けない。'],['scared','断られるのがこわい','謝っても、断られそうでこわい。']],
@@ -2820,7 +2820,7 @@ secret:{
  chapters:['秘密が広まった','友達と向き合う','これから'],locations:['教室','教室','帰り道'],
  base:['confront','spreadBack','anger','ignore','boast'],start:{mind:4,energy:4},
  monsters:[
-  {name:'バレタの影',hp:6,power:2,turns:4,look:'秘密が、みんなに知られている。'}
+  {name:'バレタの影',hp:6,power:2,look:'秘密が、みんなに知られている。'}
  ],
  talk:[['calmAsk','落ち着いて理由を聞く','「どうして言ったの」と、聞く。'],['feelingTell','気持ちを正直に言う','「バラされてつらかった」と伝える。'],['teacherSec','先生に相談','秘密をバラされたことを、先生に言う。']],
  think:[['betrayed','裏切られた','信じていたのに、裏切られた。'],['shame','みんなに知られて恥ずかしい','秘密が広まって、恥ずかしい。'],['notSure','本当にその子が言ったか不明','誰が言ったか、確かではない。']],
@@ -2871,7 +2871,7 @@ byWatch:{
  chapters:['目撃した','自分の行動を決める','これから'],locations:['校庭の隅','教室','下駄箱'],
  base:['lookCalm','joinLaugh','anger','ignore','boast'],start:{mind:4,energy:4},
  monsters:[
-  {name:'ミタノ影',hp:6,power:2,turns:4,look:'目撃した光景が、頭に残っている。'}
+  {name:'ミタノ影',hp:6,power:2,look:'目撃した光景が、頭に残っている。'}
  ],
  talk:[['quietTalk','あとで「大丈夫？」と聞く','いじめられていた子に、声をかける。'],['friendAsk','信頼できる友達に相談','「どう思う？」と聞いてみる。'],['teacherBy','先生にこっそり伝える','見たことを、先生にだけ言う。']],
  think:[['scared','自分もいじめられそうで怖い','止めたら、次は自分がやられそう。'],['dontKnow','どうすればいいか分からない','見たけど、対処法が分からない。'],['feelBad','見て見ぬふりが心に残る','見て見ぬふりをしたことが、気になっている。']],
@@ -2922,7 +2922,7 @@ score:{
  chapters:['点数が返ってきた','受け止める','次の目標'],locations:['教室','教室','帰り道'],
  base:['hideScore','bragBack','anger','ignore','boast'],start:{mind:4,energy:4},
  monsters:[
-  {name:'テンカスの影',hp:6,power:2,turns:4,look:'点数が、頭から離れない。'}
+  {name:'テンカスの影',hp:6,power:2,look:'点数が、頭から離れない。'}
  ],
  talk:[['honestSay','正直に点数を言う','聞かれたら、正直に言う。'],['methodAsk','どう勉強したか聞く','点がいい子に、やり方を聞く。'],['praiseSay','「すごいね」とほめる','点がいい子を、素直にほめる。']],
  think:[['shameS','点数が低くて恥ずかしい','人より低くて、恥ずかしい。'],['jealous','うらやましくて嫌になる','あの子に、負けたくない。'],['worry','次もできないかもと不安','このままじゃ、また低いかも。']],
@@ -2973,7 +2973,7 @@ trend:{
  chapters:['みんなが盛り上がっている','入り方を探す','自分らしく'],locations:['教室','休み時間','帰り道'],
  base:['pretendKnow','buyFit','anger','ignore','boast'],start:{mind:4,energy:4},
  monsters:[
-  {name:'ノリノリの影',hp:6,power:2,turns:4,look:'みんなが、知らない話で盛り上がっている。'}
+  {name:'ノリノリの影',hp:6,power:2,look:'みんなが、知らない話で盛り上がっている。'}
  ],
  talk:[['topicAsk','「それって何？」と聞く','知らないことを、素直に聞く。'],['ownLike','自分の好きなことを話す','自分の好きなことを、話してみる。'],['honestSay2','「知らない」と正直に言う','知らないことを、正直に言う。']],
  think:[['leftOut','仲間外れのようで不安','みんなの話に入れなくて、不安。'],['fakeIt','合わせなきゃと焦る','知らないのは、恥ずかしい気がする。'],['noInterest','そもそも興味がない','流行には、興味がない。']],
@@ -3019,7 +3019,7 @@ trend:{
 stumble:{title:'みんなの前で間違えた',nav:'発表で間違えた',num:43,attrs:['soc'],goals:['恥ずかしさを乗りこなしたい','やり直したい','失敗しても立て直したい'],chapters:['かんでしまった','恥ずかしさが残る','明日の自分'],locations:['教室・発表','昼休み','帰り道'],base:['runOut','freezeUp','keepGoing','anger','ignore'],
  start:{mind:4,energy:3},
  monsters:[
-  {name:'まわりの笑い声',hp:6,power:2,turns:4,look:'口をあけて、笑っている。'}
+  {name:'まわりの笑い声',hp:6,power:2,look:'口をあけて、笑っている。'}
  ],
  talk:[['ashamedTell','「恥ずかしかった」と話す','恥ずかしさを、正直に話す。'],['laughAlong','自分も一緒に笑う','「やっちゃった」と笑う。'],['askAfter','次はどうするか聞く','友達に、聞いてみる。']],
  think:[['messedUp','かんでしまった','言いたいことが、出てこなかった。'],['laughedAt','笑われた気がする','みんなが、笑っていた。'],['wantRetry','やり直したい','次は、うまくやりたい。']],
@@ -3070,7 +3070,7 @@ stumble:{title:'みんなの前で間違えた',nav:'発表で間違えた',num:
 sides:{title:'どっちの味方か迫られた',nav:'板ばさみ',num:44,attrs:['soc'],goals:['どっちも失いたくない','正直に伝えたい','関係をつなぎたい'],chapters:['板ばさみ','選ぶプレッシャー','決裂のあと'],locations:['休み時間','下校前','翌日'],base:['pickSide','avoidDays','calmAsk2','anger','ignore'],
  start:{mind:4,energy:3},
  monsters:[
-  {name:'板ばさみ',hp:6,power:2,turns:4,look:'二人の間で、揺れている。'}
+  {name:'板ばさみ',hp:6,power:2,look:'二人の間で、揺れている。'}
  ],
  talk:[['listenBoth','両方の言い分を聞く','片方ずつ、話を聞く。'],['tellNeutral','「どっちも選べない」と言う','正直に、気持ちを言う。'],['askTeacher2','先生に相談する','一人で抱えず、相談する。']],
  think:[['forced','選ばないとと焦る','どっちか選ばないと、と焦る。'],['bothFriends','どっちも友達','二人とも、大切な友達。'],['scaredFight','ケンカがこわい','ケンカの空気が、こわい。']],
@@ -3121,7 +3121,7 @@ sides:{title:'どっちの味方か迫られた',nav:'板ばさみ',num:44,attrs
 deadlock:{title:'話し合いが決まらない',nav:'決まらない',num:45,attrs:['soc','study'],goals:['みんな納得の決め方を見つけたい','自分の意見も伝えたい','時間内に決めたい'],chapters:['平行線の言い合い','決まらない迷子','タイムリミット'],locations:['係の話し合い','昼休み','放課後'],base:['pushMine','keepQuiet2','listIdeas','anger','ignore'],
  start:{mind:4,energy:3},
  monsters:[
-  {name:'平行線の言い合い',hp:6,power:2,turns:4,look:'「俺の案！」「私の！」と、声がぶつかる。'}
+  {name:'平行線の言い合い',hp:6,power:2,look:'「俺の案！」「私の！」と、声がぶつかる。'}
  ],
  talk:[['hearAll','みんなの案を全部聞く','全部の案を、まず聞く。'],['suggestRule','「決め方」を提案する','何で決めるか、決め方を提案。'],['askVote','「多数決にする？」と聞く','多数決を、聞いてみる。']],
  think:[['hurryUp','早く決めないと焦る','時間がない。急がないと。'],['myWay','自分の案がいい','自分の案が、いちばんだと思う。'],['sickOfTalk','言い合いが嫌','もう、決めるのが面倒。']],
@@ -3171,7 +3171,7 @@ deadlock:{title:'話し合いが決まらない',nav:'決まらない',num:45,at
 praised:{title:'褒められて嫌味を言われた',nav:'嫌味を言われた',num:46,attrs:['soc'],goals:['関係をこわさず受け取りたい','自分の調子を保ちたい','相手ともうまくやりたい'],chapters:['褒められた直後','嫌味が刺さる','明日の関係'],locations:['教室','休み時間','帰り道'],base:['brushOff','proudOut','modestSay','anger','ignore'],
  start:{mind:4,energy:3},
  monsters:[
-  {name:'ねたみの視線',hp:6,power:2,turns:4,look:'じろっと、にらんでいる。'}
+  {name:'ねたみの視線',hp:6,power:2,look:'じろっと、にらんでいる。'}
  ],
  talk:[['tellFeel2','「その言い方、つらい」と伝える','正直に、気持ちを伝える。'],['thankTeacher','先生にお礼を言う','褒めてくれたことへの、お礼。'],['askWhyJab','「どうして？」と聞く','嫌味のわけを、聞く。']],
  think:[['wantLike','好かれたい','嫌味を言われて、悲しい。'],['fair2','褒められただけなのに','悪いこと、してないのに。'],['worriedR','関係が心配','明日から、どう接するか。']],
@@ -3222,7 +3222,7 @@ praised:{title:'褒められて嫌味を言われた',nav:'嫌味を言われた
 hidden:{title:'筆箱を隠された',nav:'隠された',num:47,attrs:['soc'],goals:['冷静に対処したい','関係をこわさず解決したい','次に備えたい'],chapters:['筆箱がない','誰が隠した？','明日の約束'],locations:['教室・朝','休み時間','帰り道'],base:['accuseH','prankBack','lookNear','anger','ignore'],
  start:{mind:4,energy:3},
  monsters:[
-  {name:'消えた筆箱',hp:6,power:2,turns:4,look:'机の上に、何もない。'}
+  {name:'消えた筆箱',hp:6,power:2,look:'机の上に、何もない。'}
  ],
  talk:[['tellFeel3','「隠すの、やめて」と伝える','正直に、やめてと言う。'],['askTeacher3','先生に相談する','困ったことは、相談する。'],['askWho','「誰か見なかった？」と聞く','目撃者を、探す。']],
  think:[['annoyed','困る・腹が立つ','勝手に隠されて、腹が立つ。'],['worried2','明日も不安','明日も、同じことになるか。'],['whoDid2','誰がやったのか','誰が、隠したのか。']],
@@ -3273,7 +3273,7 @@ hidden:{title:'筆箱を隠された',nav:'隠された',num:47,attrs:['soc'],go
 sign:{title:'テストの点を見せたくない',nav:'点を見せたくない',num:48,attrs:['study','soc'],goals:['正直に伝えたい','次につなげたい','自分のペースを守りたい'],chapters:['返ってきたテスト','家に帰って','明日から'],locations:['教室','家','翌日'],base:['hidePaper','fakeSign','tellHome','anger','ignore'],
  start:{mind:4,energy:3},
  monsters:[
-  {name:'見せられない点数',hp:6,power:2,turns:4,look:'赤い数字が、目に入る。'}
+  {name:'見せられない点数',hp:6,power:2,look:'赤い数字が、目に入る。'}
  ],
  talk:[['talkHome','家の人に相談する','点数のこと、相談する。'],['talkTeacher4','先生に聞く','どう直せばいいか、聞く。'],['showFriend','友達と見せ合う','お互いのを、見せ合う。']],
  think:[['shame3','点が悪くて恥ずかしい','点数が、低かった。'],['scaredHome','家で言われそう','家で、何か言われそう。'],['dontKnow2','どう直せばいいか','何をすれば、直せるか。']],
@@ -3324,7 +3324,7 @@ sign:{title:'テストの点を見せたくない',nav:'点を見せたくない
 lineCut:{title:'列に割り込まれた',nav:'割り込まれた',num:49,attrs:['soc'],goals:['自分の順番を守りたい','相手とぶつからず解決したい','ルールを守れる関係にしたい'],chapters:['列に並んでいた','割り込まれた','明日からの列'],locations:['給食の列','休み時間','翌日の列'],base:['yellCut','pretendOk','sayTurn','anger','ignore'],
  start:{mind:4,energy:3},
  monsters:[
-  {name:'割り込む足',hp:6,power:2,turns:4,look:'前に、誰かが入った。'}
+  {name:'割り込む足',hp:6,power:2,look:'前に、誰かが入った。'}
  ],
  talk:[['talkCut','「後ろに並んで」と言う','自分の順番を、伝える。'],['tellWatch2','見ている人・先生に言う','困ったことは、相談する。'],['askBack','「一番後ろはどこ？」と聞く','気づいてもらう聞き方。']],
  think:[['unfair','ずるい・腹が立つ','割り込まれて、ずるいと思った。'],['hesitant3','言っていいか不安','言っても、いいのかな。'],['ruleThink','ルールはどうだったか','列のルール、どうだったか。']],
@@ -3374,7 +3374,7 @@ lineCut:{title:'列に割り込まれた',nav:'割り込まれた',num:49,attrs:
 dumped:{title:'仕事を押し付けられた',nav:'押し付けられた',num:50,attrs:['soc'],goals:['自分の仕事と相手の仕事を分けたい','断る勇気を持ちたい','公平な分け方にしたい'],chapters:['「やっといて」と言われた','自分の仕事と相手の仕事','明日の係'],locations:['教室・放課後','休み時間','翌日'],base:['snapTake','silentDo','sayNo2','anger','ignore'],
  start:{mind:4,energy:3},
  monsters:[
-  {name:'押し付ける手',hp:6,power:2,turns:4,look:'「やっといて」と、雑巾が渡された。'}
+  {name:'押し付ける手',hp:6,power:2,look:'「やっといて」と、雑巾が渡された。'}
  ],
  talk:[['talkDuty','「あなたの仕事だよ」と言う','静かに、断る。'],['askTeacher5','係の決め方を相談する','仕事の分け方、相談する。'],['askOthers','他の係の人に聞く','「みんなはどうしてる？」と聞く。']],
  think:[['resent','なんで私だけ…と思う','押し付けられて、不満だった。'],['dutyThink','自分の分はどこまでか','どこまでが、自分の仕事か。'],['fairThink','公平じゃないと思う','一人に押し付けるのは、公平じゃない。']],
@@ -3424,7 +3424,7 @@ dumped:{title:'仕事を押し付けられた',nav:'押し付けられた',num:5
 gossip:{title:'友達の悪口を聞いた',nav:'悪口を聞いた',num:51,attrs:['soc'],goals:['悪口に乗らないでいたい','関係をこわさず立ち回りたい','悪口のない場にしたい'],chapters:['悪口の話が始まった','どう立ち回るか','明日からの関係'],locations:['休み時間','帰り道','翌日'],base:['joinGossip','stayMute','changeTopic','anger','ignore'],
  start:{mind:4,energy:3},
  monsters:[
-  {name:'悪口の渦',hp:6,power:2,turns:4,look:'「あの子ってさ…」と始まった。'}
+  {name:'悪口の渦',hp:6,power:2,look:'「あの子ってさ…」と始まった。'}
  ],
  talk:[['changeSub','話題を変える','「そういえば」と、切り替える。'],['askDirect','本人に直接聞いてみる','悪口じゃなく、本人に聞く。'],['talkTeacher6','先生に相談する','悪口のこと、相談する。']],
  think:[['uncomfortable','悪口が嫌だ','悪口を聞くと、嫌な気持ち。'],['afraid2','はずされるのが不安','反対したら、はずされるか。'],['whatIsRight','正しいのはどれか','正しいのは、どれだろう。']],
@@ -3474,7 +3474,7 @@ gossip:{title:'友達の悪口を聞いた',nav:'悪口を聞いた',num:51,attr
 broke:{title:'借りたものを壊した',nav:'壊した',num:52,attrs:['soc'],goals:['正直に謝りたい','責任を取りたい','次は丁寧に扱いたい'],chapters:['壊れてしまった','どう伝えるか','返すとき'],locations:['教室','休み時間','翌日'],base:['hideBroke','blameIt','tellOwner','anger','ignore'],
  start:{mind:4,energy:3},
  monsters:[
-  {name:'壊れたもの',hp:6,power:2,turns:4,look:'壊れたものが、手の中にある。'}
+  {name:'壊れたもの',hp:6,power:2,look:'壊れたものが、手の中にある。'}
  ],
  talk:[['confess','「ごめん、壊した」と言う','正直に、謝る。'],['askHelp5','大人に相談する','どうすればいいか、聞く。'],['tryFix','直せるか試す','直せるところは、直す。']],
  think:[['guilty','悪いことをした','壊してしまって、悪かった。'],['scared3','怒られるのがこわい','怒られるのが、こわい。'],['responsibility','責任は取るべきか','責任を、どう取るか。']],
@@ -3525,7 +3525,7 @@ broke:{title:'借りたものを壊した',nav:'壊した',num:52,attrs:['soc'],
 leftOut:{title:'遊びから置いて行かれた',nav:'置いて行かれた',num:53,attrs:['soc'],goals:['寂しさを伝えたい','一人でも楽しくいたい','次は一緒にいたい'],chapters:['置いて行かれた','一人の時間','明日の遊び'],locations:['校庭','休み時間','翌日'],base:['chaseRun','pretendFine','sayWait2','anger','ignore'],
  start:{mind:4,energy:3},
  monsters:[
-  {name:'遠ざかる背中',hp:6,power:2,turns:4,look:'友達の背中が、遠くなる。'}
+  {name:'遠ざかる背中',hp:6,power:2,look:'友達の背中が、遠くなる。'}
  ],
  talk:[['callOut','「待って！」と声をかける','置いて行かれて、声をかける。'],['askReason','「なんで行っちゃったの？」と聞く','理由を、聞いてみる。'],['talkOther','他の子と話してみる','その子以外にも、話せる。']],
  think:[['lonely','寂しい・悲しい','置いて行かれて、寂しかった。'],['wantAlong','一緒にいたかった','本当は、一緒にいたかった。'],['ownFun','一人でも楽しいこと','一人でも、楽しいことはある。']],
@@ -3575,7 +3575,7 @@ leftOut:{title:'遊びから置いて行かれた',nav:'置いて行かれた',n
 nameWrong:{title:'名前を間違えられ続ける',nav:'名前を間違えられる',num:54,attrs:['soc'],goals:['正しい名前で呼んでもらいたい','関係をこわさず訂正したい','自分の名前を大切にしたい'],chapters:['また間違えられた','どう訂正するか','名前で呼ばれる日'],locations:['教室','休み時間','翌日'],base:['stayWrong','yellName','correctCalm','anger','ignore'],
  start:{mind:4,energy:3},
  monsters:[
-  {name:'間違った呼び名',hp:6,power:2,turns:4,look:'「△△くん」と、また呼ばれた。'}
+  {name:'間違った呼び名',hp:6,power:2,look:'「△△くん」と、また呼ばれた。'}
  ],
  talk:[['tellTeacher7','先生に「違います」と言う','落ち着いて、訂正する。'],['showCard','名札を見せる','名札で、覚えてもらう。'],['tellFriend5','友達に相談する','「どう言えばいい？」と聞く。']],
  think:[['small','自分が小さく思える','何度も間違えられて、小さく思えた。'],['awkward2','言いにくい','訂正するのが、言いにくい。'],['myName','名前は大切','名前は、自分の大切なもの。']],
@@ -3625,7 +3625,7 @@ nameWrong:{title:'名前を間違えられ続ける',nav:'名前を間違えら�
 picky:{title:'給食が苦手で残した',nav:'給食で残した',num:55,attrs:['ath','soc'],goals:['少しずつ食べられるようになりたい','無理せず挑戦したい','正直に苦手を伝えたい'],chapters:['苦手なものが出た','どう挑戦するか','明日の給食'],locations:['給食の時間','教室','翌日'],base:['leaveAll','forceEat','tinyBite','anger','ignore'],
  start:{mind:4,energy:3},
  monsters:[
-  {name:'苦手な一品',hp:6,power:2,turns:4,look:'苦手なものが、目の前にある。'}
+  {name:'苦手な一品',hp:6,power:2,look:'苦手なものが、目の前にある。'}
  ],
  talk:[['askLess2','「少なめに」とお願いする','量を、変えてもらう。'],['askLunch2','給食の先生に相談する','どうすればいいか、聞く。'],['tellFriend6','友達に相談する','「苦手なんだけど」と言う。']],
  think:[['hate2','苦手で食べたくない','苦手なものが、出てきた。'],['shame4','残すのが恥ずかしい','残すと、目立つ。'],['wantEat','食べられるようになりたい','本当は、食べられるようになりたい。']],
@@ -3675,7 +3675,7 @@ picky:{title:'給食が苦手で残した',nav:'給食で残した',num:55,attrs
 choirMiss:{title:'合唱でミスした',nav:'合唱でミスした',num:56,attrs:['study','soc'],goals:['間違えても歌い続けたい','練習で立て直したい','本番を楽しみたい'],chapters:['練習で音を外した','立て直しの練習','本番の合唱'],locations:['音楽室','音楽室','体育館'],base:['stopSing','mouthWord','humAlong','anger','ignore'],
  start:{mind:4,energy:3},
  monsters:[
-  {name:'外れた音',hp:6,power:2,turns:4,look:'さっきの音、変だったかも。'}
+  {name:'外れた音',hp:6,power:2,look:'さっきの音、変だったかも。'}
  ],
  talk:[['askPart2','先生にパートを確かめる','自分のパートを、聞いてみる。'],['askMusicT2','音楽の先生に教わる','入り方を、教わる。'],['singTogether2','隣の人と一緒に歌う','隣の声に、合わせてみる。']],
  think:[['wrongNote','音を外してしまった','さっきの音、ずれてたかも。'],['fear2','また間違えそうで怖い','間違えるのが、怖い。'],['wantSing','ちゃんと歌いたい','本当は、上手く歌いたい。']],
@@ -3725,7 +3725,7 @@ choirMiss:{title:'合唱でミスした',nav:'合唱でミスした',num:56,attr
 poolFear:{title:'プールが怖い',nav:'プールが怖い',num:57,attrs:['ath'],goals:['少しずつ水に慣れたい','怖いことを伝えたい','自分のペースで挑戦したい'],chapters:['プールの授業が始まる','水に慣れる','少しずつ進む'],locations:['プールサイド','浅いところ','プール'],base:['skipPool','wetFirst','splashFace','anger','ignore'],
  start:{mind:4,energy:3},
  monsters:[
-  {name:'水への怖さ',hp:6,power:2,turns:4,look:'水が、ちょっと怖い。'}
+  {name:'水への怖さ',hp:6,power:2,look:'水が、ちょっと怖い。'}
  ],
  talk:[['tellCoach2','「怖い」と先生に言う','正直に、気持ちを言う。'],['askFriend7','できる友達に聞く','「どうやって慣れた？」と聞く。'],['joinBuddy','友達と一緒に入る','一人より、二人が安心。']],
  think:[['coldWater','水が冷たくて怖い','水が冷たくて、入りたくない。'],['sinkFear','沈みそうで怖い','沈んでしまうんじゃないか。'],['wantSwim','泳げるようになりたい','本当は、泳げるようになりたい。']],
@@ -3775,7 +3775,7 @@ poolFear:{title:'プールが怖い',nav:'プールが怖い',num:57,attrs:['ath
 ropeTrip:{title:'大縄でひっかかった',nav:'大縄でひっかかった',num:58,attrs:['ath','soc'],goals:['失敗しても跳び続けたい','タイミングを覚えたい','みんなと跳びたい'],chapters:['みんなの前でひっかかった','練習して立て直す','もう一回跳ぶ'],locations:['校庭','校庭','校庭'],base:['quitRope','jumpLate','watchRope','anger','ignore'],
  start:{mind:4,energy:3},
  monsters:[
-  {name:'跳べない不安',hp:6,power:2,turns:4,look:'また引っかかったら、恥ずかしい。'}
+  {name:'跳べない不安',hp:6,power:2,look:'また引っかかったら、恥ずかしい。'}
  ],
  talk:[['smallRope2','少人数で練習する','休憩時間に、練習する。'],['askRetry2','「もう一回やりたい」と言う','リトライを、求める。'],['jumpWith2','できる人の後に続く','ついていくと、跳びやすい。']],
  think:[['tripped','引っかかって転んだ','ロープに、引っかかった。'],['shame5','みんなに見られて恥ずかしい','失敗を、見られちゃった。'],['wantJump','ちゃんと跳びたい','本当は、跳べるようになりたい。']],
@@ -3825,7 +3825,7 @@ ropeTrip:{title:'大縄でひっかかった',nav:'大縄でひっかかった',
 homeAlone:{title:'教室の留守番を頼まれた',nav:'留守番を頼まれた',num:59,attrs:['soc','study'],goals:['頼まれたことをやりたい','不安を伝えたい','役目を果たしたい'],chapters:['みんなが出て行く','一人の時間','戻ってきた'],locations:['教室','教室','教室'],base:['stayAlone','boredWait','checkDoor2','anger','ignore'],
  start:{mind:4,energy:3},
  monsters:[
-  {name:'一人の不安',hp:6,power:2,turns:4,look:'一人で、教室に残された。'}
+  {name:'一人の不安',hp:6,power:2,look:'一人で、教室に残された。'}
  ],
  talk:[['askStay2','「不安」と正直に言う','気持ちを、伝える。'],['tellMissed2','終わった後に伝える','後から、「さびしかった」と。'],['askBuddy2','「一緒にいて」と頼む','残れる人に、頼んでみる。']],
  think:[['lonely','一人でさびしい','一人は、さびしい。'],['dutyFeel','頼まれた責任を感じる','任された、責任がある。'],['wantDo','役目を果たしたい','ちゃんと、留守番したい。']],
@@ -3875,7 +3875,7 @@ homeAlone:{title:'教室の留守番を頼まれた',nav:'留守番を頼まれ�
 noShoes:{title:'上履きを忘れた',nav:'上履きを忘れた',num:60,attrs:['study','soc'],goals:['正直に伝えたい','今日を乗り切りたい','明日から忘れないようにしたい'],chapters:['朝、気づいた','一日をどうする','明日のために'],locations:['教室','教室','家と学校'],base:['panicShoes','hideFeet','wearSocks','anger','ignore'],
  start:{mind:4,energy:3},
  monsters:[
-  {name:'忘れた焦り',hp:6,power:2,turns:4,look:'上履きが、ない。'}
+  {name:'忘れた焦り',hp:6,power:2,look:'上履きが、ない。'}
  ],
  talk:[['tellShoes2','「忘れました」と言う','正直に、伝える。'],['borrowShoes2','備品を借りる','学校のを、借りる。'],['askFriend9','友達に貸してと頼む','休み時間に、頼む。']],
  think:[['forgotS','上履きを忘れた','忘れてしまった。'],['shame6','靴下は恥ずかしい','靴下でいるの、恥ずかしい。'],['wantFix','どうにかしたい','本当は、ちゃんとしたい。']],
@@ -3925,7 +3925,7 @@ noShoes:{title:'上履きを忘れた',nav:'上履きを忘れた',num:60,attrs:
 cleanSkip:{title:'掃除当番、逃げたい',nav:'掃除をサボりたい',num:61,attrs:['soc','study'],goals:['逃げずにやりたい','正直に気持ちを言いたい','自分の担当を果たしたい'],chapters:['掃除の時間が来た','やるか逃げるか','片付け終わり'],locations:['教室','教室','教室'],base:['skipClean','fakeBusy','smallClean','anger','ignore'],
  start:{mind:4,energy:3},
  monsters:[
-  {name:'サボりたい気持ち',hp:6,power:2,turns:4,look:'掃除、面倒くさい。'}
+  {name:'サボりたい気持ち',hp:6,power:2,look:'掃除、面倒くさい。'}
  ],
  talk:[['askEasy2','「楽なところを」と言う','担当を、相談する。'],['tiredSay2','「疲れた」と正直に言う','気持ちを、伝える。'],['teamClean2','「一緒にやろう」と声をかける','一緒なら、楽。']],
  think:[['lazy','掃除が面倒くさい','掃除、面倒だな。'],['wantPlay','早く遊びたい','掃除より、遊びたい。'],['wantDone','ちゃんとやりたい','本当は、やって終わりたい。']],
@@ -3975,7 +3975,7 @@ cleanSkip:{title:'掃除当番、逃げたい',nav:'掃除をサボりたい',nu
 lendBack:{title:'貸したものを返してほしい',nav:'返してもらいたい',num:62,attrs:['soc'],goals:['返してほしいと言いたい','関係を壊さず伝えたい','次からはルールを決めたい'],chapters:['貸したのに戻らない','どう伝えるか','次の貸し借り'],locations:['教室','教室','教室'],base:['keepWait','forgetIt','hintBack','anger','ignore'],
  start:{mind:4,energy:3},
  monsters:[
-  {name:'言い出せない',hp:6,power:2,turns:4,look:'言い出すのが、苦手。'}
+  {name:'言い出せない',hp:6,power:2,look:'言い出すのが、苦手。'}
  ],
  talk:[['sayBack2','「返して」とはっきり言う','直接、伝える。'],['askTeacher4','先生に相談する','「返してくれなくて」と。'],['stayKind2','優しく返してと頼む','怒らず、優しく。']],
  think:[['cantSay','言い出せない','返してと、言いにくい。'],['moyamoya','もやもやする','言えなくて、もやもや。'],['wantBack','ちゃんと返してほしい','本当は、返してほしい。']],
@@ -4025,7 +4025,7 @@ lendBack:{title:'貸したものを返してほしい',nav:'返してもらい�
 sickReturn:{title:'休み明けでついていけない',nav:'休み明けについていけない',num:63,attrs:['study'],goals:['休んだ分を追いつきたい','正直に分からないと言いたい','自分のペースで戻りたい'],chapters:['休み明けの授業','追いつく方法','少しずつ戻る'],locations:['教室','教室','教室'],base:['behindFeel','lostLesson','copyNote','anger','ignore'],
  start:{mind:4,energy:3},
  monsters:[
-  {name:'置いていかれた感',hp:6,power:2,turns:4,look:'みんなが、先に進んでいる。'}
+  {name:'置いていかれた感',hp:6,power:2,look:'みんなが、先に進んでいる。'}
  ],
  talk:[['askCover2','「どこまでやった？」と聞く','範囲を、確認する。'],['tellBack2','「分かりません」と言う','正直に、伝える。'],['askClassmate2','隣の人に聞く','「ここって」と、聞く。']],
  think:[['lostFeel','置いていかれた気持ち','先に進んでしまった。'],['dontKnow','授業が分からない','休んだ分、分からない。'],['wantCatch','追いつきたい','本当は、追いつきたい。']],
@@ -4075,7 +4075,7 @@ sickReturn:{title:'休み明けでついていけない',nav:'休み明けにつ
 quietGroup:{title:'グループで何も言えない',nav:'グループで言えない',num:64,attrs:['soc'],goals:['一言でも発言したい','聞く役でも貢献したい','自分の考えを伝えたい'],chapters:['グループワークが始まる','発言するか黙るか','自分の声を出す'],locations:['教室','教室','教室'],base:['quietStay','nodOnly','agreeOut','anger','ignore'],
  start:{mind:4,energy:3},
  monsters:[
-  {name:'発言の壁',hp:6,power:2,turns:4,look:'発言が、できない。'}
+  {name:'発言の壁',hp:6,power:2,look:'発言が、できない。'}
  ],
  talk:[['smallIdea2','小さな意見を言う','一言だけ、発言。'],['askSpace2','「言っていい？」と聞く','隙間を、聞く。'],['shareOpinion2','自分の考えを言う','考えを、口にする。']],
  think:[['cantSpeak','発言できない','言いたいのに、言えない。'],['fearSpeak','外れてるかもで怖い','変に思われそうで怖い。'],['wantSpeak','ちゃんと話したい','本当は、発言したい。']],
@@ -4125,7 +4125,7 @@ quietGroup:{title:'グループで何も言えない',nav:'グループで言え
 tripAnx:{title:'遠足の日が不安',nav:'遠足の日が不安',num:65,attrs:['ath','soc'],goals:['不安でも楽しみたい','迷子にならないようにしたい','気持ちを伝えたい'],chapters:['遠足の朝','目的地で行動','帰り道'],locations:['学校','遠足先','バス'],base:['tripWorry','packEarly','nearT','anger','ignore'],
  start:{mind:4,energy:3},
  monsters:[
-  {name:'知らない場所への不安',hp:6,power:2,turns:4,look:'知らない場所は、不安。'}
+  {name:'知らない場所への不安',hp:6,power:2,look:'知らない場所は、不安。'}
  ],
  talk:[['buddyRule2','相棒と一緒に行動','離れない、約束。'],['tellAnxious2','「不安」と言う','気持ちを、伝える。'],['toiletAsk2','トイレの場所を聞く','先に、確かめる。']],
  think:[['newPlace','知らない場所が不安','知らない場所は、不安。'],['lostFear','迷子になりそうで怖い','はぐれたら、どうしよう。'],['wantFun','楽しみたい','本当は、楽しみたい。']],
@@ -4175,7 +4175,7 @@ tripAnx:{title:'遠足の日が不安',nav:'遠足の日が不安',num:65,attrs:
 refuseLend:{title:'貸してばかりで断りたい',nav:'貸すのを断りたい',num:66,attrs:['soc'],goals:['断りたいけど仲良くしたい','モヤモヤを伝えたい','自分のものを守りたい'],chapters:['また「貸して」と言われた','断るか貸すか','自分の気持ちを伝える'],locations:['教室','教室','廊下'],base:['lendAgain','sayNo3','lendOnce','anger','ignore'],
  start:{mind:4,energy:3},
  monsters:[
-  {name:'断れない気持ち',hp:6,power:2,turns:4,look:'断りたいのに、断れない。'}
+  {name:'断れない気持ち',hp:6,power:2,look:'断りたいのに、断れない。'}
  ],
  talk:[['sayNo4','「今日は」と断る','優しく、断る。'],['explainWhy3','理由を言う','「私も使うから」と。'],['honestNo3','「嫌」と正直に','気持ちを、伝える。']],
  think:[['cantRefuse','断れない','断りたいのに、断れない。'],['fearDislike','嫌がられそう','断ると、嫌がられそう。'],['wantSay','気持ちを言いたい','モヤモヤを、伝えたい。']],
@@ -4225,7 +4225,7 @@ refuseLend:{title:'貸してばかりで断りたい',nav:'貸すのを断りた
 mondayBlues:{title:'月曜の朝、行きたくない',nav:'月曜の朝が重い',num:67,attrs:['soc','study'],goals:['学校につきたい','気持ちを伝えたい','小さな目標で乗り切りたい'],chapters:['月曜の朝','家を出るか迷う','教室につく'],locations:['家','家の前','教室'],base:['stayBed','dragUp','slowReady','anger','ignore'],
  start:{mind:4,energy:2},
  monsters:[
-  {name:'起き上がれない重さ',hp:6,power:2,turns:4,look:'体が、起き上がれない。'}
+  {name:'起き上がれない重さ',hp:6,power:2,look:'体が、起き上がれない。'}
  ],
  talk:[['tellHome3','「行きたくない」と言う','家の人に、言う。'],['walkFriend2','友達と登校する','一緒に、行く。'],['findFun2','楽しみを見つける','今日の、楽しみを。']],
  think:[['cantGetUp','起き上がれない','体が、起き上がれない。'],['dontWantGo','行きたくない','今日は、行きたくない。'],['justArrive2','つくだけ目標','「つくだけ」に、目標を変えよう。']],
@@ -4275,7 +4275,7 @@ mondayBlues:{title:'月曜の朝、行きたくない',nav:'月曜の朝が重�
 hwLazy:{title:'宿題のやる気が出ない',nav:'宿題のやる気が出ない',num:68,attrs:['study'],goals:['宿題を終わらせたい','やる気を出したい','ちゃんとやった自分を見たい'],chapters:['宿題があるけど','始めるか後回し','終わらせるまで'],locations:['家の机','家の机','家の机'],base:['skipHw','wantPlay','boringFeel','anger','ignore'],
  start:{mind:4,energy:2},
  monsters:[
-  {name:'やる気のなさ',hp:6,power:2,turns:4,look:'やる気が、出ない。'}
+  {name:'やる気のなさ',hp:6,power:2,look:'やる気が、出ない。'}
  ],
  talk:[['askStudy2','友達と一緒にやる','一緒だと、続く。'],['tellMom2','「やりたくない」と家に言う','気持ちを、言う。'],['askTeacher5','先生に「難しい」と言う','助けを、求める。']],
  think:[['noMotiv','やる気が出ない','やる気が、出ない。'],['wantPlay2','遊びたい','宿題より、遊びたい。'],['wantDone2','終わらせたい','ちゃんと終わらせたい。']],
@@ -4325,7 +4325,7 @@ hwLazy:{title:'宿題のやる気が出ない',nav:'宿題のやる気が出な�
 tagIt:{title:'鬼ごっこでずっと鬼',nav:'鬼ごっこでずっと鬼',num:69,attrs:['ath','soc'],goals:['鬼をかわってほしい','不公平を伝えたい','違う遊びがしたい'],chapters:['鬼ごっこが始まる','ずっと鬼のまま','伝えるかやめるか'],locations:['校庭','校庭','校庭'],base:['alwaysIt','askChange','countRounds','anger','ignore'],
  start:{mind:4,energy:3},
  monsters:[
-  {name:'ずっと鬼',hp:6,power:2,turns:4,look:'ずっと鬼で、つかない。'}
+  {name:'ずっと鬼',hp:6,power:2,look:'ずっと鬼で、つかない。'}
  ],
  talk:[['sayNotFair2','「不公平」と言う','不公平を、伝える。'],['takeTurns4','順番を提案','順番で、やろう。'],['suggestNew2','別の遊びを提案','違う、遊びに。']],
  think:[['stuckIt','ずっと鬼','ずっと鬼で、つまらない。'],['unfairPlay','不公平だ','これは、不公平。'],['wantChange2','違う遊びがしたい','別の遊びが、したい。']],
@@ -4375,8 +4375,8 @@ tagIt:{title:'鬼ごっこでずっと鬼',nav:'鬼ごっこでずっと鬼',num
 sickHide:{title:'体調不良なのに我慢して言えない',nav:'体調を言えない',num:70,attrs:['study'],goals:['具合を伝えたい','早退したい','我慢しすぎない'],chapters:['朝から体調が悪い','授業中に痛くなる','保健室か家か'],locations:['教室','教室','保健室'],base:['hideSick','pushThrough','drinkWater','anger','ignore'],
  start:{mind:4,energy:2},
  monsters:[
-  {name:'体調の悪さ',hp:5,power:1,turns:4,look:'体が、悪い。'},
-  {name:'言えない気持ち',hp:5,power:1,turns:4,look:'言いたいのに、言えない。'}
+  {name:'体調の悪さ',hp:5,power:1,look:'体が、悪い。'},
+  {name:'言えない気持ち',hp:5,power:1,look:'言いたいのに、言えない。'}
  ],
  talk:[['tellTeacher9','「具合が悪い」と言う','正直に、伝える。'],['wantHome2','「早退したい」と言う','家に、帰りたい。'],['stomachHurt2','「おなかが痛い」と言う','症状を、伝える。']],
  think:[['dizzyFeel2','目まいがする','目が、ぐるぐるする。'],['stomachHurt3','おなかが痛い','おなかが、痛い。'],['wantHome3','家に帰りたい','家に、帰りたい。']],
@@ -4426,7 +4426,7 @@ sickHide:{title:'体調不良なのに我慢して言えない',nav:'体調を�
 newKid:{title:'転校生が来た',nav:'転校生が来た',num:71,attrs:['soc'],goals:['声をかけたい','仲良くなりたい','助けてあげたい'],chapters:['転校生が来る','声をかけるか迷う','近づく'],locations:['教室','廊下','校庭'],base:['shyNew','sitNear','learnName','anger','ignore'],
  start:{mind:4,energy:3},
  monsters:[
-  {name:'初めての人への緊張',hp:6,power:2,turns:4,look:'初めての人は、緊張する。'}
+  {name:'初めての人への緊張',hp:6,power:2,look:'初めての人は、緊張する。'}
  ],
  talk:[['sayHi3','「こんにちは」と声をかける','あいさつを、する。'],['inviteNew2','遊びに誘う','仲間に、誘う。'],['buddyNew2','「聞いてね」と伝える','助けを、伝える。']],
  think:[['shyMeet','初めてで緊張','初めてで、緊張する。'],['wantGreet','声をかけたい','声を、かけたい。'],['wantFriend2','仲良くなりたい','仲良く、なりたい。']],
@@ -4476,7 +4476,7 @@ newKid:{title:'転校生が来た',nav:'転校生が来た',num:71,attrs:['soc']
 raceLast:{title:'徒競走でビリ',nav:'徒競走でビリ',num:72,attrs:['ath'],goals:['悔しさを乗り越えたい','次はがんばりたい','自分なりに評価したい'],chapters:['徒競走が始まる','ビリになった','悔しさと向き合う'],locations:['校庭','校庭','教室'],base:['lastPlace','wantWin','ashamedLose','anger','ignore'],
  start:{mind:4,energy:3},
  monsters:[
-  {name:'ビリの気持ち',hp:6,power:2,turns:4,look:'ビリで、悔しい。'}
+  {name:'ビリの気持ち',hp:6,power:2,look:'ビリで、悔しい。'}
  ],
  talk:[['cheerWinner2','1位を祝う','1位を、祝う。'],['ownTime2','自分と比べる','記録を、比べる。'],['ashamedTell2','「恥ずかしい」と言う','気持ちを、言う。']],
  think:[['lostRace','負けた','ビリに、なった。'],['wantWin2','勝ちたかった','勝ちたかったのに…。'],['nextYear2','来年がんばりたい','次は、がんばりたい。']],
@@ -4526,7 +4526,7 @@ raceLast:{title:'徒競走でビリ',nav:'徒競走でビリ',num:72,attrs:['ath
 lineBack:{title:'並ぶとき後ろに回される',nav:'後ろに回される',num:73,attrs:['soc'],goals:['自分の場所を伝えたい','不公平を伝えたい','落ち着いて対応したい'],chapters:['列に並ぶ','後ろに回される','伝えるか並ぶか'],locations:['廊下','廊下','教室'],base:['pushedBack','backLine','standQuiet','anger','ignore'],
  start:{mind:4,energy:3},
  monsters:[
-  {name:'後ろに回される悔しさ',hp:6,power:2,turns:4,look:'後ろに、回される。'}
+  {name:'後ろに回される悔しさ',hp:6,power:2,look:'後ろに、回される。'}
  ],
  talk:[['sayFirst3','「先にいた」と言う','自分の場所を、伝える。'],['tellLine3','先生に「順番が」と言う','公平を、求める。'],['unfairPush2','「不公平」と言う','不公平を、伝える。']],
  think:[['wantFirst2','前に立ちたい','前に、立ちたい。'],['unfairLine','不公平だ','順番が、違う。'],['wantCalm','落ち着きたい','落ち着いて、対応したい。']],
@@ -4576,7 +4576,7 @@ lineBack:{title:'並ぶとき後ろに回される',nav:'後ろに回される',
 bffFight:{title:'仲良しとけんか',nav:'仲良しとけんか',num:74,attrs:['soc'],goals:['仲直りしたい','自分を見つめたい','関係を戻したい'],chapters:['仲良しと言い争い','口を聞かない関係','仲直りしたい'],locations:['教室','廊下','教室'],base:['argueBack','stopTalk','hotHead','anger','ignore'],
  start:{mind:4,energy:3},
  monsters:[
-  {name:'口を聞かない関係',hp:6,power:2,turns:4,look:'口を聞かなく、なった。'}
+  {name:'口を聞かない関係',hp:6,power:2,look:'口を聞かなく、なった。'}
  ],
  talk:[['sorryFirst2','先に「ごめん」と言う','先に、ごめん。'],['inviteBack2','「また遊ぼう」と誘う','関係を、戻す。'],['thinkFault2','自分を考えて言う','自分の、悪いところを。']],
  think:[['headHot','頭に血が上る','感情で、動いちゃう。'],['cantTalk','口を聞かない','口を、聞かなくなった。'],['wantMakeUp3','仲直りしたい','仲直り、したい。']],
@@ -4626,7 +4626,7 @@ bffFight:{title:'仲良しとけんか',nav:'仲良しとけんか',num:74,attrs
 toyFight:{title:'おもちゃを取り合った',nav:'おもちゃを取り合う',num:75,attrs:['soc'],goals:['遊びたいを伝えたい','順番・ルールを守りたい','一緒に解決したい'],chapters:['おもちゃが1つしかない','取り合いになる','どう使うか決める'],locations:['教室','教室','遊び場'],base:['grabToy','holdToy','fightOver','anger','ignore'],
  start:{mind:4,energy:3},
  monsters:[
-  {name:'奪い合いの手',hp:6,power:2,turns:4,look:'奪い合って、いる。'}
+  {name:'奪い合いの手',hp:6,power:2,look:'奪い合って、いる。'}
  ],
  talk:[['sayTurn3','「じゅんばん」と言う','順番を、伝える。'],['shareToy2','「一緒に使おう」と言う','一緒に、使う。'],['askRuleToy','「ルールは？」と聞く','ルールを、確かめる。']],
  think:[['wantToy','遊びたい','おもちゃで、遊びたい。'],['unfairToy','不公平だ','ずっと自分だけ。'],['wantShare','一緒に使いたい','一緒に、使いたい。']],
@@ -4676,7 +4676,7 @@ toyFight:{title:'おもちゃを取り合った',nav:'おもちゃを取り合�
 lunchDuty:{title:'給食当番で失敗',nav:'給食当番で失敗',num:76,attrs:['ath','soc'],goals:['失敗を直したい','助けを言いたい','責任を果たしたい'],chapters:['給食当番の時間','失敗した','直して続ける'],locations:['給食室','教室','教室'],base:['dropTray','panicServe','messServe','anger','ignore'],
  start:{mind:4,energy:3},
  monsters:[
-  {name:'失敗のプレッシャー',hp:6,power:2,turns:4,look:'失敗が、重い。'}
+  {name:'失敗のプレッシャー',hp:6,power:2,look:'失敗が、重い。'}
  ],
  talk:[['wantHelp2','「助けて」と言う','助けを、求める。'],['askMate2','当番に聞く','一緒の当番に、聞く。'],['laughDuty2','「ミスった」と言う','失敗を、言う。']],
  think:[['dutyFail','失敗した','配るのを、失敗した。'],['shameD','恥ずかしい','みんなの前で、失敗した。'],['wantFix','直したい','失敗を、直したい。']],
@@ -4726,7 +4726,7 @@ lunchDuty:{title:'給食当番で失敗',nav:'給食当番で失敗',num:76,attr
 notPicked:{title:'運動会の出場者に選ばれなかった',nav:'選ばれなかった',num:77,attrs:['ath','soc'],goals:['応援して貢献したい','気持ちを乗り越えたい','次に向けてがんばりたい'],chapters:['出場者が発表される','選ばれなかった','自分の役割を見つける'],locations:['教室','校庭','校庭'],base:['notChosen','watchBench','wantRun2','anger','ignore'],
  start:{mind:4,energy:3},
  monsters:[
-  {name:'選ばれない悲しみ',hp:6,power:2,turns:4,look:'選ばれなくて、悲しい。'}
+  {name:'選ばれない悲しみ',hp:6,power:2,look:'選ばれなくて、悲しい。'}
  ],
  talk:[['cheerTeam2','チームを応援する','応援で、貢献。'],['helpWater2','係を引き受ける','水くみ係を、する。'],['tellSad2','「悲しい」と言う','気持ちを、言う。']],
  think:[['sadNotChosen','選ばれなくて悲しい','選ばれなくて、悲しい。'],['wantRun3','走りたかった','走りたかったのに…。'],['wantContribute','貢献したい','役に立ちたい。']],
@@ -4776,8 +4776,8 @@ notPicked:{title:'運動会の出場者に選ばれなかった',nav:'選ばれ�
 testFreeze:{title:'テスト中に手が止まる',nav:'手が止まる',num:78,attrs:['study'],goals:['落ち着いて続けたい','分からなくても進みたい','時間を使い切りたい'],chapters:['テストが始まる','手が止まる','落ち着いて続ける'],locations:['教室','教室','教室'],base:['penStops','brainBlank','freezePanic','anger','ignore'],
  start:{mind:4,energy:3},
  monsters:[
-  {name:'真っ白のパニック',hp:5,power:1,turns:4,look:'頭が、真っ白。'},
-  {name:'時計のプレッシャー',hp:5,power:1,turns:4,look:'時間が、迫る。'}
+  {name:'真っ白のパニック',hp:5,power:1,look:'頭が、真っ白。'},
+  {name:'時計のプレッシャー',hp:5,power:1,look:'時間が、迫る。'}
  ],
  talk:[['tellFreeze2','「止まった」と言う','止まったと、言う。'],['askHow2','「どうすれば」と思う','対処を、考える。'],['selfTalk','「大丈夫」と自分に言う','自分に、声をかける。']],
  think:[['blankNow','真っ白になる','分からなくて、真っ白。'],['timePressure','時間が迫る','時間が、なくなる。'],['wantKeep','続けたい','続けて、終わらせたい。']],
@@ -4828,7 +4828,7 @@ testFreeze:{title:'テスト中に手が止まる',nav:'手が止まる',num:78,
 forgotNote:{title:'連絡帳を忘れた',nav:'連絡帳を忘れた',num:79,attrs:['study','soc'],goals:['正直に伝えたい','連絡を確実にしたい','次は忘れないようにしたい'],chapters:['連絡帳を出す時間','忘れたことに気づく','正直に伝えて対処'],locations:['教室','教室','教室'],base:['forgotBook','panicForgot','checkBag2','anger','ignore'],
  start:{mind:4,energy:3},
  monsters:[
-  {name:'忘れた後悔',hp:6,power:2,turns:4,look:'忘れて、しまった。'}
+  {name:'忘れた後悔',hp:6,power:2,look:'忘れて、しまった。'}
  ],
  talk:[['tellEarly3','早めに先生に言う','早めに、伝える。'],['honestSorry3','「忘れました」と言う','正直に、言う。'],['askMom3','家に届けてもらう','届けてもらう。']],
  think:[['forgotNow','忘れてしまった','連絡帳を、忘れてしまった。'],['cantTell','連絡できない','家に、連絡できない。'],['wantFixN','対処したい','なんとか、対処したい。']],
@@ -4878,7 +4878,7 @@ forgotNote:{title:'連絡帳を忘れた',nav:'連絡帳を忘れた',num:79,att
 diffOpinion:{title:'発表で自分と違う意見が出る',nav:'違う意見が出る',num:80,attrs:['study','soc'],goals:['相手の意見を聞きたい','自分の意見も伝えたい','より良い答えを見つけたい'],chapters:['発表・話し合いの時間','自分と違う意見が出た','意見を比べて考える'],locations:['教室','教室','教室'],base:['myOpinion','rejectOther','insistMine','anger','ignore'],
  start:{mind:4,energy:3},
  monsters:[
-  {name:'否定された気持ち',hp:6,power:2,turns:4,look:'意見を、否定された。'}
+  {name:'否定された気持ち',hp:6,power:2,look:'意見を、否定された。'}
  ],
  talk:[['listenOther2','相手の意見を聞く','相手を、聞く。'],['sayMine3','自分の意見も言う','自分も、言う。'],['askWhy4','「なぜそう思う？」と聞く','理由を、聞く。']],
  think:[['deniedFeel','否定された','意見を、否定された。'],['wantRight','自分が正しいと思う','自分が、正しいと思う。'],['wantBetter','より良い答えを見つけたい','良い答えを、見つけたい。']],
@@ -4928,7 +4928,7 @@ diffOpinion:{title:'発表で自分と違う意見が出る',nav:'違う意見�
 groupLeft:{title:'班決めで一人余った',nav:'班で一人余った',num:81,attrs:['soc'],goals:['班に入りたい','余っても動きたい','自分の場所を見つけたい'],chapters:['班決めが始まる','一人余った','場所を見つける'],locations:['教室','教室','教室'],base:['noGroup','leftOver','feelExtra','anger','ignore'],
  start:{mind:4,energy:3},
  monsters:[
-  {name:'余った寂しさ',hp:6,power:2,turns:4,look:'一人余って、寂しい。'}
+  {name:'余った寂しさ',hp:6,power:2,look:'一人余って、寂しい。'}
  ],
  talk:[['askJoinG2','「入れて？」と聞く','班に、聞く。'],['twoLeft2','余った子と組む','余り同士で、組む。'],['offerRole2','役割を提案する','役割で、入る。']],
  think:[['leftAlone','一人余った','班から、余った。'],['wantJoin3','入りたい','班に、入りたい。'],['feelLeft','浮いている','自分だけ、浮いている。']],
@@ -4978,7 +4978,7 @@ groupLeft:{title:'班決めで一人余った',nav:'班で一人余った',num:8
 nickCall:{title:'嫌なあだ名を呼ばれる',nav:'あだ名を呼ばれる',num:82,attrs:['soc'],goals:['嫌だと伝えたい','名前で呼ばれたい','気持ちを守りたい'],chapters:['あだ名で呼ばれる','嫌な気持ちと向き合う','自分の呼ばれ方を伝える'],locations:['校庭','教室','教室'],base:['nickname','keepSmile','feelTeased','anger','ignore'],
  start:{mind:4,energy:3},
  monsters:[
-  {name:'あだ名の棘',hp:6,power:2,turns:4,look:'あだ名が、刺さる。'}
+  {name:'あだ名の棘',hp:6,power:2,look:'あだ名が、刺さる。'}
  ],
  talk:[['sayStop3','「やめて」と言う','やめてと、言う。'],['askKind3','「名前で呼んで」と頼む','名前で、呼ばれる。'],['tellTeacher11','先生に相談する','先生に、相談。']],
  think:[['calledBad','嫌な呼ばれ方','あだ名で、呼ばれる。'],['wantName','名前で呼ばれたい','ちゃんと、呼ばれたい。'],['hurtSmile','笑ってごまかす','本音を、隠してる。']],
@@ -5028,8 +5028,8 @@ nickCall:{title:'嫌なあだ名を呼ばれる',nav:'あだ名を呼ばれる',
 lostThing:{title:'大切なものをなくした',nav:'ものをなくした',num:83,attrs:['soc','study'],goals:['落ち着いて探したい','誰かを疑いたくない','気持ちを立て直したい'],chapters:['大切なものがない','あわてて探す','落ち着いて向き合う'],locations:['教室','校庭','教室'],base:['lostItem','preciousGone','accuseTake','anger','ignore'],
  start:{mind:4,energy:3},
  monsters:[
-  {name:'なくした胸の穴',hp:5,power:1,turns:4,look:'なくして、胸に穴があいた。'},
-  {name:'疑いの渦',hp:5,power:1,turns:4,look:'誰かを、疑いたくなる。'}
+  {name:'なくした胸の穴',hp:5,power:1,look:'なくして、胸に穴があいた。'},
+  {name:'疑いの渦',hp:5,power:1,look:'誰かを、疑いたくなる。'}
  ],
  talk:[['askSeen2','「見なかった？」と聞く','周りに、聞く。'],['tellLoss2','「なくしちゃった」と言う','なくしたと、言う。'],['teacherHelp3','先生に相談する','探し方を、相談。']],
  think:[['goneNow','なくなった','大切なものが、なくなった。'],['wantBack','取り戻したい','取り戻したい。'],['suspectNow','誰かを疑いたい','疑いたい気持ちと、向き合う。']],
@@ -5079,7 +5079,7 @@ lostThing:{title:'大切なものをなくした',nav:'ものをなくした',nu
 assemblyFreeze:{title:'朝礼で人前に呼ばれてあがる',nav:'朝礼であがる',num:84,attrs:['soc','study'],goals:['声を出したい','あがる気持ちを落ち着けたい','自分の言葉で言いたい'],chapters:['朝礼が始まる','舞台に呼ばれた','自分の言葉で言う'],locations:['体育館','体育館','体育館'],base:['stageCall','voiceStuck','hideBehind','anger','ignore'],
  start:{mind:4,energy:3},
  monsters:[
-  {name:'あがりの汗',hp:6,power:2,turns:4,look:'あがって、汗が出る。'}
+  {name:'あがりの汗',hp:6,power:2,look:'あがって、汗が出る。'}
  ],
  talk:[['shortSpeech2','短くていいから言う','短くても、言う。'],['lookTeacher3','先生の方を見る','先生を、見る。'],['practiceWord2','言うことを決めておく','言うことを、決める。']],
  think:[['calledUp','呼ばれた','舞台に、呼ばれた。'],['wantSpeak','言いたい','自分の言葉で、言いたい。'],['scaredUp','あがっている','あがって、汗が出る。']],
@@ -5129,7 +5129,7 @@ assemblyFreeze:{title:'朝礼で人前に呼ばれてあがる',nav:'朝礼で�
 rainHome:{title:'下校時に傘がない',nav:'傘がない',num:85,attrs:['soc','study'],goals:['濡れずに帰りたい','助けを呼びたい','待つのも選びたい'],chapters:['下校の時間、雨','傘がないことに気づく','帰り方を決める'],locations:['昇降口','昇降口','昇降口'],base:['noUmbrella','runRain','acceptRain','anger','ignore'],
  start:{mind:4,energy:3},
  monsters:[
-  {name:'濡れる不安',hp:6,power:2,turns:4,look:'濡れたく、ない。'}
+  {name:'濡れる不安',hp:6,power:2,look:'濡れたく、ない。'}
  ],
  talk:[['borrowUmb2','「傘貸して」と頼む','傘を、貸してもらう。'],['askShare2','「入れて」と頼む','相合傘を、頼む。'],['callHome3','家に電話する','迎えを、頼む。']],
  think:[['noUmb','傘がない','傘が、ない。'],['wantHome','帰りたい','早く、帰りたい。'],['wetScared','濡れたくない','濡れたく、ない。']],
@@ -5179,7 +5179,7 @@ rainHome:{title:'下校時に傘がない',nav:'傘がない',num:85,attrs:['soc
 teamLose:{title:'チーム戦で自分のミスで負けた',nav:'自分のミスで負けた',num:86,attrs:['ath','soc'],goals:['ミスを認めたい','チームに謝りたい','次に生かしたい'],chapters:['チーム戦の最中','自分のミスで負けた','ミスと向き合う'],locations:['体育館','体育館','教室'],base:['myFault2','hideFault','blameLuck','anger','ignore'],
  start:{mind:4,energy:3},
  monsters:[
-  {name:'ミスの重さ',hp:6,power:2,turns:4,look:'ミスが、重い。'}
+  {name:'ミスの重さ',hp:6,power:2,look:'ミスが、重い。'}
  ],
  talk:[['sorryTeam2','「ごめん」と言う','チームに、謝る。'],['apologize3','ちゃんと謝る','ちゃんと、謝る。'],['teamTalk3','仲間と話す','仲間と、話す。']],
  think:[['myMiss','自分のミス','自分のミスで、負けた。'],['wantRedo','やり直したい','もう一度、やり直したい。'],['blameWant','誰かのせいにしたい','誰かのせいに、したい。']],
@@ -5229,7 +5229,7 @@ teamLose:{title:'チーム戦で自分のミスで負けた',nav:'自分のミ�
 winFirst:{title:'1位になって重圧を感じる',nav:'1位の重圧',num:87,attrs:['ath','soc'],goals:['1位を楽しみたい','期待に負けないようにしたい','自分らしくいたい'],chapters:['1位に選ばれる','期待の重さ','自分らしく向き合う'],locations:['運動場','運動場','教室'],base:['topSpot','fakeFine','nervousWin','anger','ignore'],
  start:{mind:4,energy:3},
  monsters:[
-  {name:'期待の重さ',hp:6,power:2,turns:4,look:'期待が、重い。'}
+  {name:'期待の重さ',hp:6,power:2,look:'期待が、重い。'}
  ],
  talk:[['enjoyWin2','1位を喜ぶ','素直に、喜ぶ。'],['askPraise2','「すごいね」と言ってもらう','ほめて、もらう。'],['shareSpot2','仲間と分かち合う','喜びを、分かち合う。']],
  think:[['expectW','期待の重さ','期待が、重い。'],['wantEnjoy','楽しみたい','1位を、楽しみたい。'],['feelPress','プレッシャー','プレッシャーを、感じる。']],
@@ -5279,7 +5279,7 @@ winFirst:{title:'1位になって重圧を感じる',nav:'1位の重圧',num:87,
 inviteMiss:{title:'友達の誕生会に呼ばれなかった',nav:'誕生会に呼ばれない',num:88,attrs:['soc'],goals:['寂しさを受け止めたい','友達とよい関係でいたい','自分の道を進みたい'],chapters:['みんなの話で知る','寂しさと向き合う','自分の道を選ぶ'],locations:['教室','教室','教室'],base:['noInvite','pretendNo','heardParty','anger','ignore'],
  start:{mind:4,energy:3},
  monsters:[
-  {name:'外された寂しさ',hp:6,power:2,turns:4,look:'外されて、寂しい。'}
+  {name:'外された寂しさ',hp:6,power:2,look:'外されて、寂しい。'}
  ],
  talk:[['askFriend2','「楽しかった？」と聞く','興味を、聞く。'],['tellFeel6','「寂しい」と伝える','本音を、伝える。'],['wishWell2','「楽しんでね」と言う','祝福を、言う。']],
  think:[['shutOut','外された','呼ばれて、外された。'],['wantKnow','なぜか知りたい','なぜか、知りたい。'],['wantMove','自分の道を行きたい','自分の道を、行きたい。']],
@@ -5329,7 +5329,7 @@ inviteMiss:{title:'友達の誕生会に呼ばれなかった',nav:'誕生会に
 loudClass:{title:'うるさくして先生に注意された',nav:'うるさくして注意',num:89,attrs:['soc','study'],goals:['自分の声に気づきたい','静かにしたい','楽しみを残したい'],chapters:['楽しくしゃべっている','先生に注意される','声を調整する'],locations:['教室','教室','教室'],base:['tooLoud','keepTalking','talkBack2','anger','ignore'],
  start:{mind:4,energy:3},
  monsters:[
-  {name:'うるさい自分',hp:6,power:2,turns:4,look:'うるさくして、注意された。'}
+  {name:'うるさい自分',hp:6,power:2,look:'うるさくして、注意された。'}
  ],
  talk:[['whisperTime2','ひそひそに切り替える','ひそひそに、する。'],['sayLater2','「あとで話そう」と言う','あとで、話す。'],['askSorry2','「ごめん」と言う','注意を、受け止める。']],
  think:[['funNow','楽しい','しゃべるのは、楽しい。'],['wantQuiet','静かにしたい','静かに、したい。'],['scolded','注意された','注意されて、ムッとした。']],
@@ -5379,7 +5379,7 @@ loudClass:{title:'うるさくして先生に注意された',nav:'うるさく�
 sleepyClass:{title:'授業中に眠い',nav:'授業で眠い',num:90,attrs:['study'],goals:['目をさましたい','正直に伝えたい','今夜から対策したい'],chapters:['授業中、眠い','先生に注意されるか','目をさます方法を選ぶ'],locations:['教室','教室','教室'],base:['feelSleepy','fakeAwake','eyesHeavy','anger','ignore'],
  start:{mind:4,energy:3},
  monsters:[
-  {name:'重い目',hp:6,power:2,turns:4,look:'目が、重い。'}
+  {name:'重い目',hp:6,power:2,look:'目が、重い。'}
  ],
  talk:[['askWash2','顔を洗ってもいい？','顔を洗う許可を、聞く。'],['tellSleepy2','「眠い」と伝える','正直に、伝える。'],['askHelp2','先生に助けを求める','先生に、助けを求める。']],
  think:[['wantSleep','眠りたい','眠りたい。'],['wantStay','起きてたい','起きて、いたい。'],['feelDrowsy','眠気','眠気に、負けそう。']],
@@ -5429,7 +5429,7 @@ sleepyClass:{title:'授業中に眠い',nav:'授業で眠い',num:90,attrs:['stu
 drillScare:{title:'避難訓練で不安になる',nav:'避難訓練の不安',num:91,attrs:['study','soc'],goals:['怖さを受け止めたい','正しく避難したい','訓練をやり遂げたい'],chapters:['ベルが鳴る','怖さと向き合う','正しく避難する'],locations:['教室','廊下','避難所'],base:['drillBell','shakeFear','runPanic','anger','ignore'],
  start:{mind:4,energy:3},
  monsters:[
-  {name:'ベルの怖さ',hp:6,power:2,turns:4,look:'ベルが、怖い。'}
+  {name:'ベルの怖さ',hp:6,power:2,look:'ベルが、怖い。'}
  ],
  talk:[['askTeacher5','「どこへ行くの？」と聞く','行き先を、聞く。'],['buddyHold2','友達と手をつなぐ','友達と、手をつなぐ。'],['tellScared2','「怖い」と伝える','怖いと、伝える。']],
  think:[['feelScare','怖い','怖くて、震える。'],['wantSafe','安全に避難したい','安全に、避難したい。'],['runAway','逃げたい','逃げたい。']],
@@ -5479,7 +5479,7 @@ drillScare:{title:'避難訓練で不安になる',nav:'避難訓練の不安',n
 dutyPush:{title:'嫌な係を押し付けられた',nav:'係を押し付けられた',num:92,attrs:['soc'],goals:['不公平を伝えたい','公平に決めたい','納得して引き受けたい'],chapters:['嫌な係が出る','おまえの番だと言われる','公平に決める'],locations:['教室','教室','教室'],base:['dutyShift','itsYour','complainDuty','anger','ignore'],
  start:{mind:4,energy:3},
  monsters:[
-  {name:'押し付けの不公平',hp:6,power:2,turns:4,look:'押し付けは、不公平。'}
+  {name:'押し付けの不公平',hp:6,power:2,look:'押し付けは、不公平。'}
  ],
  talk:[['askFair2','「じゃんけんで決めよう」と言う','公平に、決める。'],['tellNo3','「やりたくない」と伝える','正直に、伝える。'],['swapDuty2','交代を提案する','交代を、提案する。']],
  think:[['unfair','不公平','押し付けは、不公平。'],['wantSay','言いたい','言いたい。'],['wantFair','公平にしたい','公平に、したい。']],
@@ -5529,7 +5529,7 @@ dutyPush:{title:'嫌な係を押し付けられた',nav:'係を押し付けら�
 copyMe:{title:'まねされて嫌な気持ち',nav:'まねされて嫌',num:93,attrs:['soc'],goals:['嫌な気持ちを受け止めたい','自分らしさを守りたい','相手とよい関係でいたい'],chapters:['まねされている','嫌な気持ちと向き合う','自分らしさを守る'],locations:['教室','教室','教室'],base:['imitator','sameAsMe','feelCopied','anger','ignore'],
  start:{mind:4,energy:3},
  monsters:[
-  {name:'まねの影',hp:6,power:2,turns:4,look:'まねされて、影になる。'}
+  {name:'まねの影',hp:6,power:2,look:'まねされて、影になる。'}
  ],
  talk:[['askWhy6','「なんでまねするの？」と聞く','理由を、聞く。'],['tellStop3','「やめて」と伝える','正直に、伝える。'],['compliment3','「すごいね」とほめる','ほめて、受け流す。']],
  think:[['feelBad','嫌な気持ち','まねされて、嫌。'],['wantOwn','自分らしくいたい','自分らしく、いたい。'],['feelSame','同じにされる','同じにされて、嫌。']],
@@ -5580,7 +5580,7 @@ copyMe:{title:'まねされて嫌な気持ち',nav:'まねされて嫌',num:93,a
 lostShoe:{title:'上履きが片方ない',nav:'上履きがない',num:94,attrs:['study','soc'],goals:['上履きを見つけたい','焦らず探したい','みんなに協力してもらいたい'],chapters:['上履きがない','どこを探すか','見つけるか代替する'],locations:['昇降口','昇降口','昇降口'],base:['oneShoe','shoeGone','noShoePanic','anger','ignore'],
  start:{mind:4,energy:3},
  monsters:[
-  {name:'片方の不安',hp:6,power:2,turns:4,look:'片方なくて、不安。'}
+  {name:'片方の不安',hp:6,power:2,look:'片方なくて、不安。'}
  ],
  talk:[['askSeen5','「見なかった？」と聞く','みんなに、聞く。'],['tellLost3','「ない」と伝える','正直に、伝える。'],['spareShoe2','予備を借りる','予備を、借りる。']],
  think:[['shoeMiss','片方ない','上履きが、片方ない。'],['wantFind','見つけたい','見つけたい。'],['wantShoe','歩きたい','ちゃんと、歩きたい。']],
@@ -5726,6 +5726,12 @@ const subPool=[
   {label:'列に入るだけ',desc:'参加だけする',icon:'pause',out:'good',r:{text:'列に入って、終わった。',meaning:'参加しただけでも、立派。',mind:1}}]}
 ];
 function pickSubs(n){const pool=[...subPool],out=[];while(out.length<n&&pool.length){out.push(pool.splice(Math.floor(Math.random()*pool.length),1)[0])}return out}
+// 1場面で使えるカードはSCENE_PLAYS枚まで（カードを使う＝時間が経つ）。
+// 使い切るとその場面の時間が尽きて、次のできごとへ進む。課題を早く退けても残り時間で手札を試せる
+export const SCENE_PLAYS=3;
+// 評判が上がるのは「できごと（メイン・サブ問わず）」ごとに1度だけ。
+// 同じ場面で何度も目立ってもまわりの見方はそう変わらない、という文脈上の上限（repRoseで管理）
+function repUp(s){if(s.repRose)return false;s.repRose=true;s.rep=Math.min(5,s.rep+1);return true}
 // モンスターの毎ターン行動（反撃は実装しない方針）:
 // stress=プレッシャーで気持ちを削る / seal=時間のかかる手札を封印 / special=属性・場面別の干渉 / wait=様子見
 const MONSTER_ACT={
@@ -5749,7 +5755,7 @@ const specPool={
 };
 export function monsterFaded(s){return (s.clarity||0)>=2}
 export function monsterPower(s,m){return Math.max(0,m.power-Math.min(2,s.clarity||0))}
-function monsterAct(s,m){const acts=m.acts||((m.power>=2||m.hp>=6)?['stress','special','seal','stress','special']:(m.hp>=4?['stress','seal','stress','wait','special']:['stress','wait','seal']));let a=acts[(s.turns-1)%acts.length];if(monsterFaded(s)&&a!=='stress')a='wait';return MONSTER_ACT[a](s,m)}
+function monsterAct(s,m){const acts=m.acts||((m.power>=2||m.hp>=6)?['stress','special','seal']:(m.hp>=4?['stress','seal','stress']:['stress','wait','seal']));let a=acts[(s.turns-1)%acts.length];if(monsterFaded(s)&&a!=='stress')a='wait';return MONSTER_ACT[a](s,m)}
 export function monsterSize(m){return m.weak?'small':(m.power>=2||m.hp>=6)?'huge':(m.hp<=3&&m.power<=1)?'small':'normal'}
 // 苦手意識: 同じ属性の課題に負け続けると、その属性の手札の消費気持ちが+1される（ストーリー間で持ち越す）
 function addLoss(s){
@@ -5759,7 +5765,7 @@ function addLoss(s){
 }
 export function initial(story='fight',carry=null){
  const d=stories[story];
- const s={story,stage:0,challengeIdx:0,monsterBack:false,mind:d.start.mind,energy:d.start.energy,rep:carry?carry.rep:1,repStart:carry?carry.rep:1,mindMax:carry?carry.mindMax:6,mindMaxStart:carry?carry.mindMax:6,stats:{study:0,ath:0,soc:0},monsterHp:d.monsters[0].hp,turns:0,slain:[],escaped:[],dead:false,mindLog:[],bonus:null,bolster:0,losses:carry?{...carry.losses}:{},traumas:carry?{...carry.traumas}:{},clarity:0,subPending:Array.isArray(d.subs)?[...d.subs]:pickSubs(d.subs??3),subNow:null,eventIdx:0,map:false,progress:0,goal:0,hand:[...d.base],discovered:[],used:[],flags:{},clues:[],relations:[],growth:[],log:[],explored:[],rested:[],observed:[],passed:[],minused:[],transcript:[],feedback:null,finished:false,reason:null,reflection:null,stageResults:[],stageStart:null,unlocked:[]};
+ const s={story,stage:0,challengeIdx:0,monsterBack:false,mind:d.start.mind,energy:d.start.energy,rep:carry?carry.rep:1,repStart:carry?carry.rep:1,mindMax:carry?carry.mindMax:6,mindMaxStart:carry?carry.mindMax:6,stats:{study:0,ath:0,soc:0},monsterHp:d.monsters[0].hp,turns:0,slain:[],escaped:[],dead:false,mindLog:[],bonus:null,bolster:0,losses:carry?{...carry.losses}:{},traumas:carry?{...carry.traumas}:{},clarity:0,subPending:Array.isArray(d.subs)?[...d.subs]:pickSubs(d.subs??3),subNow:null,eventIdx:0,map:false,repRose:false,progress:0,goal:0,hand:[...d.base],discovered:[],used:[],flags:{},clues:[],relations:[],growth:[],log:[],explored:[],rested:[],observed:[],passed:[],minused:[],transcript:[],feedback:null,finished:false,reason:null,reflection:null,stageResults:[],stageStart:null,unlocked:[]};
  // イベント列: 場面(chapters)は物語の進行、モンスターは課題。課題は倒す/受け流すまで同じものが再来する
  s.eventNodes=[];let qi=0;
  for(let i=0;i<d.chapters.length;i++){s.eventNodes.push({type:'main',idx:i});
@@ -5783,7 +5789,7 @@ function maybeUnlock(s){for(const u of UNLOCKS){if(s.unlocked.includes(u.card))c
 export function reqMet(s,req){if(!req)return true;if(req.stat)return(s.stats[req.stat]||0)>=(req.min||1);if(req.rep)return s.rep>=req.rep;if(req.card)return s.hand.includes(req.card)||s.used.includes(req.card);return true}
 export function available(s){return s.hand.filter(id=>!s.used.includes(id));}
 export function cardAtk(s,id){const c=cards[id];return Math.max(0,(c.atk||0)+(c.attr&&!c.dark?s.stats[c.attr]:0));}
-export function canPlay(s,id){const c=cards[id];return !s.finished&&!s.feedback&&!s.subNow&&available(s).includes(id)&&s.energy>=c.cost&&s.mind>1&&reqMet(s,c.req);}
+export function canPlay(s,id){const c=cards[id];return !s.finished&&!s.feedback&&!s.subNow&&available(s).includes(id)&&s.energy>=c.cost&&s.mind>1&&reqMet(s,c.req)&&s.turns<SCENE_PLAYS;}
 export function play(s,id){
  if(!canPlay(s,id))return false;
  const c=cards[id],m=monster(s),before=snap(s);
@@ -5798,9 +5804,6 @@ export function play(s,id){
   ({text,meaning}=def(s).onPlay(s,id));
   if(!text)text=c.text||'「'+c.title+'」を試した。';if(!meaning)meaning=c.meaning||'力を尽くした一手。';
  }
- // バフ・デバフ（±2まで）。作戦を試すと同じ系統の力が育つ
- if(c.up)s.stats[c.up]=clamp(s.stats[c.up]+1,-2,2);
- if(c.bond)s.rep=Math.min(5,s.rep+1);
  // モンスターへの攻撃。同属性の力(stats[attr])があれば効果が上下する
  const dmg=cardAtk(s,id);s.monsterHp-=dmg;
  // 生き残ったモンスターの行動（威圧・封印・特殊・様子見）。評判が0だと威圧が+1される
@@ -5809,11 +5812,18 @@ export function play(s,id){
  if(s.monsterHp>0){const r=monsterAct(s,m);mdmg=r.mdmg||0;counter=r.counter||'';stolen=r.stolen||null;}
  // 苦手意識: その属性の手札は、消費する気持ちが+1される
  if(c.attr&&s.traumas[c.attr]){s.mind=s.mind>0?Math.max(1,s.mind-1):s.mind-1;counter+=(counter?'　':'')+'苦手意識で、消費する気持ちが増えた。';}
+ // バフ（±2まで）・評判は試行の結果が出てから育つ。課題に届いた一手（dmg>0）か、
+ // そもそも課題を叩かないカード（atk:0＝準備・内省・けん制系）のときだけ育つ。
+ // 空回りした一手では力も評判も育たない。育った力はその一手自体の攻撃力には含めない
+ if(dmg>0||c.atk===0){
+  if(c.up)s.stats[c.up]=clamp(s.stats[c.up]+1,-2,2);
+  if(c.bond)repUp(s);
+ }
  s.mind=clamp(s.mind,0,s.mindMax);s.energy=clamp(s.energy,0,5);s.rep=clamp(s.rep,0,5);
  for(const k of ['study','ath','soc'])s.stats[k]=clamp(s.stats[k],-2,2);
  maybeUnlock(s);
  growth(s,'「'+c.title+'」を試した。');
- const killed=s.monsterHp<=0,escaped=!killed&&s.turns>=m.turns;
+ const killed=s.monsterHp<=0,escaped=!killed&&s.turns>=SCENE_PLAYS;
  if(s.mind<=0){s.dead=true;s.finished=true}
  s.progress=def(s).progress(s);
  s.log.push({stage:s.stage,title:c.title,text,meaning});
@@ -5864,7 +5874,7 @@ export function advance(s){
  s.eventIdx++;
  const n=s.eventNodes[s.eventIdx];
  if(!n){s.finished=true;return true}
- s.map=true;
+ s.map=true;s.repRose=false; // 場面が変われば「できごと」も新しい: 評判上昇の余地が戻る
  if(n.type==='sub'){s.subNow=s.subPending.shift()}
  else{
   s.stage++;s.turns=0;s.clarity=0;s.monsterBack=!!s.persist;
@@ -5888,7 +5898,7 @@ export function chooseSub(s,i){
  if(ch.out==='chance'){good=Math.random()<(ch.p??0.5);if(!good)r=ch.rf||{text:'うまくいかなかった。',meaning:'正しくても、うまくいかないこともある。'}}
  if(r.mind)s.mind=r.mind<0?Math.max(1,s.mind+r.mind):Math.min(s.mindMax,s.mind+r.mind);
  if(r.energy)s.energy=clamp(s.energy+r.energy,0,5);
- if(r.rep)s.rep=clamp(s.rep+r.rep,0,5);
+ if(r.rep<0)s.rep=clamp(s.rep+r.rep,0,5);else if(r.rep>0)repUp(s);
  if(r.stat)s.stats[r.stat]=clamp(s.stats[r.stat]+1,-2,2);
  if(r.dn)s.stats[r.dn]=clamp(s.stats[r.dn]-1,-2,2);
  if(r.mindMax&&s.mindMax<8){s.mindMax++;s.mind=Math.min(s.mindMax,s.mind+1)}
@@ -5904,7 +5914,7 @@ export function enterEvent(s){if(!s.map)return false;s.map=false;return true}
 export function safety(s,type){
  if(s.finished||s.feedback)return false;
  if(type==='rest'){if(s.rested.includes(s.stage))return false;s.rested.push(s.stage);s.mind=Math.min(s.mindMax,s.mind+2);s.energy=Math.min(5,s.energy+2);growth(s,'休んで、次の作戦を考える余力をつくった。');say(s,'free','静かな場所で、少し休んだ。');trackMind(s);return true}
- if(type==='help'||type==='leave'){s.flags[type]=true;if(type==='help')s.rep=Math.min(5,s.rep+1);s.progress=def(s).progress(s);s.mind=Math.min(s.mindMax,s.mind+1);s.finished=true;growth(s,type==='help'?'困りごとを大人に伝えた。':'安全な場所へ移る選択をした。');trackMind(s);return true}
+ if(type==='help'||type==='leave'){s.flags[type]=true;if(type==='help')repUp(s);s.progress=def(s).progress(s);s.mind=Math.min(s.mindMax,s.mind+1);s.finished=true;growth(s,type==='help'?'困りごとを大人に伝えた。':'安全な場所へ移る選択をした。');trackMind(s);return true}
  return false;
 }
 export function canExplore(s){return !s.finished&&!s.feedback&&!s.subNow&&s.mind>1}
@@ -5914,7 +5924,7 @@ export function explore(s,key){
  if(!allKeys.includes(key))return null;
  if(d.reasonKeys.includes(key)&&s.reason)return null;
  s.explored.push(key);s.clarity=Math.min(3,(s.clarity||0)+1);
- if(d.talk.some(o=>o[0]===key))s.rep=Math.min(5,s.rep+1); // 話す・相談する行動は評判が上がる
+ if(d.talk.some(o=>o[0]===key))repUp(s); // 話す・相談する行動は評判が上がる（できごとにつき1度）
  const out=d.onExplore(s,key);
  if(out.card)grant(s,out.card);
  say(s,'explore',out.text);
@@ -5938,7 +5948,7 @@ export function minus(s,id){
 }
 export function free(s,type){
  if(s.finished||s.feedback)return false;
- if(type==='observe'){if(s.observed.includes(s.stage))return false;s.observed.push(s.stage);s.clarity=Math.min(3,(s.clarity||0)+1);const w=def(s).watch(s);note(s,w);s.rep=Math.min(5,s.rep+1);growth(s,'相手の様子や、その場の手がかりを確かめた。');say(s,'free',w);trackMind(s);return {title:'様子を確かめた',text:w,meaning:'じっくり見るだけでも、分かることが増える。'}}
+ if(type==='observe'){if(s.observed.includes(s.stage))return false;s.observed.push(s.stage);s.clarity=Math.min(3,(s.clarity||0)+1);const w=def(s).watch(s);note(s,w);growth(s,'相手の様子や、その場の手がかりを確かめた。');say(s,'free',w);trackMind(s);return {title:'様子を確かめた',text:w,meaning:'じっくり見るだけでも、分かることが増える。'}}
  if(type==='pass'){if(s.passed.includes(s.stage))return false;s.passed.push(s.stage);s.energy=Math.min(5,s.energy+1);const t='すぐには動かず、その場をやり過ごした。\n何も変わらなかったが、少し余力が戻った。';s.log.push({stage:s.stage,title:'何もしない',text:t,meaning:'何もしないことも、選べる作戦の一つ。'});growth(s,'何もしないで、様子を見る時間をつくった。');say(s,'free',t);trackMind(s);return {title:'何もしない',text:t,meaning:'何もしないことも、選べる作戦の一つ。'}}
  return false;
 }

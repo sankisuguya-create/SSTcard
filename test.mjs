@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {initial,explore,play,advance,continueTurn,safety,available,canPlay,canExplore,canMinus,free,minus,setGoal,summary,monster,cardAtk,stories,monsterFaded,monsterPower,chooseSub} from './dist/engine.mjs';
+import {initial,explore,play,advance,continueTurn,safety,available,canPlay,canExplore,canMinus,free,minus,setGoal,summary,monster,cardAtk,stories,monsterFaded,monsterPower,chooseSub,enterEvent} from './dist/engine.mjs';
 // 乱数は決定的に（ランダムイベントはUI装飾。発動有無を別途検証）
 const origRandom=Math.random;Math.random=()=>0.99; // おまけイベントは原則offで探索
 function toNext(s){if(!advance(s))return false;while(s.subNow&&!s.finished){const chs=s.subNow.choices||[];chooseSub(s,chs.length-1);advance(s)}return true} // メイン場面へ進む（サブは最後の『見送る』選択肢で通過）
@@ -147,18 +147,33 @@ for(const story of ['fight','sports','test','join','blame','hurt','alone','lose'
 }
 assert(!free(initial('fight'),'bogus'));
 
-// 評判: 向社会的な行動で増え、一人でやる行動・自問では増えない（上限5）
+// 評判: 向社会的な行動で増えるが「できごと」ごとに1度だけ。一人でやる行動・自問では増えない（上限5）
 for(const story of ['fight','sports','test','join','blame','hurt','alone','lose','change','picked','item','scold','forgot','friend','confused','noise','role','cheat','newClass','present','spill','pair','promise','duty','rumor','lunch','lie','relay','sickDay','craft','vault','meeting','leader','late','lostBook','seat','visit','makeUp','secret','byWatch','score','trend','stumble','sides','deadlock','praised','hidden','sign','lineCut','dumped','gossip','broke','leftOut','nameWrong','picky','choirMiss','poolFear','ropeTrip','homeAlone','noShoes','cleanSkip','lendBack','sickReturn','quietGroup','tripAnx','refuseLend','mondayBlues','hwLazy','tagIt','sickHide','newKid','raceLast','lineBack','bffFight','toyFight','lunchDuty','notPicked','testFreeze','forgotNote','diffOpinion','groupLeft','nickCall','lostThing','assemblyFreeze','rainHome','teamLose','winFirst','inviteMiss','loudClass','sleepyClass','drillScare','dutyPush','copyMe','lostShoe']){
  const s=initial(story);assert.equal(s.rep,1);
- explore(s,MAP[story].talk);assert.equal(s.rep,2);
- explore(s,MAP[story].think);assert.equal(s.rep,2);
- s.energy=5;play(s,MAP[story].bond);assert.equal(s.rep,3);s.feedback=null;
- play(s,MAP[story].free1);assert.equal(s.rep,3);s.feedback=null;
+ explore(s,MAP[story].talk);assert.equal(s.rep,2); // 話す・相談するで+1（このできごとの上限に到達）
+ explore(s,MAP[story].think);assert.equal(s.rep,2); // 自問では上がらない
+ s.energy=5;s.mind=6;play(s,MAP[story].bond);assert.equal(s.rep,2);s.feedback=null; // 既に上がったできごとでは据置き
+ s.mind=6;play(s,MAP[story].free1);assert.equal(s.rep,2);s.feedback=null; // 一人でやる行動では上がらない
+}
+{ // 評判は「できごと」ごとに1度: ノードをまたぐと上がる余地が戻る
+ const s=initial('fight');s.eventNodes=[{type:'main',idx:0},{type:'main',idx:1}];s.subPending=[];
+ explore(s,'haru');assert.equal(s.rep,2);assert(s.repRose,'rep budget consumed');
+ s.monsterHp=0;s.feedback={};advance(s);enterEvent(s); // 次のメイン場面へ（中間イベントなし）
+ assert(!s.repRose,'rep budget resets per event node');
+ explore(s,'mina');assert.equal(s.rep,3);
+}
+{ // 届いた向社会的行動（bondカード）も先に上がっていなければ+1
+ const s=initial('fight');s.energy=5;s.mind=6;
+ play(s,'ask');assert(s.feedback.dmg>0);assert.equal(s.rep,2);
+}
+{ // 届かなかった一手では力・評判が育たない（dmg0でバフ不発）
+ const s=initial('test');s.stats.study=-2;s.energy=5;s.mind=6;
+ play(s,'easyFirst');assert.equal(s.feedback.dmg,0);assert.equal(s.stats.study,-2);assert.equal(s.rep,1);
 }
 {
  const s=initial('fight'),l=s.rep;
- assert(free(s,'observe'));assert.equal(s.rep,l+1);
- assert(free(s,'pass'));assert.equal(s.rep,l+1);
+ assert(free(s,'observe'));assert.equal(s.rep,l); // 見るだけでは評判は変わらない
+ assert(free(s,'pass'));assert.equal(s.rep,l);
  const s2=initial('fight');assert(safety(s2,'help'));assert.equal(s2.rep,2);
  const s3=initial('fight');s3.rep=5;explore(s3,'mina');assert.equal(s3.rep,5);play(s3,'boundary');assert.equal(s3.rep,5);
 }
@@ -206,24 +221,27 @@ for(const story of ['fight','sports','test','join','blame','hurt','alone','lose'
  const atkS=initial(story);atkS.energy=5;atkS.mind=6;
  const atkId=available(atkS).find(x=>cardAtk(atkS,x)>0);assert(atkId);
  const hpB=atkS.monsterHp;assert(play(atkS,atkId));assert.equal(atkS.monsterHp,hpB-atkS.feedback.dmg);assert(atkS.feedback.dmg>0);
- // ターン上限: 尽きるとモンスターは立ち去る（escaped）
- s.stage=0;s.monsterHp=99;s.turns=monster(s).turns;s.mind=6;s.feedback=null;
+ // 場面の手数上限（3手）: 尽きると時間切れで次のできごとへ（escaped）。4枚目は出せない
+ s.stage=0;s.monsterHp=99;s.turns=2;s.mind=6;s.energy=5;s.feedback=null;
  const atk2=available(s).find(x=>canPlay(s,x));assert(play(s,atk2));assert(s.feedback.escaped);assert(!s.feedback.killed);
- toNext(s);assert(s.escaped.includes(0));assert(s.slain.length===0);
+ s.energy=5;s.mind=6;s.feedback=null;assert(!available(s).some(x=>canPlay(s,x)),'4枚目は出せない');
+ s.feedback={};toNext(s);assert(s.escaped.includes(0));assert(s.slain.length===0);
 }
-// ターン上限と撃破の進行を直接確認
+// 場面の手数上限と撃破の進行を直接確認
 {
  const s=initial('test');s.energy=5;s.mind=6;
- // 不安の影 hp3: range(atk1+study)+easyFirst(atk2+study)で撃破可能
+ // 不安の影 hp5: easyFirst(atk2)が先に育つ力は自身の一撃には乗らない。range(atk1+study+1)と合わせて計4
  explore(s,'gaps');s.feedback=null;
  play(s,'easyFirst');const f1=s.feedback;
- assert(f1.dmg>=2||f1.killed||s.monsterHp<3);
- if(!f1.killed){s.feedback=null;play(s,'range')}
- const f=s.feedback;assert(f.killed||f.escaped||s.monsterHp<=0);
+ assert.equal(f1.dmg,2); // 育った力はその一手自体の攻撃力には含めない
+ if(!f1.killed){s.feedback=null;s.energy=5;s.mind=6;play(s,'range')}
+ let f=s.feedback;
+ if(!f.killed&&s.monsterHp>0&&s.turns<3){s.feedback=null;s.energy=5;s.mind=6;const id=available(s).find(x=>canPlay(s,x));if(id)play(s,id)}
+ f=s.feedback;assert(f.killed||f.escaped||s.monsterHp<=0);
  toNext(s);assert(s.slain.includes(0)||s.escaped.includes(0));assert.equal(s.stage,1);assert.equal(s.turns,0);assert.equal(s.monsterHp,monster(s).hp);
  // ターンを尽きさせると escaped
  s.mind=6;s.energy=5;
- while(!s.finished&&monster(s)&&s.turns<monster(s).turns){const id=available(s).find(x=>canPlay(s,x));if(!id)break;s.feedback=null;play(s,id)}
+ while(!s.finished&&monster(s)&&s.turns<3){const id=available(s).find(x=>canPlay(s,x));if(!id)break;s.feedback=null;play(s,id)}
  if(!s.finished){toNext(s)}
  // 力負け（plain）した課題モンスターは次の場面に残りHPで再来する
  const ps=initial('fight');ps.mind=1;ps.monsterHp=3;ps.feedback={};toNext(ps);
@@ -239,6 +257,16 @@ for(const story of ['fight','sports','test','join','blame','hurt','alone','lose'
  // 大失敗: 精神力0でfinished（mind2でstrain1+effect-1=0になるboundaryを撃つ）
  const f2=initial('fight');f2.mind=2;f2.energy=5;f2.stage=1;f2.monsterHp=99;f2.turns=0;
  assert(play(f2,'boundary'));assert(f2.dead);assert(f2.finished);assert.equal(summary(f2).outcome,'fail');
+}
+{ // 討伐しても残り手数の範囲で手札を試せる（進むか続けるか選べる）
+ const s=initial('test');s.energy=5;s.mind=6;
+ explore(s,'gaps');s.feedback=null;
+ s.monsterHp=2;play(s,'easyFirst');assert(s.feedback.killed);assert(s.turns<3);
+ s.feedback=null;s.energy=5;s.mind=6;
+ const id2=available(s).find(x=>canPlay(s,x));assert(id2,'討伐後も手数が残れば出せる');assert(play(s,id2));
+ s.feedback=null;s.energy=5;s.mind=6;
+ const id3=available(s).find(x=>canPlay(s,x));if(id3){assert(play(s,id3));assert(!s.feedback.escaped)}
+ assert(!available(s).some(x=>canPlay(s,x)),'3手使い切ったら出せない');
 }
 // 精神力の平均が低いと「しんどい」評価が出る
 {
@@ -480,14 +508,14 @@ const SUBNODE=s=>{s.eventNodes=[{type:'main',idx:0},{type:'sub'},{type:'main',id
  const s=initial('fight');s.mind=6;s.stats.soc=1;
  s.feedback={};s.monsterHp=9;toNext(s);assert.equal(s.stageResults[0].kind,'grown');assert(!Object.keys(s.losses).length,'no loss on grown');
 }
-{ // モンスター行動ローテーション: hp4モンスターはattack/attack/wait/stress
+{ // モンスター行動: 場面の手数（3手）の間だけ行動する
  const s=initial('fight');s.mind=6;s.monsterHp=99;
  const counters=[];
- for(let i=0;i<4;i++){s.feedback=null;s.energy=5;const id=available(s).find(x=>canPlay(s,x));if(!id)break;play(s,id);counters.push(s.feedback.counter||'')}
- assert(counters.some(c=>c.includes('様子')),'wait act seen');
- assert(counters.some(c=>c.includes('威圧')),'stress act seen');
+ for(let i=0;i<4;i++){s.feedback=null;s.energy=5;s.mind=6;const id=available(s).find(x=>canPlay(s,x));if(!id)break;play(s,id);counters.push(s.feedback.counter||'')}
+ assert.equal(counters.length,3,'3手で場面の時間が尽きる');
+ assert(counters.every(c=>c.length>0),'monster acted every turn');
 }
-{ // 強敵(hp6/power2)は手札を奪う: craft最終面 acts[3]=steal
+{ // 強敵(hp6/power2)は3手目（既定ローテーション acts[2]=seal）で手札を奪う
  const s=initial('craft');s.stage=2;s.monsterHp=99;s.mind=6;
  let stole=false;
  for(let i=0;i<4&&!stole;i++){s.feedback=null;s.energy=5;s.mind=6;const id=available(s).find(x=>canPlay(s,x));if(!id)break;play(s,id);if(s.feedback.stolen)stole=true}

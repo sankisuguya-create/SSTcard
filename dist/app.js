@@ -1,4 +1,4 @@
-import {cards,minusCards,stories,statMeta,initial,monster,monsterSize,monsterFaded,monsterPower,cardAtk,explore,available,canPlay,canExplore,canMinus,play,advance,continueTurn,safety,free,minus,scene,summary,setGoal,chooseSub,enterEvent,reqMet} from './engine.mjs';
+import {cards,minusCards,stories,statMeta,initial,monster,monsterSize,monsterFaded,monsterPower,cardAtk,explore,available,canPlay,canExplore,canMinus,play,advance,continueTurn,safety,free,minus,scene,summary,setGoal,chooseSub,enterEvent,reqMet,SCENE_PLAYS} from './engine.mjs';
 const app=document.querySelector('#app'),dialog=document.querySelector('#dialog');
 let state=initial(),history=[],previous=null,focusReturn=null;
 const sessions={};
@@ -77,14 +77,14 @@ function render(){
 
 // 中央上部: パズドラ風。大きなモンスターイラスト＋ダイアログ（タップで履歴）
 function arena(s){
- const m=monster(s),left=m.turns-s.turns,img=IMG(`mon-${s.story}-${m.imgIdx??s.challengeIdx}.webp`);
+ const m=monster(s),left=SCENE_PLAYS-s.turns,img=IMG(`mon-${s.story}-${m.imgIdx??s.challengeIdx}.webp`);
  const size=monsterSize(m),faded=monsterFaded(s),ep=monsterPower(s,m)+(s.bolster||0)+(s.rep<=0?1:0),bg=stories[s.story].bg||'class';
  return `<div class="arena ${s.monsterHp<=0?'beaten':''} size-${size} ${faded?'faded':''}" aria-label="立ちはだかるもの ${m.name}、体力 ${Math.max(0,s.monsterHp)} / ${m.hp}">
   <img class="arena-bg" src="${IMG(`bg-${bg}.webp`)}" alt="" aria-hidden="true" onerror="this.style.display='none'">
   <img class="arena-img" src="${img}" alt="${m.name}のイラスト" width="640" height="427" onerror="this.style.display='none'">
   <div class="arena-top">
    <div class="arena-name">${m.name}<span class="arena-look">${m.look}</span></div>
-   <div class="arena-meta"><span class="badge">のこり ${left} 手</span>${s.monsterBack?'<span class="badge back">まだ解決していない課題が戻ってきた</span>':''}${faded?'<span class="badge seen">正体が見えて弱くなった</span>':''}${m.power?`<span class="badge monster-power">${ep>0?`プレッシャー 精神力-${ep}${s.bolster?' (前の課題が影響)':''}`:'プレッシャーは弱まった'}</span>`:''}</div>
+   <div class="arena-meta"><span class="badge">${icon('clock')} あと ${left} 手</span>${s.monsterBack?'<span class="badge back">まだ解決していない課題が戻ってきた</span>':''}${faded?'<span class="badge seen">正体が見えて弱くなった</span>':''}${m.power?`<span class="badge monster-power">${ep>0?`プレッシャー 精神力-${ep}${s.bolster?' (前の課題が影響)':''}`:'プレッシャーは弱まった'}</span>`:''}</div>
   </div>
   <div class="arena-bottom"><div class="hp-bar" role="meter" aria-label="モンスターの体力 ${Math.max(0,s.monsterHp)} / ${m.hp}"><span class="delta-slot"></span>${Array.from({length:m.hp},(_,i)=>`<i class="${i<s.monsterHp?'on':''}"></i>`).join('')}</div></div>
  </div>`;
@@ -241,8 +241,8 @@ function feedbackView(){
   f.mdmg>0?`<span class="change down">モンスター 精神力 -${f.mdmg}</span>`:'',
   f.stolen?`<span class="change down">「${cards[f.stolen].title}」を使いにくくされた</span>`:''
  ].filter(Boolean).join('');
- const extra=f.killed?`<div class="notice clear-notice">${icon('skull')} 「${f.monster}」を退いた！ 次の場面へ進める。</div>`:f.escaped?`<div class="notice">手がつきた。モンスターはいったん立ち去った… 次の場面でまた現れる。</div>`:'';
- return `<section class="feedback" tabindex="-1" id="feedback"><div class="eyebrow">YOUR CHOICE ／ 試してみた</div><h2>「${f.title}」を使った</h2><p>${f.text}</p>${f.counter?`<p class="monster-act">${f.counter}</p>`:''}<div class="changes">${chips}</div>${s.dead?`<div class="notice fail-notice">${icon('skull')} 精神力が0になった。気持ちがあふれて、その場から逃げ出してしまった…</div>`:''}${extra}<div class="notice">${icon('spark')} ${f.meaning}</div><div class="feedback-actions"><button data-action="undo" ${s.dead?'disabled':''}>別の作戦を試す</button>${!s.dead&&!f.killed&&!f.escaped&&s.turns<monster(s).turns?`<button data-action="continue">もう一枚、作戦を試す（のこり ${monster(s).turns-s.turns}手）</button>`:''}<button class="primary" data-action="next">${s.dead?'ふりかえりへ':f.sub?'つぎへ':f.killed||f.escaped?'次の場面へ':state.stage===2?'今回をふりかえる':'次の場面へ'}</button></div></section>`;
+ const extra=f.killed?`<div class="notice clear-notice">${icon('skull')} 「${f.monster}」を退いた！ ${s.turns<SCENE_PLAYS?'のこりの時間でさらに作戦を試すか、次の場面へ進める。':'次の場面へ進める。'}</div>`:f.escaped?`<div class="notice">この場面の時間がおわった。課題はまだ残っている… 次のできごとへ進もう。</div>`:'';
+ return `<section class="feedback" tabindex="-1" id="feedback"><div class="eyebrow">YOUR CHOICE ／ 試してみた</div><h2>「${f.title}」を使った</h2><p>${f.text}</p>${f.counter?`<p class="monster-act">${f.counter}</p>`:''}<div class="changes">${chips}</div>${s.dead?`<div class="notice fail-notice">${icon('skull')} 精神力が0になった。気持ちがあふれて、その場から逃げ出してしまった…</div>`:''}${extra}<div class="notice">${icon('spark')} ${f.meaning}</div><div class="feedback-actions"><button data-action="undo" ${s.dead?'disabled':''}>別の作戦を試す</button>${!s.dead&&!f.escaped&&s.turns<SCENE_PLAYS?`<button data-action="continue">もう一枚、作戦を試す（のこり ${SCENE_PLAYS-s.turns}手）</button>`:''}<button class="primary" data-action="next">${s.dead?'ふりかえりへ':f.sub?'つぎへ':f.killed||f.escaped?'次の場面へ':state.stage===2?'今回をふりかえる':'次の場面へ'}</button></div></section>`;
 }
 
 function resultView(){

@@ -116,7 +116,7 @@ function mapView(){
  </section>`;
 }
 function subView(){
- const s=state,st=stories[s.story],ev=s.subNow,bg=SUB_BG[ev.id]||('bg-'+st.bg);
+ const s=state,st=stories[s.story],ev=s.subNow,bg=SUB_BG[ev.id]||('bg-'+(st.bg||'class'));
  const CH=[['積極的に関わる','力があるほど、いい結果になりやすい','spark'],['気にかける','様子を見て、少し気持ちを整える','eye'],['やり過ごす','何もせず、次へ進む','pause']];
  return `
  <div class="title-row"><div><div class="chapter-label">できごと</div><h1>${st.title}</h1></div></div>

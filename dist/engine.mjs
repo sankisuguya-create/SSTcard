@@ -899,6 +899,16 @@ export const cards={
  doOnce:{title:'一度やってみる',kind:'think',label:'やってみる',cost:1,atk:2,attr:'study',up:'study',desc:'一度、やってみる。',hint:'やってみるは、経験',icon:'flag'},
  planFair:{title:'公平な順番を提案する',kind:'talk',label:'公平な順番',cost:1,atk:2,attr:'soc',up:'soc',desc:'公平な順番を、提案する。',hint:'公平は、解決',icon:'list'},
  askTeacher6:{title:'先生に相談する',kind:'talk',label:'先生に相談',cost:1,atk:2,attr:'soc',up:'soc',desc:'先生に、相談する。',hint:'相談は、助け',icon:'message'},
+ imitator:{title:'まねされる',kind:'think',label:'まねされる',cost:0,strain:1,atk:1,attr:'soc',desc:'同じものを、まねされる。',hint:'まねは、自分らしさを奪う',icon:'eye'},
+ sameAsMe:{title:'同じにされる',kind:'think',label:'同じにされる',cost:0,strain:1,atk:1,attr:'soc',desc:'同じにされて、嫌になる。',hint:'同じは、個性がなくなる',icon:'bolt'},
+ feelCopied:{title:'嫌な気持ちになる',kind:'think',label:'嫌な気持ち',cost:0,strain:1,atk:1,attr:'soc',desc:'まねされて、嫌な気持ちになる。',hint:'嫌は、心の声',icon:'heart'},
+ askWhy5:{title:'「なんでまねするの？」と聞く',kind:'talk',label:'なんでまねするの？',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'「なんでまねするの？」と、聞く。',hint:'聞くは、理解',icon:'ear'},
+ tellStop2:{title:'「まねはやめて」と伝える',kind:'talk',label:'やめてと伝える',cost:1,atk:2,attr:'soc',up:'soc',desc:'「まねはやめて」と、伝える。',hint:'伝えるは、自分を守る',icon:'message'},
+ ownStyle:{title:'自分らしさを出す',kind:'think',label:'自分らしさ',cost:1,atk:2,attr:'soc',up:'soc',desc:'自分らしさを、出す。',hint:'自分らしさは、個性',icon:'spark'},
+ okCopy:{title:'まねも嬉しいと思う',kind:'think',label:'まねも嬉しい',cost:1,atk:2,attr:'soc',up:'soc',desc:'まねも嬉しいと、思う。',hint:'嬉しいは、余裕',icon:'sun'},
+ compliment2:{title:'「すごいね」とほめる',kind:'talk',label:'すごいね',cost:1,atk:2,attr:'soc',up:'soc',desc:'「すごいね」と、ほめる。',hint:'ほめるは、評判',icon:'heart'},
+ boundarySet:{title:'「これだけはやめて」と境界を引く',kind:'talk',label:'境界を引く',cost:1,atk:2,attr:'soc',up:'soc',desc:'「これだけはやめて」と、境界を引く。',hint:'境界は、自衛',icon:'check'},
+ flattered2:{title:'ほめられたと受け取る',kind:'think',label:'ほめられた',cost:1,atk:2,attr:'soc',up:'soc',desc:'まねはほめられたと、受け取る。',hint:'ほめは、前向き',icon:'sun'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -5000,11 +5010,53 @@ dutyPush:{title:'嫌な係を押し付けられた',nav:'係を押し付けら�
  watch(s){return s.stage===0?'押し付けは、みんなある。':s.stage===1?'公平は、納得。':'公平は、解決。'},
  scene(s){const f=s.flags;
   if(s.stage===0)return{narrative:'みんなが嫌がる係が出る。「おまえの番だ」と言われた。',speaker:'クラスの仲間',quote:'おまえの番だ',look:'みんなが、自分を見ている。',self:'なんで私だけ…',hint:'押し付けられて、何がつらい？'};
-  if(s.stage===1)return{narrative:'文句か、公平に決めるか。',speaker:'クラスの仲間',quote:'どする？',look:'不公平が、続く。',self:s.reason==='wantSay'?'言いたい…':s.reason==='wantFair'?'公平にしたい…':'なんで私だけ…',hint:'じゃんけん・やりたくない・交代、方法はある。'};
+  if(s.stage===1)return{narrative:'文句か、公平に決めるか。',speaker:'クラスの仲間',quote:'どうする？',look:'不公平が、続く。',self:s.reason==='wantSay'?'言いたい…':s.reason==='wantFair'?'公平にしたい…':'なんで私だけ…',hint:'じゃんけん・やりたくない・交代、方法はある。'};
   return{narrative:'公平に決めて、納得する。',speaker:'クラスの仲間',quote:f.fair2||f.swapped?'「じゃんけん！」':'「どうする？」',look:'公平な決め方が、待っている。',self:f.fair2||f.swapped||f.planned?'公平に決められた。':'まだ、不公平。',hint:'じゃんけん・交代・順番、選ぼう。'};
  },
  progress(s){const f=s.flags;return f.fair2||f.swapped||f.planned?3:f.no2||f.once||f.took?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.fair2||f.swapped?'公平に決められた。':f.no2||f.took?'正直に言えた。':'まだ、不公平。じゃんけん・やりたくない・交代、方法はある。'}
+},
+copyMe:{title:'まねされて嫌な気持ち',nav:'まねされて嫌',num:93,attrs:['soc'],goals:['嫌な気持ちを受け止めたい','自分らしさを守りたい','相手とよい関係でいたい'],chapters:['まねされている','嫌な気持ちと向き合う','自分らしさを守る'],locations:['教室','教室','教室'],base:['imitator','sameAsMe','feelCopied','anger','ignore'],
+ start:{mind:4,energy:3},
+ monsters:[{name:'まねの影',hp:5,power:1,turns:4,look:'まねされて、影になる。'},{name:'嫌な気持ち',hp:5,power:1,turns:4,look:'嫌な気持ちが、残る。'},{name:'自分らしさ',hp:6,power:2,turns:4,look:'自分らしさを、守る。'}],
+ talk:[['askWhy6','「なんでまねするの？」と聞く','理由を、聞く。'],['tellStop3','「やめて」と伝える','正直に、伝える。'],['compliment3','「すごいね」とほめる','ほめて、受け流す。']],
+ think:[['feelBad','嫌な気持ち','まねされて、嫌。'],['wantOwn','自分らしくいたい','自分らしく、いたい。'],['feelSame','同じにされる','同じにされて、嫌。']],
+ reasonKeys:['feelBad','wantOwn','feelSame'],
+ stageGrants:[['askWhy5','tellStop2','ownStyle'],['okCopy','compliment2','boundarySet','flattered2','feelCopied']],
+ subs:[
+  {title:'まねする子が「すごいと思って」と言った',text:'まねは、ほめかもしれない。',stat:'soc',min:0,good:{text:'「ありがとう」と言えた。',rep:1,mind:1},ok:{text:'理由が分かった。',mind:1}},
+  {title:'友達が「自分らしくていいね」と言った',text:'自分らしさは、認められる。',stat:'soc',min:0,good:{text:'「ありがとう」と言えた。',rep:1,mind:1},ok:{text:'自信になった。',mind:1}}
+ ],
+ onExplore(s,key){const out={text:'',card:null};
+  if(key==='askWhy6'){s.flags.why=true;relation(s,'「なんでまねするの？」と聞いたら、「すごいと思って」と言ってくれた。');out.text='「なんでまねするの？」\n「すごいと思って」';out.card='askWhy5'}
+  if(key==='tellStop3'){s.flags.stop=true;relation(s,'「まねはやめて」と伝えたら、「ごめん」と言ってくれた。');out.text='「まねはやめて」\n「ごめん」';out.card='tellStop2'}
+  if(key==='compliment3'){s.flags.complimented=true;out.text='「すごいね」と、ほめた。\n「ありがとう」';out.card='compliment2'}
+  if(key==='feelBad'){s.reason='feelBad';out.text='まねされて、嫌。\n「やめて」「なんで」で、向き合おう。';out.card='tellStop2'}
+  if(key==='wantOwn'){s.reason='wantOwn';out.text='自分らしく、いたい。\n「自分らしさ」「境界」で、守ろう。';out.card='ownStyle'}
+  if(key==='feelSame'){s.reason='feelSame';out.text='同じにされて、嫌。\n「自分らしさ」「やめて」で、自分を守ろう。';out.card='ownStyle'}
+  return out;
+ },
+ onPlay(s,id){const f=s.flags;
+  if(id==='askWhy5'){f.asked=true;return{text:'「なんでまねするの？」と、聞いた。',meaning:'聞くは、理解。'}}
+  if(id==='tellStop2'){f.told=true;return{text:'「まねはやめて」と、伝えた。',meaning:'伝えるは、自分を守る。'}}
+  if(id==='ownStyle'){f.own=true;return{text:'自分らしさを、出した。',meaning:'自分らしさは、個性。'}}
+  if(id==='okCopy'){f.ok=true;return{text:'まねも嬉しいと、思った。',meaning:'嬉しいは、余裕。'}}
+  if(id==='compliment2'){f.complimented2=true;return{text:'「すごいね」と、ほめた。',meaning:'ほめるは、評判。'}}
+  if(id==='boundarySet'){f.boundary=true;return{text:'境界を、引いた。',meaning:'境界は、自衛。'}}
+  if(id==='flattered2'){f.flattered=true;return{text:'ほめられたと、受け取った。',meaning:'ほめは、前向き。'}}
+  if(id==='imitator'){f.imitated=true;return{text:'まねされた。',meaning:'まねは、自分らしさを奪う。'}}
+  if(id==='sameAsMe'){f.same=true;return{text:'同じにされた。',meaning:'同じは、個性がなくなる。'}}
+  if(id==='feelCopied'){f.copied=true;return{text:'嫌な気持ちになった。',meaning:'嫌は、心の声。'}}
+  return{text:'',meaning:''};
+ },
+ watch(s){return s.stage===0?'まねは、みんなある。':s.stage===1?'自分らしさは、個性。':'ほめは、前向き。'},
+ scene(s){const f=s.flags;
+  if(s.stage===0)return{narrative:'同じ文房具、同じ髪型、同じ遊び。まねされている。',speaker:'まねする子',quote:'おそろいだね！',look:'同じものが、並ぶ。',self:'嫌だ…',hint:'まねされて、何がつらい？'};
+  if(s.stage===1)return{narrative:'やめてと言うか、受け流すか。',speaker:'まねする子',quote:'おそろい、うれしい！',look:'まねが、続く。',self:s.reason==='wantOwn'?'自分らしくいたい…':s.reason==='feelSame'?'同じにされるのが嫌…':'嫌だ…',hint:'なんで・やめて・自分らしさ、方法はある。'};
+  return{narrative:'自分らしさを、守る。',speaker:'まねする子',quote:f.told||f.asked?'「ごめん、すごいと思って」':'「おそろい、うれしい！」',look:'自分らしさが、待っている。',self:f.told||f.own||f.flattered||f.ok?'自分らしくできた。':'まだ、まねされる。',hint:'自分らしさ・ほめる・境界、選ぼう。'};
+ },
+ progress(s){const f=s.flags;return f.own||f.flattered||f.boundary?3:f.told||f.asked||f.ok||f.complimented2?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.own||f.boundary?'自分らしくできた。':f.told||f.asked?'正直に言えた。':'まだ、まねされる。なんで・やめて・自分らしさ、方法はある。'}
 }
 };
 

@@ -769,6 +769,16 @@ export const cards={
  askMom2:{title:'お母さんに届けてもらう',kind:'talk',label:'届けてもらう',cost:1,atk:2,attr:'soc',up:'soc',desc:'お母さんに、届けてもらう。',hint:'届けては、助け',icon:'people'},
  waitTomorrow:{title:'明日持ってくる',kind:'think',label:'明日持ってくる',cost:1,atk:2,attr:'ath',up:'ath',desc:'明日、持ってくる。',hint:'明日は、挽回',icon:'clock'},
  rushBack2:{title:'取りに帰ると言う',kind:'talk',label:'取りに帰る',cost:1,atk:2,attr:'ath',up:'ath',desc:'「取りに帰ります」と、言う。',hint:'取りに帰るは、責任',icon:'door'},
+ myOpinion:{title:'自分の意見',kind:'think',label:'自分の意見',cost:0,strain:1,atk:1,attr:'study',desc:'自分の意見と、違う意見が出た。',hint:'違いは、考えるチャンス',icon:'message'},
+ rejectOther:{title:'相手の意見を否定する',kind:'talk',label:'否定する',cost:0,strain:1,atk:1,attr:'soc',desc:'相手の意見を、否定する。',hint:'否定は、言い合いになる',icon:'bolt'},
+ feelDenied:{title:'否定された気持ち',kind:'think',label:'否定された',cost:1,atk:2,attr:'soc',up:'soc',desc:'意見を否定された気持ちを、認める。',hint:'認めると、分かる',icon:'puzzle'},
+ listenOther:{title:'相手の意見を聞く',kind:'talk',label:'相手を聞く',cost:1,atk:2,attr:'soc',up:'soc',desc:'相手の意見を、聞く。',hint:'聞くと、分かる',icon:'ear'},
+ sayMine2:{title:'自分の意見も言う',kind:'talk',label:'自分も言う',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'自分の意見も、言う。',hint:'言うは、対等',icon:'message'},
+ mergeIdeas:{title:'いいところを組み合わせる',kind:'think',label:'組み合わせる',cost:1,atk:2,attr:'study',up:'study',desc:'いいところを、組み合わせる。',hint:'組み合わせは、新しい答え',icon:'puzzle'},
+ agreeDiff:{title:'「考え方が違うね」と言う',kind:'talk',label:'違うね',cost:1,atk:2,attr:'soc',up:'soc',desc:'「考え方が違うね」と、言う。',hint:'違いを認めるは、成熟',icon:'check'},
+ thinkBoth:{title:'両方の意見を考える',kind:'think',label:'両方考える',cost:1,atk:2,attr:'study',up:'study',desc:'両方の意見を、考える。',hint:'両方考えるは、深い',icon:'book'},
+ askWhy3:{title:'「なぜそう思う？」と聞く',kind:'talk',label:'なぜ？',cost:1,atk:2,attr:'soc',up:'soc',desc:'「なぜそう思う？」と、聞く。',hint:'理由を聞くは、理解',icon:'ear'},
+ insistMine:{title:'自分の意見をごり押し',kind:'talk',label:'ごり押し',cost:0,strain:1,atk:1,attr:'soc',desc:'自分の意見を、ごり押しする。',hint:'ごり押しは、言い合い',icon:'bolt'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -4329,6 +4339,48 @@ forgotNote:{title:'連絡帳を忘れた',nav:'連絡帳を忘れた',num:79,att
  },
  progress(s){const f=s.flags;return f.told2||f.honest2||f.papered||f.asked2?3:f.checked||f.remembered?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.told2||f.honest2?'正直に伝えた。':f.papered||f.asked2?'対処した。':'まだ、隠してる。早め・正直・届けて、方法はある。'}
+},
+diffOpinion:{title:'発表で自分と違う意見が出る',nav:'違う意見が出る',num:80,attrs:['study','soc'],goals:['相手の意見を聞きたい','自分の意見も伝えたい','より良い答えを見つけたい'],chapters:['発表・話し合いの時間','自分と違う意見が出た','意見を比べて考える'],locations:['教室','教室','教室'],base:['myOpinion','rejectOther','insistMine','anger','ignore'],
+ start:{mind:4,energy:3},
+ monsters:[{name:'否定された気持ち',hp:5,power:1,turns:4,look:'意見を、否定された。'},{name:'意見のぶつかり',hp:5,power:1,turns:4,look:'意見が、ぶつかる。'},{name:'良い答えの形',hp:6,power:2,turns:4,look:'良い答えを、見つける。'}],
+ talk:[['listenOther2','相手の意見を聞く','相手を、聞く。'],['sayMine3','自分の意見も言う','自分も、言う。'],['askWhy4','「なぜそう思う？」と聞く','理由を、聞く。']],
+ think:[['deniedFeel','否定された','意見を、否定された。'],['wantRight','自分が正しいと思う','自分が、正しいと思う。'],['wantBetter','より良い答えを見つけたい','良い答えを、見つけたい。']],
+ reasonKeys:['deniedFeel','wantRight','wantBetter'],
+ stageGrants:[['listenOther','feelDenied','askWhy3'],['sayMine2','mergeIdeas','agreeDiff','thinkBoth','insistMine']],
+ subs:[
+  {title:'相手の意見に「いいところ」があった',text:'聞くと、発見がある。',stat:'study',min:0,good:{text:'「いいところもあるね」と言えた。',rep:1,mind:1},ok:{text:'答えが深まった。',mind:1}},
+  {title:'先生が「両方の意見が出たね」と言った',text:'違いは、学びのチャンス。',stat:'study',min:0,good:{text:'両方を考えられた。',mind:1},ok:{text:'場が落ち着いた。',mind:1}}
+ ],
+ onExplore(s,key){const out={text:'',card:null};
+  if(key==='listenOther2'){s.flags.listened=true;relation(s,'相手の意見を聞いたら、「聞いてくれてありがとう」と言ってくれた。');out.text='「どんな考え？」\n「聞いてくれてありがとう」';out.card='listenOther'}
+  if(key==='sayMine3'){s.flags.saidM=true;relation(s,'自分の意見も言ったら、相手も「なるほど」と考えてくれた。');out.text='「私はこう思う」\n「なるほど」';out.card='sayMine2'}
+  if(key==='askWhy4'){s.flags.asked=true;out.text='「なぜそう思う？」\n「だって、ここが良いと思うから」';out.card='askWhy3'}
+  if(key==='deniedFeel'){s.reason='deniedFeel';out.text='意見を、否定された。\n「否定された」「相手を聞く」で、向き合おう。';out.card='feelDenied'}
+  if(key==='wantRight'){s.reason='wantRight';out.text='自分が、正しいと思う。\n「両方考える」「理由を聞く」で、確かめよう。';out.card='thinkBoth'}
+  if(key==='wantBetter'){s.reason='wantBetter';out.text='良い答えを、見つけたい。\n「組み合わせ」「両方考える」で、深めよう。';out.card='mergeIdeas'}
+  return out;
+ },
+ onPlay(s,id){const f=s.flags;
+  if(id==='listenOther'){f.listened2=true;return{text:'相手の意見を、聞いた。',meaning:'聞くと、分かる。'}}
+  if(id==='feelDenied'){f.faced=true;return{text:'否定された気持ちを、認めた。',meaning:'認めると、分かる。'}}
+  if(id==='sayMine2'){f.saidM2=true;return{text:'自分の意見も、言った。',meaning:'言うは、対等。'}}
+  if(id==='mergeIdeas'){f.merged=true;return{text:'いいところを、組み合わせた。',meaning:'組み合わせは、新しい答え。'}}
+  if(id==='agreeDiff'){f.agreed=true;return{text:'「考え方が違うね」と、言った。',meaning:'違いを認めるは、成熟。'}}
+  if(id==='thinkBoth'){f.thought=true;return{text:'両方の意見を、考えた。',meaning:'両方考えるは、深い。'}}
+  if(id==='askWhy3'){f.asked2=true;return{text:'「なぜそう思う？」と、聞いた。',meaning:'理由を聞くは、理解。'}}
+  if(id==='myOpinion'){f.mine=true;return{text:'自分の意見と、違う意見が出た。',meaning:'違いは、考えるチャンス。'}}
+  if(id==='rejectOther'){f.rejected=true;return{text:'相手の意見を、否定した。',meaning:'否定は、言い合いになる。'}}
+  if(id==='insistMine'){f.insisted=true;return{text:'自分の意見を、ごり押しした。',meaning:'ごり押しは、言い合い。'}}
+  return{text:'',meaning:''};
+ },
+ watch(s){return s.stage===0?'違う意見は、みんなある。':s.stage===1?'聞くは、理解。':'組み合わせは、新しい答え。'},
+ scene(s){const f=s.flags;
+  if(s.stage===0)return{narrative:'話し合いの時間。自分が発表した意見に、反対の意見が出た。',speaker:'意見が違う子',quote:'私はそうは思わない',look:'みんなが、聞いている。',self:'否定された…',hint:'意見が違って、何がつらい？'};
+  if(s.stage===1)return{narrative:'否定し合うか、聞き合うか。',speaker:'意見が違う子',quote:'こっちの方がいいと思う',look:'意見が、ぶつかっている。',self:s.reason==='wantRight'?'自分が正しい…':s.reason==='wantBetter'?'良い答えを…':'否定された…',hint:'聞く・言う・理由を聞く、方法はある。'};
+  return{narrative:'意見を比べて、考える。',speaker:'意見が違う子',quote:f.merged||f.agreed?'「いいところもあるね」':'「こっちの方がいいと思う」',look:'意見が、まとまろうとしている。',self:f.merged||f.thought||f.agreed?'深まった。':'まだ、ぶつかってる。',hint:'組み合わせ・両方・違うね、選ぼう。'};
+ },
+ progress(s){const f=s.flags;return f.merged||f.thought||f.agreed?3:f.listened2||f.saidM2||f.asked2?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.merged||f.thought?'深まった。':f.listened2||f.saidM2?'聞き合った。':'まだ、ぶつかってる。聞く・言う・組み合わせ、方法はある。'}
 }
 };
 

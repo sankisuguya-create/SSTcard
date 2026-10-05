@@ -753,13 +753,13 @@ const cards={
  fixIdea:{title:'新しい形に直す',kind:'support',label:'新しい形',cost:2,atk:3,attr:'study',up:'study',desc:'壊れた形をいかして、新しい作品にする。',hint:'失敗も、材料になる',icon:'spark'},
  forceSubmit:{title:'そのまま出す',kind:'think',label:'そのまま出す',cost:0,strain:1,atk:1,attr:'study',desc:'直さないまま、提出する。',hint:'出すことは大事。でも…',icon:'flag'},
  finishWork:{title:'ちゃんと仕上げて出す',kind:'support',label:'仕上げる',cost:2,atk:3,attr:'study',up:'study',desc:'直した作品を、自信を持って出す。',hint:'やり直した分だけ、自信になる',icon:'check'},
- skipTurn:{title:'順番をやり過ごす',kind:'think',label:'やり過ごす',cost:0,strain:1,atk:0,desc:'自分の番を、やり過ごす。',hint:'やり過ごすと、跳べないまま',icon:'clock'},
+ passTurn:{title:'順番をやり過ごす',kind:'think',label:'やり過ごす',cost:0,strain:1,atk:0,desc:'自分の番を、やり過ごす。',hint:'やり過ごすと、跳べないまま',icon:'clock'},
  crash:{title:'勢いだけで跳ぶ',kind:'think',label:'勢いだけ',cost:0,strain:1,atk:1,attr:'ath',desc:'考えず、勢いだけで跳ぶ。',hint:'勢いだけでは、跳べない',icon:'bolt'},
  askCoach:{title:'先生にコツを聞く',kind:'talk',label:'コツを聞く',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'跳び方のコツを、先生に聞く。',hint:'コツが分かれば、跳べる',icon:'people'},
  copyMove:{title:'踏み切りを真似する',kind:'think',label:'踏み切り',cost:1,atk:2,attr:'ath',up:'ath',desc:'跳べる子の、踏み切りを真似る。',hint:'踏み切りが決まれば、跳べる',icon:'eye'},
  splitJump:{title:'低い跳び箱から練習する',kind:'think',label:'低く練習',cost:1,atk:2,attr:'ath',up:'ath',desc:'まず低い段から、練習する。',hint:'低いところから、自信がつく',icon:'runner'},
  handsFirst:{title:'手のつき方を練習する',kind:'think',label:'手つき練習',cost:1,atk:2,attr:'ath',up:'ath',desc:'手のつき方だけ、練習する。',hint:'手がつければ、怖くない',icon:'hand'},
- together:{title:'友達と一緒に練習する',kind:'talk',label:'一緒に練習',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'友達と、一緒に練習する。',hint:'一人より、一緒が楽しい',icon:'people'},
+ matePractice:{title:'友達と一緒に練習する',kind:'talk',label:'一緒に練習',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'友達と、一緒に練習する。',hint:'一人より、一緒が楽しい',icon:'people'},
  bigTry:{title:'思いっきり跳ぶ',kind:'support',label:'思いっきり',cost:2,atk:3,attr:'ath',up:'ath',desc:'練習の成果で、思いっきり跳ぶ。',hint:'準備があれば、思いっきりいける',icon:'bolt'},
  clearJump:{title:'跳び越せた！',kind:'support',label:'跳び越えた',cost:2,atk:3,attr:'ath',up:'ath',desc:'跳び箱を、跳び越えた。',hint:'跳べた経験は、自信になる',icon:'flag'},
  withdraw:{title:'黙って引き下がる',kind:'think',label:'引き下がる',cost:0,strain:1,atk:0,desc:'反対されて、黙って引き下がる。',hint:'楽になるが、提案は通らない',icon:'clock'},
@@ -979,7 +979,7 @@ const cards={
  otherFriends:{title:'他の子と遊ぶ',kind:'think',label:'他の子と遊ぶ',cost:1,atk:2,attr:'soc',up:'soc',desc:'その子以外の、他の子と遊ぶ。',hint:'友達は、一人じゃない',icon:'people'},
  slowDown:{title:'追いかけず深呼吸する',kind:'think',label:'深呼吸',cost:1,atk:2,attr:'ath',up:'ath',desc:'追いかける前に、深呼吸する。',hint:'深呼吸で、気持ちが落ち着く',icon:'sun'},
  waitPatience:{title:'戻ってくるのを待つ',kind:'support',label:'待つ',cost:1,atk:2,attr:'soc',up:'soc',desc:'「そのうち戻ってくるかな」と待つ。',hint:'待てるのも、力',icon:'clock'},
- nextTime:{title:'「次は一緒に行こう」と約束する',kind:'support',label:'次の約束',cost:2,atk:3,attr:'soc',up:'soc',desc:'「次は一緒に行こう」と、約束する。',hint:'約束で、次が変わる',icon:'flag'},
+ promiseNext:{title:'「次は一緒に行こう」と約束する',kind:'support',label:'次の約束',cost:2,atk:3,attr:'soc',up:'soc',desc:'「次は一緒に行こう」と、約束する。',hint:'約束で、次が変わる',icon:'flag'},
  stayWrong:{title:'間違えたまま返事をする',kind:'think',label:'そのまま返事',cost:0,strain:1,atk:1,attr:'soc',desc:'違う名前でも、返事をしてしまう。',hint:'そのままだと、ずっと間違えられる',icon:'eye'},
  yellName:{title:'「違うよ！」と怒る',kind:'talk',label:'怒る',cost:0,strain:1,atk:1,attr:'soc',desc:'大声で、訂正する。',hint:'怒ると、まわりが引く',icon:'bolt'},
  correctCalm:{title:'「××です」と落ち着いて直す',kind:'talk',label:'落ち着いて直す',cost:1,atk:2,attr:'soc',up:'soc',desc:'落ち着いて、正しい名前を言う。',hint:'落ち着くと、伝わる',icon:'pen'},
@@ -1237,7 +1237,7 @@ const cards={
  paperNote:{title:'紙に連絡を書く',kind:'think',label:'紙に書く',cost:1,atk:2,attr:'study',up:'study',desc:'紙に、連絡を書く。',hint:'紙は、代わりになる',icon:'pen'},
  honestSorry2:{title:'「忘れました」と正直に言う',kind:'talk',label:'忘れました',cost:1,atk:2,attr:'soc',up:'soc',desc:'「忘れました」と、正直に言う。',hint:'正直は、信頼',icon:'heart'},
  rememberBring:{title:'明日から持ってくる工夫',kind:'think',label:'持ってくる工夫',cost:1,atk:2,attr:'study',up:'study',desc:'明日から、持ってくる工夫をする。',hint:'工夫は、防止',icon:'check'},
- checkBag2:{title:'カバンの中を確かめる',kind:'think',label:'カバンを確かめる',cost:1,atk:2,attr:'study',up:'study',desc:'カバンの中を、確かめる。',hint:'確かめるは、手がかり',icon:'search'},
+ checkInside:{title:'カバンの中を確かめる',kind:'think',label:'カバンを確かめる',cost:1,atk:2,attr:'study',up:'study',desc:'カバンの中を、確かめる。',hint:'確かめるは、手がかり',icon:'search'},
  askMom2:{title:'お母さんに届けてもらう',kind:'talk',label:'届けてもらう',cost:1,atk:2,attr:'soc',up:'soc',desc:'お母さんに、届けてもらう。',hint:'届けては、助け',icon:'people'},
  waitTomorrow:{title:'明日持ってくる',kind:'think',label:'明日持ってくる',cost:1,atk:2,attr:'ath',up:'ath',desc:'明日、持ってくる。',hint:'明日は、挽回',icon:'clock'},
  rushBack2:{title:'取りに帰ると言う',kind:'talk',label:'取りに帰る',cost:1,atk:2,attr:'ath',up:'ath',desc:'「取りに帰ります」と、言う。',hint:'取りに帰るは、責任',icon:'door'},
@@ -1310,7 +1310,7 @@ const cards={
  teamForgive:{title:'仲間を信じる',kind:'think',label:'仲間を信じる',cost:1,atk:2,attr:'soc',up:'soc',desc:'仲間を、信じる。',hint:'信じるは、力',icon:'people'},
  tryAgain:{title:'もう一度やり直す',kind:'think',label:'やり直す',cost:1,atk:2,attr:'ath',up:'ath',desc:'もう一度、やり直す。',hint:'やり直しは、挽回',icon:'up'},
  blameLuck:{title:'運のせいにする',kind:'think',label:'運のせい',cost:0,strain:1,atk:1,attr:'soc',desc:'運のせいに、する。',hint:'運のせいは、逃げ',icon:'eye'},
- keepGoing:{title:'試合を続ける',kind:'think',label:'続ける',cost:1,atk:2,attr:'ath',up:'ath',desc:'試合を、続ける。',hint:'続けるは、前向き',icon:'runner'},
+ keepMatch:{title:'試合を続ける',kind:'think',label:'続ける',cost:1,atk:2,attr:'ath',up:'ath',desc:'試合を、続ける。',hint:'続けるは、前向き',icon:'runner'},
  topSpot:{title:'1位の重圧',kind:'think',label:'1位の重圧',cost:0,strain:1,atk:1,attr:'ath',desc:'1位になって、期待される。',hint:'1位は、期待の重さ',icon:'flag'},
  fakeFine:{title:'平気なふりをする',kind:'think',label:'平気なふり',cost:0,strain:1,atk:1,attr:'ath',desc:'重圧なのに、平気なふりをする。',hint:'ふりは、本音がつらい',icon:'eye'},
  nervousWin:{title:'あがってしまう',kind:'think',label:'あがる',cost:0,strain:1,atk:1,attr:'ath',desc:'期待が重くて、あがってしまう。',hint:'あがると、力が出ない',icon:'bolt'},
@@ -1320,7 +1320,7 @@ const cards={
  askPraise:{title:'「すごいね」と言ってもらう',kind:'talk',label:'ほめてもらう',cost:1,atk:2,attr:'soc',up:'soc',desc:'「すごいね」と、言ってもらう。',hint:'ほめは、エネルギー',icon:'spark'},
  shareSpot:{title:'仲間と喜びを分かち合う',kind:'talk',label:'喜びを分かち合う',cost:1,atk:2,attr:'soc',up:'soc',desc:'仲間と、喜びを分かち合う。',hint:'分かち合うは、絆',icon:'people'},
  nervousCalm:{title:'深呼吸で落ち着く',kind:'think',label:'深呼吸で落ち着く',cost:1,atk:2,attr:'ath',up:'ath',desc:'深呼吸で、落ち着く。',hint:'深呼吸は、落ち着き',icon:'heart'},
- beMyself:{title:'自分らしく走る',kind:'think',label:'自分らしく',cost:1,atk:2,attr:'ath',up:'ath',desc:'自分らしく、走る。',hint:'自分らしさは、力',icon:'runner'},
+ ownWay:{title:'自分らしく走る',kind:'think',label:'自分らしく',cost:1,atk:2,attr:'ath',up:'ath',desc:'自分らしく、走る。',hint:'自分らしさは、力',icon:'runner'},
  noInvite:{title:'呼ばれなかった',kind:'think',label:'呼ばれない',cost:0,strain:1,atk:1,attr:'soc',desc:'誕生会に、呼ばれなかった。',hint:'呼ばれないと、外される',icon:'eye'},
  pretendNo:{title:'気にしないふり',kind:'think',label:'気にしないふり',cost:0,strain:1,atk:1,attr:'soc',desc:'気にしないふりを、する。',hint:'ふりは、本音がつらい',icon:'eye'},
  heardParty:{title:'みんなの話で知る',kind:'think',label:'みんなの話',cost:0,strain:1,atk:1,attr:'soc',desc:'みんなの話で、誕生会を知る。',hint:'知ると、寂しくなる',icon:'ear'},
@@ -2879,7 +2879,7 @@ vault:{
  bg:'gym', title:'跳び箱が跳べない',nav:'跳び箱',num:'31',attrs:['ath'],
  goals:['跳び箱を跳びたい','跳べないときの自分を知りたい','練習のしかたを見つけたい'],
  chapters:['体育の時間','休み時間','次の体育'],locations:['体育館','体育館・休み','体育館'],
- base:['skipTurn','crash','anger','ignore','boast'],start:{mind:5,energy:4},
+ base:['passTurn','crash','anger','ignore','boast'],start:{mind:5,energy:4},
  monsters:[
   {name:'カベの影',hp:6,power:2,look:'跳び箱が、大きなカベに見える。'}
  ],
@@ -2891,7 +2891,7 @@ vault:{
   const out={text:'',card:null};
   if(key==='coachAsk'){s.flags.tipped=true;note(s,'先生にコツを聞いたら、「手をついて、足を開く」と分かった。');out.text='先生「手をついて、足を開くだけでいいよ」\nコツが、分かった。';out.card='askCoach'}
   if(key==='mateWatch'){s.flags.tipped=true;note(s,'跳べる子の踏み切りを見たら、真似できそう。');out.text='「跳ぶ前に、ぐっと踏み切るんだ」\n踏み切りを、真似できそう。';out.card='copyMove'}
-  if(key==='mateTogether'){s.flags.hasMate=true;relation(s,'友達と練習することにした。');out.text='「一緒にやろう！」\n友達と、練習することにした。';out.card='together'}
+  if(key==='mateTogether'){s.flags.hasMate=true;relation(s,'友達と練習することにした。');out.text='「一緒にやろう！」\n友達と、練習することにした。';out.card='matePractice'}
   if(key==='fearFall'){s.reason='fearFall';note(s,'着地がこわいなら、手のつき方から練習できる。');out.text='「着地が、こわい」\n手のつき方から、練習できる。';out.card='handsFirst'}
   if(key==='tooHigh'){s.reason='tooHigh';note(s,'高いなら、低い段から練習できる。');out.text='「高すぎる」\n低い段からなら、始められる。';out.card='splitJump'}
   if(key==='slowRun'){s.reason='slowRun';note(s,'助走が遅いなら、踏み切りから練習できる。');out.text='「助走が、遅い」\n踏み切りから、練習できる。';out.card='copyMove'}
@@ -2899,13 +2899,13 @@ vault:{
  },
  onPlay(s,id){
   const f=s.flags;let text='',meaning='';
-  if(id==='skipTurn'){f.skipped=true;s.mind-=1;relation(s,'順番をやり過ごしたら、少し楽になった。でも、跳べないまま。');text='自分の番を、やり過ごした。\n少し楽になった。でも、跳べないまま。';meaning='やり過ごすと、跳べないまま。';grant(s,'askCoach')}
+  if(id==='passTurn'){f.skipped=true;s.mind-=1;relation(s,'順番をやり過ごしたら、少し楽になった。でも、跳べないまま。');text='自分の番を、やり過ごした。\n少し楽になった。でも、跳べないまま。';meaning='やり過ごすと、跳べないまま。';grant(s,'askCoach')}
   if(id==='crash'){f.crashed=true;s.mind-=1;relation(s,'勢いだけで跳んだら、ひっかかった。');text='勢いだけで、跳んだ。\n足がひっかかって、ころんだ。';meaning='勢いだけでは、跳べない。';grant(s,'splitJump')}
   if(id==='askCoach'){f.tipped=true;note(s,'コツを聞いたら、何を練習すればいいか分かった。');text='「手をついて、足を開く」\n何を練習するか、分かった。';meaning='コツが分かれば、練習できる。'}
   if(id==='copyMove'){f.tipped=true;f.practiced=true;note(s,'踏み切りを真似したら、勢いがついた。');text='跳べる子の、踏み切りを真似した。\n「勢いが、ついた」';meaning='真似ると、コツがつかめる。'}
   if(id==='splitJump'){f.practiced=true;note(s,'低い段から練習したら、跳べそうになった。');text='低い段から、練習した。\n「これなら、跳べる」';meaning='低いところから、自信がつく。'}
   if(id==='handsFirst'){f.practiced=true;note(s,'手のつき方を練習したら、着地がこわくなくなった。');text='手のつき方だけ、練習した。\n「手がつけば、こわくない」';meaning='部分練習で、こわさが減る。'}
-  if(id==='together'){f.practiced=true;f.hasMate=true;relation(s,'友達と練習したら、楽しく続けられた。');text='友達と、一緒に練習した。\n「もう一回、やろう」';meaning='一人より、一緒が続く。'}
+  if(id==='matePractice'){f.practiced=true;f.hasMate=true;relation(s,'友達と練習したら、楽しく続けられた。');text='友達と、一緒に練習した。\n「もう一回、やろう」';meaning='一人より、一緒が続く。'}
   if(id==='bigTry'){if(f.tipped||f.practiced){f.bigJumped=true;note(s,'思いっきり跳んだら、あと少しまでいけた。');text='思いっきり、跳んだ。\n「あと、少し！」';meaning='準備があれば、思いっきりいける。'}else{s.mind-=1;text='思いっきり跳んだが、やり方が分からずひっかかった。';meaning='まずコツや練習をしてから、跳ぶと良い。';grant(s,'splitJump')}}
   if(id==='clearJump'){if(f.tipped||f.practiced){f.cleared=true;note(s,'跳び箱を、跳び越えられた。');text='跳び箱を、跳び越えた！\n「できた！」';meaning='跳べた経験は、自信になる。'}else{s.mind-=1;text='跳び越えようとしたが、準備が足りなかった。';meaning='まず練習してから、跳び越えると良い。';grant(s,'askCoach')}}
   return {text,meaning};
@@ -3997,7 +3997,7 @@ leftOut:{title:'遊びから置いて行かれた',nav:'置いて行かれた',n
  talk:[['callOut','「待って！」と声をかける','置いて行かれて、声をかける。'],['askReason','「なんで行っちゃったの？」と聞く','理由を、聞いてみる。'],['talkOther','他の子と話してみる','その子以外にも、話せる。']],
  think:[['lonely','寂しい・悲しい','置いて行かれて、寂しかった。'],['wantAlong','一緒にいたかった','本当は、一緒にいたかった。'],['ownFun','一人でも楽しいこと','一人でも、楽しいことはある。']],
  reasonKeys:['lonely','wantAlong','ownFun'],
- stageGrants:[['tellHow3','askWhyRun','slowDown'],['findOwn2','otherFriends','waitPatience','nextTime']],
+ stageGrants:[['tellHow3','askWhyRun','slowDown'],['findOwn2','otherFriends','waitPatience','promiseNext']],
  subs:[
   {title:'友達が戻ってきて「ごめん、忘れてた」と言った',text:'その子が、戻ってきて謝った。',choices:[
  {label:'「待ってたよ、行こう」と迎える',desc:'気持ちよく合流',icon:'sun',out:'good',r:{text:'迎えて、一緒に遊べた。',meaning:'待っていた時間も、迎えれば実になる。',rep:1,mind:1}},
@@ -4025,7 +4025,7 @@ leftOut:{title:'遊びから置いて行かれた',nav:'置いて行かれた',n
   if(id==='otherFriends'){f.othered=true;return{text:'他の子と、遊んだ。',meaning:'友達は、一人じゃない。'}}
   if(id==='slowDown'){f.slowed=true;return{text:'追いかけず、深呼吸した。',meaning:'深呼吸で、気持ちが落ち着く。'}}
   if(id==='waitPatience'){f.waited=true;return{text:'戻ってくるのを、待った。',meaning:'待てるのも、力。'}}
-  if(id==='nextTime'){f.nexted=true;return{text:'「次は一緒に行こう」と、約束した。',meaning:'約束で、次が変わる。'}}
+  if(id==='promiseNext'){f.nexted=true;return{text:'「次は一緒に行こう」と、約束した。',meaning:'約束で、次が変わる。'}}
   if(id==='chaseRun'){f.chased=true;return{text:'必死に、追いかけた。',meaning:'追うほど、疲れて悲しくなる。'}}
   if(id==='pretendFine'){f.pretendF=true;return{text:'「どうでもいい」と、強がった。',meaning:'強がると、心が疲れる。'}}
   return{text:'',meaning:''};
@@ -5292,7 +5292,7 @@ testFreeze:{title:'テスト中に手が止まる',nav:'手が止まる',num:78,
  progress(s){const f=s.flags;return f.easy||f.writing||f.skipped?3:f.breathed||f.calmed||f.looked?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.easy||f.writing?'続けられた。':f.breathed||f.calmed?'落ち着いた。':'まだ、止まってる。深呼吸・できる問題・時計、方法はある。'}
 },
-forgotNote:{title:'連絡帳を忘れた',nav:'連絡帳を忘れた',num:79,attrs:['study','soc'],goals:['正直に伝えたい','連絡を確実にしたい','次は忘れないようにしたい'],chapters:['連絡帳を出す時間','忘れたことに気づく','正直に伝えて対処'],locations:['教室','教室','教室'],base:['forgotBook','panicForgot','checkBag2','anger','ignore'],
+forgotNote:{title:'連絡帳を忘れた',nav:'連絡帳を忘れた',num:79,attrs:['study','soc'],goals:['正直に伝えたい','連絡を確実にしたい','次は忘れないようにしたい'],chapters:['連絡帳を出す時間','忘れたことに気づく','正直に伝えて対処'],locations:['教室','教室','教室'],base:['forgotBook','panicForgot','checkInside','anger','ignore'],
  start:{mind:4,energy:3},
  monsters:[
   {name:'忘れた後悔',hp:6,power:2,look:'忘れて、しまった。'}
@@ -5326,7 +5326,7 @@ forgotNote:{title:'連絡帳を忘れた',nav:'連絡帳を忘れた',num:79,att
   if(id==='honestSorry2'){f.honest2=true;return{text:'「忘れました」と、言った。',meaning:'正直は、信頼。'}}
   if(id==='askMom2'){f.asked2=true;return{text:'お母さんに、届けてもらった。',meaning:'届けては、助け。'}}
   if(id==='rememberBring'){f.remembered=true;return{text:'持ってくる工夫を、考えた。',meaning:'工夫は、防止。'}}
-  if(id==='checkBag2'){f.checked=true;return{text:'カバンの中を、確かめた。',meaning:'確かめるは、手がかり。'}}
+  if(id==='checkInside'){f.checked=true;return{text:'カバンの中を、確かめた。',meaning:'確かめるは、手がかり。'}}
   if(id==='waitTomorrow'){f.waited=true;return{text:'明日、持ってくることにした。',meaning:'明日は、挽回。'}}
   if(id==='rushBack2'){f.rushed=true;return{text:'「取りに帰ります」と、言った。',meaning:'取りに帰るは、責任。'}}
   if(id==='forgotBook'){f.forgot=true;return{text:'連絡帳を、忘れた。',meaning:'忘れると、連絡ができない。'}}
@@ -5651,7 +5651,7 @@ teamLose:{title:'チーム戦で自分のミスで負けた',nav:'自分のミ�
  talk:[['sorryTeam2','「ごめん」と言う','チームに、謝る。'],['apologize3','ちゃんと謝る','ちゃんと、謝る。'],['teamTalk3','仲間と話す','仲間と、話す。']],
  think:[['myMiss','自分のミス','自分のミスで、負けた。'],['wantRedo','やり直したい','もう一度、やり直したい。'],['blameWant','誰かのせいにしたい','誰かのせいに、したい。']],
  reasonKeys:['myMiss','wantRedo','blameWant'],
- stageGrants:[['sorryTeam','acceptMiss','focusNext'],['apologize2','teamForgive','tryAgain','keepGoing','myFault2']],
+ stageGrants:[['sorryTeam','acceptMiss','focusNext'],['apologize2','teamForgive','tryAgain','keepMatch','myFault2']],
  subs:[
   {title:'仲間が「次は取り返そう」と言った',text:'仲間は、励ましてくれる。',choices:[
  {label:'「うん、練習しよう」と応える',desc:'再起の約束',icon:'people',out:'good',r:{text:'一緒に練習する約束ができた。',meaning:'負けた仲間と練習の約束をすると、悔しさが力になる。',rep:1,mind:1}},
@@ -5678,7 +5678,7 @@ teamLose:{title:'チーム戦で自分のミスで負けた',nav:'自分のミ�
   if(id==='apologize2'){f.apologized2=true;return{text:'ちゃんと、謝った。',meaning:'謝るは、勇気。'}}
   if(id==='teamForgive'){f.forgiven=true;return{text:'仲間を、信じた。',meaning:'信じるは、力。'}}
   if(id==='tryAgain'){f.retried=true;return{text:'もう一度、やり直した。',meaning:'やり直しは、挽回。'}}
-  if(id==='keepGoing'){f.kept=true;return{text:'試合を、続けた。',meaning:'続けるは、前向き。'}}
+  if(id==='keepMatch'){f.kept=true;return{text:'試合を、続けた。',meaning:'続けるは、前向き。'}}
   if(id==='myFault2'){f.mine=true;return{text:'自分のせいで、負けた。',meaning:'せいがあると、肩が重い。'}}
   if(id==='hideFault'){f.hid=true;return{text:'ミスを、隠した。',meaning:'隠すと、罪が残る。'}}
   if(id==='blameLuck'){f.blamed=true;return{text:'運のせいに、した。',meaning:'運のせいは、逃げ。'}}
@@ -5701,7 +5701,7 @@ winFirst:{title:'1位になって重圧を感じる',nav:'1位の重圧',num:87,
  talk:[['enjoyWin2','1位を喜ぶ','素直に、喜ぶ。'],['askPraise2','「すごいね」と言ってもらう','ほめて、もらう。'],['shareSpot2','仲間と分かち合う','喜びを、分かち合う。']],
  think:[['expectW','期待の重さ','期待が、重い。'],['wantEnjoy','楽しみたい','1位を、楽しみたい。'],['feelPress','プレッシャー','プレッシャーを、感じる。']],
  reasonKeys:['expectW','wantEnjoy','feelPress'],
- stageGrants:[['enjoyWin','normalMe','modesty2'],['askPraise','shareSpot','nervousCalm','beMyself','fakeFine']],
+ stageGrants:[['enjoyWin','normalMe','modesty2'],['askPraise','shareSpot','nervousCalm','ownWay','fakeFine']],
  subs:[
   {title:'仲間が「すごいね」と言った',text:'ほめは、エネルギー。',choices:[
  {label:'「ありがとう、みんなのおかげ」と返す',desc:'ほめを分かち合う',icon:'people',out:'good',r:{text:'「みんなのおかげ」と言えて、仲間も喜んだ。',meaning:'ほめを分かち合うと、勝ちが育つ。',rep:1,mind:1}},
@@ -5728,7 +5728,7 @@ winFirst:{title:'1位になって重圧を感じる',nav:'1位の重圧',num:87,
   if(id==='askPraise'){f.praised2=true;return{text:'「すごいね」と、言ってもらった。',meaning:'ほめは、エネルギー。'}}
   if(id==='shareSpot'){f.shared2=true;return{text:'仲間と、喜びを分かち合った。',meaning:'分かち合うは、絆。'}}
   if(id==='nervousCalm'){f.calmed=true;return{text:'深呼吸で、落ち着いた。',meaning:'深呼吸は、落ち着き。'}}
-  if(id==='beMyself'){f.myself=true;return{text:'自分らしく、走った。',meaning:'自分らしさは、力。'}}
+  if(id==='ownWay'){f.myself=true;return{text:'自分らしく、走った。',meaning:'自分らしさは、力。'}}
   if(id==='topSpot'){f.top=true;return{text:'1位になって、期待された。',meaning:'1位は、期待の重さ。'}}
   if(id==='fakeFine'){f.faked=true;return{text:'平気なふりを、した。',meaning:'ふりは、本音がつらい。'}}
   if(id==='nervousWin'){f.nervous=true;return{text:'あがって、しまった。',meaning:'あがると、力が出ない。'}}

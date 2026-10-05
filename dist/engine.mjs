@@ -759,6 +759,16 @@ export const cards={
  lookClock:{title:'時計を見て計画する',kind:'think',label:'時計を見る',cost:1,atk:2,attr:'study',up:'study',desc:'時計を見て、計画する。',hint:'時計は、計画',icon:'clock'},
  keepWriting:{title:'とにかく書き続ける',kind:'think',label:'書き続ける',cost:1,atk:2,attr:'ath',up:'ath',desc:'とにかく、書き続ける。',hint:'書き続けるは、進む',icon:'pen'},
  askQuiet:{title:'そっと手を挙げて聞く',kind:'talk',label:'手を挙げて聞く',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'そっと手を挙げて、先生に聞く。',hint:'聞くは、勇気',icon:'hand'},
+ forgotBook:{title:'連絡帳を忘れた',kind:'think',label:'忘れた',cost:0,strain:1,atk:1,attr:'study',desc:'連絡帳を、忘れた。',hint:'忘れると、連絡ができない',icon:'book'},
+ panicForgot:{title:'あせって隠す',kind:'think',label:'隠す',cost:0,strain:1,atk:1,attr:'soc',desc:'あせって、忘れたのを隠す。',hint:'隠すと、見つかる',icon:'eye'},
+ tellEarly2:{title:'早めに先生に言う',kind:'talk',label:'早めに言う',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'早めに、先生に言う。',hint:'早めは、信頼',icon:'message'},
+ paperNote:{title:'紙に連絡を書く',kind:'think',label:'紙に書く',cost:1,atk:2,attr:'study',up:'study',desc:'紙に、連絡を書く。',hint:'紙は、代わりになる',icon:'pen'},
+ honestSorry2:{title:'「忘れました」と正直に言う',kind:'talk',label:'忘れました',cost:1,atk:2,attr:'soc',up:'soc',desc:'「忘れました」と、正直に言う。',hint:'正直は、信頼',icon:'heart'},
+ rememberBring:{title:'明日から持ってくる工夫',kind:'think',label:'持ってくる工夫',cost:1,atk:2,attr:'study',up:'study',desc:'明日から、持ってくる工夫をする。',hint:'工夫は、防止',icon:'check'},
+ checkBag2:{title:'カバンの中を確かめる',kind:'think',label:'カバンを確かめる',cost:1,atk:2,attr:'study',up:'study',desc:'カバンの中を、確かめる。',hint:'確かめるは、手がかり',icon:'search'},
+ askMom2:{title:'お母さんに届けてもらう',kind:'talk',label:'届けてもらう',cost:1,atk:2,attr:'soc',up:'soc',desc:'お母さんに、届けてもらう。',hint:'届けては、助け',icon:'people'},
+ waitTomorrow:{title:'明日持ってくる',kind:'think',label:'明日持ってくる',cost:1,atk:2,attr:'ath',up:'ath',desc:'明日、持ってくる。',hint:'明日は、挽回',icon:'clock'},
+ rushBack2:{title:'取りに帰ると言う',kind:'talk',label:'取りに帰る',cost:1,atk:2,attr:'ath',up:'ath',desc:'「取りに帰ります」と、言う。',hint:'取りに帰るは、責任',icon:'door'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -4277,6 +4287,48 @@ testFreeze:{title:'テスト中に手が止まる',nav:'手が止まる',num:78,
  },
  progress(s){const f=s.flags;return f.easy||f.writing||f.skipped?3:f.breathed||f.calmed||f.looked?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.easy||f.writing?'続けられた。':f.breathed||f.calmed?'落ち着いた。':'まだ、止まってる。深呼吸・できる問題・時計、方法はある。'}
+},
+forgotNote:{title:'連絡帳を忘れた',nav:'連絡帳を忘れた',num:79,attrs:['study','soc'],goals:['正直に伝えたい','連絡を確実にしたい','次は忘れないようにしたい'],chapters:['連絡帳を出す時間','忘れたことに気づく','正直に伝えて対処'],locations:['教室','教室','教室'],base:['forgotBook','panicForgot','checkBag2','anger','ignore'],
+ start:{mind:4,energy:3},
+ monsters:[{name:'忘れた後悔',hp:5,power:1,turns:4,look:'忘れて、しまった。'},{name:'連絡ができない焦り',hp:5,power:1,turns:4,look:'連絡が、できない。'},{name:'正直に伝える勇気',hp:6,power:2,turns:4,look:'正直は、勇気がいる。'}],
+ talk:[['tellEarly3','早めに先生に言う','早めに、伝える。'],['honestSorry3','「忘れました」と言う','正直に、言う。'],['askMom3','家に届けてもらう','届けてもらう。']],
+ think:[['forgotNow','忘れてしまった','連絡帳を、忘れてしまった。'],['cantTell','連絡できない','家に、連絡できない。'],['wantFixN','対処したい','なんとか、対処したい。']],
+ reasonKeys:['forgotNow','cantTell','wantFixN'],
+ stageGrants:[['tellEarly2','paperNote','honestSorry2'],['askMom2','rememberBring','waitTomorrow','rushBack2','panicForgot']],
+ subs:[
+  {title:'先生が「正直に言ってくれてありがとう」と言った',text:'正直は、信頼。',stat:'soc',min:0,good:{text:'怒られなかった。',rep:1,mind:1},ok:{text:'ほっとした。',mind:1}},
+  {title:'お母さんが届けてくれた',text:'届けてもらうと、解決。',stat:'soc',min:0,good:{text:'「ありがとう」と言えた。',rep:1,mind:1},ok:{text:'連絡ができた。',mind:1}}
+ ],
+ onExplore(s,key){const out={text:'',card:null};
+  if(key==='tellEarly3'){s.flags.told=true;relation(s,'早めに先生に言ったら、「正直に言ってくれてありがとう」と言ってくれた。');out.text='「先生、連絡帳を忘れました」\n「正直に言ってくれてありがとう」';out.card='tellEarly2'}
+  if(key==='honestSorry3'){s.flags.honest=true;out.text='「忘れました」と、正直に言った。\n「分かった、紙に書こうか」';out.card='honestSorry2'}
+  if(key==='askMom3'){s.flags.asked=true;out.text='家に届けてもらうことにした。\n「ありがとう、お母さん」';out.card='askMom2'}
+  if(key==='forgotNow'){s.reason='forgotNow';out.text='連絡帳を、忘れてしまった。\n「忘れました」「早めに」で、伝えよう。';out.card='tellEarly2'}
+  if(key==='cantTell'){s.reason='cantTell';out.text='家に、連絡できない。\n「紙に書く」「届けて」で、対処しよう。';out.card='paperNote'}
+  if(key==='wantFixN'){s.reason='wantFixN';out.text='なんとか、対処したい。\n「正直に」「工夫」で、動こう。';out.card='honestSorry2'}
+  return out;
+ },
+ onPlay(s,id){const f=s.flags;
+  if(id==='tellEarly2'){f.told2=true;return{text:'早めに、先生に言った。',meaning:'早めは、信頼。'}}
+  if(id==='paperNote'){f.papered=true;return{text:'紙に、連絡を書いた。',meaning:'紙は、代わりになる。'}}
+  if(id==='honestSorry2'){f.honest2=true;return{text:'「忘れました」と、言った。',meaning:'正直は、信頼。'}}
+  if(id==='askMom2'){f.asked2=true;return{text:'お母さんに、届けてもらった。',meaning:'届けては、助け。'}}
+  if(id==='rememberBring'){f.remembered=true;return{text:'持ってくる工夫を、考えた。',meaning:'工夫は、防止。'}}
+  if(id==='checkBag2'){f.checked=true;return{text:'カバンの中を、確かめた。',meaning:'確かめるは、手がかり。'}}
+  if(id==='waitTomorrow'){f.waited=true;return{text:'明日、持ってくることにした。',meaning:'明日は、挽回。'}}
+  if(id==='rushBack2'){f.rushed=true;return{text:'「取りに帰ります」と、言った。',meaning:'取りに帰るは、責任。'}}
+  if(id==='forgotBook'){f.forgot=true;return{text:'連絡帳を、忘れた。',meaning:'忘れると、連絡ができない。'}}
+  if(id==='panicForgot'){f.panicked=true;return{text:'あせって、隠した。',meaning:'隠すと、見つかる。'}}
+  return{text:'',meaning:''};
+ },
+ watch(s){return s.stage===0?'忘れは、みんなある。':s.stage===1?'早めは、信頼。':'正直は、信頼。'},
+ scene(s){const f=s.flags;
+  if(s.stage===0)return{narrative:'連絡帳を出す時間。カバンの中に、連絡帳がない。',speaker:'担任の先生',quote:'連絡帳を出してください',look:'みんなが、出している。',self:'忘れた…',hint:'忘れて、何がつらい？'};
+  if(s.stage===1)return{narrative:'隠す、正直に言うか。',speaker:'担任の先生',quote:'忘れた人はいますか？',look:'先生が、待っている。',self:s.reason==='cantTell'?'連絡できない…':s.reason==='wantFixN'?'対処したい…':'忘れた…',hint:'早め・正直・紙、方法はある。'};
+  return{narrative:'正直に伝えて、対処する。',speaker:'担任の先生',quote:f.told2||f.honest2?'「正直に言ってくれてありがとう」':'「忘れた人はいますか？」',look:'連絡帳が、待っている。',self:f.told2||f.honest2||f.asked2?'正直に伝えた。':'まだ、隠してる。',hint:'早め・正直・届けて、選ぼう。'};
+ },
+ progress(s){const f=s.flags;return f.told2||f.honest2||f.papered||f.asked2?3:f.checked||f.remembered?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.told2||f.honest2?'正直に伝えた。':f.papered||f.asked2?'対処した。':'まだ、隠してる。早め・正直・届けて、方法はある。'}
 }
 };
 

@@ -698,6 +698,16 @@ export const cards={
  wantWin:{title:'「勝ちたい」を認める',kind:'think',label:'勝ちたい',cost:1,atk:2,attr:'ath',up:'ath',desc:'勝ちたい気持ちを、認める。',hint:'認めると、やる気になる',icon:'spark'},
  ashamedLose:{title:'「恥ずかしい」と向き合う',kind:'think',label:'恥ずかしい',cost:1,atk:2,attr:'soc',up:'soc',desc:'恥ずかしさと、向き合う。',hint:'向き合うと、分かる',icon:'puzzle'},
  slowStart:{title:'ゆっくりでも走り続ける',kind:'think',label:'走り続ける',cost:1,atk:2,attr:'ath',up:'ath',desc:'ゆっくりでも、走り続ける。',hint:'続けるは、頑張り',icon:'runner'},
+ pushedBack:{title:'押されて後ろへ',kind:'think',label:'後ろへ',cost:0,strain:1,atk:1,attr:'soc',desc:'押されて、後ろに回される。',hint:'後ろのままでは、不公平',icon:'eye'},
+ sayFirst2:{title:'「私が先にいた」と言う',kind:'talk',label:'先にいた',cost:1,atk:2,attr:'soc',up:'soc',desc:'「私が先にいた」と、伝える。',hint:'伝えると、分かる',icon:'message'},
+ backLine:{title:'後ろに並ぶ',kind:'think',label:'後ろに並ぶ',cost:1,atk:2,attr:'ath',up:'ath',desc:'後ろに、素直に並ぶ。',hint:'素直は、場を保つ',icon:'list'},
+ calmPlace:{title:'落ち着いて自分の場所に',kind:'think',label:'自分の場所',cost:1,atk:2,attr:'ath',up:'ath',desc:'落ち着いて、自分の場所に戻る。',hint:'落ち着くと、動ける',icon:'flag'},
+ tellLine2:{title:'先生に「順番が」と言う',kind:'talk',label:'先生に言う',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'「順番が、変わってます」と伝える。',hint:'先生は、公平',icon:'hand'},
+ unfairPush:{title:'「それは不公平」と言う',kind:'talk',label:'不公平',cost:1,atk:2,attr:'soc',up:'soc',desc:'「それは、不公平」と伝える。',hint:'不公平は、言うべき',icon:'message'},
+ followLine:{title:'ルールで確認する',kind:'think',label:'ルールで確認',cost:1,atk:2,attr:'study',up:'study',desc:'並び方のルールで、確認する。',hint:'ルールは、公平の味方',icon:'list'},
+ askRule:{title:'「どう並ぶの？」と聞く',kind:'talk',label:'どう並ぶ？',cost:1,atk:2,attr:'soc',up:'soc',desc:'「どう並ぶの？」と、聞く。',hint:'聞くと、分かる',icon:'ear'},
+ standQuiet:{title:'静かに自分の場所へ',kind:'think',label:'静かに場所へ',cost:1,atk:2,attr:'ath',up:'ath',desc:'静かに、自分の場所に立つ。',hint:'静かは、場を保つ',icon:'flag'},
+ wantFirst:{title:'「前に立ちたい」を認める',kind:'think',label:'前に立ちたい',cost:1,atk:2,attr:'soc',up:'soc',desc:'前に立ちたい気持ちを、認める。',hint:'認めると、分かる',icon:'puzzle'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -3963,6 +3973,48 @@ raceLast:{title:'徒競走でビリ',nav:'徒競走でビリ',num:72,attrs:['ath
  },
  progress(s){const f=s.flags;return f.cheered2||f.next||f.accepted?3:f.compared2||f.practiced||f.cried?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.cheered2||f.next?'前を向いた。':f.compared2||f.practiced?'進歩を見た。':'まだ、悔しがってる。比べる・祝う・認める、方法はある。'}
+},
+lineBack:{title:'並ぶとき後ろに回される',nav:'後ろに回される',num:73,attrs:['soc'],goals:['自分の場所を伝えたい','不公平を伝えたい','落ち着いて対応したい'],chapters:['列に並ぶ','後ろに回される','伝えるか並ぶか'],locations:['廊下','廊下','教室'],base:['pushedBack','backLine','standQuiet','anger','ignore'],
+ start:{mind:4,energy:3},
+ monsters:[{name:'後ろに回される悔しさ',hp:5,power:1,turns:4,look:'後ろに、回される。'},{name:'不公平の場',hp:5,power:1,turns:4,look:'順番が、違う。'},{name:'自分の場所',hp:6,power:2,turns:4,look:'自分の場所を、守りたい。'}],
+ talk:[['sayFirst3','「先にいた」と言う','自分の場所を、伝える。'],['tellLine3','先生に「順番が」と言う','公平を、求める。'],['unfairPush2','「不公平」と言う','不公平を、伝える。']],
+ think:[['wantFirst2','前に立ちたい','前に、立ちたい。'],['unfairLine','不公平だ','順番が、違う。'],['wantCalm','落ち着きたい','落ち着いて、対応したい。']],
+ reasonKeys:['wantFirst2','unfairLine','wantCalm'],
+ stageGrants:[['sayFirst2','unfairPush','askRule'],['tellLine2','calmPlace','followLine','wantFirst','backLine']],
+ subs:[
+  {title:'周りの子が「私が先にいたのに」と味方した',text:'味方がいると、言いやすい。',stat:'soc',min:0,good:{text:'「そうだね」と言えた。',rep:1,mind:1},ok:{text:'場が公平になった。',mind:1}},
+  {title:'先生が「順番通りにね」と言った',text:'先生は、公平の味方。',stat:'study',min:0,good:{text:'順番に並び直せた。',mind:1},ok:{text:'公平になった。',mind:1}}
+ ],
+ onExplore(s,key){const out={text:'',card:null};
+  if(key==='sayFirst3'){s.flags.saidF=true;relation(s,'「私が先にいた」と言ったら、「そうか、ごめんね」と戻してもらえた。');out.text='「私が先にいたよ」\n「そうか、ごめんね」';out.card='sayFirst2'}
+  if(key==='tellLine3'){s.flags.toldL2=true;relation(s,'先生に言ったら、「順番通りにね」と公平にしてもらえた。');out.text='「先生、順番が変わってます」\n「順番通りにね」';out.card='tellLine2'}
+  if(key==='unfairPush2'){s.flags.unfair=true;out.text='「それは、不公平だよ」\n「確かに、ごめん」';out.card='unfairPush'}
+  if(key==='wantFirst2'){s.reason='wantFirst2';out.text='前に、立ちたい。\n「先にいた」「不公平」で、伝えよう。';out.card='sayFirst2'}
+  if(key==='unfairLine'){s.reason='unfairLine';out.text='順番が、違う。\n「不公平」「ルール」で、公平にしよう。';out.card='unfairPush'}
+  if(key==='wantCalm'){s.reason='wantCalm';out.text='落ち着いて、対応したい。\n「自分の場所」「静かに」で、戻ろう。';out.card='calmPlace'}
+  return out;
+ },
+ onPlay(s,id){const f=s.flags;
+  if(id==='sayFirst2'){f.saidF2=true;return{text:'「先にいた」と、言った。',meaning:'伝えると、分かる。'}}
+  if(id==='backLine'){f.backed=true;return{text:'後ろに、素直に並んだ。',meaning:'素直は、場を保つ。'}}
+  if(id==='calmPlace'){f.calm=true;return{text:'落ち着いて、自分の場所に戻った。',meaning:'落ち着くと、動ける。'}}
+  if(id==='tellLine2'){f.toldL3=true;return{text:'先生に「順番が」と、言った。',meaning:'先生は、公平。'}}
+  if(id==='unfairPush'){f.unfair2=true;return{text:'「不公平」と、言った。',meaning:'不公平は、言うべき。'}}
+  if(id==='followLine'){f.followed=true;return{text:'ルールで、確認した。',meaning:'ルールは、公平の味方。'}}
+  if(id==='askRule'){f.asked=true;return{text:'「どう並ぶの？」と、聞いた。',meaning:'聞くと、分かる。'}}
+  if(id==='standQuiet'){f.quieted=true;return{text:'静かに、場所に立った。',meaning:'静かは、場を保つ。'}}
+  if(id==='wantFirst'){f.wanted=true;return{text:'前に立ちたい気持ちを、認めた。',meaning:'認めると、分かる。'}}
+  if(id==='pushedBack'){f.pushed=true;return{text:'押されて、後ろに回った。',meaning:'後ろのままでは、不公平。'}}
+  return{text:'',meaning:''};
+ },
+ watch(s){return s.stage===0?'不公平は、みんなある。':s.stage===1?'伝えると、公平になる。':'落ち着くと、動ける。'},
+ scene(s){const f=s.flags;
+  if(s.stage===0)return{narrative:'列に並ぶ時。順番の列に押されて、後ろに回された。',speaker:'前にいる子',quote:'お前、後ろね',look:'みんなが、ぎゅうぎゅう。',self:'後ろに…',hint:'後ろに回されて、何がつらい？'};
+  if(s.stage===1)return{narrative:'伝えるか、並ぶか。',speaker:'前にいる子',quote:'後ろに行って',look:'場が、ざわざわ。',self:s.reason==='unfairLine'?'不公平…':s.reason==='wantCalm'?'落ち着きたい…':'前に立ちたい…',hint:'先にいた・不公平・先生、方法はある。'};
+  return{narrative:'自分の場所に、戻るか。',speaker:'前にいる子',quote:f.toldL3||f.unfair2?'「ごめんね」':'「後ろに行って」',look:'列が、待っている。',self:f.toldL3||f.unfair2||f.saidF2?'自分の場所に戻った。':'まだ、後ろにいる。',hint:'落ち着いて・静かに・先生、選ぼう。'};
+ },
+ progress(s){const f=s.flags;return f.toldL3||f.unfair2||f.calm?3:f.saidF2||f.asked?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.toldL3||f.unfair2?'自分の場所に戻った。':f.saidF2||f.asked?'伝えた。':'まだ、後ろにいる。先にいた・不公平・先生、方法はある。'}
 }
 };
 

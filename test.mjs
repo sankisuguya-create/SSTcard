@@ -488,6 +488,16 @@ const SUBNODE=s=>{s.eventNodes=[{type:'main',idx:0},{type:'sub'},{type:'main',id
  chooseSub(s,0);assert(s.unlocked.includes('tsunagu'),'tsunagu unlocked at soc>=1');
  assert(s.hand.includes('tsunagu'));
  assert(!canPlay(s,'tsunagu'),'still locked until soc>=2');
+ assert.deepEqual(s.feedback.unlocks,['tsunagu'],'unlockは「思いついた」できごととしてfeedbackに返る');
+}
+{ // 解禁カードはカードプレイでも発火し、二重発火しない（1度だけ）
+ const s=initial('fight');s.energy=5;s.mind=6;s.monsterHp=9;s.stats.soc=1;
+ const id=available(s).find(x=>canPlay(s,x)&&x!=='boundary');
+ if(id){s.feedback=null;play(s,id);assert(s.feedback.unlocks?.includes('tsunagu'),'unlockはplayのfeedbackに返る');}
+ const ts=initial('test');ts.energy=5;ts.mind=6;ts.monsterHp=9;ts.feedback=null;
+ play(ts,'easyFirst');assert(ts.feedback.unlocks?.includes('logic'),'study+1でlogic解禁がfeedbackに返る');
+ assert.equal(ts.unlocked.filter(x=>x==='logic').length,1,'unlockは1度だけ');
+ ts.feedback=null;ts.energy=5;play(ts,'range');assert(!ts.feedback.unlocks?.includes('logic'),'二度目は発火しない');
 }
 { // 強敵討伐で精神力上限+1（fight最終面 hp6 → 上限6→7, 精神力も+1）
  const s=initial('fight');s.stage=2;s.monsterHp=0;s.mindMax=6;s.mind=5;

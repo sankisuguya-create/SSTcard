@@ -5783,8 +5783,9 @@ export function monster(s){const ms=def(s).monsters,idx=Math.min(s.challengeIdx?
  if(s.progress>=3)return{...m,hp:Math.min(m.hp,2),power:0,weak:true,imgIdx:idx};
  return{...m,imgIdx:idx}}
 // バフ（かしこさ等）が育ったとき一度だけ現れる特別カード。条件を満たすまで手札で使えない（見えているのに届かない）
+// 脈絡づくり: 静かに手札へ混ぜるのではなく、feedback.unlocks に返して「思いついた」できごととして表示する
 const UNLOCKS=[{key:'study',card:'logic'},{key:'ath',card:'zenryoku'},{key:'soc',card:'tsunagu'},{key:'rep',card:'kakehashi',rep:2}];
-function maybeUnlock(s){for(const u of UNLOCKS){if(s.unlocked.includes(u.card))continue;const v=u.rep?s.rep:s.stats[u.key];if(v>=(u.rep||1)){s.unlocked.push(u.card);grant(s,u.card);note(s,'力が育って、新しい作戦「'+cards[u.card].title+'」が見えた。');growth(s,'育った力で、新しい作戦が見えた（使えるのは準備が整ってから）。')}}}
+function maybeUnlock(s){const got=[];for(const u of UNLOCKS){if(s.unlocked.includes(u.card))continue;const v=u.rep?s.rep:s.stats[u.key];if(v>=(u.rep||1)){s.unlocked.push(u.card);grant(s,u.card);got.push(u.card);note(s,'力が育って、新しい作戦「'+cards[u.card].title+'」が見えた。');growth(s,'育った力で、新しい作戦が見えた（使えるのは準備が整ってから）。')}}return got}
 // 選択肢・カードの必要条件: 能力(stats)・準備(手札card)・人づて(rep)が足りないと実行できない
 export function reqMet(s,req){if(!req)return true;if(req.stat)return(s.stats[req.stat]||0)>=(req.min||1);if(req.rep)return s.rep>=req.rep;if(req.card)return s.hand.includes(req.card)||s.used.includes(req.card);return true}
 export function available(s){return s.hand.filter(id=>!s.used.includes(id));}
@@ -5821,13 +5822,13 @@ export function play(s,id){
  }
  s.mind=clamp(s.mind,0,s.mindMax);s.energy=clamp(s.energy,0,5);s.rep=clamp(s.rep,0,5);
  for(const k of ['study','ath','soc'])s.stats[k]=clamp(s.stats[k],-2,2);
- maybeUnlock(s);
+ const unlocks=maybeUnlock(s);
  growth(s,'「'+c.title+'」を試した。');
  const killed=s.monsterHp<=0,escaped=!killed&&s.turns>=SCENE_PLAYS;
  if(s.mind<=0){s.dead=true;s.finished=true}
  s.progress=def(s).progress(s);
  s.log.push({stage:s.stage,title:c.title,text,meaning});
- s.feedback={title:c.title,text,meaning,before,after:snap(s),dmg,mdmg,counter,killed,escaped,monster:m.name,stolen};
+ s.feedback={title:c.title,text,meaning,before,after:snap(s),dmg,mdmg,counter,killed,escaped,monster:m.name,stolen,unlocks};
  say(s,'card',text);
  trackMind(s);
  return true;
@@ -5904,10 +5905,10 @@ export function chooseSub(s,i){
  if(r.mindMax&&s.mindMax<8){s.mindMax++;s.mind=Math.min(s.mindMax,s.mind+1)}
  if(r.card)grant(s,r.card);
  if(r.rel)relation(s,r.rel);
- maybeUnlock(s);
+ const unlocks=maybeUnlock(s);
  const meaning=r.meaning||ch.meaning||(good===true?'力があるほど、いい結果につながる。':'');
  s.progress=def(s).progress(s);
- s.feedback={title:ev.title||'できごと',text:ev.text+' '+r.text,meaning,before,after:snap(s),dmg:0,mdmg:0,sub:true};
+ s.feedback={title:ev.title||'できごと',text:ev.text+' '+r.text,meaning,before,after:snap(s),dmg:0,mdmg:0,sub:true,unlocks};
  say(s,'event',ev.text+' '+r.text);trackMind(s);return true;
 }
 export function enterEvent(s){if(!s.map)return false;s.map=false;return true}

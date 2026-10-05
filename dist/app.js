@@ -40,6 +40,14 @@ function modal(title,body){
 }
 dialog.addEventListener('cancel',()=>focusReturn?.focus());
 
+// 力が育ったときに一度だけ思いつく特別カード。どの力で思いついたかを添えて、獲得できごととして見せる
+const UNLOCK_SRC={logic:'かしこさ',zenryoku:'運動能力',tsunagu:'社交性',kakehashi:'評判'};
+function unlockModal(ids){
+ const src=[...new Set(ids.map(id=>UNLOCK_SRC[id]||'力'))].join('や');
+ modal('新しい作戦を思いついた！',`<p class="dialog-copy">${src}が育ったから、あたらしい作戦がひらめいた。手札に加わるよ（使えるのは、じゅんびができてから）。</p>${ids.map(id=>`<div class="acquired"><span class="eyebrow">NEW CARD ／ 手札に追加</span><strong>${cards[id].title}</strong><p>${cards[id].desc}</p><p class="smalltext">${cards[id].hint}。</p></div>`).join('')}<div class="dialog-footer"><button class="primary" data-action="close">手札を見る</button></div>`);
+ announce('あたらしい作戦を手札に追加しました');
+}
+
 function pip(ic,label,val,max,key,title){
  return `<span class="res" data-res="${key}" title="${title}"><span class="res-label">${icon(ic)} ${label}</span><span class="pips" role="meter" aria-label="${label} ${val} / ${max}" aria-valuemin="0" aria-valuemax="${max}" aria-valuenow="${val}">${Array.from({length:max},(_,i)=>`<i class="${i<val?'on':''}">${icon(ic)}</i>`).join('')}</span><strong class="res-num">${val}<span class="muted"> / ${max}</span></strong><span class="delta-slot"></span></span>`;
 }
@@ -241,15 +249,18 @@ function feedbackView(){
   f.mdmg>0?`<span class="change down">モンスター 精神力 -${f.mdmg}</span>`:'',
   f.stolen?`<span class="change down">「${cards[f.stolen].title}」を使いにくくされた</span>`:''
  ].filter(Boolean).join('');
- const extra=f.killed?`<div class="notice clear-notice">${icon('skull')} 「${f.monster}」を退いた！ ${s.turns<SCENE_PLAYS?'のこりの時間でさらに作戦を試すか、次の場面へ進める。':'次の場面へ進める。'}</div>`:f.escaped?`<div class="notice">この場面の時間がおわった。課題はまだ残っている… 次のできごとへ進もう。</div>`:'';
- return `<section class="feedback" tabindex="-1" id="feedback"><div class="eyebrow">YOUR CHOICE ／ 試してみた</div><h2>「${f.title}」を使った</h2><p>${f.text}</p>${f.counter?`<p class="monster-act">${f.counter}</p>`:''}<div class="changes">${chips}</div>${s.dead?`<div class="notice fail-notice">${icon('skull')} 精神力が0になった。気持ちがあふれて、その場から逃げ出してしまった…</div>`:''}${extra}<div class="notice">${icon('spark')} ${f.meaning}</div><div class="feedback-actions"><button data-action="undo" ${s.dead?'disabled':''}>別の作戦を試す</button>${!s.dead&&!f.escaped&&s.turns<SCENE_PLAYS?`<button data-action="continue">もう一枚、作戦を試す（のこり ${SCENE_PLAYS-s.turns}手）</button>`:''}<button class="primary" data-action="next">${s.dead?'ふりかえりへ':f.sub?'つぎへ':f.killed||f.escaped?'次の場面へ':state.stage===2?'今回をふりかえる':'次の場面へ'}</button></div></section>`;
+  const extra=f.killed?`<div class="notice clear-notice">${icon('skull')} 「${f.monster}」を退けた！ ${s.turns<SCENE_PLAYS?'のこりの時間でさらに作戦を試すか、次の場面へ進める。':'次の場面へ進める。'}</div>`:f.escaped?`<div class="notice">この場面の時間がおわった。課題はまだ残っている… 次のできごとへ進もう。</div>`:'';
+ // 未討伐なら残り手数は使い切る — 退けた・時間切れ・出せる手がない時だけ次へ進める
+ const canAct=s.turns<SCENE_PLAYS&&s.hand.some(id=>canPlay(s,id));
+ const showNext=s.dead||f.sub||f.killed||f.escaped||!canAct;
+ return `<section class="feedback" tabindex="-1" id="feedback"><div class="eyebrow">YOUR CHOICE ／ 試してみた</div><h2>「${f.title}」を使った</h2><p>${f.text}</p>${f.counter?`<p class="monster-act">${f.counter}</p>`:''}<div class="changes">${chips}</div>${s.dead?`<div class="notice fail-notice">${icon('skull')} 精神力が0になった。気持ちがあふれて、その場から逃げ出してしまった…</div>`:''}${extra}<div class="notice">${icon('spark')} ${f.meaning}</div><div class="feedback-actions"><button data-action="undo" ${s.dead?'disabled':''}>別の作戦を試す</button>${!s.dead&&!f.sub&&!f.escaped&&canAct?`<button ${showNext?'':'class="primary" '}data-action="continue">もう一枚、作戦を試す（のこり ${SCENE_PLAYS-s.turns}手）</button>`:''}${showNext?`<button class="primary" data-action="next">${s.dead?'ふりかえりへ':f.sub?'つぎへ':f.killed||f.escaped?'次の場面へ':state.stage===2?'今回をふりかえる':'次の場面へ'}</button>`:''}</div></section>`;
 }
 
 function resultView(){
  const s=state,r=summary(s);
  const head=r.outcome==='fail'?{h:'気持ちがあふれて、大失敗になった。',sub:'「いっぱいいっぱい」のサインに気づけなかった…休む・離れる・出す作戦を早めに使おう。'}
-  :r.outcome==='clear'?{h:'モンスターを退いた！',sub:'選んだ作戦が、課題にきちんと届いた。'}
-  :r.outcome==='partial'?{h:'いくつかのモンスターを退いた。',sub:'全部は届かなかったけれど、試した経験は残っている。'}
+  :r.outcome==='clear'?{h:'モンスターを退けた！',sub:'選んだ作戦が、課題にきちんと届いた。'}
+  :r.outcome==='partial'?{h:'いくつかのモンスターを退けた。',sub:'全部は届かなかったけれど、試した経験は残っている。'}
   :r.outcome==='exit'?{h:'安全な場所へ移って、ふりかえった。',sub:'助けを求めることも、大事な作戦の一つ。'}
   :{h:'モンスターはまだ残っている。',sub:'時間切れだったけれど、見つけた作戦は次に使える。'};
  const tierClass=r.outcome==='fail'?'fail':!r.warns.length&&r.praises.length>=3?'great':r.warns.length>r.praises.length?'warn':'good';
@@ -258,7 +269,7 @@ function resultView(){
   ['手札の数',r.handSize+' 枚',Math.min(1,r.handSize/12),''],
   ['評判',r.rep+' / 5',r.rep/5,''],
   ['バフの総量',(r.buffTotal>=0?'+':'')+r.buffTotal,Math.min(1,Math.max(0,r.buffTotal)/6),''],
-  ['モンスターを退いた数',r.slain+' / 3',r.slain/3,'']
+  ['モンスターを退けた数',r.slain+' / 3',r.slain/3,'']
  ];
  return `<div class="result-header"><div class="eyebrow">YOUR STORY ／ 今回のふりかえり</div><h1>${head.h}</h1><p class="muted">${head.sub}</p></div>
  <div class="result-grid">
@@ -309,10 +320,10 @@ function afterMutate(){
 
 function dispatch(action,id){
  if(action==='close'){close();return}
- if(action==='guide'){modal('あそびかた',`<div class="dialog-options"><p><strong>1. 立ちはだかるモンスターを見る</strong><br>おはなしの課題が、モンスターになって立ちはだかる。作戦カードで攻撃して、体力を0にするとクリア。手（ターン）が尽きると、モンスターはいったん立ち去る。</p><p><strong>2. 資源を管理する</strong><br>作戦には行動力と精神力のコストがある。精神力が1以下になると「気持ちがいっぱい」で手札が赤いマイナスカードに変わり、0になると大失敗。話す・相談すると評判が上がり、評判が0だとモンスターの威圧が強くなる。</p><p><strong>3. 力を育てる</strong><br>作戦を試すと、かしこさ・運動能力・社交性が育つ（バフ）。同じ系統の作戦が強くなる。ダークカードや一部のカードは、力を下げる（デバフ）こともある。</p></div><div class="notice">登場人物や数値は架空です。合計点や順位はありません。このモックはページを閉じると記録が消えます。</div><button class="primary" data-action="close">おはなしに戻る</button>`);return}
+ if(action==='guide'){modal('あそびかた',`<div class="dialog-options"><p><strong>1. 立ちはだかるモンスターを見る</strong><br>おはなしの課題が、モンスターになって立ちはだかる。作戦カードで攻撃して、体力を0にすると退けられる。カードは1場面に3枚まで＝場面の「時間」。モンスターを退けた時だけ、途中で次へ進むこともできる。</p><p><strong>2. 資源を管理する</strong><br>作戦には行動力と精神力のコストがある。精神力が1以下になると「気持ちがいっぱい」で手札が赤いマイナスカードに変わり、0になると大失敗。話す・相談すると評判が上がり、評判が0だとモンスターの威圧が強くなる。</p><p><strong>3. 力を育てる</strong><br>課題に届いた作戦を試すと、かしこさ・運動能力・社交性が育つ（バフ）。同じ系統の作戦が強くなる。力が育つと、新しい作戦を思いつくことも。ダークカードや一部のカードは、力を下げる（デバフ）こともある。</p></div><div class="notice">登場人物や数値は架空です。合計点や順位はありません。このモックはページを閉じると記録が消えます。</div><button class="primary" data-action="close">おはなしに戻る</button>`);return}
  if(action==='history'){showHistory();return}
  if(action==='enter'){enterEvent(state);render();return}
- if(action==='subChoose'){snapshot();if(!chooseSub(state,+id)){history.pop();return}afterMutate();announce(state.feedback.text);render();return}
+ if(action==='subChoose'){snapshot();if(!chooseSub(state,+id)){history.pop();return}afterMutate();announce(state.feedback.text);render();if(state.feedback.unlocks?.length)unlockModal(state.feedback.unlocks);return}
  if(action==='story'){if(!stories[id]||id===state.story)return;const carry=state.finished?{rep:state.rep,traumas:state.traumas,mindMax:state.mindMax,losses:state.losses}:null;sessions[state.story]={state:structuredClone(state),history:structuredClone(history),previous};const saved=sessions[id];state=saved?saved.state:initial(id,carry);history=saved?saved.history:[];previous=saved?saved.previous:null;lastVals.cur=null;render();window.scrollTo(0,0);return}
  if(action==='goal'){modal('今回、大切にしたいこと',`<p class="dialog-copy">途中で目的を変えても大丈夫。</p><div class="dialog-options">${stories[state.story].goals.map((g,n)=>`<button data-action="setGoal" data-id="${n}" ${state.goal===n?'aria-current="true"':''}>${state.goal===n?'✓ ':''}${g}</button>`).join('')}</div>`);return}
  if(action==='setGoal'){snapshot();setGoal(state,Number(id));close();render();return}
@@ -322,7 +333,7 @@ function dispatch(action,id){
  if(action==='observe'||action==='pass'){snapshot();const rp=state.rep;const out=free(state,action);if(!out){history.pop();return}afterMutate();modal(out.title,`<p class="dialog-copy">${out.text}</p>${state.rep>rp?`<div class="changes"><span class="change up">評判 ${rp} → ${state.rep}</span></div>`:''}<div class="notice">${icon('spark')} ${out.meaning}</div>${action==='observe'?'<p class="smalltext muted">「今の手がかり」に加わりました。</p>':''}<div class="dialog-footer"><button class="primary" data-action="close">次の作戦を考える</button></div>`);announce(out.text);return}
  if(action==='minus'){snapshot();const out=minus(state,id);if(!out){history.pop();return}afterMutate();modal(out.title,`<p class="dialog-copy">${out.text}</p><div class="changes"><span class="change up">精神力 +${out.recover}</span>${out.rep?`<span class="change down">評判 ${out.rep}</span>`:''}${out.dn?`<span class="change down">${statMeta[out.dn].label} -1</span>`:''}</div><div class="notice">${icon('spark')} ${out.meaning}</div>${out.rep||out.dn?'<p class="smalltext muted">気持ちは楽になったけれど、まわりや自分への影響が少し残った。</p>':''}<div class="dialog-footer"><button class="primary" data-action="close">次の作戦を考える</button></div>`);announce(out.text);return}
  if(action==='card'){if(!canPlay(state,id))return;const c=cards[id],atk=cardAtk(state,id),tr2=c.attr&&state.traumas&&state.traumas[c.attr];modal('この作戦を試してみる？',`<div class="acquired"><span class="eyebrow">${c.label} ／ 行動力 ${c.cost}${c.strain||tr2?` ・ 精神力 ${(c.strain||0)+(tr2?1:0)}${tr2?'・苦手意識':''}`:''}${c.dark?` ・ 精神力 +${c.heal} ・ 評判 -1`:''}${atk>0?` ・ 攻撃 ${atk}`:''}</span><strong>${c.title}</strong><p>${c.desc}</p></div><p class="dialog-copy">${c.hint}。どうなるか、試して確かめよう。</p><div class="dialog-footer row"><button data-action="close">手札に戻る</button><button class="primary" data-action="play" data-id="${id}">このカードを使う</button></div>`);return}
- if(action==='play'){if(!canPlay(state,id))return;snapshot();play(state,id);close();afterMutate();document.querySelector('#feedback')?.focus();announce(state.feedback.text);return}
+ if(action==='play'){if(!canPlay(state,id))return;snapshot();play(state,id);close();afterMutate();announce(state.feedback.text);if(state.feedback.unlocks?.length)unlockModal(state.feedback.unlocks);else document.querySelector('#feedback')?.focus();return}
  if(action==='continue'){continueTurn(state);afterMutate();return}
  if(action==='next'){advance(state);afterMutate();window.scrollTo(0,0);return}
  if(action==='undo'){if(!history.length)return;if(state.finished){const r=summary(state);previous={story:state.story,titles:state.log.map(x=>x.title),situation:r.situation}}state=history.pop();lastVals.cur=null;render();return}

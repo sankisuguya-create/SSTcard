@@ -678,6 +678,16 @@ export const cards={
  stomachHurt:{title:'「おなかが痛い」と言う',kind:'talk',label:'おなか痛い',cost:1,atk:2,attr:'soc',up:'soc',desc:'「おなかが痛い」と、伝える。',hint:'伝えると、助けがある',icon:'message'},
  wantHome:{title:'「早退したい」と言う',kind:'talk',label:'早退したい',cost:1,atk:2,attr:'soc',up:'soc',desc:'「早退したい」と、伝える。',hint:'伝えると、家に帰れる',icon:'door'},
  honestSick:{title:'「無理できない」と正直',kind:'talk',label:'正直に言う',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'「無理できないかも」と、正直に。',hint:'正直は、助けを呼ぶ',icon:'heart'},
+ shyNew:{title:'遠くから見るだけ',kind:'think',label:'見るだけ',cost:0,strain:1,atk:1,attr:'soc',desc:'遠くから、見るだけにする。',hint:'見るだけでは、近づけない',icon:'eye'},
+ sayHi2:{title:'「こんにちは」と声をかける',kind:'talk',label:'あいさつ',cost:1,atk:2,attr:'soc',up:'soc',desc:'「こんにちは」と、声をかける。',hint:'あいさつは、始まり',icon:'hand'},
+ introSelf:{title:'自分を紹介する',kind:'talk',label:'自己紹介',cost:1,atk:2,attr:'soc',up:'soc',desc:'自分のことを、紹介する。',hint:'紹介は、近づく',icon:'people'},
+ showAround:{title:'学校を案内する',kind:'talk',label:'案内する',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'学校の中を、案内する。',hint:'案内は、優しさ',icon:'door'},
+ inviteNew:{title:'遊びに誘う',kind:'talk',label:'誘う',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'休み時間の遊びに、誘う。',hint:'誘うは、仲間入り',icon:'spark'},
+ learnName:{title:'名前を覚える',kind:'think',label:'名前を覚える',cost:1,atk:2,attr:'study',up:'study',desc:'名前を、ちゃんと覚える。',hint:'名前は、第一歩',icon:'list'},
+ sitNear:{title:'隣に座る',kind:'think',label:'隣に座る',cost:1,atk:2,attr:'soc',up:'soc',desc:'隣に、座ってみる。',hint:'近くは、距離を縮める',icon:'people'},
+ askOldSchool:{title:'前の学校を聞く',kind:'talk',label:'前の学校',cost:1,atk:2,attr:'soc',up:'soc',desc:'前の学校のことを、聞く。',hint:'聞くと、分かる',icon:'ear'},
+ shareNote:{title:'ノートを見せる',kind:'talk',label:'ノートを見せる',cost:1,atk:2,attr:'soc',up:'soc',desc:'ノートを、見せてあげる。',hint:'見せるは、親切',icon:'book'},
+ buddyNew:{title:'「困ったら聞いてね」と言う',kind:'talk',label:'聞いてね',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'「困ったら聞いてね」と、伝える。',hint:'伝えると、安心',icon:'heart'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -3859,6 +3869,48 @@ sickHide:{title:'体調不良なのに我慢して言えない',nav:'体調を�
  },
  progress(s){const f=s.flags;return f.toldT8||f.home2||f.room?3:f.dizzy||f.stomach2||f.water||f.rested?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.toldT8||f.home2?'伝えた。':f.room||f.dizzy?'保健室に行った。':'まだ、隠してる。具合・早退・保健室、方法はある。'}
+},
+newKid:{title:'転校生が来た',nav:'転校生が来た',num:71,attrs:['soc'],goals:['声をかけたい','仲良くなりたい','助けてあげたい'],chapters:['転校生が来る','声をかけるか迷う','近づく'],locations:['教室','廊下','校庭'],base:['shyNew','sitNear','learnName','anger','ignore'],
+ start:{mind:4,energy:3},
+ monsters:[{name:'初めての人への緊張',hp:5,power:1,turns:4,look:'初めての人は、緊張する。'},{name:'声をかける勇気',hp:5,power:1,turns:4,look:'声をかけるには、勇気がいる。'},{name:'仲良くなりたい',hp:6,power:2,turns:4,look:'仲良く、なりたい。'}],
+ talk:[['sayHi3','「こんにちは」と声をかける','あいさつを、する。'],['inviteNew2','遊びに誘う','仲間に、誘う。'],['buddyNew2','「聞いてね」と伝える','助けを、伝える。']],
+ think:[['shyMeet','初めてで緊張','初めてで、緊張する。'],['wantGreet','声をかけたい','声を、かけたい。'],['wantFriend2','仲良くなりたい','仲良く、なりたい。']],
+ reasonKeys:['shyMeet','wantGreet','wantFriend2'],
+ stageGrants:[['sayHi2','introSelf','askOldSchool'],['showAround','inviteNew','shareNote','buddyNew','sitNear']],
+ subs:[
+  {title:'転校生が「ありがとう」と言った',text:'声をかけると、伝わる。',stat:'soc',min:0,good:{text:'笑顔になった。',rep:1,mind:1},ok:{text:'仲良くなれた。',mind:1}},
+  {title:'遊びに来てくれた',text:'誘うと、仲間になった。',stat:'ath',min:0,good:{text:'一緒に遊べた。',mind:1},ok:{text:'仲間が増えた。',mind:1}}
+ ],
+ onExplore(s,key){const out={text:'',card:null};
+  if(key==='sayHi3'){s.flags.saidH=true;relation(s,'「こんにちは」と言ったら、「こんにちは」と返ってきた。');out.text='「こんにちは」\n「こんにちは」';out.card='sayHi2'}
+  if(key==='inviteNew2'){s.flags.invited=true;relation(s,'遊びに誘ったら、「ありがとう」と来てくれた。');out.text='「一緒に遊ぼう」\n「ありがとう、行くね」';out.card='inviteNew'}
+  if(key==='buddyNew2'){s.flags.buddied=true;out.text='「困ったら聞いてね」\n「ありがとう」';out.card='buddyNew'}
+  if(key==='shyMeet'){s.reason='shyMeet';out.text='初めてで、緊張する。\n「自己紹介」「前の学校」で、近づこう。';out.card='introSelf'}
+  if(key==='wantGreet'){s.reason='wantGreet';out.text='声を、かけたい。\n「あいさつ」「隣に座る」で、始めよう。';out.card='sayHi2'}
+  if(key==='wantFriend2'){s.reason='wantFriend2';out.text='仲良く、なりたい。\n「誘う」「案内」で、近づこう。';out.card='inviteNew'}
+  return out;
+ },
+ onPlay(s,id){const f=s.flags;
+  if(id==='sayHi2'){f.hi=true;return{text:'「こんにちは」と、声をかけた。',meaning:'あいさつは、始まり。'}}
+  if(id==='introSelf'){f.intro=true;return{text:'自分を、紹介した。',meaning:'紹介は、近づく。'}}
+  if(id==='showAround'){f.showed=true;return{text:'学校を、案内した。',meaning:'案内は、優しさ。'}}
+  if(id==='inviteNew'){f.invited2=true;return{text:'遊びに、誘った。',meaning:'誘うは、仲間入り。'}}
+  if(id==='learnName'){f.named=true;return{text:'名前を、覚えた。',meaning:'名前は、第一歩。'}}
+  if(id==='sitNear'){f.sat=true;return{text:'隣に、座った。',meaning:'近くは、距離を縮める。'}}
+  if(id==='askOldSchool'){f.asked=true;return{text:'前の学校を、聞いた。',meaning:'聞くと、分かる。'}}
+  if(id==='shareNote'){f.shared=true;return{text:'ノートを、見せた。',meaning:'見せるは、親切。'}}
+  if(id==='buddyNew'){f.buddy=true;return{text:'「聞いてね」と、伝えた。',meaning:'伝えると、安心。'}}
+  if(id==='shyNew'){f.shy=true;return{text:'遠くから、見るだけだった。',meaning:'見るだけでは、近づけない。'}}
+  return{text:'',meaning:''};
+ },
+ watch(s){return s.stage===0?'初めての人は、緊張する。':s.stage===1?'あいさつは、始まり。':'誘うは、仲間入り。'},
+ scene(s){const f=s.flags;
+  if(s.stage===0)return{narrative:'転校生が来た。まだ、話したことがない。',speaker:'転校生',quote:'よろしくお願いします',look:'新しい子が、立っている。',self:'声をかけたい…',hint:'転校生に、何が気になる？'};
+  if(s.stage===1)return{narrative:'声をかけるか、迷う。',speaker:'転校生',quote:'えっと…',look:'一人で、立っている。',self:s.reason==='wantGreet'?'声をかけたい…':s.reason==='wantFriend2'?'仲良くなりたい…':'緊張する…',hint:'あいさつ・自己紹介・前の学校、方法はある。'};
+  return{narrative:'近づいて、話す。',speaker:'転校生',quote:f.invited2||f.buddy?'「ありがとう」':'「えっと」',look:'距離が、縮まる。',self:f.invited2||f.buddy||f.hi?'仲良くなれた。':'まだ、遠くにいる。',hint:'誘う・案内・聞いてね、選ぼう。'};
+ },
+ progress(s){const f=s.flags;return f.invited2||f.buddy||f.showed?3:f.hi||f.intro||f.asked?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.invited2||f.buddy?'仲良くなれた。':f.hi||f.intro?'近づいた。':'まだ、遠くにいる。あいさつ・誘う・案内、方法はある。'}
 }
 };
 

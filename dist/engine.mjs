@@ -568,6 +568,16 @@ export const cards={
  tellMissed:{title:'「さびしかった」と後で言う',kind:'talk',label:'後で伝える',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'終わった後、「さびしかった」と伝える。',hint:'後で言うのも、正直',icon:'heart'},
  ownDuty:{title:'留守番を「自分の役目」と考える',kind:'think',label:'自分の役目',cost:1,atk:2,attr:'study',up:'study',desc:'留守番は、自分の役目と考える。',hint:'役目は、やりがい',icon:'flag'},
  finishDuty:{title:'戻ってきた人に報告する',kind:'talk',label:'報告する',cost:1,atk:2,attr:'soc',up:'soc',desc:'「変わりありません」と、報告する。',hint:'報告は、締めの仕事',icon:'message'},
+ panicShoes:{title:'慌ててどうしようもない',kind:'think',label:'慌てる',cost:0,strain:1,atk:1,attr:'study',desc:'忘れて、慌ててしまう。',hint:'慌てるだけは、解決しない',icon:'bolt'},
+ hideFeet:{title:'靴を隠して誤魔化す',kind:'think',label:'隠す',cost:0,strain:1,atk:1,attr:'study',desc:'靴下のまま、隠れて過ごす。',hint:'隠すと、見つかった時つらい',icon:'eye'},
+ tellShoes:{title:'「忘れました」と先生に言う',kind:'talk',label:'正直に言う',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'「上履きを忘れました」と正直に。',hint:'正直は、助けを呼ぶ',icon:'hand'},
+ borrowShoes:{title:'備品の上履きを借りる',kind:'talk',label:'借りる',cost:1,atk:2,attr:'soc',up:'soc',desc:'学校の備品を、借りる。',hint:'借りるのも、解決策',icon:'people'},
+ lostFound:{title:'落とし物箱を探す',kind:'think',label:'落とし物箱',cost:1,atk:2,attr:'study',up:'study',desc:'落とし物箱に、上履きがあるか探す。',hint:'探すと、見つかるかも',icon:'search'},
+ askFriend8:{title:'友達に「貸して」と頼む',kind:'talk',label:'友達に頼む',cost:1,atk:2,attr:'soc',up:'soc',desc:'休み時間に、友達に貸してもらう。',hint:'頼るのも、勇気',icon:'message'},
+ wearSocks:{title:'靴下のまま我慢する',kind:'think',label:'靴下で我慢',cost:1,atk:1,attr:'study',desc:'靴下のまま、一日我慢する。',hint:'我慢は、汚れる',icon:'clock'},
+ ownShoes:{title:'「忘れた自分が悪い」と認める',kind:'think',label:'自分を認める',cost:1,atk:2,attr:'study',up:'study',desc:'忘れたのは自分と、認める。',hint:'認めると、次に進める',icon:'check'},
+ checkBag2:{title:'明日は前日に確かめる',kind:'think',label:'前日確かめ',cost:1,atk:2,attr:'study',up:'study',desc:'明日から、前の日に持ち物を確かめる。',hint:'習慣は、忘れ物を防ぐ',icon:'list'},
+ apologizeT:{title:'先生に「ごめんなさい」と言う',kind:'talk',label:'謝る',cost:1,atk:2,attr:'soc',up:'soc',desc:'忘れてごめんなさい、と言う。',hint:'謝ると、次が始まる',icon:'heart'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -3287,6 +3297,48 @@ homeAlone:{title:'教室の留守番を頼まれた',nav:'留守番を頼まれ�
  },
  progress(s){const f=s.flags;return f.finished||f.ownD||f.proudF?3:f.checkedD||f.quietedJ||f.askedS4||f.watchedR?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.finished||f.ownD?'留守番を、果たせた。':f.checkedD||f.quietedJ?'やることを見つけた。':'まだ、さびしいまま。確認・丁寧・報告、方法はある。'}
+},
+noShoes:{title:'上履きを忘れた',nav:'上履きを忘れた',num:60,attrs:['study','soc'],goals:['正直に伝えたい','今日を乗り切りたい','明日から忘れないようにしたい'],chapters:['朝、気づいた','一日をどうする','明日のために'],locations:['教室','教室','家と学校'],base:['panicShoes','hideFeet','wearSocks','anger','ignore'],
+ start:{mind:4,energy:3},
+ monsters:[{name:'忘れた焦り',hp:5,power:1,turns:4,look:'上履きが、ない。'},{name:'どうするかの迷い',hp:5,power:1,turns:4,look:'靴下のまま、恥ずかしい。'},{name:'明日の忘れ物',hp:6,power:2,turns:4,look:'明日も、忘れるかも。'}],
+ talk:[['tellShoes2','「忘れました」と言う','正直に、伝える。'],['borrowShoes2','備品を借りる','学校のを、借りる。'],['askFriend9','友達に貸してと頼む','休み時間に、頼む。']],
+ think:[['forgotS','上履きを忘れた','忘れてしまった。'],['shame6','靴下は恥ずかしい','靴下でいるの、恥ずかしい。'],['wantFix','どうにかしたい','本当は、ちゃんとしたい。']],
+ reasonKeys:['forgotS','shame6','wantFix'],
+ stageGrants:[['tellShoes','borrowShoes','lostFound'],['askFriend8','ownShoes','checkBag2','apologizeT']],
+ subs:[
+  {title:'落とし物箱に上履きがあった',text:'探したら、あった。',stat:'study',min:0,good:{text:'履けた。',mind:1},ok:{text:'ほっとした。',mind:1}},
+  {title:'「私もよく忘れる」と友達が言った',text:'忘れ物は、みんなある。',stat:'soc',min:0,good:{text:'「普通なんだ」と思えた。',rep:1,mind:1},ok:{text:'安心した。',mind:1}}
+ ],
+ onExplore(s,key){const out={text:'',card:null};
+  if(key==='tellShoes2'){s.flags.toldS2=true;relation(s,'正直に言ったら、「備品を借りなさい」と言ってもらえた。');out.text='「上履きを忘れました」\n「備品を貸すから、履いてね」';out.card='tellShoes'}
+  if(key==='borrowShoes2'){s.flags.borrowed=true;out.text='「備品、借りていいですか」\n「いいよ、使って」';out.card='borrowShoes'}
+  if(key==='askFriend9'){s.flags.askedF9=true;out.text='「休み時間だけ貸して」\n「いいよ」';out.card='askFriend8'}
+  if(key==='forgotS'){s.reason='forgotS';out.text='上履きを、忘れてしまった。\n「正直に言う」「落とし物箱」で探そう。';out.card='tellShoes'}
+  if(key==='shame6'){s.reason='shame6';out.text='靴下でいるのは、恥ずかしい。\n「借りる」「頼む」で、一日を乗り切ろう。';out.card='borrowShoes'}
+  if(key==='wantFix'){s.reason='wantFix';out.text='本当は、ちゃんとしたい。\n「前日確かめ」で、明日から変えよう。';out.card='checkBag2'}
+  return out;
+ },
+ onPlay(s,id){const f=s.flags;
+  if(id==='tellShoes'){f.toldS3=true;return{text:'「忘れました」と、正直に言った。',meaning:'正直は、助けを呼ぶ。'}}
+  if(id==='borrowShoes'){f.borrowed2=true;return{text:'備品の上履きを、借りた。',meaning:'借りるのも、解決策。'}}
+  if(id==='lostFound'){f.foundBox=true;return{text:'落とし物箱を、探した。',meaning:'探すと、見つかるかも。'}}
+  if(id==='askFriend8'){f.askedF10=true;return{text:'友達に、「貸して」と頼んだ。',meaning:'頼るのも、勇気。'}}
+  if(id==='wearSocks'){f.woreSocks=true;return{text:'靴下のまま、一日我慢した。',meaning:'我慢は、汚れる。'}}
+  if(id==='ownShoes'){f.ownedS=true;return{text:'「忘れた自分が悪い」と、認めた。',meaning:'認めると、次に進める。'}}
+  if(id==='checkBag2'){f.checkB=true;return{text:'明日は、前日に確かめることにした。',meaning:'習慣は、忘れ物を防ぐ。'}}
+  if(id==='apologizeT'){f.apologized=true;return{text:'「ごめんなさい」と、言った。',meaning:'謝ると、次が始まる。'}}
+  if(id==='panicShoes'){f.panicked=true;return{text:'慌てて、どうしようもなかった。',meaning:'慌てるだけは、解決しない。'}}
+  if(id==='hideFeet'){f.hidF=true;return{text:'靴下のまま、隠れた。',meaning:'隠すと、見つかった時つらい。'}}
+  return{text:'',meaning:''};
+ },
+ watch(s){return s.stage===0?'忘れ物は、みんなある。':s.stage===1?'正直は、早い解決。':'習慣は、味方。'},
+ scene(s){const f=s.flags;
+  if(s.stage===0)return{narrative:'朝、教室で気づいた。上履きが、ない。',speaker:'心の声',quote:'あれ、上履き…',look:'足元は、靴下のまま。',self:'忘れた…',hint:'忘れて、何がつらい？'};
+  if(s.stage===1)return{narrative:'今日一日を、どうやって過ごすか。',speaker:'担任の先生',quote:'どうしたの？',look:'教室の中、みんな上履き。',self:s.reason==='shame6'?'恥ずかしい…':s.reason==='wantFix'?'何とかしたい…':'忘れた…',hint:'正直・借りる・探す・頼む、方法はある。'};
+  return{narrative:'明日の準備。今夜、何をする？',speaker:'家の人',quote:f.checkB||f.ownedS?'「明日は忘れないでね」':'「明日も忘れない？」',look:'ランドセルが、待っている。',self:f.checkB||f.ownedS?'前日確かめできる。':'まだ、忘れそう。',hint:'認める・前日確かめ・謝る、選ぼう。'};
+ },
+ progress(s){const f=s.flags;return f.checkB||f.ownedS||f.apologized?3:f.toldS3||f.borrowed2||f.foundBox||f.askedF10?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.checkB||f.ownedS?'明日の準備ができた。':f.toldS3||f.borrowed2?'今日を、乗り切れた。':'まだ、靴下のまま。正直・借りる・探す、方法はある。'}
 }
 };
 

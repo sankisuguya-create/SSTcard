@@ -313,7 +313,7 @@ function dispatch(action,id){
  if(action==='history'){showHistory();return}
  if(action==='enter'){enterEvent(state);render();return}
  if(action==='subChoose'){snapshot();if(!chooseSub(state,+id)){history.pop();return}afterMutate();announce(state.feedback.text);render();return}
- if(action==='story'){if(!stories[id]||id===state.story)return;const carry=state.finished?{rep:state.rep,traumas:state.traumas,mindMax:state.mindMax}:null;sessions[state.story]={state:structuredClone(state),history:structuredClone(history),previous};const saved=sessions[id];state=saved?saved.state:initial(id,carry);history=saved?saved.history:[];previous=saved?saved.previous:null;lastVals.cur=null;render();window.scrollTo(0,0);return}
+ if(action==='story'){if(!stories[id]||id===state.story)return;const carry=state.finished?{rep:state.rep,traumas:state.traumas,mindMax:state.mindMax,losses:state.losses}:null;sessions[state.story]={state:structuredClone(state),history:structuredClone(history),previous};const saved=sessions[id];state=saved?saved.state:initial(id,carry);history=saved?saved.history:[];previous=saved?saved.previous:null;lastVals.cur=null;render();window.scrollTo(0,0);return}
  if(action==='goal'){modal('今回、大切にしたいこと',`<p class="dialog-copy">途中で目的を変えても大丈夫。</p><div class="dialog-options">${stories[state.story].goals.map((g,n)=>`<button data-action="setGoal" data-id="${n}" ${state.goal===n?'aria-current="true"':''}>${state.goal===n?'✓ ':''}${g}</button>`).join('')}</div>`);return}
  if(action==='setGoal'){snapshot();setGoal(state,Number(id));close();render();return}
  if(action==='notebook'){showNotebook();return}

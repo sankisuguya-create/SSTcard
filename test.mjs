@@ -576,3 +576,26 @@ console.log('resolve-weaken checks OK');
  assert(r.warns.some(w=>w.includes('しんどかった')),'stress warn');
  assert.equal(r.tier,'次は立て直しから');
 }
+{ // 力負けの連敗はストーリーをまたぐ: 持ち越した敗北数で次の物語の1敗で苦手意識がつく
+ const s=initial('fight');s.mind=1;s.feedback={};s.monsterHp=9;toNext(s);assert.equal(s.losses.soc,1);
+ const s2=initial('fight',{rep:1,traumas:{},losses:s.losses,mindMax:6});
+ assert.equal(s2.losses.soc,1,'losses carried');
+ s2.mind=1;s2.feedback={};s2.monsterHp=9;toNext(s2);
+ assert(s2.traumas.soc,'cross-story trauma via carried losses');
+}
+{ // 連敗が切れる: 成功すると敗北数はリセットされ次の力負けでは苦手意識はつかない
+ const s=initial('fight');s.mind=1;s.feedback={};s.monsterHp=9;toNext(s);assert.equal(s.losses.soc,1);
+ s.mind=6;s.feedback=null;s.monsterHp=1;s.turns=0;s.energy=5;s.stageStart={mind:6,rep:1,statsSum:0,discoveredN:0,mindMax:6};
+ const id=available(s)[0];s.monsterHp=1;play(s,id);toNext(s);
+ assert(!s.losses.soc,'losses reset after slain');
+}
+{ // 大人へ伝える・安全へ移るはレジリエンス評価で称賛・加点される
+ const h=initial('fight');safety(h,'help');const rh=summary(h);
+ assert(rh.praises.some(p=>p.includes('大人')),'help praise');
+ const l=initial('fight');safety(l,'leave');const rl=summary(l);
+ assert(rl.praises.some(p=>p.includes('安全')),'leave praise');
+ const n=initial('fight');assert(summary(n).score<summary(h).score-1,'help scores higher');
+}
+{ // summary はスコアを返す / mindLog は初期精神力から記録される
+ const s=initial('fight');assert.equal(typeof summary(s).score,'number');assert.equal(s.mindLog[0],s.mind);
+}

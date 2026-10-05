@@ -598,6 +598,16 @@ export const cards={
  ownBound:{title:'「私のもの」と考え直す',kind:'think',label:'自分のもの',cost:1,atk:2,attr:'study',up:'study',desc:'自分のものだから、返してもらう権利がある。',hint:'権利は、主張していい',icon:'check'},
  stayKind:{title:'優しく返してと頼む',kind:'talk',label:'優しく頼む',cost:1,atk:2,attr:'soc',up:'soc',desc:'怒らず、優しく返してと言う。',hint:'優しくても、伝わる',icon:'sun'},
  returnRule:{title:'次から貸す時は期限を決める',kind:'think',label:'次のルール',cost:1,atk:2,attr:'study',up:'study',desc:'貸す時、「いつ返す」を決める習慣。',hint:'ルールは、予防',icon:'list'},
+ behindFeel:{title:'置いていかれた気持ちのまま',kind:'think',label:'置いていかれた',cost:0,strain:1,atk:1,attr:'study',desc:'置いていかれた気持ちで、授業を受ける。',hint:'気持ちのままは、つらい',icon:'eye'},
+ lostLesson:{title:'分からないまま流される',kind:'think',label:'流される',cost:0,strain:1,atk:1,attr:'study',desc:'分からないのに、流されてしまう。',hint:'流されると、抜け落ちる',icon:'door'},
+ copyNote:{title:'友達のノートを借りる',kind:'talk',label:'ノートを借りる',cost:1,atk:2,attr:'study',up:'study',desc:'休んだ分のノートを、借りる。',hint:'借りると、追いつける',icon:'book'},
+ askCover:{title:'「どこまでやった？」と聞く',kind:'talk',label:'範囲を聞く',cost:1,atk:2,attr:'study',up:'study',desc:'休んだ間の範囲を、聞く。',hint:'範囲が分かれば、追いつける',icon:'search'},
+ tellBack:{title:'「休んでて分かりません」と言う',kind:'talk',label:'正直に言う',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'「休んでたから分かりません」と、正直に。',hint:'正直は、助けを呼ぶ',icon:'hand'},
+ homeStudy:{title:'家で休んだ分をやる',kind:'think',label:'家でやる',cost:1,atk:2,attr:'study',up:'study',desc:'家で、休んだ分をやっておく。',hint:'家での習慣は、追いつく',icon:'sun'},
+ catchSmall:{title:'分かるところから一つずつ',kind:'think',label:'一つずつ',cost:1,atk:2,attr:'study',up:'study',desc:'分かるところから、一つずつ。',hint:'一つずつは、現実的',icon:'up'},
+ askSheet:{title:'先生にプリントをもらう',kind:'talk',label:'プリントをもらう',cost:1,atk:2,attr:'study',up:'study',desc:'休んだ分のプリントを、もらう。',hint:'もらうと、復習できる',icon:'cards'},
+ askClassmate:{title:'隣の人に「ここ」と聞く',kind:'talk',label:'隣に聞く',cost:1,atk:2,attr:'soc',up:'soc',desc:'隣の人に、「ここって」と聞く。',hint:'聞くは、失礼じゃない',icon:'people'},
+ ownPace4:{title:'無理せず追いつく',kind:'think',label:'自分のペース',cost:1,atk:2,attr:'study',up:'study',desc:'焦らず、自分のペースで追いつく。',hint:'ペースが、続く',icon:'clock'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -3443,6 +3453,48 @@ lendBack:{title:'貸したものを返してほしい',nav:'返してもらい�
  },
  progress(s){const f=s.flags;return f.dated||f.ruled||f.ownedB?3:f.saidB2||f.wroteN||f.askedT5||f.kindAsked?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.dated||f.ruled?'次の準備ができた。':f.saidB2||f.kindAsked?'返してと、言えた。':'まだ、言えないまま。はっきり・手紙・優しく、方法はある。'}
+},
+sickReturn:{title:'休み明けでついていけない',nav:'休み明けについていけない',num:63,attrs:['study'],goals:['休んだ分を追いつきたい','正直に分からないと言いたい','自分のペースで戻りたい'],chapters:['休み明けの授業','追いつく方法','少しずつ戻る'],locations:['教室','教室','教室'],base:['behindFeel','lostLesson','copyNote','anger','ignore'],
+ start:{mind:4,energy:3},
+ monsters:[{name:'置いていかれた感',hp:5,power:1,turns:4,look:'みんなが、先に進んでいる。'},{name:'分からなさ',hp:5,power:1,turns:4,look:'授業が、分からない。'},{name:'追いつくまで',hp:6,power:2,turns:4,look:'追いつくのは、大変。'}],
+ talk:[['askCover2','「どこまでやった？」と聞く','範囲を、確認する。'],['tellBack2','「分かりません」と言う','正直に、伝える。'],['askClassmate2','隣の人に聞く','「ここって」と、聞く。']],
+ think:[['lostFeel','置いていかれた気持ち','先に進んでしまった。'],['dontKnow','授業が分からない','休んだ分、分からない。'],['wantCatch','追いつきたい','本当は、追いつきたい。']],
+ reasonKeys:['lostFeel','dontKnow','wantCatch'],
+ stageGrants:[['copyNote','askCover','tellBack'],['homeStudy','catchSmall','askSheet','askClassmate','ownPace4']],
+ subs:[
+  {title:'「ノート貸すよ」と友達が言った',text:'借りたら、追いつけそう。',stat:'study',min:0,good:{text:'休んだ分が分かった。',rep:1,mind:1},ok:{text:'助かった。',mind:1}},
+  {title:'先生が「ゆっくりでいいよ」と言った',text:'焦らなくていいと、言われた。',stat:'study',min:0,good:{text:'落ち着いた。',mind:1},ok:{text:'安心した。',mind:1}}
+ ],
+ onExplore(s,key){const out={text:'',card:null};
+  if(key==='askCover2'){s.flags.askedC=true;out.text='「休みの間、どこまでやった？」\n「ここまでだよ」';out.card='askCover'}
+  if(key==='tellBack2'){s.flags.toldB=true;relation(s,'正直に言ったら、「分かるところからでいいよ」と言ってもらえた。');out.text='「休んでて分かりません」\n「分かるところから、ゆっくりでいいよ」';out.card='tellBack'}
+  if(key==='askClassmate2'){s.flags.askedCl=true;out.text='「ここって、どうやるの？」\n「こうだよ」';out.card='askClassmate'}
+  if(key==='lostFeel'){s.reason='lostFeel';out.text='置いていかれた気持ち。\n「範囲を聞く」で、何をやったか確認しよう。';out.card='askCover'}
+  if(key==='dontKnow'){s.reason='dontKnow';out.text='授業が、分からない。\n「ノートを借りる」「プリントをもらう」で。';out.card='copyNote'}
+  if(key==='wantCatch'){s.reason='wantCatch';out.text='本当は、追いつきたい。\n「一つずつ」「自分のペース」で進もう。';out.card='catchSmall'}
+  return out;
+ },
+ onPlay(s,id){const f=s.flags;
+  if(id==='copyNote'){f.copied=true;return{text:'友達のノートを、借りた。',meaning:'借りると、追いつける。'}}
+  if(id==='askCover'){f.askedC2=true;return{text:'範囲を、聞いた。',meaning:'範囲が分かれば、追いつける。'}}
+  if(id==='tellBack'){f.toldB2=true;return{text:'「分かりません」と、正直に言った。',meaning:'正直は、助けを呼ぶ。'}}
+  if(id==='homeStudy'){f.homeS=true;return{text:'家で、休んだ分をやった。',meaning:'家での習慣は、追いつく。'}}
+  if(id==='catchSmall'){f.caught=true;return{text:'分かるところから、一つずつ。',meaning:'一つずつは、現実的。'}}
+  if(id==='askSheet'){f.askedS=true;return{text:'プリントを、もらった。',meaning:'もらうと、復習できる。'}}
+  if(id==='askClassmate'){f.askedCl2=true;return{text:'隣の人に、聞いた。',meaning:'聞くは、失礼じゃない。'}}
+  if(id==='ownPace4'){f.ownP4=true;return{text:'自分のペースで、追いついた。',meaning:'ペースが、続く。'}}
+  if(id==='behindFeel'){f.behind=true;return{text:'置いていかれた気持ちの、まま。',meaning:'気持ちのままは、つらい。'}}
+  if(id==='lostLesson'){f.lost=true;return{text:'分からないまま、流された。',meaning:'流されると、抜け落ちる。'}}
+  return{text:'',meaning:''};
+ },
+ watch(s){return s.stage===0?'休んだ人は、みんなある。':s.stage===1?'範囲を聞くと、追いつける。':'一つずつは、現実的。'},
+ scene(s){const f=s.flags;
+  if(s.stage===0)return{narrative:'休み明けの授業。みんなが進んでいて、ついていけない。',speaker:'担任の先生',quote:'じゃあ、ここからね',look:'黒板に、進んだ内容がある。',self:'分からない…',hint:'休み明けで、何がつらい？'};
+  if(s.stage===1)return{narrative:'追いつく方法を、探す。',speaker:'友達',quote:'ノート、貸す？',look:'休んだ分のノートがある。',self:s.reason==='dontKnow'?'分からない…':s.reason==='wantCatch'?'追いつきたい…':'置いていかれた…',hint:'聞く・借りる・正直、方法はある。'};
+  return{narrative:'少しずつ、追いついていく。',speaker:'担任の先生',quote:f.caught||f.ownP4?'「いい調子」':'「どう？」',look:'プリントとノートがある。',self:f.caught||f.ownP4||f.homeS?'追いつけそう。':'まだ、遅れたまま。',hint:'一つずつ・ペース・家・隣に聞く、選ぼう。'};
+ },
+ progress(s){const f=s.flags;return f.caught||f.ownP4||f.homeS?3:f.copied||f.askedC2||f.toldB2||f.askedS?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.caught||f.ownP4?'追いつけてきた。':f.copied||f.askedC2?'方法を、見つけた。':'まだ、遅れたまま。聞く・借りる・正直、方法はある。'}
 }
 };
 

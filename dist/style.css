@@ -451,3 +451,12 @@ rt{font-size:.55em}
 .res-col.warn .res-item svg{stroke:#9a6518}
 .tier-banner.warn{background:#fdf4e7;color:#9a6518}
 @media (max-width:620px){.resilience{grid-template-columns:1fr}}
+
+/* 見えているのに届かない選択肢（能力・準備・人づて不足） */
+.sub-choice.locked{opacity:.55;border-style:dashed;background:#f4f6f8}
+.sub-choice.locked .rail-icon svg{stroke:#9aa5b1}
+.sub-choice .req-note{color:#a15b4d;font-size:12px;display:inline-flex;align-items:center;gap:4px}
+.sub-choice .req-note svg{width:13px;height:13px;stroke:#a15b4d;fill:none}
+.game-card.locked{opacity:.62;border-style:dashed}
+.game-card.locked .card-bottom{color:#a15b4d}
+.badge.back{background:#fae8e0;color:#a0452f;border-color:#e2b3ac}

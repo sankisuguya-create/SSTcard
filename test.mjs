@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import {initial,explore,play,advance,continueTurn,safety,available,canPlay,canExplore,canMinus,free,minus,setGoal,summary,monster,cardAtk,stories,monsterFaded,monsterPower,chooseSub} from './dist/engine.mjs';
 // 乱数は決定的に（ランダムイベントはUI装飾。発動有無を別途検証）
 const origRandom=Math.random;Math.random=()=>0.99; // おまけイベントは原則offで探索
-function toNext(s){if(!advance(s))return false;while(s.subNow&&!s.finished){chooseSub(s,2);advance(s)}return true} // メイン場面へ進む（サブは『やり過ごす』で通過）
+function toNext(s){if(!advance(s))return false;while(s.subNow&&!s.finished){const chs=s.subNow.choices||[];chooseSub(s,chs.length-1);advance(s)}return true} // メイン場面へ進む（サブは最後の『見送る』選択肢で通過）
 
 let a=initial('fight');explore(a,'haru');assert(available(a).includes('relocate'));assert.equal(explore(a,'haru'),null);play(a,'boundary');assert(a.flags.boundary);toNext(a);safety(a,'rest');explore(a,'respect');play(a,'promise');toNext(a);assert(a.flags.promise);safety(a,'rest');play(a,'relocate');toNext(a);assert(a.finished);assert(a.flags.fixed);assert(summary(a).relation.includes('約束'));
 let b=initial('sports');explore(b,'movement');const c=initial('sports');explore(c,'noise');play(b,'practice');play(c,'practice');assert(b.mind>c.mind);assert(b.flags.practiced);toNext(c);safety(c,'rest');explore(c,'teacher');play(c,'place');toNext(c);play(c,'adjust');toNext(c);assert(c.finished);assert(c.flags.adjusted);
@@ -225,6 +225,17 @@ for(const story of ['fight','sports','test','join','blame','hurt','alone','lose'
  s.mind=6;s.energy=5;
  while(!s.finished&&monster(s)&&s.turns<monster(s).turns){const id=available(s).find(x=>canPlay(s,x));if(!id)break;s.feedback=null;play(s,id)}
  if(!s.finished){toNext(s)}
+ // 力負け（plain）した課題モンスターは次の場面に残りHPで再来する
+ const ps=initial('fight');ps.mind=1;ps.monsterHp=3;ps.feedback={};toNext(ps);
+ assert.equal(ps.stageResults[0].kind,'plain');assert(ps.monsterBack,'monster returns');assert.equal(ps.monsterHp,3,'carried hp');
+ assert.equal(monster(ps).name,stories.fight.monsters[0].name,'same challenge returns');
+ // 耐え抜いた（endured）課題は解決済み扱いで進む
+ const en=initial('fight');en.mind=6;en.monsterHp=2;en.feedback={};toNext(en);
+ assert.equal(en.stageResults[0].kind,'endured');assert(!en.monsterBack);assert(en.challengeIdx>=1);
+ // 課題を全部解決した後は残りの空気（モヤモヤ）だけが残る
+ const lo=initial('fight');lo.challengeIdx=stories.fight.monsters.length;lo.feedback={};
+ assert(monster(lo).leftover,'leftover residue');assert(monster(lo).power===0);
+ lo.mind=6;lo.monsterHp=0;toNext(lo);assert(lo.stageResults.some(r=>r.kind==='cleaned'));
  // 大失敗: 精神力0でfinished（mind2でstrain1+effect-1=0になるboundaryを撃つ）
  const f2=initial('fight');f2.mind=2;f2.energy=5;f2.stage=1;f2.monsterHp=99;f2.turns=0;
  assert(play(f2,'boundary'));assert(f2.dead);assert(f2.finished);assert.equal(summary(f2).outcome,'fail');
@@ -327,6 +338,8 @@ for(const [name,body] of Object.entries(storyBlocks)){
  const dead=[...ids].filter(id=>!reach.has(id));
  assert(dead.length===0,`${name}: unreachable cards ${dead}`);
 }
+// バフ解禁カード（maybeUnlock経由）・req参照カードも参照済み扱い
+for(const mm of src.matchAll(/card:'([a-zA-Z][a-zA-Z0-9]*)'/g))if(cards[mm[1]])referenced.add(mm[1]);
 // orphan check: 全非ダークカードがどこかのストーリーで参照されていること
 const orphans=Object.keys(cards).filter(id=>!cards[id].dark&&!cards[id].minus&&!referenced.has(id));
 assert(orphans.length===0,`orphan cards: ${orphans}`);
@@ -402,37 +415,51 @@ let pik4=initial('picky');explore(pik4,'tellFriend6');assert(available(pik4).inc
 
 // ── 新仕様: サブイベント／苦手意識／モンスター行動ローテーション／精神力上限／物語持ち越し ──
 Math.random=()=>0.99;
-{ // サブイベント: 高パラメータでgood結果（rep>=1でgood）。advanceでsubNowに入り、chooseSubで解決
- const s=initial('fight');s.energy=5;s.mind=6;s.rep=5;
- s.subPending=[{id:'okashi',text:'お菓子をもらった。',stat:'rep',min:1,good:{text:'「ありがとう！」と笑いあった。',mind:1,rep:1},ok:{text:'少し元気が出た。',mind:1}}];
- s.eventNodes=[{type:'main',idx:0},{type:'sub'},{type:'main',idx:1},{type:'main',idx:2}];
- s.feedback={};s.monsterHp=0;advance(s);
+const ev=(text,choices)=>({title:'できごと',text,choices});
+const SUB1=ev('お菓子をもらった。',[
+ {label:'A',out:'good',r:{text:'「ありがとう」と笑いあった。',rep:1}},
+ {label:'B',out:'bad',r:{text:'困った顔をされた。',rep:-1}},
+ {label:'C',out:'good',r:{text:'礼を言って進んだ。',mind:1}}]);
+const SUBSTAT=ev('伝え方を試す場面。',[
+ {label:'力任せ',out:'stat',stat:'soc',min:1,r:{text:'うまく伝わった。',rep:1},rf:{text:'うまく伝えられなかった。',mind:0}},
+ {label:'見送る',out:'good',r:{text:'様子を見た。'}}]);
+const SUBLOCK=ev('橋渡しが要る場面。',[
+ {label:'つなぐ',req:{stat:'soc',min:1},out:'good',r:{text:'つなげた。',rep:1}},
+ {label:'見送る',out:'good',r:{text:'見送った。'}}]);
+const SUBNODE=s=>{s.eventNodes=[{type:'main',idx:0},{type:'sub'},{type:'main',idx:1},{type:'main',idx:2}];s.feedback={};s.monsterHp=0;advance(s)};
+{ // サブイベント: choicesの選択で結果が変わる。advanceでsubNowに入りchooseSubで解決
+ const s=initial('fight');s.energy=5;s.mind=6;s.rep=5;s.subPending=[SUB1];SUBNODE(s);
  assert(s.subNow,'sub event entered');assert(s.map,'map shown between events');
  chooseSub(s,0);assert(s.feedback.sub);assert(s.feedback.text.includes('ありがとう'));
  assert.equal(s.rep,5); // clamp
 }
-{ // サブイベント: パラメータ不足でok結果
- const s=initial('fight');s.energy=5;s.mind=6;s.rep=0;
- s.subPending=[{id:'home',text:'先生にほめられた。',stat:'rep',min:3,good:{text:'G',mind:1,rep:1},ok:{text:'「がんばってるね」と言われた。',mind:1}}];
- s.eventNodes=[{type:'main',idx:0},{type:'sub'},{type:'main',idx:1},{type:'main',idx:2}];
- s.feedback={};s.monsterHp=0;advance(s);chooseSub(s,0);
- assert(!s.feedback.text.includes('いつも助かる'),'ok not good');
+{ // 正解に見えるが失敗する選択肢（out:bad）は評判が下がる
+ const s=initial('fight');s.rep=3;s.subPending=[SUB1];SUBNODE(s);
+ chooseSub(s,1);assert(s.feedback.text.includes('困った顔'));assert.equal(s.rep,2);
 }
-{ // やり過ごす=何もしない／気にかける=気持ち+1
- const s=initial('fight');s.mind=3;
- s.subPending=[{id:'okashi',text:'お菓子をもらった。',stat:'rep',min:1,good:{text:'G',mind:1},ok:{text:'O',mind:1}}];
- s.eventNodes=[{type:'main',idx:0},{type:'sub'},{type:'main',idx:1},{type:'main',idx:2}];
- s.feedback={};s.monsterHp=0;advance(s);chooseSub(s,1);
- assert(s.feedback.text.includes('気にかけておいた'));assert.equal(s.mind,4);
+{ // 力判定（out:stat）: 不足ならrf分岐、十分ならr分岐
+ const s=initial('fight');s.stats.soc=0;s.subPending=[SUBSTAT];SUBNODE(s);
+ chooseSub(s,0);assert(s.feedback.text.includes('うまく伝えられなかった'));
+ const s2=initial('fight');s2.stats.soc=1;s2.rep=2;s2.subPending=[SUBSTAT];SUBNODE(s2);
+ chooseSub(s2,0);assert(s2.feedback.text.includes('うまく伝わった'));assert.equal(s2.rep,3);
+}
+{ // 条件つき選択肢: req未満足ならchooseSubはfalse（見えているが選べない）
+ const s=initial('fight');s.stats.soc=0;s.subPending=[SUBLOCK];SUBNODE(s);
+ assert.equal(chooseSub(s,0),false,'locked choice rejected');
+ chooseSub(s,1);assert(s.feedback.sub);
+ s.stats.soc=1; // 力が育てば選べる
 }
 { // サブ画面ではカードを出せない／advanceで次ノードへ
- const s=initial('fight');s.energy=5;
- s.subPending=[{id:'okashi',text:'x',stat:'rep',min:1,good:{text:'G'},ok:{text:'O'}}];
- s.eventNodes=[{type:'main',idx:0},{type:'sub'},{type:'main',idx:1},{type:'main',idx:2}];
- s.feedback={};s.monsterHp=0;advance(s);
+ const s=initial('fight');s.energy=5;s.subPending=[SUB1];SUBNODE(s);
  assert(!canPlay(s,s.hand[0]),'no card play during sub');
  chooseSub(s,0);assert(s.feedback.sub);
  advance(s);assert.equal(s.stage,1);assert(!s.subNow);
+}
+{ // バフが育つと解禁カードが手札に現れる（使えるのはreqを満たしてから）
+ const s=initial('fight');s.stats.soc=1;s.subPending=[ev('x',[{label:'つなげる',out:'good',r:{text:'つながった。',stat:'soc'}},{label:'見送る',out:'good',r:{text:'x'}}])];SUBNODE(s);
+ chooseSub(s,0);assert(s.unlocked.includes('tsunagu'),'tsunagu unlocked at soc>=1');
+ assert(s.hand.includes('tsunagu'));
+ assert(!canPlay(s,'tsunagu'),'still locked until soc>=2');
 }
 { // 強敵討伐で精神力上限+1（fight最終面 hp6 → 上限6→7, 精神力も+1）
  const s=initial('fight');s.stage=2;s.monsterHp=0;s.mindMax=6;s.mind=5;
@@ -522,13 +549,13 @@ console.log('clarity checks OK');
 {
  const bad=[];
  for(const [name,d] of Object.entries(stories)){
-  if(d.monsters.length<3||d.monsters.length>7)bad.push(name+':monsters');
+  if(d.monsters.length<1||d.monsters.length>3)bad.push(name+':monsters');
   if((d.talk.length+d.think.length)<2)bad.push(name+':explore');
   if(d.goals.length!==3)bad.push(name+':goals');
-  if(d.chapters.length!==d.monsters.length)bad.push(name+':chapters');
-  if(d.locations.length!==d.monsters.length)bad.push(name+':locations');
+  if(d.chapters.length!==d.locations.length)bad.push(name+':chapters-locations');
   if(d.base.length<4)bad.push(name+':base');
-  if((d.stageGrants||[]).length!==d.monsters.length-1)bad.push(name+':stageGrants');
+  if((d.stageGrants||[]).length!==d.chapters.length-1)bad.push(name+':stageGrants');
+  for(const e of (d.subs||[]))if(!Array.isArray(e.choices)||!e.choices.length)bad.push(name+':subs-choices');
   const keys=[...d.talk.map(o=>o[0]),...d.think.map(o=>o[0])];
   if(new Set(keys).size!==keys.length)bad.push(name+':dup-keys');
   for(const m of d.monsters)if(m.acts)for(const a of m.acts)if(!['stress','seal','special','wait'].includes(a))bad.push(name+':acts');
@@ -546,7 +573,7 @@ console.log('clarity checks OK');
  assert(!available(s).includes('realSorry'));
 }
 { // 未解決では弱体化しない
- const s=initial('fight');const m=monster(s);assert(!m.weak&&m.power===0);
+ const s=initial('fight');const m=monster(s);assert(!m.weak&&m.power===1);
  const s2=initial('craft');s2.stage=2;assert(!monster(s2).weak&&monster(s2).power===2);
 }
 console.log('resolve-weaken checks OK');

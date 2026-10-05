@@ -668,6 +668,16 @@ export const cards={
  askChange:{title:'「かわって」とお願い',kind:'talk',label:'かわって',cost:1,atk:2,attr:'soc',up:'soc',desc:'「かわって」と、お願いする。',hint:'お願いは、素直',icon:'message'},
  playAlone4:{title:'一人で別の遊び',kind:'think',label:'一人遊び',cost:1,atk:2,attr:'ath',up:'ath',desc:'一人で、別の遊びをする。',hint:'一人も、自由',icon:'runner'},
  itForever:{title:'「ずっと鬼」と向き合う',kind:'think',label:'向き合う',cost:1,atk:2,attr:'soc',up:'soc',desc:'ずっと鬼の不公平と、向き合う。',hint:'向き合うと、分かる',icon:'puzzle'},
+ hideSick:{title:'体調を隠す',kind:'think',label:'隠す',cost:0,strain:1,atk:1,attr:'ath',desc:'体調が悪いのを、隠す。',hint:'隠すと、悪化する',icon:'eye'},
+ pushThrough:{title:'我慢して通す',kind:'think',label:'我慢',cost:0,strain:1,atk:1,attr:'ath',desc:'痛いのを、我慢して通す。',hint:'我慢は、悪化させる',icon:'clock'},
+ tellTeacher8:{title:'「具合が悪い」と言う',kind:'talk',label:'具合を言う',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'「具合が悪いです」と、正直に。',hint:'言うと、助けてもらえる',icon:'hand'},
+ healthRoom:{title:'保健室に行く',kind:'think',label:'保健室へ',cost:1,atk:2,attr:'ath',up:'ath',desc:'保健室に、行って休む。',hint:'休むと、治る',icon:'door'},
+ drinkWater:{title:'水分をとる',kind:'think',label:'水分をとる',cost:1,atk:2,attr:'ath',up:'ath',desc:'水を、飲む。',hint:'水分は、基本',icon:'sun'},
+ restBreak:{title:'休み時間に休む',kind:'think',label:'休む',cost:1,atk:2,attr:'ath',up:'ath',desc:'休み時間に、休む。',hint:'休むと、次がある',icon:'clock'},
+ dizzyFeel:{title:'「目まい」と言う',kind:'talk',label:'目まい',cost:1,atk:2,attr:'soc',up:'soc',desc:'「目まいがします」と、伝える。',hint:'伝えると、分かる',icon:'ear'},
+ stomachHurt:{title:'「おなかが痛い」と言う',kind:'talk',label:'おなか痛い',cost:1,atk:2,attr:'soc',up:'soc',desc:'「おなかが痛い」と、伝える。',hint:'伝えると、助けがある',icon:'message'},
+ wantHome:{title:'「早退したい」と言う',kind:'talk',label:'早退したい',cost:1,atk:2,attr:'soc',up:'soc',desc:'「早退したい」と、伝える。',hint:'伝えると、家に帰れる',icon:'door'},
+ honestSick:{title:'「無理できない」と正直',kind:'talk',label:'正直に言う',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'「無理できないかも」と、正直に。',hint:'正直は、助けを呼ぶ',icon:'heart'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -3807,6 +3817,48 @@ tagIt:{title:'鬼ごっこでずっと鬼',nav:'鬼ごっこでずっと鬼',num
  },
  progress(s){const f=s.flags;return f.turns2||f.suggested2||f.quit?3:f.saidNF2||f.refused?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.turns2||f.suggested2?'変えた。':f.saidNF2||f.refused?'伝えた。':'まだ、鬼のまま。不公平・順番・やめる、方法はある。'}
+},
+sickHide:{title:'体調不良なのに我慢して言えない',nav:'体調を言えない',num:70,attrs:['study'],goals:['具合を伝えたい','早退したい','我慢しすぎない'],chapters:['朝から体調が悪い','授業中に痛くなる','保健室か家か'],locations:['教室','教室','保健室'],base:['hideSick','pushThrough','drinkWater','anger','ignore'],
+ start:{mind:4,energy:2},
+ monsters:[{name:'体調の悪さ',hp:5,power:1,turns:4,look:'体が、悪い。'},{name:'言えない気持ち',hp:5,power:1,turns:4,look:'言いたいのに、言えない。'},{name:'我慢の限界',hp:6,power:2,turns:4,look:'我慢が、限界。'}],
+ talk:[['tellTeacher9','「具合が悪い」と言う','正直に、伝える。'],['wantHome2','「早退したい」と言う','家に、帰りたい。'],['stomachHurt2','「おなかが痛い」と言う','症状を、伝える。']],
+ think:[['dizzyFeel2','目まいがする','目が、ぐるぐるする。'],['stomachHurt3','おなかが痛い','おなかが、痛い。'],['wantHome3','家に帰りたい','家に、帰りたい。']],
+ reasonKeys:['dizzyFeel2','stomachHurt3','wantHome3'],
+ stageGrants:[['tellTeacher8','dizzyFeel','stomachHurt'],['healthRoom','restBreak','wantHome','honestSick','drinkWater']],
+ subs:[
+  {title:'保健の先生が「どうしたの？」と聞いた',text:'保健室は、味方の場所。',stat:'soc',min:0,good:{text:'全部言えた。',mind:1},ok:{text:'助けてもらえた。',mind:1}},
+  {title:'お母さんが迎えに来た',text:'早退は、正解だった。',stat:'ath',min:0,good:{text:'家に帰って休めた。',mind:1},ok:{text:'体が楽になった。',mind:1}}
+ ],
+ onExplore(s,key){const out={text:'',card:null};
+  if(key==='tellTeacher9'){s.flags.toldT9=true;relation(s,'「具合が悪い」と言ったら、「保健室に行きなさい」と言ってもらえた。');out.text='「具合が悪いです」\n「保健室に行きなさい」';out.card='tellTeacher8'}
+  if(key==='wantHome2'){s.flags.home=true;relation(s,'「早退したい」と言ったら、家の人に連絡してくれた。');out.text='「早退したいです」\n「お母さんに連絡するね」';out.card='wantHome'}
+  if(key==='stomachHurt2'){s.flags.stomach=true;out.text='「おなかが痛いです」\n「保健室に行きなさい」';out.card='stomachHurt'}
+  if(key==='dizzyFeel2'){s.reason='dizzyFeel2';out.text='目が、ぐるぐるする。\n「具合を言う」「目まい」で、伝えよう。';out.card='dizzyFeel'}
+  if(key==='stomachHurt3'){s.reason='stomachHurt3';out.text='おなかが、痛い。\n「おなか痛い」「保健室」で、助けを求めよう。';out.card='stomachHurt'}
+  if(key==='wantHome3'){s.reason='wantHome3';out.text='家に、帰りたい。\n「早退したい」「正直」で、伝えよう。';out.card='wantHome'}
+  return out;
+ },
+ onPlay(s,id){const f=s.flags;
+  if(id==='tellTeacher8'){f.toldT8=true;return{text:'「具合が悪い」と、言った。',meaning:'言うと、助けてもらえる。'}}
+  if(id==='healthRoom'){f.room=true;return{text:'保健室に、行った。',meaning:'休むと、治る。'}}
+  if(id==='drinkWater'){f.water=true;return{text:'水を、飲んだ。',meaning:'水分は、基本。'}}
+  if(id==='restBreak'){f.rested=true;return{text:'休み時間に、休んだ。',meaning:'休むと、次がある。'}}
+  if(id==='dizzyFeel'){f.dizzy=true;return{text:'「目まい」と、言った。',meaning:'伝えると、分かる。'}}
+  if(id==='stomachHurt'){f.stomach2=true;return{text:'「おなかが痛い」と、言った。',meaning:'伝えると、助けがある。'}}
+  if(id==='wantHome'){f.home2=true;return{text:'「早退したい」と、言った。',meaning:'伝えると、家に帰れる。'}}
+  if(id==='honestSick'){f.honest=true;return{text:'「無理できない」と、正直に言った。',meaning:'正直は、助けを呼ぶ。'}}
+  if(id==='hideSick'){f.hid=true;return{text:'体調を、隠した。',meaning:'隠すと、悪化する。'}}
+  if(id==='pushThrough'){f.pushed=true;return{text:'我慢して、通した。',meaning:'我慢は、悪化させる。'}}
+  return{text:'',meaning:''};
+ },
+ watch(s){return s.stage===0?'体調悪いのは、みんなある。':s.stage===1?'言うと、助けてもらえる。':'休むと、治る。'},
+ scene(s){const f=s.flags;
+  if(s.stage===0)return{narrative:'朝から、体調が悪い。でも、言えない。',speaker:'担任の先生',quote:'元気だね',look:'教室が、始まっている。',self:'実は、つらい…',hint:'体調が悪いのに、何が言えない？'};
+  if(s.stage===1)return{narrative:'授業中に、痛くなってきた。',speaker:'担任の先生',quote:'どうしたの？',look:'時間が、経っている。',self:s.reason==='stomachHurt3'?'おなかが痛い…':s.reason==='wantHome3'?'家に帰りたい…':'目まいがする…',hint:'具合・早退・保健室、方法はある。'};
+  return{narrative:'保健室か、家か。',speaker:'担任の先生',quote:f.toldT8||f.home2?'「迎えに来てもらったよ」':'「大丈夫？」',look:'外が、待っている。',self:f.toldT8||f.home2?'伝えた。':'まだ、隠してる。',hint:'保健室・早退・正直、選ぼう。'};
+ },
+ progress(s){const f=s.flags;return f.toldT8||f.home2||f.room?3:f.dizzy||f.stomach2||f.water||f.rested?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.toldT8||f.home2?'伝えた。':f.room||f.dizzy?'保健室に行った。':'まだ、隠してる。具合・早退・保健室、方法はある。'}
 }
 };
 

@@ -658,6 +658,16 @@ export const cards={
  boringFeel:{title:'「つまらない」を認める',kind:'think',label:'つまらない',cost:1,atk:2,attr:'study',up:'study',desc:'つまらない気持ちを、認める。',hint:'認めると、変わる',icon:'heart'},
  startOne:{title:'一問だけ解いてみる',kind:'think',label:'一問だけ',cost:1,atk:2,attr:'study',up:'study',desc:'一問だけ、解いてみる。',hint:'一問は、始まり',icon:'pen'},
  focusNow:{title:'目の前の一つに集中',kind:'think',label:'集中する',cost:1,atk:2,attr:'study',up:'study',desc:'目の前の一つだけに、集中。',hint:'集中は、完成の近道',icon:'spark'},
+ alwaysIt:{title:'ずっと鬼のまま',kind:'think',label:'鬼のまま',cost:0,strain:1,atk:1,attr:'ath',desc:'ずっと鬼を、させられる。',hint:'鬼だけでは、つまらない',icon:'eye'},
+ sayNotFair:{title:'「それは不公平」と言う',kind:'talk',label:'不公平と言う',cost:1,atk:2,attr:'soc',up:'soc',desc:'「それは不公平」と、伝える。',hint:'不公平は、言うべき',icon:'message'},
+ takeTurns3:{title:'順番に鬼を決める',kind:'talk',label:'順番で',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'順番に、鬼を決めてもらう。',hint:'順番は、公平',icon:'list'},
+ countRounds:{title:'何回やったか数える',kind:'think',label:'回数を数える',cost:1,atk:2,attr:'study',up:'study',desc:'何回鬼をやったか、数える。',hint:'数えると、証拠になる',icon:'list'},
+ refuseIt:{title:'「もうやだ」と拒否する',kind:'talk',label:'拒否する',cost:1,atk:2,attr:'soc',up:'soc',desc:'「もうやだ」と、拒否する。',hint:'拒否は、権利',icon:'hand'},
+ suggestNew:{title:'別の遊びを提案する',kind:'talk',label:'別の遊び',cost:1,atk:2,attr:'soc',up:'soc',desc:'「別の遊びにしよう」と、提案。',hint:'提案は、前向き',icon:'spark'},
+ quitTag:{title:'やめて帰る',kind:'think',label:'やめる',cost:1,atk:2,attr:'ath',up:'ath',desc:'嫌なら、やめて帰る。',hint:'やめるのも、選択肢',icon:'door'},
+ askChange:{title:'「かわって」とお願い',kind:'talk',label:'かわって',cost:1,atk:2,attr:'soc',up:'soc',desc:'「かわって」と、お願いする。',hint:'お願いは、素直',icon:'message'},
+ playAlone4:{title:'一人で別の遊び',kind:'think',label:'一人遊び',cost:1,atk:2,attr:'ath',up:'ath',desc:'一人で、別の遊びをする。',hint:'一人も、自由',icon:'runner'},
+ itForever:{title:'「ずっと鬼」と向き合う',kind:'think',label:'向き合う',cost:1,atk:2,attr:'soc',up:'soc',desc:'ずっと鬼の不公平と、向き合う。',hint:'向き合うと、分かる',icon:'puzzle'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -3755,6 +3765,48 @@ hwLazy:{title:'宿題のやる気が出ない',nav:'宿題のやる気が出な�
  },
  progress(s){const f=s.flags;return f.studyF2||f.started||f.focused?3:f.five||f.timer||f.broke2||f.reward?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.studyF2||f.started?'終わった。':f.five||f.timer?'始めた。':'まだ、やってない。5分・分ける・一問、方法はある。'}
+},
+tagIt:{title:'鬼ごっこでずっと鬼',nav:'鬼ごっこでずっと鬼',num:69,attrs:['ath','soc'],goals:['鬼をかわってほしい','不公平を伝えたい','違う遊びがしたい'],chapters:['鬼ごっこが始まる','ずっと鬼のまま','伝えるかやめるか'],locations:['校庭','校庭','校庭'],base:['alwaysIt','askChange','countRounds','anger','ignore'],
+ start:{mind:4,energy:3},
+ monsters:[{name:'ずっと鬼',hp:5,power:1,turns:4,look:'ずっと鬼で、つかない。'},{name:'不公平の場',hp:5,power:1,turns:4,look:'ずっと鬼は、不公平。'},{name:'遊びを変えたい',hp:6,power:2,turns:4,look:'違う遊びが、したい。'}],
+ talk:[['sayNotFair2','「不公平」と言う','不公平を、伝える。'],['takeTurns4','順番を提案','順番で、やろう。'],['suggestNew2','別の遊びを提案','違う、遊びに。']],
+ think:[['stuckIt','ずっと鬼','ずっと鬼で、つまらない。'],['unfairPlay','不公平だ','これは、不公平。'],['wantChange2','違う遊びがしたい','別の遊びが、したい。']],
+ reasonKeys:['stuckIt','unfairPlay','wantChange2'],
+ stageGrants:[['sayNotFair','takeTurns3','refuseIt'],['suggestNew','quitTag','playAlone4','itForever','countRounds']],
+ subs:[
+  {title:'「順番がいいよね」と味方が言った',text:'味方がいると、言いやすい。',stat:'soc',min:0,good:{text:'「そうだね」と言えた。',rep:1,mind:1},ok:{text:'場が変わった。',mind:1}},
+  {title:'ルールが変わって遊び直せた',text:'提案が、通った。',stat:'ath',min:0,good:{text:'楽しく遊べた。',mind:1},ok:{text:'みんなで決められた。',mind:1}}
+ ],
+ onExplore(s,key){const out={text:'',card:null};
+  if(key==='sayNotFair2'){s.flags.saidNF=true;relation(s,'「不公平」と言ったら、「確かに」と分かってもらえた。');out.text='「ずっと鬼は、不公平だよ」\n「そうか、ごめんね」';out.card='sayNotFair'}
+  if(key==='takeTurns4'){s.flags.turns=true;relation(s,'順番の提案をしたら、「いいよ」とみんなが受け入れた。');out.text='「順番にしよう」\n「いいね、公平だね」';out.card='takeTurns3'}
+  if(key==='suggestNew2'){s.flags.suggested=true;out.text='「別の遊びにしよう」\n「何して遊ぶ？」';out.card='suggestNew'}
+  if(key==='stuckIt'){s.reason='stuckIt';out.text='ずっと鬼で、つまらない。\n「数える」「拒否」で、変えよう。';out.card='countRounds'}
+  if(key==='unfairPlay'){s.reason='unfairPlay';out.text='これは、不公平。\n「不公平と言う」「順番」で、伝えよう。';out.card='sayNotFair'}
+  if(key==='wantChange2'){s.reason='wantChange2';out.text='別の遊びが、したい。\n「別の遊び」「やめる」で、変わろう。';out.card='suggestNew'}
+  return out;
+ },
+ onPlay(s,id){const f=s.flags;
+  if(id==='sayNotFair'){f.saidNF2=true;return{text:'「不公平」と、言った。',meaning:'不公平は、言うべき。'}}
+  if(id==='takeTurns3'){f.turns2=true;return{text:'順番に、決めてもらった。',meaning:'順番は、公平。'}}
+  if(id==='countRounds'){f.counted=true;return{text:'何回やったか、数えた。',meaning:'数えると、証拠になる。'}}
+  if(id==='refuseIt'){f.refused=true;return{text:'「もうやだ」と、拒否した。',meaning:'拒否は、権利。'}}
+  if(id==='suggestNew'){f.suggested2=true;return{text:'別の遊びを、提案した。',meaning:'提案は、前向き。'}}
+  if(id==='quitTag'){f.quit=true;return{text:'やめて、帰った。',meaning:'やめるのも、選択肢。'}}
+  if(id==='askChange'){f.asked=true;return{text:'「かわって」と、お願いした。',meaning:'お願いは、素直。'}}
+  if(id==='playAlone4'){f.alone=true;return{text:'一人で、別の遊びをした。',meaning:'一人も、自由。'}}
+  if(id==='itForever'){f.faced=true;return{text:'不公平と、向き合った。',meaning:'向き合うと、分かる。'}}
+  if(id==='alwaysIt'){f.stayed=true;return{text:'ずっと鬼の、ままだった。',meaning:'鬼だけでは、つまらない。'}}
+  return{text:'',meaning:''};
+ },
+ watch(s){return s.stage===0?'ずっと鬼は、不公平。':s.stage===1?'伝えると、変わる。':'やめるのも、選択肢。'},
+ scene(s){const f=s.flags;
+  if(s.stage===0)return{narrative:'鬼ごっこ。ずっと鬼をさせられる。つかない。',speaker:'遊んでいる子たち',quote:'まだ鬼だよ',look:'みんなが、逃げ回る。',self:'ずっと鬼…',hint:'ずっと鬼で、何がつらい？'};
+  if(s.stage===1)return{narrative:'かわってくれない。',speaker:'遊んでいる子たち',quote:'まだ君が鬼ね',look:'みんなが、待っている。',self:s.reason==='unfairPlay'?'不公平…':s.reason==='wantChange2'?'別のがいい…':'ずっと鬼…',hint:'不公平・順番・別の遊び、方法はある。'};
+  return{narrative:'伝えるか、やめるか。',speaker:'遊んでいる子たち',quote:f.turns2||f.suggested2?'「いいね」':'「まだ鬼ね」',look:'場が、待っている。',self:f.turns2||f.suggested2||f.saidNF2?'変えた。':'まだ、鬼のまま。',hint:'拒否・やめる・一人、選ぼう。'};
+ },
+ progress(s){const f=s.flags;return f.turns2||f.suggested2||f.quit?3:f.saidNF2||f.refused?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.turns2||f.suggested2?'変えた。':f.saidNF2||f.refused?'伝えた。':'まだ、鬼のまま。不公平・順番・やめる、方法はある。'}
 }
 };
 

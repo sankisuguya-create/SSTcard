@@ -1,7 +1,8 @@
-import {cards,minusCards,stories,statMeta,initial,monster,monsterSize,monsterFaded,monsterPower,cardAtk,explore,available,canPlay,nextHandPlayable,canExplore,canMinus,play,advance,continueTurn,safety,free,minus,scene,summary,setGoal,chooseSub,enterEvent,reqMet,SCENE_PLAYS} from './engine.mjs';
+import {cards,minusCards,stories,storySessions,statMeta,initial,monster,monsterSize,monsterFaded,monsterPower,cardAtk,explore,available,canPlay,nextHandPlayable,canExplore,canMinus,play,advance,continueTurn,safety,free,minus,scene,summary,setGoal,chooseSub,enterEvent,reqMet,SCENE_PLAYS} from './engine.mjs';
 const app=document.querySelector('#app'),dialog=document.querySelector('#dialog');
 let state=initial(),history=[],previous=null,focusReturn=null;
 const sessions={};
+let navOpen=false,sessionPlan=null,sessionIdx=0;
 const lastVals={};
 
 const paths={
@@ -30,6 +31,7 @@ const paths={
 const IMG=n=>window.SST_IMGS?.[n]||('img/'+n);
 const icon=n=>`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${paths[n]||paths.cards}"/></svg>`;
 const snapshot=()=>history.push(structuredClone(state));
+const storyBtn=(s,[id,t])=>`<button class="story-button ${s.story===id?'selected':''}" data-action="story" data-id="${id}" aria-pressed="${s.story===id}"><span class="story-number">STORY ${t.num}</span><strong>${t.nav}</strong><span>${t.attrs.map(a=>`<span class="attr-tag ${a}">${statMeta[a].attr}</span>`).join('')}</span></button>`;
 const snapVals=s=>({energy:s.energy,mind:s.mind,rep:s.rep,hp:s.monsterHp,study:s.stats.study,ath:s.stats.ath,soc:s.stats.soc});
 function announce(t){document.querySelector('#announce').textContent=t}
 function close(){dialog.close();focusReturn?.focus()}
@@ -75,7 +77,8 @@ function render(){
  app.innerHTML=`<header class="app-header"><div class="brand"><div class="brand-mark">${icon('cards')}</div><div><div class="brand-name">こころの作戦カード</div><div class="eyebrow">KOKORO CARDS</div></div></div><div class="row"><span class="badge header-note">体験モック</span><button class="quiet small" data-action="guide">${icon('book')}<span class="header-note"> あそびかた</span></button></div></header>
  <div class="layout"><aside>
   <div class="side-label">STORIES ／ おはなし</div>
-  <nav class="story-nav" aria-label="ストーリー">${Object.entries(stories).map(([id,t])=>`<button class="story-button ${s.story===id?'selected':''}" data-action="story" data-id="${id}" aria-pressed="${s.story===id}"><span class="story-number">STORY ${t.num}</span><strong>${t.nav}</strong><span>${t.attrs.map(a=>`<span class="attr-tag ${a}">${statMeta[a].attr}</span>`).join('')}</span></button>`).join('')}</nav>
+  <nav class="story-nav" aria-label="ストーリー">${Object.entries(stories).filter(([id])=>navOpen||id===s.story).map(e=>storyBtn(s,e)).join('')}<button class="nav-toggle" data-action="navToggle" aria-expanded="${navOpen}">${icon('list')}<span>${navOpen?'おはなしをとじる':'ほかのおはなしをえらぶ'}</span><span class="nav-count">${Object.keys(stories).length-1}</span></button></nav>
+  <div class="side-section session-section"><div class="side-label">セッション ／ 3話れんぞく</div>${storySessions.map(ss=>{const on=sessionPlan&&sessionPlan.id===ss.id;return `<button class="session-button ${on?'selected':''}" data-action="session" data-id="${ss.id}" aria-pressed="${!!on}"><span class="session-name">${ss.name}</span><span class="session-desc">${ss.desc}</span><span class="session-steps">${ss.stories.map((_,n)=>`<i class="${on?n<sessionIdx?'done':n===sessionIdx?'now':'':''}"></i>`).join('')}<em>${on?`${sessionIdx+1} / ${ss.stories.length} 話目`:`${ss.stories.length}話れんぞく`}</em></span></button>`}).join('')}</div>
   <div class="side-section goal-section"><div><div class="side-label">今回、大切にしたいこと</div><p class="goal-value">${st.goals[s.goal]}</p><div class="goal-pips" role="meter" aria-label="目的の進み具合 ${s.progress} / 3" aria-valuemin="0" aria-valuemax="3" aria-valuenow="${s.progress}">${[0,1,2].map(i=>`<i class="${i<s.progress?'on':''}"></i>`).join('')}</div></div><button class="small quiet" data-action="goal" ${s.finished||s.feedback?'disabled':''}>目的を変える</button><p class="side-note">何を大切にするかで、<br>作戦の使いどころも変わる。</p></div>
   <div class="side-section clue-section"><div class="side-label">今の手がかり</div>${s.clues.length?s.clues.slice(-3).map(t=>`<div class="side-clue">${t}</div>`).join(''):`<div class="side-clue dim">${scene(s).hint}</div>`}</div>
   <div class="side-section notebook-section"><button class="notebook-button" data-action="notebook">${icon('book')}<span>作戦ノート</span><span class="count">${s.discovered.length}</span></button></div>
@@ -108,7 +111,8 @@ function dlgBox(s){
  </button>`;
 }
 
-const SUB_BG={okashi:'bg-class',committee:'bg-class',move:'bg-hall',basketball:'bg-yard',cleaning:'bg-class',beetle:'bg-yard',button:'bg-class',lostFound:'bg-hall',picture:'bg-class',shuffle:'bg-class',nurse:'bg-hall',madoboshi:'bg-class',lunchWin:'bg-lunch',lunchTalk:'bg-lunch',cleanPool:'bg-yard',collect:'bg-class',watering:'bg-yard',crying:'bg-hall',bookDrop:'bg-lib',watching:'bg-gym',extraRent:'bg-lib'};
+// できごとの背景。各できごとの内容が読み合う場所の絵を割り当てる（未登録は物語の背景にフォールバック）
+const SUB_BG={okashi:'bg-class',home:'bg-class',book:'bg-lib',kasa:'bg-yard',hakobi:'bg-hall',housou:'bg-hall',yotsuba:'bg-yard',todoke:'bg-hall',teate:'bg-yard',jitaku:'bg-class',okawari:'bg-lunch',hanni:'bg-lib',usagi:'bg-yard',souko:'bg-gym',sakuhin:'bg-class',hitori:'bg-yard',aisatsu:'bg-yard',uta:'bg-class',asobi:'bg-yard',morning:'bg-yard'};
 function mapView(){
  const s=state,st=stories[s.story];
  const nodes=s.eventNodes.map((n,i)=>{
@@ -259,6 +263,7 @@ function feedbackView(){
 
 function resultView(){
  const s=state,r=summary(s);
+ const ss=sessionPlan,nextStory=ss&&sessionIdx<ss.stories.length-1?stories[ss.stories[sessionIdx+1]]:null;
  const head=r.outcome==='fail'?{h:'気持ちがあふれて、大失敗になった。',sub:'「いっぱいいっぱい」のサインに気づけなかった…休む・離れる・出す作戦を早めに使おう。'}
   :r.outcome==='clear'?{h:'モンスターを退けた！',sub:'選んだ作戦が、課題にきちんと届いた。'}
   :r.outcome==='partial'?{h:'いくつかのモンスターを退けた。',sub:'全部は届かなかったけれど、試した経験は残っている。'}
@@ -289,7 +294,8 @@ function resultView(){
   <section class="result-box wide"><h3>${icon('cards')}今回の作戦の道すじ</h3><div class="timeline">${s.log.length?s.log.map((l,i)=>`<span>${i+1}. ${l.title}</span>`).join(''):'<span>いつでも選べる作戦を使った</span>'}</div>${previous&&previous.story===s.story?`<div class="comparison"><strong>前に試した道すじ</strong><br>${previous.titles.join(' ／ ')||'休憩・離脱・援助を選んだ'}<br>${previous.situation}</div>`:''}</section>
   <section class="result-box wide"><h3>${icon('book')}次に使ってみたい作戦は？</h3><div class="row" style="flex-wrap:wrap">${[...new Set([...s.used,...s.discovered])].slice(0,6).map(id=>`<button class="small ${s.reflection===id?'primary':''}" data-action="reflection" data-id="${id}" aria-pressed="${s.reflection===id}">${cards[id].title}</button>`).join('')}<button class="small ${s.reflection==='defer'?'primary':''}" data-action="reflection" data-id="defer">今は決めない</button></div>${s.reflection?'<p class="smalltext muted" style="margin-top:10px">次の作戦として、この画面に記録しました。</p>':''}</section>
  </div>
- <div class="result-actions"><button class="primary" data-action="replay">同じおはなしを、別の作戦で</button><button data-action="undo" ${!history.length?'disabled':''}>最後の選択に戻る</button>${Object.keys(stories).filter(k=>k!==s.story).map(k=>`<button data-action="story" data-id="${k}">「${stories[k].nav}」へ</button>`).join('')}</div>`;
+ ${ss?`<div class="session-banner"><span class="session-tag">${icon('people')} ${ss.name}</span><span>${ss.stories.map((_,n)=>`<i class="step-dot ${n<sessionIdx?'done':n===sessionIdx?'now':''}"></i>`).join('')}${nextStory?` ${sessionIdx+1} / ${ss.stories.length} 話目をおえた`:' セッションの3話をすべておえた'}</span></div>`:''}
+ <div class="result-actions">${nextStory?`<button class="primary" data-action="sessionNext">つぎのおはなしへ ／ 「${nextStory.nav}」</button>`:''}<button class="${nextStory?'':'primary'}" data-action="replay">同じおはなしを、別の作戦で</button><button data-action="undo" ${!history.length?'disabled':''}>最後の選択に戻る</button>${Object.keys(stories).filter(k=>k!==s.story).map(k=>`<button data-action="story" data-id="${k}">「${stories[k].nav}」へ</button>`).join('')}</div>`;
 }
 
 function showExplore(type){
@@ -325,7 +331,10 @@ function dispatch(action,id){
  if(action==='history'){showHistory();return}
  if(action==='enter'){enterEvent(state);render();return}
  if(action==='subChoose'){snapshot();if(!chooseSub(state,+id)){history.pop();return}afterMutate();announce(state.feedback.text);render();if(state.feedback.unlocks?.length)unlockModal(state.feedback.unlocks);return}
- if(action==='story'){if(!stories[id]||id===state.story)return;const carry=state.finished?{rep:state.rep,traumas:state.traumas,mindMax:state.mindMax,losses:state.losses}:null;sessions[state.story]={state:structuredClone(state),history:structuredClone(history),previous};const saved=sessions[id];state=saved?saved.state:initial(id,carry);history=saved?saved.history:[];previous=saved?saved.previous:null;lastVals.cur=null;render();window.scrollTo(0,0);return}
+ if(action==='navToggle'){navOpen=!navOpen;render();return}
+ if(action==='session'){const ss=storySessions.find(x=>x.id===id);if(!ss)return;sessionPlan=ss;sessionIdx=0;navOpen=false;sessions[state.story]={state:structuredClone(state),history:structuredClone(history),previous};state=initial(ss.stories[0]);history=[];previous=null;lastVals.cur=null;render();window.scrollTo(0,0);return}
+ if(action==='sessionNext'){const ss=sessionPlan;if(!ss)return;sessionIdx=Math.min(sessionIdx+1,ss.stories.length-1);const nid=ss.stories[sessionIdx];if(nid===state.story)return;sessions[state.story]={state:structuredClone(state),history:structuredClone(history),previous};const carry=state.finished?{rep:state.rep,traumas:state.traumas,mindMax:state.mindMax,losses:state.losses}:null;state=initial(nid,carry);history=[];previous=null;lastVals.cur=null;render();window.scrollTo(0,0);return}
+ if(action==='story'){if(!stories[id]||id===state.story)return;if(sessionPlan){const n=sessionPlan.stories.indexOf(id);if(n>=0)sessionIdx=n;else sessionPlan=null}const carry=state.finished?{rep:state.rep,traumas:state.traumas,mindMax:state.mindMax,losses:state.losses}:null;sessions[state.story]={state:structuredClone(state),history:structuredClone(history),previous};const saved=sessions[id];state=saved?saved.state:initial(id,carry);history=saved?saved.history:[];previous=saved?saved.previous:null;lastVals.cur=null;render();window.scrollTo(0,0);return}
  if(action==='goal'){modal('今回、大切にしたいこと',`<p class="dialog-copy">途中で目的を変えても大丈夫。</p><div class="dialog-options">${stories[state.story].goals.map((g,n)=>`<button data-action="setGoal" data-id="${n}" ${state.goal===n?'aria-current="true"':''}>${state.goal===n?'✓ ':''}${g}</button>`).join('')}</div>`);return}
  if(action==='setGoal'){snapshot();setGoal(state,Number(id));close();render();return}
  if(action==='notebook'){showNotebook();return}

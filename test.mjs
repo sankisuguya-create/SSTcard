@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {initial,explore,play,advance,continueTurn,safety,available,canPlay,nextHandPlayable,canExplore,canMinus,free,minus,setGoal,summary,monster,cardAtk,stories,monsterFaded,monsterPower,chooseSub,enterEvent} from './dist/engine.mjs';
+import {initial,explore,play,advance,continueTurn,safety,available,canPlay,nextHandPlayable,canExplore,canMinus,free,minus,setGoal,summary,monster,cardAtk,stories,storyCtx,subPool,storySessions,monsterFaded,monsterPower,chooseSub,enterEvent} from './dist/engine.mjs';
 // 乱数は決定的に（ランダムイベントはUI装飾。発動有無を別途検証）
 const origRandom=Math.random;Math.random=()=>0.99; // おまけイベントは原則offで探索
 function toNext(s){if(!advance(s))return false;while(s.subNow&&!s.finished){const chs=s.subNow.choices||[];chooseSub(s,chs.length-1);advance(s)}return true} // メイン場面へ進む（サブは最後の『見送る』選択肢で通過）
@@ -551,6 +551,22 @@ const SUBNODE=s=>{s.eventNodes=[{type:'main',idx:0},{type:'sub'},{type:'main',id
   const s=initial(name);assert.equal(s.subPending.length,n,`${name} subs not loaded`);
   assert(s.eventNodes.filter(e=>e.type==='sub').length===n,`${name} sub nodes missing on map`);
  }
+}
+{ // 場面文脈ゲート: 物語の場所・時間帯と読み合うできごとだけが抽選対象になる
+ const elig=d=>{const c=storyCtx(d);return subPool.filter(e=>!e.loc||e.loc.some(t=>c.has(t))).map(e=>e.id)};
+ // 家の机だけの物語（hwLazy）→ 場所を選ばない汎用できごとのみ（給食・校庭・通学路系は出ない）
+ assert.deepEqual(elig(stories.hwLazy),['okashi','todoke','uta']);
+ // 実際の抽選でも、場面に合うできごとしか選ばれない（present は教室のみ＝school文脈だけ）
+ const pr=initial('present'),prE=elig(stories.present);
+ assert(pr.subPending.length===3);assert(pr.subPending.every(e=>prE.includes(e.id)),'picked events fit the scene context');
+ // 「おかわり」は給食のある物語だけ、「傘のない子」は通学路・外のある物語だけ
+ assert(elig(stories.lunch).includes('okawari'));assert(!elig(stories.testFreeze).includes('okawari'));
+ assert(elig(stories.rainHome).includes('kasa'));assert(!elig(stories.present).includes('kasa'));
+ // どの物語でも3件以上のできごとが成立する（抽選の枯渇なし）
+ for(const d of Object.values(stories))assert(elig(d).length>=3,'sub pool exhausted for '+d.title);
+}
+{ // 3話れんぞくセッション: 3話構成で実在する物語を指す
+ for(const ss of storySessions){assert(ss.stories.length===3);assert(ss.stories.every(id=>stories[id]),'session story exists: '+ss.id)}
 }
 Math.random=origRandom;
 console.log('new-spec checks OK: sub-events, trauma, monster acts, mindMax, carry');

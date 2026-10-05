@@ -5634,35 +5634,35 @@ function snap(s){return {mind:s.mind,energy:s.energy,rep:s.rep,progress:s.progre
 function trackMind(s){s.mindLog.push(s.mind)}
 // 場面の合間に入るおまけイベント。各できごとに固有の選択肢と結果を持つ（choices配列）。
 // 最後の選択肢は「見送る」系で必ず選べる。req=必要な力・準備・人づて（足りないと見えていても選べない）。
-const subPool=[
+export const subPool=[
  {id:'okashi',title:'お菓子をもらった',text:'お菓子をもらった。',choices:[
   {label:'「ありがとう」と伝える',desc:'気持ちを言葉にする',icon:'heart',out:'good',r:{text:'「ありがとう！」と笑いあった。',meaning:'気持ちを伝えると、相手もうれしい。',mind:1,rep:1}},
   {label:'みんなにも分ける',desc:'もらったお菓子を分け合う',icon:'people',out:'stat',stat:'soc',min:1,r:{text:'分けて食べて、みんなで笑った。',meaning:'分け合えると、もらった以上に仲良くなる。',rep:1,mind:1},rf:{text:'分け方で少しもめてしまった。',meaning:'分け合うにも、相手を見る力がいる。'}},
   {label:'「もっとちょうだい」とおねだり',desc:'たくさんもらえそう',icon:'hand',out:'bad',r:{text:'少し困った顔をされた。',meaning:'おねだりしすぎると、まわりの見る目が変わる。',rep:-1}},
   {label:'礼を言って先へ進む',desc:'受け取って、次へ',icon:'pause',out:'good',r:{text:'礼を言って、先へ進んだ。',meaning:'受け取って礼を言うだけでも、十分な応答。',mind:1}}]},
- {id:'home',title:'ほめられた',text:'先生に近ごろのことをほめられた。',choices:[
+ {id:'home',title:'ほめられた',text:'先生に近ごろのことをほめられた。',loc:['school'],choices:[
   {label:'「がんばってます」と答える',desc:'素直に受け取る',icon:'sun',out:'good',r:{text:'「いつも助かるよ」と言われた。',meaning:'ほめられたことを受け取るのも、力。',mind:1,rep:1}},
   {label:'「みんなもすごいです」と返す',desc:'まわりのことも伝える',icon:'people',out:'chance',p:0.6,r:{text:'先生が、もっとほめてくれた。',meaning:'まわりを立てる言葉は、自分にも返ってくる。',rep:1,mind:1},rf:{text:'うまく言えず、ぎこちない空気になった。',meaning:'正しい気持ちでも、伝わるとは限らない。'}},
   {label:'「まあね」とうけ流す',desc:'照れずに受ける',icon:'eye',out:'bad',r:{text:'うぬぼれていると思われた。',meaning:'受け方しだいで、同じ言葉が違って見える。',rep:-1}},
   {label:'照れて、うなずくだけ',desc:'今はそれでいい',icon:'pause',out:'good',r:{text:'照れながら、うなずいた。',meaning:'言葉がなくても、受け取ることはできる。',mind:1}}]},
- {id:'book',title:'本との出会い',text:'図書室で面白そうな本を見つけた。',choices:[
+ {id:'book',title:'本との出会い',text:'図書室で面白そうな本を見つけた。',loc:['lib','school'],choices:[
   {label:'その場で少し読む',desc:'気分転換に読む',icon:'book',out:'good',r:{text:'少し読んで、気分転換できた。',meaning:'短い読書でも、気持ちは切り替わる。',mind:1}},
   {label:'役に立つ考え方を探す',desc:'作戦のヒントを探る',icon:'search',out:'stat',stat:'study',min:1,r:{text:'役立つ考え方を見つけた。',meaning:'読み取る力があれば、本は作戦になる。',stat:'study',mind:1},rf:{text:'難しくて、まだ読み取れなかった。',meaning:'かしこさが育てば、もっと読み取れる。'}},
   {label:'棚に戻して先へ',desc:'今は読まない',icon:'pause',out:'good',r:{text:'棚に戻して、先へ進んだ。',meaning:'見つけた本は、また今度でも読める。'}}]},
- {id:'kasa',title:'傘のない子',text:'雨。傘を忘れた子がいた。',choices:[
+ {id:'kasa',title:'傘のない子',text:'雨。傘を忘れた子がいた。',loc:['commute','out','after'],choices:[
   {label:'一緒に入れてあげる',desc:'自分の傘に招く',icon:'people',out:'stat',stat:'soc',min:1,r:{text:'「ありがとう！」と並んで歩けた。',meaning:'助けは、手を出せる力があってこそ届く。',rep:1,mind:1},rf:{text:'傘が小さくて、二人で少し濡れた。',meaning:'気持ちは伝わった。上手に入れる力は、あとから育つ。',mind:1}},
   {label:'先生に知らせる',desc:'大人につなぐ',icon:'message',out:'good',r:{text:'先生が貸し傘を出してくれた。',meaning:'自分でやらなくても、知らせるだけで助けになる。',rep:1}},
   {label:'知らないふりをする',desc:'見なかったことにする',icon:'eye',out:'bad',r:{text:'通り過ぎたが、胸がちくりとした。',meaning:'見て見ぬふりは、自分の気持ちにも残る。',mind:-1}},
   {label:'今は先へ進む',desc:'自分の用事を優先',icon:'pause',out:'good',r:{text:'そのまま先へ進んだ。',meaning:'見送ることも、選び方の一つ。'}}]},
- {id:'hakobi',title:'荷物運び',text:'重い荷物を運ぶ人がいた。',choices:[
+ {id:'hakobi',title:'荷物運び',text:'重い荷物を運ぶ人がいた。',loc:['school'],choices:[
   {label:'「持ちます」と手伝う',desc:'力を貸す',icon:'hand',out:'stat',stat:'ath',min:1,r:{text:'軽々運べて、感謝された。',meaning:'体の力があれば、助けは確かになる。',rep:1,stat:'ath'},rf:{text:'重くて途中で休んだが、一緒に届けられた。',meaning:'力が足りなくても、届けば助けになる。',energy:1}},
   {label:'半分だけ持つ',desc:'できる分だけ',icon:'people',out:'good',r:{text:'半分持って、一緒に運んだ。',meaning:'全部でなくても、分かち合えば助けになる。',mind:1}},
   {label:'先を行く',desc:'急ぐ',icon:'pause',out:'good',r:{text:'先を急いだ。',meaning:'見送ることも、選び方の一つ。'}}]},
- {id:'housou',title:'放送係の声',text:'放送係が堂々と読み上げていた。',choices:[
+ {id:'housou',title:'放送係の声',text:'放送係が堂々と読み上げていた。',loc:['school'],choices:[
   {label:'自分も前に立つ練習をする',desc:'堂々とまねしてみる',icon:'flag',req:{stat:'soc',min:2},out:'good',r:{text:'自分も前に立てる気がした。',meaning:'見ているだけでなく、やってみると世界が変わる。',mindMax:1}},
   {label:'「すごいね」と伝える',desc:'感想を届ける',icon:'message',out:'good',r:{text:'「ありがとう」とうれしそうだった。',meaning:'ほめは、届く。',rep:1}},
   {label:'聞き流す',desc:'心に留めるだけ',icon:'pause',out:'good',r:{text:'すごいなと思った。',meaning:'感心も、心の栄養になる。',mind:1}}]},
- {id:'yotsuba',title:'四つ葉',text:'校庭で四つ葉のクローバーを見つけた。',choices:[
+ {id:'yotsuba',title:'四つ葉',text:'校庭で四つ葉のクローバーを見つけた。',loc:['out'],choices:[
   {label:'お守りにして進む',desc:'いい日になる気がする',icon:'spark',out:'good',r:{text:'いいことありそうな気分。',meaning:'小さな幸せも、拾えば力になる。',mind:1,energy:1}},
   {label:'友達に見せる',desc:'発見を分かち合う',icon:'people',out:'good',r:{text:'「いいね」と笑いあった。',meaning:'見つけた幸せは、分けると増える。',rep:1}},
   {label:'踏まないよう避けて進む',desc:'そっとしておく',icon:'pause',out:'good',r:{text:'そっと避けて進んだ。',meaning:'見つけただけでも、少し気分が晴れた。',mind:1}}]},
@@ -5670,45 +5670,45 @@ const subPool=[
   {label:'届けに行く',desc:'なくし物は届ける',icon:'hand',out:'good',r:{text:'受付の人に深く礼を言われた。',meaning:'届ける一手間が、誰かの助けになる。',rep:1}},
   {label:'落ちた場所に置き直す',desc:'見つけやすい場所へ',icon:'eye',out:'good',r:{text:'目立つ場所に置き直した。',meaning:'届けられなくても、見つけやすくする方法はある。',mind:1}},
   {label:'通り過ぎる',desc:'今は急ぐ',icon:'pause',out:'good',r:{text:'そのまま通り過ぎた。',meaning:'見送ることも、選び方の一つ。'}}]},
- {id:'teate',title:'転んだ子',text:'転んだ子がいて、手当てが必要そうだ。',choices:[
+ {id:'teate',title:'転んだ子',text:'転んだ子がいて、手当てが必要そうだ。',loc:['school','out'],choices:[
   {label:'手当てを手伝う',desc:'傷を見てあげる',icon:'heart',out:'stat',stat:'soc',min:1,r:{text:'「ありがとう」と泣き止んだ。',meaning:'寄り添う力があると、痛みは早く引く。',rep:1,mind:1},rf:{text:'ドキドキしたが、保健室まで一緒に行けた。',meaning:'上手でなくても、ついていくだけで助けになる。',mind:1}},
   {label:'先生を呼ぶ',desc:'大人につなぐ',icon:'message',out:'good',r:{text:'先生がすぐに来てくれた。',meaning:'呼ぶのも、立派な助け。',rep:1}},
   {label:'じっと見守る',desc:'心配だが動けない',icon:'eye',out:'bad',r:{text:'見ているだけでは、相手は助からなかった。',meaning:'見守るだけが助けとは限らない。',mind:-1}},
   {label:'その場を離れる',desc:'他の人に任せる',icon:'pause',out:'good',r:{text:'任せることにして、離れた。',meaning:'任せることも、選び方。'}}]},
- {id:'jitaku',title:'日直の仕事',text:'日直の仕事を手伝えそうだ。',choices:[
+ {id:'jitaku',title:'日直の仕事',text:'日直の仕事を手伝えそうだ。',loc:['school'],choices:[
   {label:'進んで手伝う',desc:'率先してやる',icon:'hand',out:'stat',stat:'ath',min:1,r:{text:'早く終わって、ほめられた。',meaning:'体を動かせる力があれば、助けは速い。',energy:1,rep:1},rf:{text:'少し遅れたが、終わらせられた。',meaning:'力が足りなくても、終えれば助けになる。',energy:1}},
   {label:'「手伝おうか」と声をかける',desc:'まず聞く',icon:'message',out:'good',r:{text:'「助かる」と言われて、半分できた。',meaning:'聞いてから助けると、断られにくい。',rep:1}},
   {label:'自分の仕事に戻る',desc:'分担は分担',icon:'pause',out:'good',r:{text:'自分の仕事に戻った。',meaning:'手伝わない選択も、ある。'}}]},
- {id:'okawari',title:'おかわり',text:'給食のおかわり、じゃんけんに勝った。',choices:[
+ {id:'okawari',title:'おかわり',text:'給食のおかわり、じゃんけんに勝った。',loc:['lunch'],choices:[
   {label:'喜びを分かち合う',desc:'「やった！」と言い合う',icon:'sun',out:'good',r:{text:'うれしいおかわりを、みんなで喜んだ。',meaning:'喜びは、分かち合うと増える。',mind:1,rep:1}},
   {label:'負けた子に分ける',desc:'見返りなく譲る',icon:'heart',out:'good',r:{text:'「いいの？」と驚かれて、二人で分けた。',meaning:'譲ることで、喜びが増えることもある。',rep:1,mind:1}},
   {label:'「ざんねん！」と自慢する',desc:'勝ち誇る',icon:'flag',out:'bad',r:{text:'まわりが白けた。',meaning:'勝ち誇ると、喜びが半分になる。',rep:-1}},
   {label:'静かに食べる',desc:'自分のおかわり',icon:'pause',out:'good',r:{text:'おいしく食べた。',meaning:'自分だけの喜びも、あり。',mind:1}}]},
- {id:'hanni',title:'先輩の助言',text:'先輩がテストの出やすい所を教えてくれた。',choices:[
+ {id:'hanni',title:'先輩の助言',text:'先輩がテストの出やすい所を教えてくれた。',loc:['lib','school'],choices:[
   {label:'聞いてメモする',desc:'しっかり記録する',icon:'book',out:'stat',stat:'study',min:1,r:{text:'どこを見ればいいか、はっきり分かった。',meaning:'聞いたことを形にする力があれば、助言は生きる。',stat:'study'},rf:{text:'話は聞けたが、要点まではまとめられなかった。',meaning:'まとめる力は、あとから育つ。',mind:1}},
   {label:'「ありがとう」と聞き続ける',desc:'素直に聞く',icon:'message',out:'good',r:{text:'先輩が、もっと教えてくれた。',meaning:'聞く姿勢が、助言を引き出す。',rep:1,mind:1}},
   {label:'分かったふりをする',desc:'もう知っているように見せる',icon:'eye',out:'bad',r:{text:'ふりをしていたら、肝心なところを聞き逃した。',meaning:'分かったふりは、あとで自分が困る。',mind:-1}},
   {label:'遠慮して立ち去る',desc:'自分でなんとかする',icon:'pause',out:'good',r:{text:'自分の力でやることにした。',meaning:'自分でやるのも、一つの作戦。'}}]},
- {id:'usagi',title:'うさぎの世話',text:'飼育小屋のうさぎの世話ができる。',choices:[
+ {id:'usagi',title:'うさぎの世話',text:'飼育小屋のうさぎの世話ができる。',loc:['out'],choices:[
   {label:'そっと世話をする',desc:'うさぎのペースで',icon:'heart',out:'stat',stat:'soc',min:1,r:{text:'うさぎがなついてきた。',meaning:'相手のペースに合わせる力があれば、心は通う。',mind:1,rep:1},rf:{text:'急ぎすぎて、うさぎが少し逃げた。',meaning:'生き物には、急がない方がいい。',mind:1}},
   {label:'なでるだけ',desc:'触れ合う',icon:'hand',out:'good',r:{text:'モフモフで、癒やされた。',meaning:'触れ合うだけでも、心は休まる。',mind:1}},
   {label:'追いかけて遊ぶ',desc:'元気に遊ぶ',icon:'bolt',out:'bad',r:{text:'うさぎが隅に逃げてしまった。',meaning:'相手のペースを考えないと、嫌がられる。',rep:-1}},
   {label:'見るだけにする',desc:'今は遠くから',icon:'pause',out:'good',r:{text:'遠くから見て、先へ進んだ。',meaning:'見守るだけの時もある。'}}]},
- {id:'souko',title:'倉庫の整理',text:'体育倉庫の整理を手伝える。',choices:[
+ {id:'souko',title:'倉庫の整理',text:'体育倉庫の整理を手伝える。',loc:['out','special'],choices:[
   {label:'重いものを運ぶ',desc:'体で役に立つ',icon:'bolt',out:'stat',stat:'ath',min:1,r:{text:'体がほぐれて、すっきりした。',meaning:'体の力があれば、助けは大きい。',stat:'ath',energy:1},rf:{text:'少し疲れたが、片付いた。',meaning:'力が足りなくても、手伝えば片付く。',energy:1}},
   {label:'並べるだけ手伝う',desc:'細かい仕事',icon:'hand',out:'good',r:{text:'並べるだけでも、きれいになった。',meaning:'小さな力の入れ方も、ある。',mind:1}},
   {label:'やめておく',desc:'自分の時間へ',icon:'pause',out:'good',r:{text:'自分の時間に戻った。',meaning:'任せることも、選べる。'}}]},
- {id:'sakuhin',title:'上手な作品',text:'図工室で上手な作品を見た。',choices:[
+ {id:'sakuhin',title:'上手な作品',text:'図工室で上手な作品を見た。',loc:['special'],choices:[
   {label:'じっくり見て学ぶ',desc:'作り方を盗む',icon:'search',out:'stat',stat:'study',min:1,r:{text:'作り方のコツが分かった。',meaning:'見る力があれば、作品は先生になる。',stat:'study',mind:1},rf:{text:'すごいとは思ったが、コツまでは見えなかった。',meaning:'見て学ぶ力は、あとから育つ。',mind:1}},
   {label:'作者に「すごい」と伝える',desc:'感想を届ける',icon:'message',out:'good',r:{text:'「ありがとう」とうれしそうだった。',meaning:'感想を伝えると、作った人の力になる。',rep:1}},
   {label:'自分のと比べて落ち込む',desc:'差を感じる',icon:'eye',out:'bad',r:{text:'自分のが、下手に見えた。',meaning:'比べると、見えていた良さが消える。',mind:-1}},
   {label:'通り過ぎる',desc:'急ぐ',icon:'pause',out:'good',r:{text:'きれいだなと思って、通り過ぎた。',meaning:'美しいものを見ただけでも、心は洗われる。',mind:1}}]},
- {id:'hitori',title:'一人の子',text:'一人でいる子に気づいた。',choices:[
+ {id:'hitori',title:'一人の子',text:'一人でいる子に気づいた。',loc:['out','break'],choices:[
   {label:'声をかける',desc:'「一緒にやる？」',icon:'message',out:'stat',stat:'soc',min:2,r:{text:'声をかけたら、笑顔になった。',meaning:'人とつながる力があれば、一人を二人に変えられる。',rep:1,mind:1},rf:{text:'声はかけたが、会話は続かなかった。',meaning:'勇気は出せた。続ける力は、あとから育つ。',mind:1}},
   {label:'近くで自分の遊びをする',desc:'隣にいるだけ',icon:'eye',out:'good',r:{text:'隣で遊んでいたら、相手が寄ってきた。',meaning:'無理に誘わなくても、近くにいるだけで届く。',mind:1}},
   {label:'先生に知らせる',desc:'様子を伝える',icon:'people',out:'good',r:{text:'先生が、さりげなく声をかけてくれた。',meaning:'知らせることも、助けになる。',rep:1}},
   {label:'気にかけておく',desc:'無理に踏み込まない',icon:'pause',out:'good',r:{text:'気にかけておくことにした。',meaning:'踏み込まないのも、やさしさ。',mind:1}}]},
- {id:'aisatsu',title:'校門のあいさつ',text:'校門で校長先生にあいさつした。',choices:[
+ {id:'aisatsu',title:'校門のあいさつ',text:'校門で校長先生にあいさつした。',loc:['commute','morning','out'],choices:[
   {label:'もう一度、大きな声で',desc:'気持ちのいいあいさつ',icon:'sun',out:'good',r:{text:'大きな声で返してもらえた。',meaning:'あいさつは、大きな声ほど届く。',rep:1}},
   {label:'友達にも同じように',desc:'輪を広げる',icon:'people',out:'stat',stat:'rep',min:2,r:{text:'「おはよう！」が広がった。',meaning:'あいさつは、広げると空気が変わる。',rep:1},rf:{text:'少し照れて、小さな声になった。',meaning:'評判が育てば、もっと自然に言える。',mind:1}},
   {label:'そのまま教室へ',desc:'急ぐ',icon:'pause',out:'good',r:{text:'あいさつして、教室へ向かった。',meaning:'できたことは、できた。',mind:1}}]},
@@ -5716,16 +5716,35 @@ const subPool=[
   {label:'隣の子と一緒に歌う',desc:'声を合わせる',icon:'people',out:'stat',stat:'soc',min:1,r:{text:'一緒に歌えて、笑いあった。',meaning:'歌は、合わせると楽しい。',rep:1,mind:1},rf:{text:'歌詞が違って、少し笑いあった。',meaning:'ずれても、歌えば楽しい。',mind:1}},
   {label:'一人で歌い続ける',desc:'自分の世界',icon:'sun',out:'good',r:{text:'気分が明るくなった。',meaning:'好きな歌は、一人でも心を明るくする。',mind:1}},
   {label:'やめておく',desc:'静かにする',icon:'pause',out:'good',r:{text:'口ずさみをやめて、静かにした。',meaning:'静かにするのも、まわりへの気配り。'}}]},
- {id:'asobi',title:'遊びの誘い',text:'休み時間の遊びに誘われた。',choices:[
+ {id:'asobi',title:'遊びの誘い',text:'休み時間の遊びに誘われた。',loc:['break','out'],choices:[
   {label:'「入る！」と飛び込む',desc:'輪の中へ',icon:'bolt',out:'stat',stat:'soc',min:1,r:{text:'みんなで笑いあった。',meaning:'飛び込む勇気と力があれば、輪は開く。',rep:1},rf:{text:'ルールが分からず戸惑ったが、混ぜてもらえた。',meaning:'戸惑っても、入れば始まる。',mind:1}},
   {label:'「どうやるの？」と聞いてから入る',desc:'ルールを確かめてから',icon:'search',out:'good',r:{text:'ルールを聞いてから入れた。',meaning:'聞いてから入るのは、回り道に見えて近道。',rep:1,mind:1}},
   {label:'見ているだけにする',desc:'入らない',icon:'pause',out:'good',r:{text:'見ているだけでも楽しかった。',meaning:'見ているだけも、楽しみ方の一つ。',mind:1}}]},
- {id:'morning',title:'朝のあいさつ',text:'朝のあいさつ運動に参加した。',choices:[
+ {id:'morning',title:'朝のあいさつ',text:'朝のあいさつ運動に参加した。',loc:['morning','out'],choices:[
   {label:'大きな声であいさつ',desc:'元気に言う',icon:'sun',out:'good',r:{text:'「おはよう！」が広がった。',meaning:'元気なあいさつは、一日を変える。',rep:1,mind:1}},
   {label:'列の人にも一人ずつ',desc:'丁寧に言う',icon:'people',out:'stat',stat:'rep',min:2,r:{text:'何人もに返してもらえた。',meaning:'続けると、あいさつが習慣になる。',rep:1},rf:{text:'声が小さくて、届かなかった人もいた。',meaning:'慣れれば、もっと届く。',mind:1}},
   {label:'列に入るだけ',desc:'参加だけする',icon:'pause',out:'good',r:{text:'列に入って、終わった。',meaning:'参加しただけでも、立派。',mind:1}}]}
 ];
-function pickSubs(n){const pool=[...subPool],out=[];while(out.length<n&&pool.length){out.push(pool.splice(Math.floor(Math.random()*pool.length),1)[0])}return out}
+// 場面の文脈（ctx）: その物語の場所・時間帯を locations の語から推定し、場面と読み合わない
+// できごと（給食系を放課後の物語に出す等）は選ばない。できごとの loc は「起きうる文脈タグ」の
+// 配列（どれか一つでも合えば出る）。loc なしはどの場面でも自然なもの（お菓子・落とし物・口ずさみ）。
+const OFFCAMP=/家|公園|遊び場|バス|遠足|登校|帰り道|下校途中|下校時|通学|祖父母/;
+const CTX_RULES=[
+ [/給食|食事|おかわり|配膳/,'lunch'],
+ [/校庭|グラウンド|運動場|公園|遊び場|遠足|避難|プール|浅い|帰り道|下校|登校|校門|昇降口|下駄箱|外|道/,'out'],
+ [/朝|登校|始業/,'morning'],
+ [/放課後|帰りの会|下校|帰り道|放課|夕/,'after'],
+ [/休み|昼休み|休/,'break'],
+ [/図書|読書|司書|本棚/,'lib'],
+ [/図工|音楽|理科|実験|体育館|体育|調理|パソコン|水泳|プール|保健|英語|理科室|書道|避難訓練|避難所|絵の具/,'special'],
+ [/家|部屋|自宅|祖父母|風呂|台所|リビング/,'home'],
+ [/帰り道|下校|登校|昇降口|校門|下駄箱|通学|バス|家の前|道/,'commute']
+];
+export function storyCtx(d){const ctx=new Set();for(const l of d.locations||[])for(const [re,t] of CTX_RULES)if(re.test(l))ctx.add(t);if((d.locations||[]).some(l=>!OFFCAMP.test(l)))ctx.add('school');return ctx}
+function pickSubs(n,ctx=new Set()){const pool=[...subPool.filter(e=>!e.loc||e.loc.some(t=>ctx.has(t)))],out=[];while(out.length<n&&pool.length){out.push(pool.splice(Math.floor(Math.random()*pool.length),1)[0])}return out}
+// 3話れんぞくのセッション。一続きの日の出来事としておはなしが続く
+// （結果の評判・苦手意識・上限はつぎのおはなしへ持ち越す）。
+export const storySessions=[{id:'nakanaori',name:'なかなおりの一日',desc:'ことばで傷ついて、仲直りして、もう一度遊ぶ。友だちとの関係をなおす3話れんぞく。',stories:['hurt','makeUp','join']}];
 // 1場面で使えるカードはSCENE_PLAYS枚まで（カードを使う＝時間が経つ）。
 // 使い切るとその場面の時間が尽きて、次のできごとへ進む。課題を早く退けても残り時間で手札を試せる
 export const SCENE_PLAYS=3;
@@ -5765,7 +5784,7 @@ function addLoss(s){
 }
 export function initial(story='fight',carry=null){
  const d=stories[story];
- const s={story,stage:0,challengeIdx:0,monsterBack:false,mind:d.start.mind,energy:d.start.energy,rep:carry?carry.rep:1,repStart:carry?carry.rep:1,mindMax:carry?carry.mindMax:6,mindMaxStart:carry?carry.mindMax:6,stats:{study:0,ath:0,soc:0},monsterHp:d.monsters[0].hp,turns:0,slain:[],escaped:[],dead:false,mindLog:[],bonus:null,bolster:0,losses:carry?{...carry.losses}:{},traumas:carry?{...carry.traumas}:{},clarity:0,subPending:Array.isArray(d.subs)?[...d.subs]:pickSubs(d.subs??3),subNow:null,eventIdx:0,map:false,repRose:false,progress:0,goal:0,hand:[...d.base],discovered:[],used:[],flags:{},clues:[],relations:[],growth:[],log:[],explored:[],rested:[],observed:[],passed:[],minused:[],transcript:[],feedback:null,finished:false,reason:null,reflection:null,stageResults:[],stageStart:null,unlocked:[]};
+ const s={story,stage:0,challengeIdx:0,monsterBack:false,mind:d.start.mind,energy:d.start.energy,rep:carry?carry.rep:1,repStart:carry?carry.rep:1,mindMax:carry?carry.mindMax:6,mindMaxStart:carry?carry.mindMax:6,stats:{study:0,ath:0,soc:0},monsterHp:d.monsters[0].hp,turns:0,slain:[],escaped:[],dead:false,mindLog:[],bonus:null,bolster:0,losses:carry?{...carry.losses}:{},traumas:carry?{...carry.traumas}:{},clarity:0,subPending:Array.isArray(d.subs)?[...d.subs]:pickSubs(d.subs??3,storyCtx(d)),subNow:null,eventIdx:0,map:false,repRose:false,progress:0,goal:0,hand:[...d.base],discovered:[],used:[],flags:{},clues:[],relations:[],growth:[],log:[],explored:[],rested:[],observed:[],passed:[],minused:[],transcript:[],feedback:null,finished:false,reason:null,reflection:null,stageResults:[],stageStart:null,unlocked:[]};
  // イベント列: 場面(chapters)は物語の進行、モンスターは課題。課題は倒す/受け流すまで同じものが再来する
  s.eventNodes=[];let qi=0;
  for(let i=0;i<d.chapters.length;i++){s.eventNodes.push({type:'main',idx:i});

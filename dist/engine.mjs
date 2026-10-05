@@ -859,6 +859,16 @@ export const cards={
  acceptRule:{title:'みんな呼べるわけじゃないと納得',kind:'think',label:'納得する',cost:1,atk:2,attr:'study',up:'study',desc:'みんな呼べるわけじゃないと、納得する。',hint:'納得は、理解',icon:'check'},
  ownParty:{title:'自分も誘う機会を作る',kind:'think',label:'自分も誘う',cost:1,atk:2,attr:'soc',up:'soc',desc:'自分も誘う機会を、作る。',hint:'誘うは、積極性',icon:'people'},
  letItGo:{title:'気にしないで進む',kind:'think',label:'気にしない',cost:1,atk:2,attr:'ath',up:'ath',desc:'気にしないで、進む。',hint:'進むは、前向き',icon:'flag'},
+ tooLoud:{title:'うるさくしていた',kind:'think',label:'うるさい',cost:0,strain:1,atk:1,attr:'soc',desc:'うるさくして、注意される。',hint:'うるさいと、迷惑になる',icon:'bolt'},
+ keepTalking:{title:'しゃべり続ける',kind:'talk',label:'しゃべり続ける',cost:0,strain:1,atk:1,attr:'soc',desc:'注意されても、しゃべり続ける。',hint:'続けると、再び注意される',icon:'message'},
+ talkBack2:{title:'「うるさいよ」と言い返す',kind:'talk',label:'言い返す',cost:0,strain:1,atk:1,attr:'soc',desc:'「うるさいよ」と、言い返す。',hint:'言い返すと、言い合いになる',icon:'bolt'},
+ quietNow:{title:'今は静かにする',kind:'think',label:'静かにする',cost:1,atk:2,attr:'soc',up:'soc',desc:'今は、静かにする。',hint:'静かは、思いやり',icon:'ear'},
+ noticeVoice:{title:'自分の声に気づく',kind:'think',label:'声に気づく',cost:1,atk:2,attr:'study',up:'study',desc:'自分の声に、気づく。',hint:'気づくは、自覚',icon:'ear'},
+ whisperTime:{title:'ひそひそ声に切り替える',kind:'talk',label:'ひそひそ',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'ひそひそ声に、切り替える。',hint:'ひそひそは、配慮',icon:'message'},
+ adjustVoice:{title:'声の大きさを調整する',kind:'think',label:'調整する',cost:1,atk:2,attr:'study',up:'study',desc:'声の大きさを、調整する。',hint:'調整は、学び',icon:'check'},
+ wantFun2:{title:'楽しみたい気持ちを持つ',kind:'think',label:'楽しみたい',cost:1,atk:2,attr:'soc',up:'soc',desc:'楽しみたい気持ちを、持つ。',hint:'楽しいは、大切',icon:'sun'},
+ friendsWait:{title:'みんなが聞きたい時間を守る',kind:'think',label:'時間を守る',cost:1,atk:2,attr:'soc',up:'soc',desc:'みんなが聞きたい時間を、守る。',hint:'時間を守るは、配慮',icon:'clock'},
+ sayLater:{title:'「あとで話そう」と言う',kind:'talk',label:'あとで話そう',cost:1,atk:2,attr:'soc',up:'soc',desc:'「あとで話そう」と、言う。',hint:'あとでは、待てる',icon:'message'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -4797,6 +4807,48 @@ inviteMiss:{title:'友達の誕生会に呼ばれなかった',nav:'誕生会に
  },
  progress(s){const f=s.flags;return f.asked2||f.wished2||f.plans||f.letGo?3:f.told2||f.accepted||f.own?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.asked2||f.wished2?'向き合えた。':f.plans||f.letGo?'自分の道を行った。':'まだ、外されてる。聞く・寂しい・自分の計画、方法はある。'}
+},
+loudClass:{title:'うるさくして先生に注意された',nav:'うるさくして注意',num:89,attrs:['soc','study'],goals:['自分の声に気づきたい','静かにしたい','楽しみを残したい'],chapters:['楽しくしゃべっている','先生に注意される','声を調整する'],locations:['教室','教室','教室'],base:['tooLoud','keepTalking','talkBack2','anger','ignore'],
+ start:{mind:4,energy:3},
+ monsters:[{name:'うるさい自分',hp:5,power:1,turns:4,look:'うるさくして、注意された。'},{name:'注意されたムッと',hp:5,power:1,turns:4,look:'注意されて、ムッとする。'},{name:'静かな選択',hp:6,power:2,turns:4,look:'静かを、選ぶ。'}],
+ talk:[['whisperTime2','ひそひそに切り替える','ひそひそに、する。'],['sayLater2','「あとで話そう」と言う','あとで、話す。'],['askSorry2','「ごめん」と言う','注意を、受け止める。']],
+ think:[['funNow','楽しい','しゃべるのは、楽しい。'],['wantQuiet','静かにしたい','静かに、したい。'],['scolded','注意された','注意されて、ムッとした。']],
+ reasonKeys:['funNow','wantQuiet','scolded'],
+ stageGrants:[['quietNow','noticeVoice','whisperTime'],['adjustVoice','wantFun2','friendsWait','sayLater','keepTalking']],
+ subs:[
+  {title:'先生が「静かにできてえらい」と言った',text:'静かは、認められる。',stat:'soc',min:0,good:{text:'「ごめん」と言えた。',rep:1,mind:1},ok:{text:'場が落ち着いた。',mind:1}},
+  {title:'友達が「ひそひそいいね」と言った',text:'ひそひそは、みんなも嬉しい。',stat:'soc',min:0,good:{text:'「ありがとう」と言えた。',rep:1,mind:1},ok:{text:'しゃべり続けられた。',mind:1}}
+ ],
+ onExplore(s,key){const out={text:'',card:null};
+  if(key==='whisperTime2'){s.flags.whispered=true;relation(s,'ひそひそに切り替えたら、「それいいね」と言ってくれた。');out.text='「（ひそひそ）」\n「それいいね」';out.card='whisperTime'}
+  if(key==='sayLater2'){s.flags.later=true;out.text='「あとで話そう」と、言った。\n「うん、あとで」';out.card='sayLater'}
+  if(key==='askSorry2'){s.flags.sorry=true;relation(s,'「ごめん」と言ったら、「分かってくれてありがとう」と言ってくれた。');out.text='「ごめん」\n「分かってくれてありがとう」';out.card='wantFun2'}
+  if(key==='funNow'){s.reason='funNow';out.text='しゃべるのは、楽しい。\n「あとで」「ひそひそ」で、続けよう。';out.card='sayLater'}
+  if(key==='wantQuiet'){s.reason='wantQuiet';out.text='静かに、したい。\n「静かに」「ひそひそ」で、調整しよう。';out.card='quietNow'}
+  if(key==='scolded'){s.reason='scolded';out.text='注意されて、ムッとした。\n「声に気づく」「静かに」で、向き合おう。';out.card='noticeVoice'}
+  return out;
+ },
+ onPlay(s,id){const f=s.flags;
+  if(id==='quietNow'){f.quiet=true;return{text:'今は、静かにした。',meaning:'静かは、思いやり。'}}
+  if(id==='noticeVoice'){f.noticed=true;return{text:'自分の声に、気づいた。',meaning:'気づくは、自覚。'}}
+  if(id==='whisperTime'){f.whispered2=true;return{text:'ひそひそに、切り替えた。',meaning:'ひそひそは、配慮。'}}
+  if(id==='adjustVoice'){f.adjusted=true;return{text:'声の大きさを、調整した。',meaning:'調整は、学び。'}}
+  if(id==='wantFun2'){f.fun=true;return{text:'楽しみたい気持ちを、持った。',meaning:'楽しいは、大切。'}}
+  if(id==='friendsWait'){f.waited=true;return{text:'みんなの時間を、守った。',meaning:'時間を守るは、配慮。'}}
+  if(id==='sayLater'){f.later2=true;return{text:'「あとで話そう」と、言った。',meaning:'あとでは、待てる。'}}
+  if(id==='tooLoud'){f.loud=true;return{text:'うるさくして、注意された。',meaning:'うるさいと、迷惑になる。'}}
+  if(id==='keepTalking'){f.kept=true;return{text:'しゃべり続けた。',meaning:'続けると、再び注意される。'}}
+  if(id==='talkBack2'){f.back=true;return{text:'言い返した。',meaning:'言い返すと、言い合いになる。'}}
+  return{text:'',meaning:''};
+ },
+ watch(s){return s.stage===0?'うるさいは、みんなある。':s.stage===1?'静かは、思いやり。':'調整は、学び。'},
+ scene(s){const f=s.flags;
+  if(s.stage===0)return{narrative:'授業中、友達と楽しくしゃべっていたら、先生に注意された。',speaker:'担任の先生',quote:'静かにしてください',look:'みんなが、聞いている。',self:'ムッとする…',hint:'注意されて、何がつらい？'};
+  if(s.stage===1)return{narrative:'しゃべり続けるか、静かにするか。',speaker:'担任の先生',quote:'まだうるさいよ',look:'先生が、見ている。',self:s.reason==='wantQuiet'?'静かにしたい…':s.reason==='scolded'?'ムッとする…':'楽しい…',hint:'静かに・ひそひそ・あとで、方法はある。'};
+  return{narrative:'声を調整して、楽しみを残す。',speaker:'担任の先生',quote:f.quiet||f.whispered2?'「静かにできてえらい」':'「まだうるさいよ」',look:'静かな時間が、待っている。',self:f.quiet||f.whispered2||f.adjusted?'調整できた。':'まだ、うるさい。',hint:'ひそひそ・あとで・調整、選ぼう。'};
+ },
+ progress(s){const f=s.flags;return f.quiet||f.whispered2||f.adjusted?3:f.noticed||f.fun||f.later2?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.quiet||f.whispered2?'静かにできた。':f.noticed||f.later2?'気づいた。':'まだ、うるさい。静かに・ひそひそ・あとで、方法はある。'}
 }
 };
 

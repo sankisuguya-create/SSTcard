@@ -809,6 +809,16 @@ export const cards={
  acceptGone:{title:'見つからなくても前を向く',kind:'think',label:'前を向く',cost:1,atk:2,attr:'ath',up:'ath',desc:'見つからなくても、前を向く。',hint:'前を向くは、強さ',icon:'flag'},
  makeAgain:{title:'また集められると考える',kind:'think',label:'また集める',cost:1,atk:2,attr:'ath',up:'ath',desc:'また、集められると考える。',hint:'または、希望',icon:'sun'},
  teacherHelp2:{title:'先生に探し方を相談',kind:'talk',label:'探し方相談',cost:1,atk:2,attr:'soc',up:'soc',desc:'先生に、探し方を相談する。',hint:'相談は、助け',icon:'people'},
+ stageCall:{title:'舞台で呼ばれる',kind:'think',label:'呼ばれる',cost:0,strain:1,atk:1,attr:'soc',desc:'朝礼で、舞台に呼ばれる。',hint:'呼ばれると、目立つ',icon:'flag'},
+ voiceStuck:{title:'声が出ない',kind:'think',label:'声が出ない',cost:0,strain:1,atk:1,attr:'soc',desc:'声が、出ない。',hint:'出ないと、黙ってしまう',icon:'bolt'},
+ hideBehind:{title:'後ろに隠れる',kind:'think',label:'隠れる',cost:0,strain:1,atk:1,attr:'ath',desc:'後ろに、隠れる。',hint:'隠れると、消えてしまう',icon:'eye'},
+ breatheStage:{title:'舞台で深呼吸',kind:'think',label:'舞台で深呼吸',cost:1,atk:2,attr:'ath',up:'ath',desc:'舞台の上で、深呼吸する。',hint:'深呼吸は、落ち着き',icon:'heart'},
+ shortSpeech:{title:'短くていいから言う',kind:'talk',label:'短く言う',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'短くてもいいから、言う。',hint:'短くは、十分',icon:'message'},
+ lookTeacher2:{title:'先生の方を見る',kind:'think',label:'先生を見る',cost:1,atk:2,attr:'soc',up:'soc',desc:'先生の方を、見る。',hint:'先生は、味方',icon:'eye'},
+ acceptNerv:{title:'あがってもいいと認める',kind:'think',label:'あがってもいい',cost:1,atk:2,attr:'study',up:'study',desc:'あがってもいいと、認める。',hint:'認めると、楽になる',icon:'puzzle'},
+ practiceWord:{title:'言うことを決めておく',kind:'think',label:'言うことを決める',cost:1,atk:2,attr:'study',up:'study',desc:'言うことを、決めておく。',hint:'決めるは、準備',icon:'list'},
+ stepForward:{title:'一歩前に出る',kind:'think',label:'前に出る',cost:1,atk:2,attr:'ath',up:'ath',desc:'一歩、前に出る。',hint:'前に出るは、勇気',icon:'runner'},
+ assemblyEyes:{title:'みんなの目を気にする',kind:'think',label:'目を気にする',cost:1,atk:2,attr:'soc',up:'soc',desc:'みんなの目を、気にする。',hint:'気にすると、見える',icon:'people'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -4537,6 +4547,48 @@ lostThing:{title:'大切なものをなくした',nav:'ものをなくした',nu
  },
  progress(s){const f=s.flags;return f.told2||f.accepted||f.again?3:f.retraced||f.looked||f.asked2?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.told2||f.accepted?'向き合えた。':f.retraced||f.looked?'探した。':'まだ、疑ってる。道を・聞く・前を向く、方法はある。'}
+},
+assemblyFreeze:{title:'朝礼で人前に呼ばれてあがる',nav:'朝礼であがる',num:84,attrs:['soc','study'],goals:['声を出したい','あがる気持ちを落ち着けたい','自分の言葉で言いたい'],chapters:['朝礼が始まる','舞台に呼ばれた','自分の言葉で言う'],locations:['体育館','体育館','体育館'],base:['stageCall','voiceStuck','hideBehind','anger','ignore'],
+ start:{mind:4,energy:3},
+ monsters:[{name:'あがりの汗',hp:5,power:1,turns:4,look:'あがって、汗が出る。'},{name:'みんなの視線',hp:5,power:1,turns:4,look:'みんなが、見ている。'},{name:'自分の声',hp:6,power:2,turns:4,look:'自分の声を、出す。'}],
+ talk:[['shortSpeech2','短くていいから言う','短くても、言う。'],['lookTeacher3','先生の方を見る','先生を、見る。'],['practiceWord2','言うことを決めておく','言うことを、決める。']],
+ think:[['calledUp','呼ばれた','舞台に、呼ばれた。'],['wantSpeak','言いたい','自分の言葉で、言いたい。'],['scaredUp','あがっている','あがって、汗が出る。']],
+ reasonKeys:['calledUp','wantSpeak','scaredUp'],
+ stageGrants:[['breatheStage','shortSpeech','lookTeacher2'],['acceptNerv','practiceWord','stepForward','assemblyEyes','hideBehind']],
+ subs:[
+  {title:'先生が「ゆっくりでいいよ」と言った',text:'ゆっくりは、助け。',stat:'soc',min:0,good:{text:'落ち着いて言えた。',mind:1},ok:{text:'声が出た。',mind:1}},
+  {title:'後で友達が「よく言えたね」と言った',text:'言うと、届く。',stat:'soc',min:0,good:{text:'「ありがとう」と言えた。',rep:1,mind:1},ok:{text:'声が届いた。',mind:1}}
+ ],
+ onExplore(s,key){const out={text:'',card:null};
+  if(key==='shortSpeech2'){s.flags.short=true;relation(s,'短くていいからと思って言ったら、先生が「よく言えたね」と言ってくれた。');out.text='「…（短い一言）」\n「よく言えたね」';out.card='shortSpeech'}
+  if(key==='lookTeacher3'){s.flags.looked=true;out.text='先生の方を、見た。\n先生が、うなずいてくれた。';out.card='lookTeacher2'}
+  if(key==='practiceWord2'){s.flags.practiced=true;out.text='言うことを、決めた。\n「はい」って言えばいい。';out.card='practiceWord'}
+  if(key==='calledUp'){s.reason='calledUp';out.text='舞台に、呼ばれた。\n「短く」「深呼吸」で、出ていこう。';out.card='shortSpeech'}
+  if(key==='wantSpeak'){s.reason='wantSpeak';out.text='自分の言葉で、言いたい。\n「言うことを決める」「短く」で、準備しよう。';out.card='practiceWord'}
+  if(key==='scaredUp'){s.reason='scaredUp';out.text='あがって、汗が出る。\n「深呼吸」「あがってもいい」で、落ち着こう。';out.card='breatheStage'}
+  return out;
+ },
+ onPlay(s,id){const f=s.flags;
+  if(id==='breatheStage'){f.breathed=true;return{text:'舞台で、深呼吸した。',meaning:'深呼吸は、落ち着き。'}}
+  if(id==='shortSpeech'){f.short2=true;return{text:'短くても、言った。',meaning:'短くは、十分。'}}
+  if(id==='lookTeacher2'){f.looked2=true;return{text:'先生の方を、見た。',meaning:'先生は、味方。'}}
+  if(id==='acceptNerv'){f.accepted=true;return{text:'あがってもいいと、認めた。',meaning:'認めると、楽になる。'}}
+  if(id==='practiceWord'){f.practiced2=true;return{text:'言うことを、決めた。',meaning:'決めるは、準備。'}}
+  if(id==='stepForward'){f.stepped=true;return{text:'一歩、前に出た。',meaning:'前に出るは、勇気。'}}
+  if(id==='assemblyEyes'){f.saw=true;return{text:'みんなの目を、見た。',meaning:'気にすると、見える。'}}
+  if(id==='stageCall'){f.called=true;return{text:'舞台に、呼ばれた。',meaning:'呼ばれると、目立つ。'}}
+  if(id==='voiceStuck'){f.stuck=true;return{text:'声が、出なかった。',meaning:'出ないと、黙ってしまう。'}}
+  if(id==='hideBehind'){f.hid=true;return{text:'後ろに、隠れた。',meaning:'隠れると、消えてしまう。'}}
+  return{text:'',meaning:''};
+ },
+ watch(s){return s.stage===0?'あがるは、みんなある。':s.stage===1?'深呼吸は、落ち着き。':'短くは、十分。'},
+ scene(s){const f=s.flags;
+  if(s.stage===0)return{narrative:'朝礼。司会の先生に名前を呼ばれて、舞台に立つ。',speaker:'司会の先生',quote:'前に出てください',look:'みんなが、見ている。',self:'あがる…',hint:'呼ばれて、何がつらい？'};
+  if(s.stage===1)return{narrative:'黙って立つか、声を出すか。',speaker:'司会の先生',quote:'ゆっくりでいいですよ',look:'舞台の上に、立っている。',self:s.reason==='wantSpeak'?'言いたい…':s.reason==='scaredUp'?'あがる…':'声が出ない…',hint:'深呼吸・短く・決める、方法はある。'};
+  return{narrative:'自分の言葉で、言う。',speaker:'司会の先生',quote:f.short2?'「よく言えたね」':'「ゆっくりでいいですよ」',look:'自分の声が、待っている。',self:f.short2||f.stepped?'言えた。':'まだ、黙ってる。',hint:'短く・前に出る・決める、選ぼう。'};
+ },
+ progress(s){const f=s.flags;return f.short2||f.stepped||f.practiced2?3:f.breathed||f.looked2||f.accepted?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.short2||f.stepped?'言えた。':f.breathed||f.looked2?'落ち着いた。':'まだ、黙ってる。深呼吸・短く・決める、方法はある。'}
 }
 };
 

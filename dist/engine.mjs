@@ -618,6 +618,16 @@ export const cards={
  agreeOut:{title:'「私もそう思う」と同調',kind:'talk',label:'同調する',cost:1,atk:1,attr:'soc',desc:'「私もそう思う」と、同調する。',hint:'同調は、入口',icon:'people'},
  listenRole:{title:'聞く役を果たす',kind:'think',label:'聞く役',cost:1,atk:2,attr:'soc',up:'soc',desc:'話せなくても、聞く役を果たす。',hint:'聞くのも、貢献',icon:'ear'},
  shareOpinion:{title:'自分の考えを口にする',kind:'talk',label:'考えを言う',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'自分の考えを、口にする。',hint:'言うのは、勇気',icon:'heart'},
+ tripWorry:{title:'不安なまま遠足へ',kind:'think',label:'不安なまま',cost:0,strain:1,atk:1,attr:'ath',desc:'不安なまま、遠足に行く。',hint:'不安だけでは、楽しくない',icon:'eye'},
+ packEarly:{title:'荷物は前の日に',kind:'think',label:'前日準備',cost:1,atk:2,attr:'study',up:'study',desc:'荷物を、前の日に準備する。',hint:'準備は、不安を減らす',icon:'list'},
+ nearT:{title:'先生の近くで行動する',kind:'think',label:'先生の近く',cost:1,atk:2,attr:'soc',up:'soc',desc:'不安なら、先生の近くにいる。',hint:'近くは、安心',icon:'people'},
+ buddyRule:{title:'バディ（相棒）と一緒に',kind:'talk',label:'相棒と一緒',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'決まった相棒と、一緒に行動。',hint:'二人は、迷子防止',icon:'people'},
+ mapCheck:{title:'行き先の地図を確かめる',kind:'think',label:'地図を確かめる',cost:1,atk:2,attr:'study',up:'study',desc:'行き先の地図を、確かめておく。',hint:'知ると、不安が減る',icon:'search'},
+ tellAnxious:{title:'「不安」と先生に言う',kind:'talk',label:'不安を言う',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'「ちょっと不安です」と、正直に。',hint:'正直は、助けを呼ぶ',icon:'hand'},
+ followLead:{title:'グループのリーダーについていく',kind:'think',label:'ついていく',cost:1,atk:2,attr:'ath',up:'ath',desc:'リーダーの後に、ついていく。',hint:'ついていくと、迷わない',icon:'runner'},
+ toiletAsk:{title:'トイレの場所を確かめる',kind:'talk',label:'トイレ確認',cost:1,atk:2,attr:'study',up:'study',desc:'先に、トイレの場所を確かめる。',hint:'確かめると、安心',icon:'search'},
+ ownPace5:{title:'疲れたら自分のペースで',kind:'think',label:'自分のペース',cost:1,atk:2,attr:'ath',up:'ath',desc:'疲れたら、自分のペースで行く。',hint:'ペースが、続く',icon:'clock'},
+ enjoyTrip:{title:'楽しむことに集中する',kind:'think',label:'楽しむ',cost:1,atk:2,attr:'ath',up:'ath',desc:'不安より、楽しむことに集中。',hint:'楽しむは、気持ちを上げる',icon:'sun'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -3547,6 +3557,48 @@ quietGroup:{title:'グループで何も言えない',nav:'グループで言え
  },
  progress(s){const f=s.flags;return f.sharedOp||f.saidOne||f.listened?3:f.saidI2||f.askedQ||f.wroteI||f.askedSp2?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.sharedOp||f.saidOne?'発言できた。':f.saidI2||f.askedQ?'一言、言えた。':'まだ、黙ったまま。一言・質問・聞く、方法はある。'}
+},
+tripAnx:{title:'遠足の日が不安',nav:'遠足の日が不安',num:65,attrs:['ath','soc'],goals:['不安でも楽しみたい','迷子にならないようにしたい','気持ちを伝えたい'],chapters:['遠足の朝','目的地で行動','帰り道'],locations:['学校','遠足先','バス'],base:['tripWorry','packEarly','nearT','anger','ignore'],
+ start:{mind:4,energy:3},
+ monsters:[{name:'知らない場所への不安',hp:5,power:1,turns:4,look:'知らない場所は、不安。'},{name:'迷子の怖さ',hp:5,power:1,turns:4,look:'迷子になったら、どうしよう。'},{name:'帰るまで',hp:6,power:2,turns:4,look:'家に帰るまでが、遠足。'}],
+ talk:[['buddyRule2','相棒と一緒に行動','離れない、約束。'],['tellAnxious2','「不安」と言う','気持ちを、伝える。'],['toiletAsk2','トイレの場所を聞く','先に、確かめる。']],
+ think:[['newPlace','知らない場所が不安','知らない場所は、不安。'],['lostFear','迷子になりそうで怖い','はぐれたら、どうしよう。'],['wantFun','楽しみたい','本当は、楽しみたい。']],
+ reasonKeys:['newPlace','lostFear','wantFun'],
+ stageGrants:[['packEarly','nearT','mapCheck'],['buddyRule','followLead','toiletAsk','ownPace5','enjoyTrip']],
+ subs:[
+  {title:'先生が「班から離れないでね」と言った',text:'ルールがあれば、安心。',stat:'soc',min:0,good:{text:'班についていった。',mind:1},ok:{text:'心強かった。',mind:1}},
+  {title:'相棒が「はぐれないようにね」と言った',text:'相棒がいると、安心。',stat:'ath',min:0,good:{text:'一緒に行動できた。',rep:1,mind:1},ok:{text:'安心した。',mind:1}}
+ ],
+ onExplore(s,key){const out={text:'',card:null};
+  if(key==='buddyRule2'){s.flags.buddied=true;relation(s,'相棒と一緒に行動したら、迷子にならなかった。');out.text='「一緒に行動しよう」\n「うん、はぐれないようにね」';out.card='buddyRule'}
+  if(key==='tellAnxious2'){s.flags.toldA=true;relation(s,'「不安」と言ったら、「先生の近くにいなさい」と言ってもらえた。');out.text='「ちょっと不安です」\n「先生の近くにいなさい」';out.card='tellAnxious'}
+  if(key==='toiletAsk2'){s.flags.askedTl=true;out.text='「トイレどこですか」\n「あっちだよ、確認しておこう」';out.card='toiletAsk'}
+  if(key==='newPlace'){s.reason='newPlace';out.text='知らない場所は、不安。\n「地図」「前日準備」で、知ろう。';out.card='mapCheck'}
+  if(key==='lostFear'){s.reason='lostFear';out.text='はぐれたら、怖い。\n「相棒と一緒」「先生の近く」で安心。';out.card='buddyRule'}
+  if(key==='wantFun'){s.reason='wantFun';out.text='本当は、楽しみたい。\n「自分のペース」「楽しむ」で、気持ちを上げよう。';out.card='ownPace5'}
+  return out;
+ },
+ onPlay(s,id){const f=s.flags;
+  if(id==='packEarly'){f.packed=true;return{text:'荷物を、前の日に準備した。',meaning:'準備は、不安を減らす。'}}
+  if(id==='nearT'){f.neared=true;return{text:'先生の近くに、いることにした。',meaning:'近くは、安心。'}}
+  if(id==='buddyRule'){f.buddied2=true;return{text:'相棒と、一緒に行動した。',meaning:'二人は、迷子防止。'}}
+  if(id==='mapCheck'){f.mapped=true;return{text:'行き先の地図を、確かめた。',meaning:'知ると、不安が減る。'}}
+  if(id==='tellAnxious'){f.toldA2=true;return{text:'「不安」と、正直に言った。',meaning:'正直は、助けを呼ぶ。'}}
+  if(id==='followLead'){f.followed=true;return{text:'リーダーに、ついていった。',meaning:'ついていくと、迷わない。'}}
+  if(id==='toiletAsk'){f.askedTl2=true;return{text:'トイレの場所を、確かめた。',meaning:'確かめると、安心。'}}
+  if(id==='ownPace5'){f.ownP5=true;return{text:'自分のペースで、行った。',meaning:'ペースが、続く。'}}
+  if(id==='enjoyTrip'){f.enjoyed=true;return{text:'楽しむことに、集中した。',meaning:'楽しむは、気持ちを上げる。'}}
+  if(id==='tripWorry'){f.worried=true;return{text:'不安なまま、行った。',meaning:'不安だけでは、楽しくない。'}}
+  return{text:'',meaning:''};
+ },
+ watch(s){return s.stage===0?'不安は、みんなある。':s.stage===1?'準備は、不安を減らす。':'楽しむは、気持ちを上げる。'},
+ scene(s){const f=s.flags;
+  if(s.stage===0)return{narrative:'遠足の朝。バスが待っているけど、知らない場所は不安。',speaker:'担任の先生',quote:'班の人と一緒に行動してね',look:'バスが、止まっている。',self:'不安…',hint:'遠足で、何が不安？'};
+  if(s.stage===1)return{narrative:'目的地についた。班で行動する時間。',speaker:'班のリーダー',quote:'こっちだよ、ついてきて',look:'知らない場所が、広がる。',self:s.reason==='lostFear'?'はぐれたら怖い…':s.reason==='wantFun'?'楽しみたい…':'不安…',hint:'相棒・先生の近く・地図、方法はある。'};
+  return{narrative:'帰り道。今日を振り返る。',speaker:'班のリーダー',quote:f.enjoyed||f.buddied2?'「楽しかったね」':'「もう帰るよ」',look:'バスの窓から、景色が流れる。',self:f.enjoyed||f.buddied2||f.neared?'楽しめた。':'まだ、不安なまま。',hint:'ペース・楽しむ・ついていく・トイレ、選ぼう。'};
+ },
+ progress(s){const f=s.flags;return f.enjoyed||f.buddied2||f.followed?3:f.packed||f.neared||f.mapped||f.toldA2?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.enjoyed||f.buddied2?'楽しめた。':f.packed||f.mapped?'準備できた。':'まだ、不安なまま。相棒・地図・正直、方法はある。'}
 }
 };
 

@@ -738,6 +738,16 @@ export const cards={
  dutyShame:{title:'当番を失敗した恥ずかしさ',kind:'think',label:'失敗の恥',cost:1,atk:2,attr:'soc',up:'soc',desc:'失敗の恥ずかしさを、認める。',hint:'認めると、分かる',icon:'puzzle'},
  redoDuty:{title:'もう一度やり直す',kind:'think',label:'やり直す',cost:1,atk:2,attr:'ath',up:'ath',desc:'もう一度、やり直す。',hint:'直すは、挽回',icon:'up'},
  panicServe:{title:'慌てて配る',kind:'think',label:'慌てて配る',cost:0,strain:1,atk:1,attr:'ath',desc:'慌てて、配る。',hint:'慌ては、また失敗',icon:'bolt'},
+ notChosen:{title:'選ばれない',kind:'think',label:'選ばれない',cost:0,strain:1,atk:1,attr:'soc',desc:'出場者に、選ばれない。',hint:'選ばれないと、つらい',icon:'eye'},
+ watchBench:{title:'ベンチから見るだけ',kind:'think',label:'見るだけ',cost:0,strain:1,atk:1,attr:'ath',desc:'ベンチから、見るだけ。',hint:'見るだけでは、楽しいけど',icon:'eye'},
+ cheerTeam:{title:'チームを応援する',kind:'talk',label:'チーム応援',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'チームを、応援する。',hint:'応援は、貢献',icon:'sun'},
+ helpWater:{title:'水くみ係を引き受ける',kind:'talk',label:'水くみ係',cost:1,atk:2,attr:'ath',up:'ath',desc:'水くみ係を、引き受ける。',hint:'係は、貢献',icon:'hand'},
+ sadNotPicked:{title:'悲しさを認める',kind:'think',label:'悲しみ認める',cost:1,atk:2,attr:'soc',up:'soc',desc:'選ばれない悲しさを、認める。',hint:'認めると、楽になる',icon:'heart'},
+ nextRace:{title:'次の機会に向けて練習',kind:'think',label:'次に向けて練習',cost:1,atk:2,attr:'ath',up:'ath',desc:'次の機会に向けて、練習する。',hint:'練習は、未来',icon:'runner'},
+ ownValue:{title:'自分の価値を考える',kind:'think',label:'自分の価値',cost:1,atk:2,attr:'study',up:'study',desc:'自分の価値を、考える。',hint:'価値は、走るだけじゃない',icon:'puzzle'},
+ wantRun2:{title:'走りたい気持ちを認める',kind:'think',label:'走りたい',cost:1,atk:2,attr:'ath',up:'ath',desc:'走りたい気持ちを、認める。',hint:'認めると、動ける',icon:'spark'},
+ benchWait:{title:'ベンチで待つ',kind:'think',label:'ベンチで待つ',cost:1,atk:2,attr:'ath',up:'ath',desc:'ベンチで、待つ。',hint:'待つは、支える',icon:'flag'},
+ tryHarder:{title:'もっとがんばる',kind:'think',label:'もっとがんばる',cost:1,atk:2,attr:'ath',up:'ath',desc:'もっと、がんばる。',hint:'がんばりは、未来',icon:'up'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -4171,6 +4181,48 @@ lunchDuty:{title:'給食当番で失敗',nav:'給食当番で失敗',num:76,attr
  },
  progress(s){const f=s.flags;return f.fixed||f.carried||f.redone?3:f.helped2||f.asked2||f.laughed2?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.fixed||f.redone?'直して続けた。':f.helped2||f.asked2?'助けを言えた。':'まだ、止まってる。助けて・聞く・直す、方法はある。'}
+},
+notPicked:{title:'運動会の出場者に選ばれなかった',nav:'選ばれなかった',num:77,attrs:['ath','soc'],goals:['応援して貢献したい','気持ちを乗り越えたい','次に向けてがんばりたい'],chapters:['出場者が発表される','選ばれなかった','自分の役割を見つける'],locations:['教室','校庭','校庭'],base:['notChosen','watchBench','wantRun2','anger','ignore'],
+ start:{mind:4,energy:3},
+ monsters:[{name:'選ばれない悲しみ',hp:5,power:1,turns:4,look:'選ばれなくて、悲しい。'},{name:'ベンチの寂しさ',hp:5,power:1,turns:4,look:'ベンチが、寂しい。'},{name:'自分の役割',hp:6,power:2,turns:4,look:'役割を、見つける。'}],
+ talk:[['cheerTeam2','チームを応援する','応援で、貢献。'],['helpWater2','係を引き受ける','水くみ係を、する。'],['tellSad2','「悲しい」と言う','気持ちを、言う。']],
+ think:[['sadNotChosen','選ばれなくて悲しい','選ばれなくて、悲しい。'],['wantRun3','走りたかった','走りたかったのに…。'],['wantContribute','貢献したい','役に立ちたい。']],
+ reasonKeys:['sadNotChosen','wantRun3','wantContribute'],
+ stageGrants:[['cheerTeam','helpWater','sadNotPicked'],['nextRace','ownValue','benchWait','tryHarder','watchBench']],
+ subs:[
+  {title:'チームが「応援ありがとう」と言った',text:'応援も、貢献。',stat:'soc',min:0,good:{text:'役割を感じた。',rep:1,mind:1},ok:{text:'元気が出た。',mind:1}},
+  {title:'先生が「水くみ、助かったよ」と言った',text:'係も、大切。',stat:'ath',min:0,good:{text:'「どういたしまして」と言えた。',rep:1,mind:1},ok:{text:'役に立った。',mind:1}}
+ ],
+ onExplore(s,key){const out={text:'',card:null};
+  if(key==='cheerTeam2'){s.flags.cheered=true;relation(s,'チームを応援したら、「応援ありがとう」と笑ってくれた。');out.text='「がんばれー」\n「応援ありがとう」';out.card='cheerTeam'}
+  if(key==='helpWater2'){s.flags.helped=true;out.text='「水くみ係、私がやるね」\n「助かる」';out.card='helpWater'}
+  if(key==='tellSad2'){s.flags.told=true;out.text='「選ばれなくて、悲しい」\n「そうか、でも応援してくれて嬉しい」';out.card='sadNotPicked'}
+  if(key==='sadNotChosen'){s.reason='sadNotChosen';out.text='選ばれなくて、悲しい。\n「悲しみ認める」「応援」で、出そう。';out.card='sadNotPicked'}
+  if(key==='wantRun3'){s.reason='wantRun3';out.text='走りたかった。\n「走りたい」「練習」で、次に向かおう。';out.card='wantRun2'}
+  if(key==='wantContribute'){s.reason='wantContribute';out.text='役に立ちたい。\n「係」「応援」で、貢献しよう。';out.card='helpWater'}
+  return out;
+ },
+ onPlay(s,id){const f=s.flags;
+  if(id==='cheerTeam'){f.cheered2=true;return{text:'チームを、応援した。',meaning:'応援は、貢献。'}}
+  if(id==='helpWater'){f.helped2=true;return{text:'水くみ係を、引き受けた。',meaning:'係は、貢献。'}}
+  if(id==='sadNotPicked'){f.faced=true;return{text:'悲しさを、認めた。',meaning:'認めると、楽になる。'}}
+  if(id==='nextRace'){f.next=true;return{text:'次に向けて、練習した。',meaning:'練習は、未来。'}}
+  if(id==='ownValue'){f.valued=true;return{text:'自分の価値を、考えた。',meaning:'価値は、走るだけじゃない。'}}
+  if(id==='wantRun2'){f.wanted=true;return{text:'走りたい気持ちを、認めた。',meaning:'認めると、動ける。'}}
+  if(id==='benchWait'){f.waited=true;return{text:'ベンチで、待った。',meaning:'待つは、支える。'}}
+  if(id==='tryHarder'){f.tried=true;return{text:'もっと、がんばった。',meaning:'がんばりは、未来。'}}
+  if(id==='notChosen'){f.not=true;return{text:'選ばれなかった。',meaning:'選ばれないと、つらい。'}}
+  if(id==='watchBench'){f.watched=true;return{text:'見るだけ、だった。',meaning:'見るだけでは、楽しいけど。'}}
+  return{text:'',meaning:''};
+ },
+ watch(s){return s.stage===0?'選ばれないは、みんなある。':s.stage===1?'応援は、貢献。':'役割は、見つかる。'},
+ scene(s){const f=s.flags;
+  if(s.stage===0)return{narrative:'運動会の出場者発表。私の名前は、呼ばれなかった。',speaker:'担任の先生',quote:'出場者は、この人たちです',look:'選ばれた子が、立っている。',self:'選ばれなかった…',hint:'選ばれないで、何がつらい？'};
+  if(s.stage===1)return{narrative:'悲しみか、貢献か。',speaker:'出場する友達',quote:'応援してくれる？',look:'ベンチが、待っている。',self:s.reason==='wantRun3'?'走りたかった…':s.reason==='wantContribute'?'貢献したい…':'悲しい…',hint:'応援・係・悲しむ、方法はある。'};
+  return{narrative:'自分の役割を、見つける。',speaker:'出場する友達',quote:f.cheered2||f.helped2?'「応援ありがとう」':'「応援してくれる？」',look:'運動会が、続いている。',self:f.cheered2||f.helped2||f.next?'役割を見つけた。':'まだ、寂しがってる。',hint:'応援・係・練習、選ぼう。'};
+ },
+ progress(s){const f=s.flags;return f.cheered2||f.helped2||f.next?3:f.faced||f.valued?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.cheered2||f.helped2?'貢献できた。':f.faced||f.valued?'気持ちを認めた。':'まだ、寂しがってる。応援・係・認める、方法はある。'}
 }
 };
 

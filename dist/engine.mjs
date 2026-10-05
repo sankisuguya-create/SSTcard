@@ -779,6 +779,16 @@ export const cards={
  thinkBoth:{title:'両方の意見を考える',kind:'think',label:'両方考える',cost:1,atk:2,attr:'study',up:'study',desc:'両方の意見を、考える。',hint:'両方考えるは、深い',icon:'book'},
  askWhy3:{title:'「なぜそう思う？」と聞く',kind:'talk',label:'なぜ？',cost:1,atk:2,attr:'soc',up:'soc',desc:'「なぜそう思う？」と、聞く。',hint:'理由を聞くは、理解',icon:'ear'},
  insistMine:{title:'自分の意見をごり押し',kind:'talk',label:'ごり押し',cost:0,strain:1,atk:1,attr:'soc',desc:'自分の意見を、ごり押しする。',hint:'ごり押しは、言い合い',icon:'bolt'},
+ noGroup:{title:'どこにも入れない',kind:'think',label:'入れない',cost:0,strain:1,atk:1,attr:'soc',desc:'どの班にも、入れない。',hint:'入れないと、浮く',icon:'eye'},
+ leftOver:{title:'一人余る',kind:'think',label:'一人余る',cost:0,strain:1,atk:1,attr:'soc',desc:'班決めで、一人余る。',hint:'余ると、寂しい',icon:'eye'},
+ askJoinG:{title:'「入れてくれる？」と聞く',kind:'talk',label:'入れて？',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'「入れてくれる？」と、聞く。',hint:'聞くは、第一歩',icon:'message'},
+ offerRole:{title:'役割を提案する',kind:'talk',label:'役割を提案',cost:1,atk:2,attr:'study',up:'study',desc:'「私、これやるよ」と提案する。',hint:'役割は、入り口',icon:'check'},
+ waitCall:{title:'先生の割り当てを待つ',kind:'think',label:'割り当て待つ',cost:1,atk:2,attr:'ath',up:'ath',desc:'先生の割り当てを、待つ。',hint:'待つは、受け入れ',icon:'clock'},
+ teacherPut:{title:'先生に入れてもらう',kind:'talk',label:'入れてもらう',cost:1,atk:2,attr:'soc',up:'soc',desc:'先生に、班に入れてもらう。',hint:'先生は、助け',icon:'hand'},
+ twoLeft:{title:'余った子と組む',kind:'talk',label:'余った子と組む',cost:1,atk:2,attr:'soc',up:'soc',desc:'余った子と、組む。',hint:'余り同士は、味方',icon:'people'},
+ aloneGroup:{title:'一人でやることにする',kind:'think',label:'一人でやる',cost:1,atk:2,attr:'ath',up:'ath',desc:'一人で、やることにする。',hint:'一人も、選択肢',icon:'flag'},
+ wantJoin2:{title:'入りたい気持ちを認める',kind:'think',label:'入りたい',cost:1,atk:2,attr:'soc',up:'soc',desc:'班に入りたい気持ちを、認める。',hint:'認めると、動ける',icon:'heart'},
+ feelExtra:{title:'余った感じがする',kind:'think',label:'余った感じ',cost:0,strain:1,atk:1,attr:'soc',desc:'自分だけ、余った感じがする。',hint:'余った感じは、つらい',icon:'bolt'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -4381,6 +4391,48 @@ diffOpinion:{title:'発表で自分と違う意見が出る',nav:'違う意見�
  },
  progress(s){const f=s.flags;return f.merged||f.thought||f.agreed?3:f.listened2||f.saidM2||f.asked2?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.merged||f.thought?'深まった。':f.listened2||f.saidM2?'聞き合った。':'まだ、ぶつかってる。聞く・言う・組み合わせ、方法はある。'}
+},
+groupLeft:{title:'班決めで一人余った',nav:'班で一人余った',num:81,attrs:['soc'],goals:['班に入りたい','余っても動きたい','自分の場所を見つけたい'],chapters:['班決めが始まる','一人余った','場所を見つける'],locations:['教室','教室','教室'],base:['noGroup','leftOver','feelExtra','anger','ignore'],
+ start:{mind:4,energy:3},
+ monsters:[{name:'余った寂しさ',hp:5,power:1,turns:4,look:'一人余って、寂しい。'},{name:'みんなの輪',hp:5,power:1,turns:4,look:'みんなの輪が、できてる。'},{name:'自分の場所',hp:6,power:2,turns:4,look:'自分の場所を、見つける。'}],
+ talk:[['askJoinG2','「入れて？」と聞く','班に、聞く。'],['twoLeft2','余った子と組む','余り同士で、組む。'],['offerRole2','役割を提案する','役割で、入る。']],
+ think:[['leftAlone','一人余った','班から、余った。'],['wantJoin3','入りたい','班に、入りたい。'],['feelLeft','浮いている','自分だけ、浮いている。']],
+ reasonKeys:['leftAlone','wantJoin3','feelLeft'],
+ stageGrants:[['askJoinG','offerRole','wantJoin2'],['twoLeft','teacherPut','waitCall','aloneGroup','leftOver']],
+ subs:[
+  {title:'班が「一緒にやろう」と言った',text:'聞くと、入れる。',stat:'soc',min:0,good:{text:'「ありがとう」と言えた。',rep:1,mind:1},ok:{text:'入れてもらえた。',mind:1}},
+  {title:'先生が「この班に入ろうね」と言った',text:'先生は、助け。',stat:'soc',min:0,good:{text:'班に入れた。',mind:1},ok:{text:'場所ができた。',mind:1}}
+ ],
+ onExplore(s,key){const out={text:'',card:null};
+  if(key==='askJoinG2'){s.flags.asked=true;relation(s,'「入れて？」と聞いたら、「いいよ、一緒にやろう」と言ってくれた。');out.text='「入れてくれる？」\n「いいよ、一緒にやろう」';out.card='askJoinG'}
+  if(key==='twoLeft2'){s.flags.two=true;out.text='余った子と、組むことにした。\n「じゃあ、私たちでやろう」';out.card='twoLeft'}
+  if(key==='offerRole2'){s.flags.offered=true;out.text='「私、これやるよ」と提案した。\n「じゃあ、よろしくね」';out.card='offerRole'}
+  if(key==='leftAlone'){s.reason='leftAlone';out.text='班から、余った。\n「入れて？」「余った子と」で、動こう。';out.card='askJoinG'}
+  if(key==='wantJoin3'){s.reason='wantJoin3';out.text='班に、入りたい。\n「入れて？」「役割」で、入ろう。';out.card='askJoinG'}
+  if(key==='feelLeft'){s.reason='feelLeft';out.text='自分だけ、浮いている。\n「入りたい」「待つ」で、向き合おう。';out.card='wantJoin2'}
+  return out;
+ },
+ onPlay(s,id){const f=s.flags;
+  if(id==='askJoinG'){f.asked2=true;return{text:'「入れて？」と、聞いた。',meaning:'聞くは、第一歩。'}}
+  if(id==='offerRole'){f.offered2=true;return{text:'役割を、提案した。',meaning:'役割は、入り口。'}}
+  if(id==='twoLeft'){f.two2=true;return{text:'余った子と、組んだ。',meaning:'余り同士は、味方。'}}
+  if(id==='teacherPut'){f.put=true;return{text:'先生に、入れてもらった。',meaning:'先生は、助け。'}}
+  if(id==='waitCall'){f.waited=true;return{text:'割り当てを、待った。',meaning:'待つは、受け入れ。'}}
+  if(id==='aloneGroup'){f.alone=true;return{text:'一人で、やることにした。',meaning:'一人も、選択肢。'}}
+  if(id==='wantJoin2'){f.wanted=true;return{text:'入りたい気持ちを、認めた。',meaning:'認めると、動ける。'}}
+  if(id==='noGroup'){f.noG=true;return{text:'どこにも、入れなかった。',meaning:'入れないと、浮く。'}}
+  if(id==='leftOver'){f.left=true;return{text:'一人、余った。',meaning:'余ると、寂しい。'}}
+  if(id==='feelExtra'){f.extra=true;return{text:'余った感じがした。',meaning:'余った感じは、つらい。'}}
+  return{text:'',meaning:''};
+ },
+ watch(s){return s.stage===0?'余るは、みんなある。':s.stage===1?'聞くは、第一歩。':'一人も、選択肢。'},
+ scene(s){const f=s.flags;
+  if(s.stage===0)return{narrative:'班決めの時間。みんなが班を決める中、自分だけ余った。',speaker:'班を決めた子',quote:'うちの班、もういっぱい',look:'みんなの輪が、できている。',self:'一人余った…',hint:'余って、何がつらい？'};
+  if(s.stage===1)return{narrative:'浮いているか、動くか。',speaker:'班を決めた子',quote:'あっちの班はどう？',look:'班が、決まろうとしている。',self:s.reason==='wantJoin3'?'入りたい…':s.reason==='feelLeft'?'浮いてる…':'余った…',hint:'入れて・余った子・役割方法はある。'};
+  return{narrative:'自分の場所を、見つける。',speaker:'班を決めた子',quote:f.asked2||f.two2?'「一緒にやろう」':'「あっちの班はどう？」',look:'自分の場所が、待っている。',self:f.asked2||f.two2||f.put||f.alone?'場所を見つけた。':'まだ、浮いてる。',hint:'入れて・余った子・一人、選ぼう。'};
+ },
+ progress(s){const f=s.flags;return f.asked2||f.two2||f.put||f.alone?3:f.offered2||f.wanted?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.asked2||f.two2?'入れた。':f.put||f.alone?'場所ができた。':'まだ、浮いてる。入れて・余った子・一人、方法はある。'}
 }
 };
 

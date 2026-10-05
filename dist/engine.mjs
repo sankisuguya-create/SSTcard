@@ -558,6 +558,16 @@ export const cards={
  jumpWith:{title:'できる人の後に続いて跳ぶ',kind:'talk',label:'続いて跳ぶ',cost:1,bond:1,atk:2,attr:'ath',up:'ath',desc:'できる人の直後に、続いて跳ぶ。',hint:'ついていくと、跳びやすい',icon:'runner'},
  ropeStep:{title:'一歩ずつ慣れていく',kind:'think',label:'一歩ずつ',cost:1,atk:2,attr:'ath',up:'ath',desc:'失敗しても、一歩ずつ慣れる。',hint:'慣れは、時間がかかる',icon:'up'},
  shyFace:{title:'笑われたけど、それでも跳ぶ',kind:'think',label:'それでも跳ぶ',cost:1,atk:2,attr:'ath',up:'ath',desc:'失敗して笑われても、もう一回。',hint:'笑われても跳ぶのが、勇気',icon:'heart'},
+ stayAlone:{title:'一人でじっと待つ',kind:'think',label:'じっと待つ',cost:0,strain:1,atk:1,attr:'soc',desc:'不安なまま、じっと待つ。',hint:'我慢だけは、つらい',icon:'clock'},
+ boredWait:{title:'つまらなくてぼんやり',kind:'think',label:'ぼんやり',cost:0,strain:1,atk:1,attr:'soc',desc:'何もせず、ぼんやり過ごす。',hint:'時間が、もったいない',icon:'eye'},
+ checkDoor2:{title:'戸締りを確認する',kind:'think',label:'戸締り確認',cost:1,atk:2,attr:'study',up:'study',desc:'窓とドアを、確かめて回る。',hint:'確認は、留守番の仕事',icon:'door'},
+ quietJob:{title:'頼まれたことを丁寧に',kind:'think',label:'丁寧にやる',cost:1,atk:2,attr:'study',up:'study',desc:'頼まれたことを、丁寧にやる。',hint:'丁寧は、信頼を作る',icon:'check'},
+ askStay:{title:'「不安」と正直に言う',kind:'talk',label:'不安と言う',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'「一人だと不安」と、正直に言う。',hint:'正直は、助けを呼ぶ',icon:'message'},
+ feelProud:{title:'「任された」と思う',kind:'think',label:'任された',cost:1,atk:2,attr:'soc',up:'soc',desc:'頼まれたのは、信頼だと考える。',hint:'信頼は、力になる',icon:'spark'},
+ watchRoom:{title:'教室を見回る',kind:'think',label:'見回る',cost:1,atk:2,attr:'study',up:'study',desc:'教室の中を、見回る。',hint:'見回ると、安心',icon:'search'},
+ tellMissed:{title:'「さびしかった」と後で言う',kind:'talk',label:'後で伝える',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'終わった後、「さびしかった」と伝える。',hint:'後で言うのも、正直',icon:'heart'},
+ ownDuty:{title:'留守番を「自分の役目」と考える',kind:'think',label:'自分の役目',cost:1,atk:2,attr:'study',up:'study',desc:'留守番は、自分の役目と考える。',hint:'役目は、やりがい',icon:'flag'},
+ finishDuty:{title:'戻ってきた人に報告する',kind:'talk',label:'報告する',cost:1,atk:2,attr:'soc',up:'soc',desc:'「変わりありません」と、報告する。',hint:'報告は、締めの仕事',icon:'message'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -3235,6 +3245,48 @@ ropeTrip:{title:'大縄でひっかかった',nav:'大縄でひっかかった',
  },
  progress(s){const f=s.flags;return f.jumped||f.stepped2||f.faced?3:f.watched||f.edged||f.asked||f.smalled?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.jumped||f.faced?'もう一度、跳べた。':f.watched||f.edged?'練習で、慣れてきた。':'まだ、跳べないかも。見る・端・少人数、方法はある。'}
+},
+homeAlone:{title:'教室の留守番を頼まれた',nav:'留守番を頼まれた',num:59,attrs:['soc','study'],goals:['頼まれたことをやりたい','不安を伝えたい','役目を果たしたい'],chapters:['みんなが出て行く','一人の時間','戻ってきた'],locations:['教室','教室','教室'],base:['stayAlone','boredWait','checkDoor2','anger','ignore'],
+ start:{mind:4,energy:3},
+ monsters:[{name:'一人の不安',hp:5,power:1,turns:4,look:'一人で、教室に残された。'},{name:'つまらなさ',hp:5,power:1,turns:4,look:'何もすることが、ない。'},{name:'頼まれた責任',hp:6,power:2,turns:4,look:'留守番を、果たさなければ。'}],
+ talk:[['askStay2','「不安」と正直に言う','気持ちを、伝える。'],['tellMissed2','終わった後に伝える','後から、「さびしかった」と。'],['askBuddy2','「一緒にいて」と頼む','残れる人に、頼んでみる。']],
+ think:[['lonely','一人でさびしい','一人は、さびしい。'],['dutyFeel','頼まれた責任を感じる','任された、責任がある。'],['wantDo','役目を果たしたい','ちゃんと、留守番したい。']],
+ reasonKeys:['lonely','dutyFeel','wantDo'],
+ stageGrants:[['checkDoor2','quietJob','askStay'],['watchRoom','feelProud','tellMissed','ownDuty','finishDuty']],
+ subs:[
+  {title:'隣のクラスの人が「一人？」と声をかけた',text:'声をかけてもらえて、ほっとした。',stat:'soc',min:0,good:{text:'「ちょっとだけ」って言えた。',rep:1,mind:1},ok:{text:'心強かった。',mind:1}},
+  {title:'戻ってきた先生が「ありがとう」と言った',text:'留守番を、評価してもらえた。',stat:'study',min:0,good:{text:'「役に立った」と思えた。',mind:1},ok:{text:'安心した。',mind:1}}
+ ],
+ onExplore(s,key){const out={text:'',card:null};
+  if(key==='askStay2'){s.flags.askedS3=true;relation(s,'「不安」と言ったら、「大丈夫だよ」と言ってもらえた。');out.text='「一人だと不安です」\n「大丈夫、すぐ戻るから」';out.card='askStay'}
+  if(key==='tellMissed2'){s.flags.toldM=true;relation(s,'「さびしかった」と言ったら、「ごめんね」と言ってもらえた。');out.text='「実は、さびしかった」\n「ごめんね、ありがとう」';out.card='tellMissed'}
+  if(key==='askBuddy2'){s.flags.askedB=true;out.text='「一緒にいてくれない？」\n「うん、いるよ」';out.card='watchRoom'}
+  if(key==='lonely'){s.reason='lonely';out.text='一人は、さびしい。\n「見回る」「確認する」で、落ち着こう。';out.card='watchRoom'}
+  if(key==='dutyFeel'){s.reason='dutyFeel';out.text='頼まれた責任を、感じる。\n「丁寧にやる」「自分の役目」と考えよう。';out.card='quietJob'}
+  if(key==='wantDo'){s.reason='wantDo';out.text='ちゃんと、留守番したい。\n「戸締り確認」「見回る」で、やることを作ろう。';out.card='checkDoor2'}
+  return out;
+ },
+ onPlay(s,id){const f=s.flags;
+  if(id==='checkDoor2'){f.checkedD=true;return{text:'戸締りを、確認した。',meaning:'確認は、留守番の仕事。'}}
+  if(id==='quietJob'){f.quietedJ=true;return{text:'頼まれたことを、丁寧にやった。',meaning:'丁寧は、信頼を作る。'}}
+  if(id==='askStay'){f.askedS4=true;return{text:'「不安」と、正直に言った。',meaning:'正直は、助けを呼ぶ。'}}
+  if(id==='feelProud'){f.proudF=true;return{text:'「任された」と、思った。',meaning:'信頼は、力になる。'}}
+  if(id==='watchRoom'){f.watchedR=true;return{text:'教室を、見回った。',meaning:'見回ると、安心。'}}
+  if(id==='tellMissed'){f.toldM2=true;return{text:'「さびしかった」と、後で言った。',meaning:'後で言うのも、正直。'}}
+  if(id==='ownDuty'){f.ownD=true;return{text:'留守番を、「自分の役目」と考えた。',meaning:'役目は、やりがい。'}}
+  if(id==='finishDuty'){f.finished=true;return{text:'「変わりありません」と、報告した。',meaning:'報告は、締めの仕事。'}}
+  if(id==='stayAlone'){f.stayedA=true;return{text:'一人で、じっと待った。',meaning:'我慢だけは、つらい。'}}
+  if(id==='boredWait'){f.bored=true;return{text:'ぼんやり、過ごした。',meaning:'時間が、もったいない。'}}
+  return{text:'',meaning:''};
+ },
+ watch(s){return s.stage===0?'一人も、みんなある。':s.stage===1?'やることを作ると、落ち着く。':'役目は、信頼の証。'},
+ scene(s){const f=s.flags;
+  if(s.stage===0)return{narrative:'先生が「教室の留守番、お願いできる？」と言った。みんなが出て行く。',speaker:'担任の先生',quote:'ちょっとお願いしてもいい？',look:'教室に、一人残される。',self:'さびしい…',hint:'留守番を頼まれて、どう感じた？'};
+  if(s.stage===1)return{narrative:'一人の時間。何をするか、自分で決める。',speaker:'心の声',quote:'何をしよう？',look:'窓の外は、明るい。',self:s.reason==='dutyFeel'?'責任を感じる…':s.reason==='wantDo'?'やりたい…':'さびしい…',hint:'確認・丁寧・不安を言う、方法はある。'};
+  return{narrative:'みんなが、戻ってきた。',speaker:'担任の先生',quote:f.finished||f.ownD?'「ありがとう、助かったよ」':'「どうだった？」',look:'教室に、活気が戻る。',self:f.finished||f.ownD||f.proudF?'役目を果たせた。':'まだ、さびしいまま。',hint:'報告・伝える・役目・誇り、選ぼう。'};
+ },
+ progress(s){const f=s.flags;return f.finished||f.ownD||f.proudF?3:f.checkedD||f.quietedJ||f.askedS4||f.watchedR?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.finished||f.ownD?'留守番を、果たせた。':f.checkedD||f.quietedJ?'やることを見つけた。':'まだ、さびしいまま。確認・丁寧・報告、方法はある。'}
 }
 };
 

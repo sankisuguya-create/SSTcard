@@ -728,6 +728,16 @@ export const cards={
  letGo:{title:'ゆずる勇気を出す',kind:'think',label:'ゆずる',cost:1,atk:2,attr:'soc',up:'soc',desc:'ゆずる勇気を、出す。',hint:'ゆずるは、強さ',icon:'heart'},
  askRules2:{title:'「使い方のルールは？」と聞く',kind:'talk',label:'ルールを聞く',cost:1,atk:2,attr:'soc',up:'soc',desc:'「使い方のルールは？」と、聞く。',hint:'聞くと、分かる',icon:'ear'},
  fightOver:{title:'けんかになる',kind:'think',label:'けんかになる',cost:0,strain:1,atk:1,attr:'soc',desc:'おもちゃで、けんかになる。',hint:'けんかは、悪化する',icon:'bolt'},
+ dropTray:{title:'トレイを落とす',kind:'think',label:'落とす',cost:0,strain:1,atk:1,attr:'ath',desc:'トレイを、落としてしまう。',hint:'落とすと、みんな待つ',icon:'bolt'},
+ messServe:{title:'配るのを間違える',kind:'think',label:'配り間違い',cost:0,strain:1,atk:1,attr:'soc',desc:'配るのを、間違える。',hint:'間違いは、直せる',icon:'eye'},
+ wantHelp:{title:'「助けて」と言う',kind:'talk',label:'助けて',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'「助けて」と、言う。',hint:'助けては、勇気',icon:'hand'},
+ askMate:{title:'一緒の当番に聞く',kind:'talk',label:'当番に聞く',cost:1,atk:2,attr:'soc',up:'soc',desc:'一緒の当番の子に、聞く。',hint:'聞くと、分かる',icon:'ear'},
+ fixServe:{title:'配り直す',kind:'think',label:'配り直す',cost:1,atk:2,attr:'ath',up:'ath',desc:'間違いを、配り直す。',hint:'直すは、責任',icon:'check'},
+ carryCareful:{title:'慎重に運ぶ',kind:'think',label:'慎重に運ぶ',cost:1,atk:2,attr:'ath',up:'ath',desc:'慎重に、運ぶ。',hint:'慎重は、失敗を防ぐ',icon:'flag'},
+ laughDuty:{title:'「ごめん、ミスった」と言う',kind:'talk',label:'ミスった',cost:1,atk:2,attr:'soc',up:'soc',desc:'「ごめん、ミスった」と言う。',hint:'ミスを言うは、正直',icon:'message'},
+ dutyShame:{title:'当番を失敗した恥ずかしさ',kind:'think',label:'失敗の恥',cost:1,atk:2,attr:'soc',up:'soc',desc:'失敗の恥ずかしさを、認める。',hint:'認めると、分かる',icon:'puzzle'},
+ redoDuty:{title:'もう一度やり直す',kind:'think',label:'やり直す',cost:1,atk:2,attr:'ath',up:'ath',desc:'もう一度、やり直す。',hint:'直すは、挽回',icon:'up'},
+ panicServe:{title:'慌てて配る',kind:'think',label:'慌てて配る',cost:0,strain:1,atk:1,attr:'ath',desc:'慌てて、配る。',hint:'慌ては、また失敗',icon:'bolt'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -4119,6 +4129,48 @@ toyFight:{title:'おもちゃを取り合った',nav:'おもちゃを取り合�
  },
  progress(s){const f=s.flags;return f.shared2||f.saidT2||f.traded||f.counted?3:f.let||f.asked2?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.shared2?'一緒に使えた。':f.saidT2||f.asked2?'順番を決めた。':'まだ、取り合ってる。じゅんばん・一緒・ルール、方法はある。'}
+},
+lunchDuty:{title:'給食当番で失敗',nav:'給食当番で失敗',num:76,attrs:['ath','soc'],goals:['失敗を直したい','助けを言いたい','責任を果たしたい'],chapters:['給食当番の時間','失敗した','直して続ける'],locations:['給食室','教室','教室'],base:['dropTray','panicServe','messServe','anger','ignore'],
+ start:{mind:4,energy:3},
+ monsters:[{name:'失敗のプレッシャー',hp:5,power:1,turns:4,look:'失敗が、重い。'},{name:'みんなのお腹',hp:5,power:1,turns:4,look:'みんなが、待っている。'},{name:'やり直す勇気',hp:6,power:2,turns:4,look:'直すには、勇気がいる。'}],
+ talk:[['wantHelp2','「助けて」と言う','助けを、求める。'],['askMate2','当番に聞く','一緒の当番に、聞く。'],['laughDuty2','「ミスった」と言う','失敗を、言う。']],
+ think:[['dutyFail','失敗した','配るのを、失敗した。'],['shameD','恥ずかしい','みんなの前で、失敗した。'],['wantFix','直したい','失敗を、直したい。']],
+ reasonKeys:['dutyFail','shameD','wantFix'],
+ stageGrants:[['wantHelp','askMate','laughDuty'],['fixServe','carryCareful','redoDuty','dutyShame','panicServe']],
+ subs:[
+  {title:'一緒の当番が「手伝うよ」と言った',text:'仲間がいると、直せる。',stat:'soc',min:0,good:{text:'「ありがとう」と言えた。',rep:1,mind:1},ok:{text:'早く直せた。',mind:1}},
+  {title:'みんなが「早く食べたい」と待っている',text:'待たせると、プレッシャー。',stat:'ath',min:0,good:{text:'落ち着いて配れた。',mind:1},ok:{text:'少しずつ直した。',mind:1}}
+ ],
+ onExplore(s,key){const out={text:'',card:null};
+  if(key==='wantHelp2'){s.flags.helped=true;relation(s,'「助けて」と言ったら、一緒の当番が「いいよ」と手伝ってくれた。');out.text='「助けて」\n「いいよ、手伝う」';out.card='wantHelp'}
+  if(key==='askMate2'){s.flags.asked=true;out.text='一緒の当番に聞いた。\n「こっちは私がやるね」';out.card='askMate'}
+  if(key==='laughDuty2'){s.flags.laughed=true;out.text='「ごめん、ミスった」と言った。\n「大丈夫、手伝うよ」';out.card='laughDuty'}
+  if(key==='dutyFail'){s.reason='dutyFail';out.text='配るのを、失敗した。\n「配り直す」「慎重に」で、直そう。';out.card='fixServe'}
+  if(key==='shameD'){s.reason='shameD';out.text='みんなの前で、失敗した。\n「ミスった」「恥」で、気持ちを出そう。';out.card='laughDuty'}
+  if(key==='wantFix'){s.reason='wantFix';out.text='失敗を、直したい。\n「助けて」「やり直す」で、動こう。';out.card='wantHelp'}
+  return out;
+ },
+ onPlay(s,id){const f=s.flags;
+  if(id==='wantHelp'){f.helped2=true;return{text:'「助けて」と、言った。',meaning:'助けては、勇気。'}}
+  if(id==='askMate'){f.asked2=true;return{text:'当番の子に、聞いた。',meaning:'聞くと、分かる。'}}
+  if(id==='laughDuty'){f.laughed2=true;return{text:'「ミスった」と、言った。',meaning:'ミスを言うは、正直。'}}
+  if(id==='fixServe'){f.fixed=true;return{text:'配り直した。',meaning:'直すは、責任。'}}
+  if(id==='carryCareful'){f.carried=true;return{text:'慎重に、運んだ。',meaning:'慎重は、失敗を防ぐ。'}}
+  if(id==='redoDuty'){f.redone=true;return{text:'もう一度、やり直した。',meaning:'直すは、挽回。'}}
+  if(id==='dutyShame'){f.faced=true;return{text:'失敗の恥を、認めた。',meaning:'認めると、分かる。'}}
+  if(id==='dropTray'){f.dropped=true;return{text:'トレイを、落とした。',meaning:'落とすと、みんな待つ。'}}
+  if(id==='panicServe'){f.panicked=true;return{text:'慌てて、配った。',meaning:'慌ては、また失敗。'}}
+  if(id==='messServe'){f.messed=true;return{text:'配るのを、間違えた。',meaning:'間違いは、直せる。'}}
+  return{text:'',meaning:''};
+ },
+ watch(s){return s.stage===0?'失敗は、みんなある。':s.stage===1?'助けては、勇気。':'直すは、責任。'},
+ scene(s){const f=s.flags;
+  if(s.stage===0)return{narrative:'給食当番の時間。トレイを落として、配るのを失敗した。',speaker:'給食当番の子',quote:'大丈夫？',look:'汁が、こぼれている。',self:'失敗した…',hint:'失敗で、何がつらい？'};
+  if(s.stage===1)return{narrative:'みんなが待っている。直すか、止まるか。',speaker:'給食当番の子',quote:'一緒にやろう',look:'みんなが、待っている。',self:s.reason==='shameD'?'恥ずかしい…':s.reason==='wantFix'?'直したい…':'失敗した…',hint:'助けて・聞く・ミスった、方法はある。'};
+  return{narrative:'失敗を、直して続ける。',speaker:'給食当番の子',quote:f.helped2||f.fixed?'「おかげで間に合った」':'「大丈夫？」',look:'給食が、並んでいる。',self:f.helped2||f.fixed||f.carried?'直して続けた。':'まだ、止まってる。',hint:'配り直す・慎重に・直す、選ぼう。'};
+ },
+ progress(s){const f=s.flags;return f.fixed||f.carried||f.redone?3:f.helped2||f.asked2||f.laughed2?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.fixed||f.redone?'直して続けた。':f.helped2||f.asked2?'助けを言えた。':'まだ、止まってる。助けて・聞く・直す、方法はある。'}
 }
 };
 

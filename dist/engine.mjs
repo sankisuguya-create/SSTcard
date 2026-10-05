@@ -608,6 +608,16 @@ export const cards={
  askSheet:{title:'先生にプリントをもらう',kind:'talk',label:'プリントをもらう',cost:1,atk:2,attr:'study',up:'study',desc:'休んだ分のプリントを、もらう。',hint:'もらうと、復習できる',icon:'cards'},
  askClassmate:{title:'隣の人に「ここ」と聞く',kind:'talk',label:'隣に聞く',cost:1,atk:2,attr:'soc',up:'soc',desc:'隣の人に、「ここって」と聞く。',hint:'聞くは、失礼じゃない',icon:'people'},
  ownPace4:{title:'無理せず追いつく',kind:'think',label:'自分のペース',cost:1,atk:2,attr:'study',up:'study',desc:'焦らず、自分のペースで追いつく。',hint:'ペースが、続く',icon:'clock'},
+ quietStay:{title:'黙ったまま過ごす',kind:'think',label:'黙ったまま',cost:0,strain:1,atk:1,attr:'soc',desc:'何も言わず、黙ったまま過ごす。',hint:'黙ると、置いていかれる',icon:'eye'},
+ nodOnly:{title:'頷くだけで済ませる',kind:'think',label:'頷くだけ',cost:0,strain:1,atk:1,attr:'soc',desc:'意見を言わず、頷くだけにする。',hint:'頷くだけでは、伝わらない',icon:'check'},
+ smallIdea:{title:'小さな意見を一つ言う',kind:'talk',label:'小さな意見',cost:1,atk:2,attr:'soc',up:'soc',desc:'小さな意見でいいから、一つ言う。',hint:'一言は、参加の始まり',icon:'message'},
+ askQ2:{title:'質問だけしてみる',kind:'talk',label:'質問だけ',cost:1,atk:2,attr:'soc',up:'soc',desc:'「これはどう？」と、質問だけ。',hint:'質問も、意見の一つ',icon:'ear'},
+ writeIdea:{title:'付箋に書いて出す',kind:'think',label:'付箋に書く',cost:1,atk:2,attr:'study',up:'study',desc:'言えないから、付箋に書いて出す。',hint:'書くと、伝えられる',icon:'pen'},
+ askSpace:{title:'「私も言っていい？」と聞く',kind:'talk',label:'言っていい？',cost:1,atk:2,attr:'soc',up:'soc',desc:'「私も言っていい？」と、隙間を聞く。',hint:'聞くと、場が開く',icon:'hand'},
+ sayOne:{title:'一言だけ口に出す',kind:'talk',label:'一言だけ',cost:1,atk:2,attr:'soc',up:'soc',desc:'考えたことの、一言だけ出す。',hint:'一言も、勇気',icon:'spark'},
+ agreeOut:{title:'「私もそう思う」と同調',kind:'talk',label:'同調する',cost:1,atk:1,attr:'soc',desc:'「私もそう思う」と、同調する。',hint:'同調は、入口',icon:'people'},
+ listenRole:{title:'聞く役を果たす',kind:'think',label:'聞く役',cost:1,atk:2,attr:'soc',up:'soc',desc:'話せなくても、聞く役を果たす。',hint:'聞くのも、貢献',icon:'ear'},
+ shareOpinion:{title:'自分の考えを口にする',kind:'talk',label:'考えを言う',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'自分の考えを、口にする。',hint:'言うのは、勇気',icon:'heart'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -3495,6 +3505,48 @@ sickReturn:{title:'休み明けでついていけない',nav:'休み明けにつ
  },
  progress(s){const f=s.flags;return f.caught||f.ownP4||f.homeS?3:f.copied||f.askedC2||f.toldB2||f.askedS?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.caught||f.ownP4?'追いつけてきた。':f.copied||f.askedC2?'方法を、見つけた。':'まだ、遅れたまま。聞く・借りる・正直、方法はある。'}
+},
+quietGroup:{title:'グループで何も言えない',nav:'グループで言えない',num:64,attrs:['soc'],goals:['一言でも発言したい','聞く役でも貢献したい','自分の考えを伝えたい'],chapters:['グループワークが始まる','発言するか黙るか','自分の声を出す'],locations:['教室','教室','教室'],base:['quietStay','nodOnly','agreeOut','anger','ignore'],
+ start:{mind:4,energy:3},
+ monsters:[{name:'発言の壁',hp:5,power:1,turns:4,look:'発言が、できない。'},{name:'黙りの中',hp:5,power:1,turns:4,look:'黙っていると、置いていかれる。'},{name:'自分の声',hp:6,power:2,turns:4,look:'自分の声で、話したい。'}],
+ talk:[['smallIdea2','小さな意見を言う','一言だけ、発言。'],['askSpace2','「言っていい？」と聞く','隙間を、聞く。'],['shareOpinion2','自分の考えを言う','考えを、口にする。']],
+ think:[['cantSpeak','発言できない','言いたいのに、言えない。'],['fearSpeak','外れてるかもで怖い','変に思われそうで怖い。'],['wantSpeak','ちゃんと話したい','本当は、発言したい。']],
+ reasonKeys:['cantSpeak','fearSpeak','wantSpeak'],
+ stageGrants:[['smallIdea','askQ2','writeIdea'],['askSpace','sayOne','listenRole','shareOpinion']],
+ subs:[
+  {title:'「あなたはどう思う？」と聞かれた',text:'意見を、求められた。',stat:'soc',min:0,good:{text:'「こう思う」って言えた。',rep:1,mind:1},ok:{text:'場が開いた。',mind:1}},
+  {title:'小さな意見を採用してもらえた',text:'言ったことが、役に立った。',stat:'study',min:0,good:{text:'「言ってよかった」と思えた。',mind:1},ok:{text:'自信になった。',mind:1}}
+ ],
+ onExplore(s,key){const out={text:'',card:null};
+  if(key==='smallIdea2'){s.flags.saidI=true;relation(s,'一言言ったら、「いいね」と言ってもらえた。');out.text='「私は、こう思う」\n「いいね、それ」';out.card='smallIdea'}
+  if(key==='askSpace2'){s.flags.askedSp=true;out.text='「私も言っていい？」\n「もちろん、聞きたい」';out.card='askSpace'}
+  if(key==='shareOpinion2'){s.flags.shared=true;relation(s,'自分の考えを言ったら、聞いてもらえた。');out.text='「私の考えだけど…」\n「うん、聞かせて」';out.card='shareOpinion'}
+  if(key==='cantSpeak'){s.reason='cantSpeak';out.text='言いたいのに、言えない。\n「一言だけ」「質問だけ」で始めよう。';out.card='sayOne'}
+  if(key==='fearSpeak'){s.reason='fearSpeak';out.text='変に思われそうで、怖い。\n「付箋に書く」「聞く役」で参加しよう。';out.card='writeIdea'}
+  if(key==='wantSpeak'){s.reason='wantSpeak';out.text='本当は、発言したい。\n「小さな意見」「一言」で、場を作ろう。';out.card='smallIdea'}
+  return out;
+ },
+ onPlay(s,id){const f=s.flags;
+  if(id==='smallIdea'){f.saidI2=true;return{text:'小さな意見を、言った。',meaning:'一言は、参加の始まり。'}}
+  if(id==='askQ2'){f.askedQ=true;return{text:'質問だけ、してみた。',meaning:'質問も、意見の一つ。'}}
+  if(id==='writeIdea'){f.wroteI=true;return{text:'付箋に、書いて出した。',meaning:'書くと、伝えられる。'}}
+  if(id==='askSpace'){f.askedSp2=true;return{text:'「言っていい？」と、聞いた。',meaning:'聞くと、場が開く。'}}
+  if(id==='sayOne'){f.saidOne=true;return{text:'一言だけ、口に出した。',meaning:'一言も、勇気。'}}
+  if(id==='agreeOut'){f.agreed=true;return{text:'「私もそう思う」と、言った。',meaning:'同調は、入口。'}}
+  if(id==='listenRole'){f.listened=true;return{text:'聞く役を、果たした。',meaning:'聞くのも、貢献。'}}
+  if(id==='shareOpinion'){f.sharedOp=true;return{text:'自分の考えを、言った。',meaning:'言うのは、勇気。'}}
+  if(id==='quietStay'){f.quiet=true;return{text:'黙ったまま、過ごした。',meaning:'黙ると、置いていかれる。'}}
+  if(id==='nodOnly'){f.nodded=true;return{text:'頷くだけで、済ませた。',meaning:'頷くだけでは、伝わらない。'}}
+  return{text:'',meaning:''};
+ },
+ watch(s){return s.stage===0?'黙ってしまうのは、みんなある。':s.stage===1?'一言は、参加の始まり。':'聞くのも、貢献。'},
+ scene(s){const f=s.flags;
+  if(s.stage===0)return{narrative:'グループワーク。みんなが話し合う中、自分は黙っている。',speaker:'グループのリーダー',quote:'みんなの意見、聞かせて',look:'みんなが、話し合っている。',self:'言えない…',hint:'グループで言えなくて、何がつらい？'};
+  if(s.stage===1)return{narrative:'発言するか、黙るか。',speaker:'グループのリーダー',quote:'あなたは？',look:'自分に、目が向く。',self:s.reason==='fearSpeak'?'変に思われそう…':s.reason==='wantSpeak'?'話したい…':'言えない…',hint:'一言・質問・付箋・聞く、方法はある。'};
+  return{narrative:'自分の声を、出してみる。',speaker:'グループのリーダー',quote:f.sharedOp||f.saidOne?'「いい意見だね」':'「どう？」',look:'場が、待っている。',self:f.sharedOp||f.saidOne||f.saidI2?'発言できた。':'まだ、黙ったまま。',hint:'考え・一言・同調・聞く役、選ぼう。'};
+ },
+ progress(s){const f=s.flags;return f.sharedOp||f.saidOne||f.listened?3:f.saidI2||f.askedQ||f.wroteI||f.askedSp2?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.sharedOp||f.saidOne?'発言できた。':f.saidI2||f.askedQ?'一言、言えた。':'まだ、黙ったまま。一言・質問・聞く、方法はある。'}
 }
 };
 

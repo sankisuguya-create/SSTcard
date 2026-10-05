@@ -748,6 +748,17 @@ export const cards={
  wantRun2:{title:'走りたい気持ちを認める',kind:'think',label:'走りたい',cost:1,atk:2,attr:'ath',up:'ath',desc:'走りたい気持ちを、認める。',hint:'認めると、動ける',icon:'spark'},
  benchWait:{title:'ベンチで待つ',kind:'think',label:'ベンチで待つ',cost:1,atk:2,attr:'ath',up:'ath',desc:'ベンチで、待つ。',hint:'待つは、支える',icon:'flag'},
  tryHarder:{title:'もっとがんばる',kind:'think',label:'もっとがんばる',cost:1,atk:2,attr:'ath',up:'ath',desc:'もっと、がんばる。',hint:'がんばりは、未来',icon:'up'},
+ penStops:{title:'手が止まる',kind:'think',label:'手が止まる',cost:0,strain:1,atk:1,attr:'study',desc:'問題が分からなくて、手が止まる。',hint:'止まると、時間が迫る',icon:'eye'},
+ brainBlank:{title:'頭が真っ白',kind:'think',label:'真っ白',cost:0,strain:1,atk:1,attr:'study',desc:'頭が、真っ白になる。',hint:'真っ白は、パニック',icon:'bolt'},
+ freezePanic:{title:'あせってさらに止まる',kind:'think',label:'あせる',cost:0,strain:1,atk:1,attr:'study',desc:'あせって、さらに手が止まる。',hint:'あせりは、悪循環',icon:'bolt'},
+ breatheTest:{title:'一度深呼吸する',kind:'think',label:'深呼吸',cost:1,atk:2,attr:'study',up:'study',desc:'一度、深呼吸する。',hint:'深呼吸は、頭を戻す',icon:'spark'},
+ skipReturn:{title:'あとで戻る',kind:'think',label:'あとで戻る',cost:1,atk:2,attr:'study',up:'study',desc:'分からない所は、あとで戻る。',hint:'あと戻りは、賢い',icon:'clock'},
+ rememberStudy:{title:'勉強したのを思い出す',kind:'think',label:'勉強を思い出す',cost:1,atk:2,attr:'study',up:'study',desc:'勉強したのを、思い出す。',hint:'思い出すは、自信',icon:'book'},
+ easyFirst2:{title:'できる問題からやる',kind:'think',label:'できる問題から',cost:1,atk:2,attr:'study',up:'study',desc:'できる問題から、やる。',hint:'できる問題は、自信',icon:'check'},
+ calmRitual:{title:'心を落ち着ける決まり',kind:'think',label:'落ち着く決まり',cost:1,atk:2,attr:'ath',up:'ath',desc:'心を落ち着ける、決まり。',hint:'決まりは、安心',icon:'heart'},
+ lookClock:{title:'時計を見て計画する',kind:'think',label:'時計を見る',cost:1,atk:2,attr:'study',up:'study',desc:'時計を見て、計画する。',hint:'時計は、計画',icon:'clock'},
+ keepWriting:{title:'とにかく書き続ける',kind:'think',label:'書き続ける',cost:1,atk:2,attr:'ath',up:'ath',desc:'とにかく、書き続ける。',hint:'書き続けるは、進む',icon:'pen'},
+ askQuiet:{title:'そっと手を挙げて聞く',kind:'talk',label:'手を挙げて聞く',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'そっと手を挙げて、先生に聞く。',hint:'聞くは、勇気',icon:'hand'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -4223,6 +4234,49 @@ notPicked:{title:'運動会の出場者に選ばれなかった',nav:'選ばれ�
  },
  progress(s){const f=s.flags;return f.cheered2||f.helped2||f.next?3:f.faced||f.valued?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.cheered2||f.helped2?'貢献できた。':f.faced||f.valued?'気持ちを認めた。':'まだ、寂しがってる。応援・係・認める、方法はある。'}
+},
+testFreeze:{title:'テスト中に手が止まる',nav:'手が止まる',num:78,attrs:['study'],goals:['落ち着いて続けたい','分からなくても進みたい','時間を使い切りたい'],chapters:['テストが始まる','手が止まる','落ち着いて続ける'],locations:['教室','教室','教室'],base:['penStops','brainBlank','freezePanic','anger','ignore'],
+ start:{mind:4,energy:3},
+ monsters:[{name:'真っ白のパニック',hp:5,power:1,turns:4,look:'頭が、真っ白。'},{name:'時計のプレッシャー',hp:5,power:1,turns:4,look:'時間が、迫る。'},{name:'落ち着きの取り戻し',hp:6,power:2,turns:4,look:'落ち着きを、取り戻す。'}],
+ talk:[['tellFreeze2','「止まった」と言う','止まったと、言う。'],['askHow2','「どうすれば」と思う','対処を、考える。'],['selfTalk','「大丈夫」と自分に言う','自分に、声をかける。']],
+ think:[['blankNow','真っ白になる','分からなくて、真っ白。'],['timePressure','時間が迫る','時間が、なくなる。'],['wantKeep','続けたい','続けて、終わらせたい。']],
+ reasonKeys:['blankNow','timePressure','wantKeep'],
+ stageGrants:[['breatheTest','rememberStudy','calmRitual'],['skipReturn','easyFirst2','lookClock','keepWriting','freezePanic']],
+ subs:[
+  {title:'隣の子が落ち着いて書いている',text:'周りが書いてると、あせる。',stat:'study',min:0,good:{text:'「私も書ける」と思えた。',mind:1},ok:{text:'少し落ち着いた。',mind:1}},
+  {title:'「あと10分」と言われた',text:'時間が迫る。',stat:'study',min:0,good:{text:'できる問題を先にやった。',mind:1},ok:{text:'少し進んだ。',mind:1}}
+ ],
+ onExplore(s,key){const out={text:'',card:null};
+  if(key==='tellFreeze2'){s.flags.told=true;relation(s,'そっと手を挙げて「ここが分かりません」と言ったら、先生がヒントをくれた。');out.text='そっと手を挙げた。\n「どこが分からないか、教えて」';out.card='askQuiet'}
+  if(key==='askHow2'){s.flags.asked=true;out.text='「どうすればいい？」と、考えた。\n「深呼吸」「できる問題から」';out.card='easyFirst2'}
+  if(key==='selfTalk'){s.flags.self=true;relation(s,'「大丈夫、ゆっくり」と自分に言い聞かせた。');out.text='「大丈夫、ゆっくり」\n自分に、声をかけた。';out.card='calmRitual'}
+  if(key==='blankNow'){s.reason='blankNow';out.text='分からなくて、真っ白。\n「深呼吸」「思い出す」で、戻そう。';out.card='breatheTest'}
+  if(key==='timePressure'){s.reason='timePressure';out.text='時間が、なくなる。\n「時計」「あとで戻る」で、計画しよう。';out.card='lookClock'}
+  if(key==='wantKeep'){s.reason='wantKeep';out.text='続けて、終わらせたい。\n「できる問題」「書き続ける」で、進もう。';out.card='easyFirst2'}
+  return out;
+ },
+ onPlay(s,id){const f=s.flags;
+  if(id==='breatheTest'){f.breathed=true;return{text:'一度、深呼吸した。',meaning:'深呼吸は、頭を戻す。'}}
+  if(id==='skipReturn'){f.skipped=true;return{text:'あとで、戻った。',meaning:'あと戻りは、賢い。'}}
+  if(id==='rememberStudy'){f.remembered=true;return{text:'勉強したのを、思い出した。',meaning:'思い出すは、自信。'}}
+  if(id==='easyFirst2'){f.easy=true;return{text:'できる問題から、やった。',meaning:'できる問題は、自信。'}}
+  if(id==='calmRitual'){f.calmed=true;return{text:'心を、落ち着けた。',meaning:'決まりは、安心。'}}
+  if(id==='lookClock'){f.looked=true;return{text:'時計を見て、計画した。',meaning:'時計は、計画。'}}
+  if(id==='keepWriting'){f.writing=true;return{text:'とにかく、書き続けた。',meaning:'書き続けるは、進む。'}}
+  if(id==='askQuiet'){f.askedQ=true;return{text:'そっと手を挙げて、聞いた。',meaning:'聞くは、勇気。'}}
+  if(id==='penStops'){f.stopped=true;return{text:'手が、止まった。',meaning:'止まると、時間が迫る。'}}
+  if(id==='brainBlank'){f.blank=true;return{text:'頭が、真っ白になった。',meaning:'真っ白は、パニック。'}}
+  if(id==='freezePanic'){f.panicked=true;return{text:'あせって、さらに止まった。',meaning:'あせりは、悪循環。'}}
+  return{text:'',meaning:''};
+ },
+ watch(s){return s.stage===0?'止まるは、みんなある。':s.stage===1?'深呼吸は、頭を戻す。':'書き続けるは、進む。'},
+ scene(s){const f=s.flags;
+  if(s.stage===0)return{narrative:'テストの途中。分からない問題で、手が止まった。',speaker:'テスト監督の先生',quote:'時間は残り15分です',look:'時計が、進んでいる。',self:'手が止まった…',hint:'止まって、何がつらい？'};
+  if(s.stage===1)return{narrative:'真っ白か、続けるか。',speaker:'テスト監督の先生',quote:'あと10分',look:'問題が、残っている。',self:s.reason==='timePressure'?'時間が…':s.reason==='wantKeep'?'続けたい…':'真っ白…',hint:'深呼吸・できる問題・時計、方法はある。'};
+  return{narrative:'落ち着いて、続ける。',speaker:'テスト監督の先生',quote:f.easy||f.breathed?'「あと少し、がんばって」':'「あと10分」',look:'テストが、終わろうとしている。',self:f.easy||f.breathed||f.writing?'続けられた。':'まだ、止まってる。',hint:'深呼吸・できる問題・書き続ける、選ぼう。'};
+ },
+ progress(s){const f=s.flags;return f.easy||f.writing||f.skipped?3:f.breathed||f.calmed||f.looked?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.easy||f.writing?'続けられた。':f.breathed||f.calmed?'落ち着いた。':'まだ、止まってる。深呼吸・できる問題・時計、方法はある。'}
 }
 };
 

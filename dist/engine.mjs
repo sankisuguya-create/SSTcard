@@ -708,6 +708,16 @@ export const cards={
  askRule:{title:'「どう並ぶの？」と聞く',kind:'talk',label:'どう並ぶ？',cost:1,atk:2,attr:'soc',up:'soc',desc:'「どう並ぶの？」と、聞く。',hint:'聞くと、分かる',icon:'ear'},
  standQuiet:{title:'静かに自分の場所へ',kind:'think',label:'静かに場所へ',cost:1,atk:2,attr:'ath',up:'ath',desc:'静かに、自分の場所に立つ。',hint:'静かは、場を保つ',icon:'flag'},
  wantFirst:{title:'「前に立ちたい」を認める',kind:'think',label:'前に立ちたい',cost:1,atk:2,attr:'soc',up:'soc',desc:'前に立ちたい気持ちを、認める。',hint:'認めると、分かる',icon:'puzzle'},
+ argueBack:{title:'言い返して言い合い',kind:'talk',label:'言い返す',cost:0,strain:1,atk:1,attr:'soc',desc:'言い返して、言い合いになる。',hint:'言い合いは、悪化する',icon:'bolt'},
+ stopTalk:{title:'口を聞かない',kind:'think',label:'口を聞かない',cost:0,strain:1,atk:1,attr:'soc',desc:'仲良しと、口を聞かなくなる。',hint:'聞かないと、終われない',icon:'eye'},
+ coolDown2:{title:'少し離れて頭を冷やす',kind:'think',label:'頭を冷やす',cost:1,atk:2,attr:'ath',up:'ath',desc:'少し離れて、頭を冷やす。',hint:'冷やすと、分かる',icon:'clock'},
+ thinkFault:{title:'自分の悪いところを考える',kind:'think',label:'自分を考える',cost:1,atk:2,attr:'study',up:'study',desc:'自分の悪いところを、考える。',hint:'考えると、分かる',icon:'puzzle'},
+ sorryFirst:{title:'先に「ごめん」と言う',kind:'talk',label:'先にごめん',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'先に、「ごめん」と言う。',hint:'先にごめんは、強さ',icon:'heart'},
+ waitTiming:{title:'良いタイミングを待つ',kind:'think',label:'タイミング待つ',cost:1,atk:2,attr:'ath',up:'ath',desc:'良いタイミングを、待つ。',hint:'待つと、伝わる',icon:'clock'},
+ sorryNote:{title:'手紙に気持ちを書く',kind:'think',label:'手紙に書く',cost:1,atk:2,attr:'study',up:'study',desc:'手紙に、気持ちを書く。',hint:'書くと、伝わる',icon:'pen'},
+ inviteBack:{title:'「また遊ぼう」と誘う',kind:'talk',label:'また遊ぼう',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'「また遊ぼう」と、誘う。',hint:'誘うは、関係修復',icon:'people'},
+ hotHead:{title:'頭に血が上る',kind:'think',label:'頭に血',cost:0,strain:1,atk:1,attr:'ath',desc:'頭に血が上り、感情で動く。',hint:'血は、悪化させる',icon:'bolt'},
+ wantMakeUp2:{title:'仲直りしたい気持ち',kind:'think',label:'仲直りしたい',cost:1,atk:2,attr:'soc',up:'soc',desc:'仲直りしたい気持ちを、認める。',hint:'認めると、動ける',icon:'heart'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -4015,6 +4025,48 @@ lineBack:{title:'並ぶとき後ろに回される',nav:'後ろに回される',
  },
  progress(s){const f=s.flags;return f.toldL3||f.unfair2||f.calm?3:f.saidF2||f.asked?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.toldL3||f.unfair2?'自分の場所に戻った。':f.saidF2||f.asked?'伝えた。':'まだ、後ろにいる。先にいた・不公平・先生、方法はある。'}
+},
+bffFight:{title:'仲良しとけんか',nav:'仲良しとけんか',num:74,attrs:['soc'],goals:['仲直りしたい','自分を見つめたい','関係を戻したい'],chapters:['仲良しと言い争い','口を聞かない関係','仲直りしたい'],locations:['教室','廊下','教室'],base:['argueBack','stopTalk','hotHead','anger','ignore'],
+ start:{mind:4,energy:3},
+ monsters:[{name:'口を聞かない関係',hp:5,power:1,turns:4,look:'口を聞かなく、なった。'},{name:'言い争いの熱',hp:5,power:1,turns:4,look:'熱く、なってる。'},{name:'仲直りの勇気',hp:6,power:2,turns:4,look:'仲直りには、勇気がいる。'}],
+ talk:[['sorryFirst2','先に「ごめん」と言う','先に、ごめん。'],['inviteBack2','「また遊ぼう」と誘う','関係を、戻す。'],['thinkFault2','自分を考えて言う','自分の、悪いところを。']],
+ think:[['headHot','頭に血が上る','感情で、動いちゃう。'],['cantTalk','口を聞かない','口を、聞かなくなった。'],['wantMakeUp3','仲直りしたい','仲直り、したい。']],
+ reasonKeys:['headHot','cantTalk','wantMakeUp3'],
+ stageGrants:[['coolDown2','thinkFault','waitTiming'],['sorryFirst','sorryNote','inviteBack','wantMakeUp2','argueBack']],
+ subs:[
+  {title:'仲良しが黙っている',text:'黙っていても、関係は止まる。',stat:'soc',min:0,good:{text:'自分から話せた。',mind:1},ok:{text:'少しずつ戻った。',mind:1}},
+  {title:'タイミングが合った',text:'待つと、伝わる。',stat:'ath',min:0,good:{text:'「ごめんね」と言えた。',rep:1,mind:1},ok:{text:'仲直りできた。',mind:1}}
+ ],
+ onExplore(s,key){const out={text:'',card:null};
+  if(key==='sorryFirst2'){s.flags.sorry=true;relation(s,'先に「ごめん」と言ったら、「私も」と返ってきた。');out.text='「ごめんね」\n「私も、ごめん」';out.card='sorryFirst'}
+  if(key==='inviteBack2'){s.flags.invited=true;relation(s,'「また遊ぼう」と誘ったら、「うん」と笑ってくれた。');out.text='「また遊ぼう」\n「うん、遊ぼう」';out.card='inviteBack'}
+  if(key==='thinkFault2'){s.flags.thought=true;out.text='自分の悪いところを、考えて言った。\n「私のここ、悪かった」';out.card='thinkFault'}
+  if(key==='headHot'){s.reason='headHot';out.text='頭に血が、上る。\n「頭を冷やす」「待つ」で、落ち着こう。';out.card='coolDown2'}
+  if(key==='cantTalk'){s.reason='cantTalk';out.text='口を、聞かなくなった。\n「ごめん」「手紙」で、始めよう。';out.card='sorryFirst'}
+  if(key==='wantMakeUp3'){s.reason='wantMakeUp3';out.text='仲直り、したい。\n「誘う」「仲直りしたい」で、動こう。';out.card='inviteBack'}
+  return out;
+ },
+ onPlay(s,id){const f=s.flags;
+  if(id==='coolDown2'){f.cooled=true;return{text:'頭を、冷やした。',meaning:'冷やすと、分かる。'}}
+  if(id==='thinkFault'){f.thought2=true;return{text:'自分の悪いところを、考えた。',meaning:'考えると、分かる。'}}
+  if(id==='sorryFirst'){f.sorry2=true;return{text:'先に、「ごめん」と言った。',meaning:'先にごめんは、強さ。'}}
+  if(id==='waitTiming'){f.waited=true;return{text:'良いタイミングを、待った。',meaning:'待つと、伝わる。'}}
+  if(id==='sorryNote'){f.noted=true;return{text:'手紙に、気持ちを書いた。',meaning:'書くと、伝わる。'}}
+  if(id==='inviteBack'){f.invited2=true;return{text:'「また遊ぼう」と、誘った。',meaning:'誘うは、関係修復。'}}
+  if(id==='argueBack'){f.argued=true;return{text:'言い返して、言い合いになった。',meaning:'言い合いは、悪化する。'}}
+  if(id==='stopTalk'){f.stopped=true;return{text:'口を、聞かなくなった。',meaning:'聞かないと、終われない。'}}
+  if(id==='hotHead'){f.hot=true;return{text:'頭に血が、上った。',meaning:'血は、悪化させる。'}}
+  if(id==='wantMakeUp2'){f.wanted=true;return{text:'仲直りしたい気持ちを、認めた。',meaning:'認めると、動ける。'}}
+  return{text:'',meaning:''};
+ },
+ watch(s){return s.stage===0?'けんかは、みんなある。':s.stage===1?'先にごめんは、強さ。':'誘うは、関係修復。'},
+ scene(s){const f=s.flags;
+  if(s.stage===0)return{narrative:'仲良しと、言い争いをした。口を聞かなくなった。',speaker:'仲良しの友達',quote:'もう知らない',look:'距離が、できている。',self:'なんでこんなことに…',hint:'けんかで、何がつらい？'};
+  if(s.stage===1)return{narrative:'仲直りするか、このままか。',speaker:'仲良しの友達',quote:'…',look:'黙って、いる。',self:s.reason==='cantTalk'?'口を聞けない…':s.reason==='wantMakeUp3'?'仲直りしたい…':'頭に血が上る…',hint:'ごめん・手紙・待つ、方法はある。'};
+  return{narrative:'仲直りに、踏み出す。',speaker:'仲良しの友達',quote:f.sorry2||f.invited2?'「私も、ごめんね」':'「…」',look:'距離が、縮まろうとしている。',self:f.sorry2||f.invited2||f.noted?'仲直りできた。':'まだ、距離がある。',hint:'ごめん・誘う・書く、選ぼう。'};
+ },
+ progress(s){const f=s.flags;return f.sorry2||f.invited2?3:f.cooled||f.thought2||f.waited||f.noted?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.sorry2||f.invited2?'仲直りできた。':f.cooled||f.thought2?'落ち着いた。':'まだ、距離がある。ごめん・誘う・手紙、方法はある。'}
 }
 };
 

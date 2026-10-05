@@ -879,6 +879,16 @@ export const cards={
  sitUp2:{title:'姿勢を正す',kind:'think',label:'姿勢を正す',cost:1,atk:2,attr:'ath',up:'ath',desc:'姿勢を正して、目をさます。',hint:'姿勢は、覚醒',icon:'up'},
  planSleep:{title:'今夜の睡眠計画を立てる',kind:'think',label:'睡眠計画',cost:1,atk:2,attr:'study',up:'study',desc:'今夜の睡眠計画を、立てる。',hint:'計画は、予防',icon:'list'},
  morningPrep:{title:'朝の準備を思い出す',kind:'think',label:'朝の準備',cost:1,atk:2,attr:'study',up:'study',desc:'朝の準備を、思い出す。',hint:'思い出すは、対策',icon:'book'},
+ drillBell:{title:'訓練のベルが鳴る',kind:'think',label:'ベルが鳴る',cost:0,strain:1,atk:1,attr:'study',desc:'訓練のベルが、鳴る。',hint:'ベルは、心を揺らす',icon:'bolt'},
+ shakeFear:{title:'怖くて震える',kind:'think',label:'震える',cost:0,strain:1,atk:1,attr:'study',desc:'怖くて、体が震える。',hint:'震えると、動けない',icon:'bolt'},
+ runPanic:{title:'パニックで走り出す',kind:'think',label:'パニックで走る',cost:0,strain:1,atk:1,attr:'ath',desc:'パニックで、走り出す。',hint:'走ると、危ない',icon:'runner'},
+ hideUnder:{title:'机の下に隠れる',kind:'think',label:'机の下に隠れる',cost:1,atk:2,attr:'study',up:'study',desc:'机の下に、隠れる。',hint:'隠れるは、正しい行動',icon:'door'},
+ followRule:{title:'「お・は・し」を思い出す',kind:'think',label:'お・は・し',cost:1,atk:2,attr:'study',up:'study',desc:'「お・は・し」を、思い出す。',hint:'ルールは、道しるべ',icon:'list'},
+ calmWalk2:{title:'落ち着いて歩く',kind:'think',label:'落ち着いて歩く',cost:1,atk:2,attr:'ath',up:'ath',desc:'落ち着いて、歩く。',hint:'歩くは、安全',icon:'check'},
+ askTeacher4:{title:'「どこへ行くの？」と聞く',kind:'talk',label:'どこへ行くの？',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'「どこへ行くの？」と、聞く。',hint:'聞くは、確認',icon:'message'},
+ buddyHold:{title:'近くの友達と手をつなぐ',kind:'talk',label:'手をつなぐ',cost:1,atk:2,attr:'soc',up:'soc',desc:'近くの友達と、手をつなぐ。',hint:'つなぐは、安心',icon:'people'},
+ rememberRule:{title:'訓練の意味を思い出す',kind:'think',label:'訓練の意味',cost:1,atk:2,attr:'study',up:'study',desc:'訓練の意味を、思い出す。',hint:'意味は、納得',icon:'book'},
+ drillDone:{title:'訓練をやり遂げる',kind:'think',label:'やり遂げる',cost:1,atk:2,attr:'study',up:'study',desc:'訓練を、やり遂げる。',hint:'やり遂げるは、成長',icon:'flag'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -4901,6 +4911,48 @@ sleepyClass:{title:'授業中に眠い',nav:'授業で眠い',num:90,attrs:['stu
  },
  progress(s){const f=s.flags;return f.drank||f.washed||f.pinched||f.sat?3:f.told2||f.planned||f.prepped?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.drank||f.washed?'目が覚めた。':f.told2||f.planned?'正直に言えた。':'まだ、眠い。水・顔を洗う・睡眠計画、方法はある。'}
+},
+drillScare:{title:'避難訓練で不安になる',nav:'避難訓練の不安',num:91,attrs:['study','soc'],goals:['怖さを受け止めたい','正しく避難したい','訓練をやり遂げたい'],chapters:['ベルが鳴る','怖さと向き合う','正しく避難する'],locations:['教室','廊下','避難所'],base:['drillBell','shakeFear','runPanic','anger','ignore'],
+ start:{mind:4,energy:3},
+ monsters:[{name:'ベルの怖さ',hp:5,power:1,turns:4,look:'ベルが、怖い。'},{name:'揺れる不安',hp:5,power:1,turns:4,look:'不安で、揺れる。'},{name:'正しい避難',hp:6,power:2,turns:4,look:'正しく、避難する。'}],
+ talk:[['askTeacher5','「どこへ行くの？」と聞く','行き先を、聞く。'],['buddyHold2','友達と手をつなぐ','友達と、手をつなぐ。'],['tellScared2','「怖い」と伝える','怖いと、伝える。']],
+ think:[['feelScare','怖い','怖くて、震える。'],['wantSafe','安全に避難したい','安全に、避難したい。'],['runAway','逃げたい','逃げたい。']],
+ reasonKeys:['feelScare','wantSafe','runAway'],
+ stageGrants:[['hideUnder','followRule','calmWalk2'],['askTeacher4','buddyHold','rememberRule','drillDone','runPanic']],
+ subs:[
+  {title:'友達が「一緒に行こう」と手をつないだ',text:'友達は、支え。',stat:'soc',min:0,good:{text:'「ありがとう」と言えた。',rep:1,mind:1},ok:{text:'安心して歩けた。',mind:1}},
+  {title:'先生が「落ち着いてできてえらい」と言った',text:'落ち着きは、認められる。',stat:'study',min:0,good:{text:'「できた」と思えた。',rep:1,mind:1},ok:{text:'自信になった。',mind:1}}
+ ],
+ onExplore(s,key){const out={text:'',card:null};
+  if(key==='askTeacher5'){s.flags.asked=true;relation(s,'「どこへ行くの？」と聞いたら、「避難所だよ」と教えてくれた。');out.text='「どこへ行くの？」\n「避難所だよ」';out.card='askTeacher4'}
+  if(key==='buddyHold2'){s.flags.buddy=true;relation(s,'友達と手をつないだら、「一緒に行こう」と言ってくれた。');out.text='「（手をつなぐ）」\n「一緒に行こう」';out.card='buddyHold'}
+  if(key==='tellScared2'){s.flags.scared=true;relation(s,'「怖い」と伝えたら、「大丈夫、一緒にいるよ」と言ってくれた。');out.text='「怖い」\n「大丈夫、一緒にいるよ」';out.card='rememberRule'}
+  if(key==='feelScare'){s.reason='feelScare';out.text='怖くて、震える。\n「手をつなぐ」「怖い」で、向き合おう。';out.card='buddyHold'}
+  if(key==='wantSafe'){s.reason='wantSafe';out.text='安全に、避難したい。\n「お・は・し」「落ち着いて歩く」で、避難しよう。';out.card='followRule'}
+  if(key==='runAway'){s.reason='runAway';out.text='逃げたい。\n「机の下」「手をつなぐ」で、正しく避難しよう。';out.card='hideUnder'}
+  return out;
+ },
+ onPlay(s,id){const f=s.flags;
+  if(id==='hideUnder'){f.hid=true;return{text:'机の下に、隠れた。',meaning:'隠れるは、正しい行動。'}}
+  if(id==='followRule'){f.rule=true;return{text:'「お・は・し」を、思い出した。',meaning:'ルールは、道しるべ。'}}
+  if(id==='calmWalk2'){f.calm=true;return{text:'落ち着いて、歩いた。',meaning:'歩くは、安全。'}}
+  if(id==='askTeacher4'){f.asked2=true;return{text:'「どこへ行くの？」と、聞いた。',meaning:'聞くは、確認。'}}
+  if(id==='buddyHold'){f.held=true;return{text:'友達と、手をつないだ。',meaning:'つなぐは、安心。'}}
+  if(id==='rememberRule'){f.remembered=true;return{text:'訓練の意味を、思い出した。',meaning:'意味は、納得。'}}
+  if(id==='drillDone'){f.done=true;return{text:'訓練を、やり遂げた。',meaning:'やり遂げるは、成長。'}}
+  if(id==='drillBell'){f.bell=true;return{text:'訓練のベルが、鳴った。',meaning:'ベルは、心を揺らす。'}}
+  if(id==='shakeFear'){f.shake=true;return{text:'怖くて、震えた。',meaning:'震えると、動けない。'}}
+  if(id==='runPanic'){f.panic=true;return{text:'パニックで、走り出した。',meaning:'走ると、危ない。'}}
+  return{text:'',meaning:''};
+ },
+ watch(s){return s.stage===0?'怖いは、みんなある。':s.stage===1?'ルールは、道しるべ。':'やり遂げるは、成長。'},
+ scene(s){const f=s.flags;
+  if(s.stage===0)return{narrative:'突然、ベルが鳴る。避難訓練だ。体が震える。',speaker:'放送',quote:'これは訓練です。落ち着いて避難してください',look:'みんなが、動き出す。',self:'怖い…',hint:'ベルが鳴って、何がつらい？'};
+  if(s.stage===1)return{narrative:'走り出す、落ち着くか。',speaker:'放送',quote:'走らないで、歩いてください',look:'不安が、心を揺らす。',self:s.reason==='wantSafe'?'安全に避難したい…':s.reason==='runAway'?'逃げたい…':'怖い…',hint:'机の下・お・は・し・手をつなぐ、方法はある。'};
+  return{narrative:'正しく避難して、やり遂げる。',speaker:'担任の先生',quote:f.hid||f.calm||f.done?'「落ち着いてできてえらい」':'「走らないで」',look:'避難所が、待っている。',self:f.hid||f.calm||f.done?'正しく避難できた。':'まだ、怖い。',hint:'手をつなぐ・落ち着いて歩く・やり遂げる、選ぼう。'};
+ },
+ progress(s){const f=s.flags;return f.done||f.calm?3:f.hid||f.rule||f.held?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.done?'やり遂げた。':f.calm||f.hid?'避難できた。':'まだ、怖い。机の下・お・は・し・手をつなぐ、方法はある。'}
 }
 };
 

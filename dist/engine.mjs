@@ -588,6 +588,16 @@ export const cards={
  ownClean:{title:'「自分の担当」と考える',kind:'think',label:'自分の担当',cost:1,atk:2,attr:'study',up:'study',desc:'掃除は、自分の担当と考える。',hint:'担当は、やりがい',icon:'flag'},
  teamClean:{title:'「一緒にやろう」と声をかける',kind:'talk',label:'一緒に',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'「一緒にやろう」と、声をかける。',hint:'一緒なら、楽',icon:'people'},
  doneClean:{title:'「終わった」と報告する',kind:'talk',label:'終わった報告',cost:1,atk:2,attr:'soc',up:'soc',desc:'終わったら、「できました」と言う。',hint:'報告は、達成感',icon:'check'},
+ keepWait:{title:'何も言わず待ち続ける',kind:'think',label:'待ち続ける',cost:0,strain:1,atk:1,attr:'soc',desc:'言えずに、待ち続ける。',hint:'待つだけでは、戻らない',icon:'clock'},
+ forgetIt:{title:'もう諦めてしまう',kind:'think',label:'諦める',cost:0,strain:1,atk:1,attr:'soc',desc:'返してもらうのを、諦める。',hint:'諦めると、もやもや残る',icon:'eye'},
+ hintBack:{title:'「そろそろ」とほのめかす',kind:'talk',label:'ほのめかす',cost:1,atk:1,attr:'soc',desc:'「そろそろ使うから」と、ほのめかす。',hint:'遠回しは、伝わりにくい',icon:'ear'},
+ sayBack:{title:'「返して」とはっきり言う',kind:'talk',label:'返してと言う',cost:1,atk:2,attr:'soc',up:'soc',desc:'「返してほしい」と、はっきり言う。',hint:'はっきりは、失礼じゃない',icon:'message'},
+ askTeacher3:{title:'先生に相談する',kind:'talk',label:'先生に相談',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'「返してくれなくて」と、相談。',hint:'相談は、逃げじゃない',icon:'people'},
+ writeNote:{title:'手紙で伝える',kind:'think',label:'手紙で伝える',cost:1,atk:2,attr:'study',up:'study',desc:'言いにくいから、手紙に書く。',hint:'書くと、伝えられる',icon:'pen'},
+ setDate:{title:'「いつまでに」と約束する',kind:'talk',label:'期限を決める',cost:1,atk:2,attr:'soc',up:'soc',desc:'「いつまでに返す」を、決める。',hint:'期限は、安心',icon:'flag'},
+ ownBound:{title:'「私のもの」と考え直す',kind:'think',label:'自分のもの',cost:1,atk:2,attr:'study',up:'study',desc:'自分のものだから、返してもらう権利がある。',hint:'権利は、主張していい',icon:'check'},
+ stayKind:{title:'優しく返してと頼む',kind:'talk',label:'優しく頼む',cost:1,atk:2,attr:'soc',up:'soc',desc:'怒らず、優しく返してと言う。',hint:'優しくても、伝わる',icon:'sun'},
+ returnRule:{title:'次から貸す時は期限を決める',kind:'think',label:'次のルール',cost:1,atk:2,attr:'study',up:'study',desc:'貸す時、「いつ返す」を決める習慣。',hint:'ルールは、予防',icon:'list'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -3391,6 +3401,48 @@ cleanSkip:{title:'掃除当番、逃げたい',nav:'掃除をサボりたい',nu
  },
  progress(s){const f=s.flags;return f.doneC||f.ownedC||f.teamed2?3:f.smalledC||f.askedE2||f.toldT2||f.quick?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.doneC||f.ownedC?'掃除を、果たせた。':f.smalledC||f.quick?'小さく、始められた。':'まだ、面倒なまま。小さく・正直・一緒に、方法はある。'}
+},
+lendBack:{title:'貸したものを返してほしい',nav:'返してもらいたい',num:62,attrs:['soc'],goals:['返してほしいと言いたい','関係を壊さず伝えたい','次からはルールを決めたい'],chapters:['貸したのに戻らない','どう伝えるか','次の貸し借り'],locations:['教室','教室','教室'],base:['keepWait','forgetIt','hintBack','anger','ignore'],
+ start:{mind:4,energy:3},
+ monsters:[{name:'言い出せない',hp:5,power:1,turns:4,look:'言い出すのが、苦手。'},{name:'もやもや',hp:5,power:1,turns:4,look:'返してほしいのに、言えない。'},{name:'次の貸し借り',hp:6,power:2,turns:4,look:'また貸す時、どうする？'}],
+ talk:[['sayBack2','「返して」とはっきり言う','直接、伝える。'],['askTeacher4','先生に相談する','「返してくれなくて」と。'],['stayKind2','優しく返してと頼む','怒らず、優しく。']],
+ think:[['cantSay','言い出せない','返してと、言いにくい。'],['moyamoya','もやもやする','言えなくて、もやもや。'],['wantBack','ちゃんと返してほしい','本当は、返してほしい。']],
+ reasonKeys:['cantSay','moyamoya','wantBack'],
+ stageGrants:[['sayBack','writeNote','askTeacher3'],['setDate','ownBound','stayKind','returnRule']],
+ subs:[
+  {title:'「ごめん、忘れてた」と返してもらえた',text:'言ったら、素直に返ってきた。',stat:'soc',min:0,good:{text:'「返して」って言えた。',rep:1,mind:1},ok:{text:'戻ってきた。',mind:1}},
+  {title:'「私もよく貸しっぱなし」と友達が言った',text:'みんな、貸し借りで悩む。',stat:'soc',min:0,good:{text:'「普通なんだ」と思えた。',mind:1},ok:{text:'安心した。',mind:1}}
+ ],
+ onExplore(s,key){const out={text:'',card:null};
+  if(key==='sayBack2'){s.flags.saidB=true;relation(s,'「返して」と言ったら、素直に返してくれた。');out.text='「そろそろ返して」\n「あ、ごめん忘れてた」';out.card='sayBack'}
+  if(key==='askTeacher4'){s.flags.askedT4=true;relation(s,'相談したら、「ちゃんと言っていいよ」と言ってもらえた。');out.text='「返してくれなくて」\n「ちゃんと言っていいよ、君のものだから」';out.card='askTeacher3'}
+  if(key==='stayKind2'){s.flags.stayedK=true;out.text='「優しく言えばいい？」\n「うん、優しくていいよ」';out.card='stayKind'}
+  if(key==='cantSay'){s.reason='cantSay';out.text='返してと、言いにくい。\n「はっきり」「手紙」で、伝えよう。';out.card='sayBack'}
+  if(key==='moyamoya'){s.reason='moyamoya';out.text='言えなくて、もやもやする。\n「自分のもの」と考えて、権利を主張しよう。';out.card='ownBound'}
+  if(key==='wantBack'){s.reason='wantBack';out.text='本当は、返してほしい。\n「期限を決める」「優しく」で、実現しよう。';out.card='setDate'}
+  return out;
+ },
+ onPlay(s,id){const f=s.flags;
+  if(id==='sayBack'){f.saidB2=true;return{text:'「返して」と、はっきり言った。',meaning:'はっきりは、失礼じゃない。'}}
+  if(id==='writeNote'){f.wroteN=true;return{text:'手紙で、伝えた。',meaning:'書くと、伝えられる。'}}
+  if(id==='askTeacher3'){f.askedT5=true;return{text:'先生に、相談した。',meaning:'相談は、逃げじゃない。'}}
+  if(id==='setDate'){f.dated=true;return{text:'「いつまでに」と、決めた。',meaning:'期限は、安心。'}}
+  if(id==='ownBound'){f.ownedB=true;return{text:'「私のもの」と、考え直した。',meaning:'権利は、主張していい。'}}
+  if(id==='stayKind'){f.kindAsked=true;return{text:'優しく、返してと頼んだ。',meaning:'優しくても、伝わる。'}}
+  if(id==='returnRule'){f.ruled=true;return{text:'次からは、期限を決めることにした。',meaning:'ルールは、予防。'}}
+  if(id==='keepWait'){f.waited=true;return{text:'何も言わず、待ち続けた。',meaning:'待つだけでは、戻らない。'}}
+  if(id==='forgetIt'){f.forgot2=true;return{text:'諦めて、しまった。',meaning:'諦めると、もやもや残る。'}}
+  if(id==='hintBack'){f.hinted=true;return{text:'「そろそろ」と、ほのめかした。',meaning:'遠回しは、伝わりにくい。'}}
+  return{text:'',meaning:''};
+ },
+ watch(s){return s.stage===0?'言いにくいのは、みんなある。':s.stage===1?'はっきりは、失礼じゃない。':'ルールは、予防。'},
+ scene(s){const f=s.flags;
+  if(s.stage===0)return{narrative:'貸したものが、ずっと戻ってこない。言い出せない。',speaker:'心の声',quote:'返してって、言いにくい…',look:'貸した相手は、普通に使っている。',self:'もやもやする…',hint:'返してほしいのに、何がつらい？'};
+  if(s.stage===1)return{narrative:'どう伝えるか。はっきり言うか、優しく言うか、別の方法か。',speaker:'貸した相手',quote:'あれ、まだ持ってた？',look:'相手は、気づいていない。',self:s.reason==='moyamoya'?'もやもや…':s.reason==='wantBack'?'返してほしい…':'言いにくい…',hint:'はっきり・手紙・優しく、方法はある。'};
+  return{narrative:'返してもらえた。次からは、どうする？',speaker:'貸した相手',quote:f.dated||f.ruled?'「いつ返すか決めとくね」':'「ごめんね」',look:'自分のものが、戻ってきた。',self:f.dated||f.ruled||f.ownedB?'次は、ルールを決められる。':'まだ、言いにくいまま。',hint:'期限・権利・優しく・ルール、選ぼう。'};
+ },
+ progress(s){const f=s.flags;return f.dated||f.ruled||f.ownedB?3:f.saidB2||f.wroteN||f.askedT5||f.kindAsked?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.dated||f.ruled?'次の準備ができた。':f.saidB2||f.kindAsked?'返してと、言えた。':'まだ、言えないまま。はっきり・手紙・優しく、方法はある。'}
 }
 };
 

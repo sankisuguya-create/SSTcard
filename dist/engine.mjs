@@ -799,6 +799,16 @@ export const cards={
  laughItOff2:{title:'自分も笑いに変える',kind:'talk',label:'笑いに変える',cost:1,atk:2,attr:'soc',up:'soc',desc:'あだ名を、自分も笑いに変える。',hint:'笑いに変えるは、強さ',icon:'sun'},
  feelTeased:{title:'からかわれた感じ',kind:'think',label:'からかわれた',cost:0,strain:1,atk:1,attr:'soc',desc:'からかわれた感じがする。',hint:'からかいは、傷つく',icon:'bolt'},
  tellTeacher10:{title:'先生に「あだ名で」と相談',kind:'talk',label:'先生に相談',cost:1,atk:2,attr:'soc',up:'soc',desc:'先生に「あだ名で呼ばれる」と相談する。',hint:'相談は、助け',icon:'people'},
+ lostItem:{title:'大切なものがない',kind:'think',label:'ものがない',cost:0,strain:1,atk:1,attr:'soc',desc:'大切なものが、なくなった。',hint:'なくすと、胸が痛む',icon:'search'},
+ preciousGone:{title:'大事なものが消えた',kind:'think',label:'大事なものが消えた',cost:0,strain:1,atk:1,attr:'soc',desc:'大事なものが、消えた。',hint:'消えると、あせる',icon:'bolt'},
+ accuseTake:{title:'「誰かが取った」と決めつける',kind:'talk',label:'取った！',cost:0,strain:1,atk:1,attr:'soc',desc:'「誰かが取った」と、決めつける。',hint:'決めつけは、疑い合いになる',icon:'bolt'},
+ retracePath:{title:'通った道を思い出す',kind:'think',label:'道を思い出す',cost:1,atk:2,attr:'study',up:'study',desc:'通った道を、思い出す。',hint:'思い出すは、手がかり',icon:'search'},
+ lookCarefully:{title:'よく見て探す',kind:'think',label:'よく見る',cost:1,atk:2,attr:'study',up:'study',desc:'落ち着いて、よく見て探す。',hint:'よく見るは、発見',icon:'eye'},
+ tellLoss:{title:'「なくしちゃった」と言う',kind:'talk',label:'なくしちゃった',cost:1,bond:1,atk:2,attr:'soc',up:'soc',desc:'「なくしちゃった」と、言う。',hint:'言うと、助けが来る',icon:'message'},
+ askSeen:{title:'「見なかった？」と聞く',kind:'talk',label:'見なかった？',cost:1,atk:2,attr:'soc',up:'soc',desc:'「見なかった？」と、聞く。',hint:'聞くは、手がかり',icon:'ear'},
+ acceptGone:{title:'見つからなくても前を向く',kind:'think',label:'前を向く',cost:1,atk:2,attr:'ath',up:'ath',desc:'見つからなくても、前を向く。',hint:'前を向くは、強さ',icon:'flag'},
+ makeAgain:{title:'また集められると考える',kind:'think',label:'また集める',cost:1,atk:2,attr:'ath',up:'ath',desc:'また、集められると考える。',hint:'または、希望',icon:'sun'},
+ teacherHelp2:{title:'先生に探し方を相談',kind:'talk',label:'探し方相談',cost:1,atk:2,attr:'soc',up:'soc',desc:'先生に、探し方を相談する。',hint:'相談は、助け',icon:'people'},
  // ダークカード: ふだんの手札に混ざる、評判を下げて気持ちを楽にする選択肢。モンスターには効かない。
  anger:{title:'怒る',kind:'talk',label:'出す',cost:0,dark:1,heal:1,desc:'その場で、強い言葉をぶつける。',hint:'少し楽になるが、評判が下がる',icon:'bolt',text:'「うるさい！」と、強い言葉をぶつけた。\n少しすっきりした。でも、まわりの目は少し冷たい。',meaning:'出すと楽になる。でも、まわりからの評判は下がる。'},
  ignore:{title:'知らないふりをする',kind:'think',label:'やり過ごす',cost:0,dark:1,heal:1,desc:'見て見ぬふりをして、うずくまる。',hint:'気持ちは楽。でも、評判が下がる',icon:'eye',text:'知らないふりをして、その場をやり過ごした。\n気持ちは少し楽になった。でも、まわりの評判は下がった。',meaning:'見ないふりは一時的な楽。評判が下がると、つらい出来事が増える。'},
@@ -4485,6 +4495,48 @@ nickCall:{title:'嫌なあだ名を呼ばれる',nav:'あだ名を呼ばれる',
  },
  progress(s){const f=s.flags;return f.stop2||f.kind2||f.toldT2?3:f.hated||f.toldD||f.laughed?2:s.reason?1:0},
  situation(s){const f=s.flags;return f.stop2||f.kind2?'名前で呼ばれた。':f.hated||f.toldD?'気持ちを伝えた。':'まだ、あだ名のまま。やめて・名前で・相談、方法はある。'}
+},
+lostThing:{title:'大切なものをなくした',nav:'ものをなくした',num:83,attrs:['soc','study'],goals:['落ち着いて探したい','誰かを疑いたくない','気持ちを立て直したい'],chapters:['大切なものがない','あわてて探す','落ち着いて向き合う'],locations:['教室','校庭','教室'],base:['lostItem','preciousGone','accuseTake','anger','ignore'],
+ start:{mind:4,energy:3},
+ monsters:[{name:'なくした胸の穴',hp:5,power:1,turns:4,look:'なくして、胸に穴があいた。'},{name:'疑いの渦',hp:5,power:1,turns:4,look:'誰かを、疑いたくなる。'},{name:'前を向く心',hp:6,power:2,turns:4,look:'前を向いて、歩く。'}],
+ talk:[['askSeen2','「見なかった？」と聞く','周りに、聞く。'],['tellLoss2','「なくしちゃった」と言う','なくしたと、言う。'],['teacherHelp3','先生に相談する','探し方を、相談。']],
+ think:[['goneNow','なくなった','大切なものが、なくなった。'],['wantBack','取り戻したい','取り戻したい。'],['suspectNow','誰かを疑いたい','疑いたい気持ちと、向き合う。']],
+ reasonKeys:['goneNow','wantBack','suspectNow'],
+ stageGrants:[['retracePath','lookCarefully','askSeen'],['tellLoss','teacherHelp2','acceptGone','makeAgain','preciousGone']],
+ subs:[
+  {title:'見つかった！',text:'落ち着いて探すと、見つかる。',stat:'study',min:0,good:{text:'見つかって、ほっとした。',mind:1},ok:{text:'見つかった。',mind:1}},
+  {title:'友達が「一緒に探すよ」と言った',text:'助けが、来る。',stat:'soc',min:0,good:{text:'「ありがとう」と言えた。',rep:1,mind:1},ok:{text:'探し方が分かった。',mind:1}}
+ ],
+ onExplore(s,key){const out={text:'',card:null};
+  if(key==='askSeen2'){s.flags.asked=true;relation(s,'「見なかった？」と聞いたら、「見てないけど、一緒に探すよ」と言ってくれた。');out.text='「見なかった？」\n「見てないけど、一緒に探すよ」';out.card='askSeen'}
+  if(key==='tellLoss2'){s.flags.told=true;relation(s,'「なくしちゃった」と言ったら、「それは大変だね」と心配してくれた。');out.text='「なくしちゃった」\n「それは大変だね」';out.card='tellLoss'}
+  if(key==='teacherHelp3'){s.flags.teacher=true;relation(s,'先生に相談したら、「落ち着いて、通った道を思い出そう」と言ってくれた。');out.text='「なくしました」\n「通った道を、思い出そう」';out.card='teacherHelp2'}
+  if(key==='goneNow'){s.reason='goneNow';out.text='大切なものが、なくなった。\n「なくした」「道を思い出す」で、向き合おう。';out.card='tellLoss'}
+  if(key==='wantBack'){s.reason='wantBack';out.text='取り戻したい。\n「道を思い出す」「よく見る」で、探そう。';out.card='retracePath'}
+  if(key==='suspectNow'){s.reason='suspectNow';out.text='誰かを、疑いたくなる。\n「なくした」「聞く」で、疑いを抑えよう。';out.card='tellLoss'}
+  return out;
+ },
+ onPlay(s,id){const f=s.flags;
+  if(id==='retracePath'){f.retraced=true;return{text:'通った道を、思い出した。',meaning:'思い出すは、手がかり。'}}
+  if(id==='lookCarefully'){f.looked=true;return{text:'よく見て、探した。',meaning:'よく見るは、発見。'}}
+  if(id==='tellLoss'){f.told2=true;return{text:'「なくしちゃった」と、言った。',meaning:'言うと、助けが来る。'}}
+  if(id==='askSeen'){f.asked2=true;return{text:'「見なかった？」と、聞いた。',meaning:'聞くは、手がかり。'}}
+  if(id==='acceptGone'){f.accepted=true;return{text:'見つからなくても、前を向いた。',meaning:'前を向くは、強さ。'}}
+  if(id==='makeAgain'){f.again=true;return{text:'また集められると、考えた。',meaning:'または、希望。'}}
+  if(id==='teacherHelp2'){f.teacher2=true;return{text:'先生に、相談した。',meaning:'相談は、助け。'}}
+  if(id==='lostItem'){f.lost=true;return{text:'大切なものが、なくなった。',meaning:'なくすと、胸が痛む。'}}
+  if(id==='preciousGone'){f.gone=true;return{text:'大事なものが、消えた。',meaning:'消えると、あせる。'}}
+  if(id==='accuseTake'){f.accused=true;return{text:'「誰かが取った」と、決めつけた。',meaning:'決めつけは、疑い合いになる。'}}
+  return{text:'',meaning:''};
+ },
+ watch(s){return s.stage===0?'なくすは、みんなある。':s.stage===1?'思い出すは、手がかり。':'前を向くは、強さ。'},
+ scene(s){const f=s.flags;
+  if(s.stage===0)return{narrative:'大切なものが、ない。ポケットもカバンも、空っぽ。',speaker:'自分',quote:'どこにもない…',look:'あちこち、探してる。',self:'なくなった…',hint:'なくして、何がつらい？'};
+  if(s.stage===1)return{narrative:'あわてて疑うか、落ち着いて探すか。',speaker:'近くの子',quote:'何か探してるの？',look:'疑いが、渦を巻く。',self:s.reason==='wantBack'?'取り戻したい…':s.reason==='suspectNow'?'疑いたい…':'なくなった…',hint:'道を・よく見る・聞く、方法はある。'};
+  return{narrative:'落ち着いて、向き合う。',speaker:'近くの子',quote:f.told2||f.asked2?'「一緒に探すよ」':'「何か探してるの？」',look:'見つかる場所が、待っている。',self:f.told2||f.accepted||f.again?'向き合えた。':'まだ、疑ってる。',hint:'聞く・相談・前を向く、選ぼう。'};
+ },
+ progress(s){const f=s.flags;return f.told2||f.accepted||f.again?3:f.retraced||f.looked||f.asked2?2:s.reason?1:0},
+ situation(s){const f=s.flags;return f.told2||f.accepted?'向き合えた。':f.retraced||f.looked?'探した。':'まだ、疑ってる。道を・聞く・前を向く、方法はある。'}
 }
 };
 
